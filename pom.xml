@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+This is the System-level Maven POM.
+
+Usage:  Define all truly common things for the system here.
+        For example: versions of third-party dependencies used throughout the
+        system.
+
+
+Template version: 1.1-RC1
+Generation time : 2009-04-17 09:01:59 CEST
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>se.vgr.tyck-till</groupId>
+  <artifactId>tyck-till-system</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>${project.artifactId}</name>
+
+  <!-- common library versions -->
+  <properties>
+    <javg.version>1.1-RC1</javg.version>
+    <spring.fw.version>2.5.5</spring.fw.version>
+    <apache.cxf.version>2.1.1</apache.cxf.version>
+  </properties>
+
+  <modules>
+    <module>core-bc</module>
+  </modules>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+	  <plugin>
+            <groupId>com.google.code.maven-license-plugin</groupId>
+            <artifactId>maven-license-plugin</artifactId>
+            <configuration>
+                <header>header.txt</header>
+				<excludes>
+                    <exclude>target/**</exclude>
+                    <exclude>**/NOTICES.txt</exclude>
+					<exclude>thirdpartylicenses/**</exclude>
+					<exclude>**/LICENSE.rtf</exclude>
+                </excludes>
+            </configuration>
+      </plugin>
+    </plugins>
+    
+		<!-- needed for SVN-deployment -->
+		<extensions>
+			<extension>
+				<groupId>org.jvnet.wagon-svn</groupId>
+				<artifactId>wagon-svn</artifactId>
+				<version>1.8</version>
+			</extension>
+		</extensions>
+  </build>
+
+  <dependencies>
+    <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.4</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+<!-- Used by "mvn deploy" to deploy artefacts to a central maven repository. Use settings.xml to set username and password for this repository, see wagon-svn for more information -->
+  <distributionManagement>
+     <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>svn-repo</id>
+      <url>svn:https://oppna-program-tyck-till.googlecode.com/svn/maven/repo/</url> 
+	 </repository>
+  </distributionManagement>
+
+<pluginRepositories>
+  <pluginRepository>
+    <id>mc-release</id>
+    <name>Local Maven repository of releases</name>
+    <url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+  </pluginRepository>
+</pluginRepositories>
+
+  
+</project>

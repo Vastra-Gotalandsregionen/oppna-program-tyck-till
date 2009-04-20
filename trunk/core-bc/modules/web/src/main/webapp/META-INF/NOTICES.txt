@@ -1,5 +1,10 @@
 Copyright © 2009 VŠstra Gštalandsregionen
 
+This product includes/uses software, Orbeon
+(http://www.orbeon.com)
+License: GNU Lesser General Public License (LGPL)
+(http://www.gnu.org/copyleft/lesser.html)
+
 This product includes/uses software, Apache Ant
 (http://ant.apache.org/)
 License: The Apache Software License, Version 2.0

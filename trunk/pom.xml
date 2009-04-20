@@ -101,5 +101,13 @@ Generation time : 2009-04-17 09:01:59 CEST
   </pluginRepository>
 </pluginRepositories>
 
+<!-- This is needed for the orbeon-xforms-filter.jar-file which we have in our repo (it's not available in any public maven repo) -->
+<repositories>
+	   	<repository>
+	   		<id>oppna-program-tyck-till-repo</id>
+	   		<url>http://oppna-program-tyck-till.googlecode.com/svn/maven</url>
+	   	</repository>
+   </repositories>
+
   
 </project>

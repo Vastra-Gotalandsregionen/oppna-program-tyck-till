@@ -31,8 +31,7 @@ Generation time : 2009-04-17 09:01:59 CEST
     </plugins>
   </build>
 
-  <dependencies>
-    
+  <dependencies>  
     <dependency>
       <groupId>se.vgr.javg</groupId>
       <artifactId>javg-rt-support</artifactId>
@@ -54,9 +53,17 @@ Generation time : 2009-04-17 09:01:59 CEST
       <artifactId>orbeon-xforms-filter</artifactId>
       <version>3.7.0beta1</version>
     </dependency>
-  
+    <!-- We use jersey as the implementation of jsr 311 ,TODO: change to Apache cxf? -->
+ 	<dependency>
+    	<groupId>com.sun.jersey</groupId>
+    	<artifactId>jersey-server</artifactId>
+    	<version>1.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.sun.jersey</groupId>
+	    <artifactId>jersey-spring</artifactId>
+	    <version>1.0</version>
+	</dependency> 
    </dependencies>
-   
-   
-
+  
 </project>

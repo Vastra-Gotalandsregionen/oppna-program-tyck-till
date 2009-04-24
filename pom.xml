@@ -49,6 +49,7 @@ Generation time : 2009-04-17 09:01:59 CEST
                     <exclude>**/NOTICES.txt</exclude>
 					<exclude>thirdpartylicenses/**</exclude>
 					<exclude>**/LICENSE.rtf</exclude>
+					<exclude>**/context.xml</exclude>
                 </excludes>
             </configuration>
       </plugin>

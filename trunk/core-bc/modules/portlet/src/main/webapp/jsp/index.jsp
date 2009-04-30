@@ -33,9 +33,9 @@
 </head>
 <body> 
 <iframe 
-	src="http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp" 
+	src="http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp" 
 	width="100%" 
-	height="100%"
+	height="600px"
 	frameborder="0">
   <p>Din webbläsare stödjer ej IFrames.</p>
 </iframe>

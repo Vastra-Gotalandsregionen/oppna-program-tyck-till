@@ -7,4 +7,4 @@ Tyck Till är en applikation för
 
 == XForms == 
 
-Tyck till-applikationen använder sig av standarden [http://www.w3.org/TR/xforms/ XForms] för sitt formulär. Som implementation används open source-implementationen [http://www.orbeon.com Orbeon]. 
+Tyck till-applikationen använder sig av standarden [http://www.w3.org/TR/xforms/ XForms] för att implementera interaktiva formulär. Som implementation används open source-implementationen [http://www.orbeon.com Orbeon]. 

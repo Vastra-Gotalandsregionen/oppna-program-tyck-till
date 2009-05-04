@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+  id="TyckTillTestPortlet" version="2.0">
+  
+  <portlet>
+    <portlet-name>TyckTillTestPortlet</portlet-name>
+    <portlet-class>se.vgr.tycktill.portlet.TyckTillTestPortlet</portlet-class>
+    <expiration-cache>0</expiration-cache>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
+  </portlet>
+  <filter>
+  	<filter-name>ErrorHandlingFilter</filter-name>
+  	<filter-class>se.vgr.javg.portlet.filter.JavgErrorHandlingFilter</filter-class>
+  	<lifecycle>ACTION_PHASE</lifecycle>
+  	<lifecycle>RENDER_PHASE</lifecycle>
+  	<init-param>
+  		<name>TyckTillErrorFormURL</name>
+  		<value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value>
+  	</init-param>
+  </filter>
+  <filter-mapping>
+  	<filter-name>ErrorHandlingFilter</filter-name>
+  	<portlet-name>TyckTillTestPortlet</portlet-name>
+  </filter-mapping>
+  
+</portlet-app>

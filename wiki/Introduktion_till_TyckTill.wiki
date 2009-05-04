@@ -4,4 +4,4 @@
 = Introduktion =
 Tyck Till är en applikation för att skicka felrapporter samt övrig feedback. Den första versionen används används för att hantera felrapporter och övrig feedback i portalen. 
 
-Applikationen bygger på ett formulär imlementerat enligt standarden [http://www.w3.org/TR/xforms/ XForms]. Som implementation används open source-implementationen [http://www.orbeon.com Orbeon]. 
+Applikationen bygger på ett formulär imlementerat enligt standarden [http://www.w3.org/TR/xforms/ XForms]. Som implementation av XForms används open source-produkten [http://www.orbeon.com Orbeon]. 

@@ -28,6 +28,7 @@ Generation time : 2009-04-17 09:01:59 CEST
 
   <modules>
     <module>core-bc</module>
+	<module>test-portlet</module>
   </modules>
   
   <build>

@@ -2,3 +2,9 @@
 #labels Featured
 
 = Introduktion =
+
+Tyck Till är en applikation för
+
+== XForms == 
+
+Tyck till använder sig av standarden XForms för sitt formulär. Som implementation används [http:www.orbeon.com Orbeon]. 

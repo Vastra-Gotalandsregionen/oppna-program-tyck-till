@@ -3,8 +3,6 @@
 
 = Introduktion =
 
-Tyck Till är en applikation för
+Tyck Till är en applikation för att skicka felrapporter samt övrig feedback. I första hand används den ifrån portalen. 
 
-== XForms == 
-
-Tyck till-applikationen använder sig av standarden [http://www.w3.org/TR/xforms/ XForms] för att implementera interaktiva formulär. Som implementation används open source-implementationen [http://www.orbeon.com Orbeon]. 
+Applikationen bygger på ett formulär imlementerat enligt standarden [http://www.w3.org/TR/xforms/ XForms]. Som implementation används open source-implementationen [http://www.orbeon.com Orbeon]. 

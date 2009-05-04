@@ -1,6 +1,10 @@
 #summary Introduktion till Tyck till-applikationen.
 #labels Featured
 
+= Innehåll = 
+
+<wiki:toc max_depth="3" />
+
 = Introduktion =
 Tyck Till är en applikation för att skicka felrapporter samt övrig feedback. Den första versionen används används för att hantera felrapporter och övrig feedback i portalen. 
 

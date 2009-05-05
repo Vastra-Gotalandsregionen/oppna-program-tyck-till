@@ -38,8 +38,28 @@ Generation time : 2009-04-17 09:01:59 CEST
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
+		  <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
+	  <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <additionalConfig>
+            <file>
+              <name>.settings/org.eclipse.core.resources.prefs</name>
+              <content>
+<![CDATA[#Thu Jan 15 15:42:43 CET 2009
+eclipse.preferences.version=1
+encoding/<project>=UTF-8]]>
+              </content>
+            </file>
+          </additionalConfig>
+
+        </configuration>
+      </plugin>
+
 	  <plugin>
             <groupId>com.google.code.maven-license-plugin</groupId>
             <artifactId>maven-license-plugin</artifactId>

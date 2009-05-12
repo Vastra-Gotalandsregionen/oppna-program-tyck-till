@@ -12,7 +12,11 @@ import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.RenderFilter;
-
+/**
+ * TODO Move this to referense architecture - javg! 
+ * @author sofiajonsson
+ *
+ */
 public class JavgErrorHandlingFilter implements RenderFilter, ActionFilter {
 
 	private String tyckTillErrorFormURL;
@@ -37,7 +41,7 @@ public class JavgErrorHandlingFilter implements RenderFilter, ActionFilter {
 	private String createTyckTillPopupLink(String errorFormURL) {
 		StringBuffer buf = new StringBuffer();
 		buf.append("Ett ov&#228;ntat fel har uppst&#229;tt, ");
-		buf.append("<a href=\"#\" onClick=\"javascript:window.open('");
+		buf.append("<a href=\"#\" onClick=\"window.open('");
 		buf.append(errorFormURL);
 		buf.append("', 'tyck-till-window', 'menubar=no,width=670,height=450,toolbar=no')");
 		buf.append("\">klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");

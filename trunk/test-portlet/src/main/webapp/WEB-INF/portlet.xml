@@ -21,6 +21,7 @@
   	<init-param>
   		<name>TyckTillErrorFormURL</name>
   		<value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value>
+  		<!-- <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> -->
   	</init-param>
   </filter>
   <filter-mapping>

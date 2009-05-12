@@ -39,7 +39,7 @@ public class JavgErrorHandlingFilter implements RenderFilter, ActionFilter {
 		buf.append("Ett ov&#228;ntat fel har uppst&#229;tt, ");
 		buf.append("<a href=\"#\" onClick=\"javascript:window.open('");
 		buf.append(errorFormURL);
-		buf.append("', 'tyck-till-window', 'menubar=no,width=700,height=500,toolbar=no')");
+		buf.append("', 'tyck-till-window', 'menubar=no,width=670,height=450,toolbar=no')");
 		buf.append("\">klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");
 		return buf.toString();
 	}

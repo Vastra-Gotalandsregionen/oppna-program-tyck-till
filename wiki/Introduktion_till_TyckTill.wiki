@@ -26,8 +26,9 @@ För att testa/utveckla dessa lokalt har !OpenPortlet Container på Glassfish an
 
 === Deploy av portlets till !OpenPortlet Container === 
 
-Starta Glassfish. Gå därefter till http://localhost:8080/portletdriver/admin. Välj webbisar-portlett.war och tryck på Deploy. Gå därefter till Portlets-fliken där default-portletfönstret automatiskt har uppdaterats med webbisar-portlettarna; _!EditWebbis_ och _!AdminEditWebbis_. 
+Starta Glassfish. Gå därefter till http://localhost:8080/portletdriver/admin. Välj tyck-till-portlet.war och tryck på Deploy. Gå därefter till Portlets-fliken där default-portletfönstret automatiskt har uppdaterats med tyck-till-portleten.
 
+Gör på samma vis för att deploya tyck-till-test-portlet.war. 
 
 = Att skapa en release på google code =
 

@@ -97,8 +97,7 @@
 		<url-pattern>/resource/*</url-pattern>
 	</servlet-mapping>
 	<!-- end REST/JAX-RS/Jersey config -->
-
-
+	
   <welcome-file-list>
     <welcome-file>xforms-jsp/index.jsp</welcome-file>
   </welcome-file-list>

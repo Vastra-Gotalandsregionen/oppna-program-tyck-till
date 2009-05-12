@@ -13,6 +13,22 @@ Applikationen bygger på ett formulär imlementerat enligt standarden [http://ww
 = Systemöversikt = 
 
  
+== Orbeon-konfiguration ==
+
+Tyck till kör _separat deployment_ av Orbeon enligt instruktionerna som återfinns [http://www.orbeon.com/ops/doc/reference-xforms-java här]. Orbeon.war har döpts om till orbeon-3.7.0.war och deployats på Tomcat - detta för att man ska kunna köra flera olika versioner samtidigt.
+
+Observera att filterklassen är felaktigt namngiven i Orbeon-dokumentationen ovan. För orbeon-3.7.0beta1 ska det vara (se web.xml i core-bc/modules/web modulen): 
+{{{
+<filter-name>orbeon-xforms-filter</filter-name>
+  	<filter-class>org.orbeon.oxf.servlet.OPSXFormsFilter</filter-class>
+  	<init-param>
+  		<param-name>oxf.xforms.renderer.context</param-name>
+  		<param-value>/orbeon</param-value>
+  	</init-param>
+</filter>
+}}}
+
+Cross-context-setup (enligt Orbeon-dokumentationen ovan) har satts genom en context.xml fil under META-INF-katalogen i core-bc/modules/web modulen. 
 
 = Sätta upp sin lokala utvecklingsmiljö =
 
@@ -28,7 +44,10 @@ Välj refactor->rename på projektet. Döp om det till "orbeon-3.7.0".
 
 Deploya orbeon-3.7.0 på Tomcat via Eclipse (genom att välja _Add and remove projects_ på servern).  
 
-Not: Tyck till kör _separat deployment_ av Orbeon enligt instruktionerna som återfinns [http://www.orbeon.com/ops/doc/reference-xforms-java här]. 
+== Deploy av web-projektet ==
+
+Deploya även /tyck-till-core-bc-module-web-projektet i Tomcat från Eclipse. Formuläret deployas default på `http://<Tomcat URL>/tyck-till-core-bc-module-web/xforms-jsp/index.jsp`. 
+
 
 == Testa portlets lokalt ==
 

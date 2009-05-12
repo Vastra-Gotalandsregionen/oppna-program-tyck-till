@@ -16,7 +16,7 @@ För att utveckla och köra projektet lokalt används referensarkitekturens utve
 
 == Testa portlets lokalt ==
 
-Tyck till innehåller två portlets. Maven-modulen core-bc/module/portlet innehåller produktionsportletten, som länkar in tyck-till-formuläret i en IFrame. Test-portlet-modulen innehåller en enkelt testportlet som är till för att kasta exceptions och testa Portletfiltret, som i sin tur öppnar upp felformuläret i ett popupfönster. Båda portlettarna har en inställning i portlet.xml där urlen till formläret pekas ut. Denna inställning behöver ändras, då den är olika i lokal miljö, utv/testmiljön och produktionsmiljön. 
+Tyck till innehåller två portlets. Maven-modulen core-bc/module/portlet innehåller produktionsportletten, som länkar in tyck-till-formuläret i en IFrame. Test-portlet-modulen innehåller en enkelt testportlet som är till för att kasta exceptions och testa Portletfiltret, som i sin tur öppnar upp felformuläret i ett popupfönster. Båda portlettarna har en inställning i portlet.xml där urlen till formläret pekas ut. Denna inställning behöver ändras beroende på vilken miljö man vill köra mot. 
 
 För att testa/utveckla dessa lokalt har !OpenPortlet Container på Glassfish använts. Se [http://oppna-program.googlecode.com/svn/reference-architecture/trunk/docs/Teknisk_arkitektur/Systemutveckling/JavaEE/Anvisningar_Anslutningsskikt_Portlet.doc referensarkitekturens anvisningar för portlets] för mer information om utveckling av JSR 286-portlets och hur installationen av !OpenPortlet Container och Glassfish går till.
 

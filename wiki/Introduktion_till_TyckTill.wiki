@@ -12,7 +12,7 @@ Applikationen bygger på ett formulär imlementerat enligt standarden [http://ww
 
 = Systemöversikt = 
 
-Nuvarande beta-version av Orbeon har inte gått att köra på WebSphere Portal 6.1. Därför kör vi Tyck till som en webapplikation på Tomcat tills vidare. Webbapplikationen är sedan inlänkad i portalen via en IFrame. Maven-modulen core-bc/module/portlet innehåller produktionsportleten, som länkar in Tyck till-formuläret via en IFrame. Portletten fångar information om vilken användare som är inloggad och skickar med till webapplikationen, vilket behövs för att fylla i default-värden på kontaktuppgifterna i formuläret. 
+Nuvarande beta-version av Orbeon har inte gått att köra på !WebSphere Portal 6.1. Därför kör vi Tyck till som en webapplikation på Tomcat tills vidare. Webbapplikationen är sedan inlänkad i portalen via en IFrame. Maven-modulen core-bc/module/portlet innehåller produktionsportleten, som länkar in Tyck till-formuläret via en IFrame. Portletten fångar information om vilken användare som är inloggad och skickar med till webapplikationen, vilket behövs för att fylla i default-värden på kontaktuppgifterna i formuläret. 
 
 Test-portlet-modulen innehåller en enkelt testportlet som är till för att testa portletfiltret, som öppnar upp felformuläret i ett popupfönster. Filtret fångar både information om felet som uppstått samt om vilken användare som var inloggad. 
 

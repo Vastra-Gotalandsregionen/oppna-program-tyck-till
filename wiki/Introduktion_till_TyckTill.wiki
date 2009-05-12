@@ -28,6 +28,8 @@ Välj refactor->rename på projektet. Döp om det till "orbeon-3.7.0".
 
 Deploya orbeon-3.7.0 på Tomcat via Eclipse (genom att välja _Add and remove projects_ på servern).  
 
+Not: Tyck till kör _separat deployment_ av Orbeon enligt instruktionerna som återfinns [http://www.orbeon.com/ops/doc/reference-xforms-java här]. 
+
 == Testa portlets lokalt ==
 
 Tyck till innehåller två portlets. Maven-modulen core-bc/module/portlet innehåller produktionsportletten, som länkar in tyck-till-formuläret i en IFrame. Test-portlet-modulen innehåller en enkelt testportlet som är till för att kasta exceptions och testa Portletfiltret, som i sin tur öppnar upp felformuläret i ett popupfönster. Båda portlettarna har en inställning i portlet.xml där urlen till formläret pekas ut. Denna inställning behöver ändras beroende på vilken miljö man vill köra mot. 

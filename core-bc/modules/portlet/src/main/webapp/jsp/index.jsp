@@ -19,27 +19,18 @@
       Boston, MA 02111-1307  USA
 
 --%>
-<html xmlns:xf="http://www.w3.org/2002/xforms"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    xml:lang="sv" lang="sv">
-<head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />	
- 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css"/>
-	<title>Tyck till</title>
-	
-</head>
-<body> 
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="javax.portlet.*"%>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
+
+<portlet:defineObjects />
 <iframe 
-	src="http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp" 
+	src="<%=portletConfig.getInitParameter("tyck_till_form_url") %>" 
 	width="100%" 
 	height="600px"
 	frameborder="0">
   <p>Din webbläsare stödjer ej IFrames.</p>
 </iframe>
 
-</body> 
-
-</html>

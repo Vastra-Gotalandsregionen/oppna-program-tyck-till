@@ -18,6 +18,12 @@ Applikationen bygger på ett formulär imlementerat enligt standarden [http://ww
 
 För att utveckla och köra projektet lokalt används referensarkitekturens utvecklingsmiljö. Börja därför med att sätta upp utvecklingsmiljön enligt [http://code.google.com/p/oppna-program/wiki/Anvisningar_Utvecklingsmiljo referensarkitekturens instruktioner]. Se [http://code.google.com/p/oppna-program-tyck-till/source/checkout Source] för information om hur du checkar ut källkoden. 
 
+== Installation av Orbeon ==
+
+Ladda hem Orbeon 3.7.0_beta1 från http://forge.ow2.org/project/showfiles.php?group_id=168. 
+
+Packa upp distributionen till en temporär katalog. Gå till Eclipse. Välj import->war-file. Peka ut orbeon.war som ligger i roten på orbeon-distributionen. Döp web-projektet till "orbeon_3_7_0". 
+
 == Testa portlets lokalt ==
 
 Tyck till innehåller två portlets. Maven-modulen core-bc/module/portlet innehåller produktionsportletten, som länkar in tyck-till-formuläret i en IFrame. Test-portlet-modulen innehåller en enkelt testportlet som är till för att kasta exceptions och testa Portletfiltret, som i sin tur öppnar upp felformuläret i ett popupfönster. Båda portlettarna har en inställning i portlet.xml där urlen till formläret pekas ut. Denna inställning behöver ändras beroende på vilken miljö man vill köra mot. 

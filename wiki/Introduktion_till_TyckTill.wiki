@@ -26,7 +26,7 @@ Packa upp distributionen till en temporär katalog. Gå till Eclipse. Välj impo
 
 Välj refactor->rename på projektet. Döp om det till "orbeon-3.7.0".
 
-Deploya orbeon-3.7.0 på Tomcat via Eclipse (add and remove projects på servern).  
+Deploya orbeon-3.7.0 på Tomcat via Eclipse (genom att välja _Add and remove projects_ på servern).  
 
 == Testa portlets lokalt ==
 

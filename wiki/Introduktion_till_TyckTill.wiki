@@ -14,10 +14,9 @@ Applikationen bygger på ett formulär imlementerat enligt standarden [http://ww
 
 För att utveckla och köra projektet lokalt används referensarkitekturens utvecklingsmiljö. Börja därför med att sätta upp utvecklingsmiljön enligt [http://code.google.com/p/oppna-program/wiki/Anvisningar_Utvecklingsmiljo referensarkitekturens instruktioner]. Se [http://code.google.com/p/oppna-program-tyck-till/source/checkout Source] för information om hur du checkar ut källkoden. 
 
-
 == Testa portlets lokalt ==
 
-Tyck till innehåller två portlets. Maven-modulen core-bc/module/portlet innehåller produktionsportletten, som länkar in tyck-till-formuläret i en IFrame. Test-portlet-modulen innehåller en enkelt testportlet som är till för att kasta exceptions och testa Portletfiltret, som i sin tur öppnar upp felformuläret i ett popupfönster. 
+Tyck till innehåller två portlets. Maven-modulen core-bc/module/portlet innehåller produktionsportletten, som länkar in tyck-till-formuläret i en IFrame. Test-portlet-modulen innehåller en enkelt testportlet som är till för att kasta exceptions och testa Portletfiltret, som i sin tur öppnar upp felformuläret i ett popupfönster. Båda portlettarna har en inställning i portlet.xml där urlen till formläret pekas ut. Denna inställning behöver ändras, då den är olika i lokal miljö, utv/testmiljön och produktionsmiljön. 
 
 För att testa/utveckla dessa lokalt har !OpenPortlet Container på Glassfish använts. Se [http://oppna-program.googlecode.com/svn/reference-architecture/trunk/docs/Teknisk_arkitektur/Systemutveckling/JavaEE/Anvisningar_Anslutningsskikt_Portlet.doc referensarkitekturens anvisningar för portlets] för mer information om utveckling av JSR 286-portlets och hur installationen av !OpenPortlet Container och Glassfish går till.
 

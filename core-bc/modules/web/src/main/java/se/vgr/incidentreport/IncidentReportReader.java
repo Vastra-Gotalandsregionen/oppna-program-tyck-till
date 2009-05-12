@@ -34,21 +34,8 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 			MultivaluedMap<String, String> mvm, InputStream is)
 			throws IOException, WebApplicationException {
 		
-		System.out.println("in ir reader");
 		try {
 			
-			/*
-			 *  <incidentReport xmlns="">
-			                	<description><%=(request.getParameter("errorMessage") == null)? "": request.getParameter("errorMessage") %></description>
-			                	<screenShot>
-			                		<sendScreenShot>true</sendScreenShot>
-			                		<files>
-					                    <file filename="" mediatype=""/>
-					                </files>
-			                	</screenShot>
-			                	
-			                </incidentReport>
-			 */
 			IncidentReport ir = new IncidentReport();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document doc = builder.parse(is);

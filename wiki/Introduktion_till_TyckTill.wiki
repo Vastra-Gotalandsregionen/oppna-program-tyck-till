@@ -22,7 +22,11 @@ För att utveckla och köra projektet lokalt används referensarkitekturens utve
 
 Ladda hem Orbeon 3.7.0_beta1 från http://forge.ow2.org/project/showfiles.php?group_id=168. 
 
-Packa upp distributionen till en temporär katalog. Gå till Eclipse. Välj import->war-file. Peka ut orbeon.war som ligger i roten på orbeon-distributionen. Döp web-projektet till "orbeon_3_7_0". 
+Packa upp distributionen till en temporär katalog. Gå till Eclipse. Välj import->war-file. Peka ut orbeon.war som ligger i roten på orbeon-distributionen. Använd defaultinställningar. 
+
+Välj refactor->rename på projektet. Döp om det till "orbeon-3.7.0".
+
+Deploya orbeon-3.7.0 på Tomcat via Eclipse (add and remove projects på servern).  
 
 == Testa portlets lokalt ==
 

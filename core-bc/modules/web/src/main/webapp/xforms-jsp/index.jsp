@@ -24,7 +24,7 @@
 <!-- TODO Fixa urler till REST-gränssnittet -->
 <!-- TODO If/when deploying as a portlet we must remove all jsp-tags -->
 <!-- TODO fixa så att det går att köra utan mus... tabindex etc -->
-<!--  Test å ä ö -->
+
 
 <html xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns="http://www.w3.org/1999/xhtml"

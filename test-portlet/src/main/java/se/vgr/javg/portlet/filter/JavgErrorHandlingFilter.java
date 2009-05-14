@@ -13,7 +13,7 @@ import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.RenderFilter;
 /**
- * TODO Move this to referense architecture - javg! 
+ * TODO When ready - move this to referense architecture - javg! 
  * @author sofiajonsson
  *
  */
@@ -67,5 +67,7 @@ public class JavgErrorHandlingFilter implements RenderFilter, ActionFilter {
 		}
 
 	}
+	
+
 
 }

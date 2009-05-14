@@ -1,0 +1,91 @@
+@CHARSET "UTF-8";
+@namespace xf url("http://www.w3.org/2002/xforms");
+
+
+html {
+	height: 100%;
+}
+
+body {
+    height: 100%;
+	font: 62.5% Arial, Verdana, Helvetica, sans-serif;
+	background:#fff;
+	padding: 0;
+	margin: 0;
+	margin-left: 0.5em
+}
+
+#custom-doc {
+	margin:auto;text-align:left; /* leave unchanged */
+	width:60em;/* non-IE */
+	*width:58.50em;/* IE */
+	min-width:600px;/* optional but recommended */
+}
+
+
+
+h2{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:1.2em;
+	font-weight:bold; 
+	color:#2a6344;
+	margin-bottom:0.3em;
+	margin-top:0.2em;
+}
+
+
+h3{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 1.1em;
+	font-weight:bold;
+	color:#2a6344; 
+}
+
+.xforms-textarea{
+	width: 55em;
+	height: 4em;
+}
+
+.xforms-select1-appearance-full span {
+    display:block;
+    margin-bottom:0.3em;
+	margin-top:0.3em;
+}
+
+.xforms-select-appearance-full span {
+    display:block;
+    margin-bottom:0.3em;
+	margin-top:0.3em;
+}
+
+
+
+p {
+	-x-system-font:none;
+	color:#222222;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:1.1em;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:1.3em;
+	margin-bottom:0;
+	margin-top:0;
+}
+
+input.btn {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 1.2em;
+}
+
+
+div.addrow {
+	padding-top: 0.8em;
+	padding-bottom: 1.2em;
+}
+
+div.header {
+	margin-bottom:0.4em;
+}

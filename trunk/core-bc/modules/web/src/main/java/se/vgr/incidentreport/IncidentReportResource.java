@@ -30,13 +30,7 @@ import com.sun.jersey.spi.inject.Inject;
 @Path("incidentReport")
 public class IncidentReportResource {
 
-//    @GET 
-//    @Produces("application/xml")
-//    public IncidentReport get() {
-//    	System.out.println("In getIncidentReport");
-//    	
-//     	return new IncidentReport();
-//    }
+
 	
 	@Inject
     private IncidentReportService incidentReportService;
@@ -44,10 +38,9 @@ public class IncidentReportResource {
     
     @POST 
     @Produces("application/xml")
-    public IncidentReport post(@Context UriInfo uriInfo, IncidentReport ir) {
+    public void post(@Context UriInfo uriInfo, IncidentReport ir) {
     	//TODO anropa servicen som skickar in felrapport till UC.
     	System.out.println("In postIncidentReport [" + ir.description + "]"); 
-    	return ir;
     }
 
 }

@@ -50,6 +50,11 @@ Generation time : 2009-04-17 09:01:59 CEST
       <artifactId>tyck-till-core-bc-composite-svc</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>se.vgr.tyck-till</groupId>
+      <artifactId>tyck-till-core-bc-composite-types</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
 <!--    <dependency>-->
 <!--      <groupId>taglibs</groupId>-->
 <!--      <artifactId>standard</artifactId>-->

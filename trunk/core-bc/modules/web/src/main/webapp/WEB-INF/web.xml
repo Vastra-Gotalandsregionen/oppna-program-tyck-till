@@ -92,43 +92,26 @@
   </filter-mapping>
   
   
-  <!-- REST/JSX-RS/Jersey config -->
-	<!-- <servlet>
-		<servlet-name>Jersey Web Application</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>
-			<param-value>com.sun.jersey.api.core.PackagesResourceConfig</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>se.vgr.incidentreport</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Jersey Web Application</servlet-name>
-		<url-pattern>/resource/*</url-pattern>
-	</servlet-mapping>-->
-	<!-- end REST/JAX-RS/Jersey config -->
+  
 	
+	<!-- REST/JSX-RS/Jersey config -->
 	<servlet>
-    <servlet-name>Jersey Spring</servlet-name>
-    <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
-    <init-param>
-        <param-name>com.sun.ws.rest.config.property.resourceConfigClass</param-name>
-        <param-value>com.sun.ws.rest.api.core.PackagesResourceConfig</param-value>
-    </init-param> 
-    <init-param>
-        <param-name>com.sun.ws.rest.config.property.packages</param-name>
-        <param-value>se.vgr.incidentreport</param-value>
-    </init-param>
-	</servlet>
+    	<servlet-name>Jersey Spring</servlet-name>
+    	<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+	    <init-param>
+	        <param-name>com.sun.ws.rest.config.property.resourceConfigClass</param-name>
+	        <param-value>com.sun.ws.rest.api.core.PackagesResourceConfig</param-value>
+	    </init-param> 
+	    <init-param>
+	        <param-name>com.sun.ws.rest.config.property.packages</param-name>
+	        <param-value>se.vgr.incidentreport</param-value>
+	    </init-param>
+		</servlet>
 	<servlet-mapping>
 	    <servlet-name>Jersey Spring</servlet-name>
 	    <url-pattern>/resource/*</url-pattern>
 	</servlet-mapping>
-	
+	<!-- end REST/JAX-RS/Jersey config -->
 	
   <welcome-file-list>
     <welcome-file>xforms-jsp/index.jsp</welcome-file>

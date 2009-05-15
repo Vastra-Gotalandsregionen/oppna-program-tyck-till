@@ -25,6 +25,20 @@
 
   <description>Tyck till</description>
   
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath*:/services-config.xml
+    </param-value>
+  </context-param>
+    <!-- Bootstraps the root Spring Web Application Context, responsible for deploying managed beans
+    defined in the configuration files above.  These beans represent the services used by the application. -->
+  <listener>
+    <listener-class>
+      org.springframework.web.context.ContextLoaderListener
+    </listener-class>
+  </listener>
+  
   <!-- Orbeon config start -->
   <filter>
   	<filter-name>orbeon-xforms-filter</filter-name>
@@ -79,7 +93,7 @@
   
   
   <!-- REST/JSX-RS/Jersey config -->
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>Jersey Web Application</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
@@ -95,8 +109,26 @@
 	<servlet-mapping>
 		<servlet-name>Jersey Web Application</servlet-name>
 		<url-pattern>/resource/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>-->
 	<!-- end REST/JAX-RS/Jersey config -->
+	
+	<servlet>
+    <servlet-name>Jersey Spring</servlet-name>
+    <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+    <init-param>
+        <param-name>com.sun.ws.rest.config.property.resourceConfigClass</param-name>
+        <param-value>com.sun.ws.rest.api.core.PackagesResourceConfig</param-value>
+    </init-param> 
+    <init-param>
+        <param-name>com.sun.ws.rest.config.property.packages</param-name>
+        <param-value>se.vgr.incidentreport</param-value>
+    </init-param>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>Jersey Spring</servlet-name>
+	    <url-pattern>/resource/*</url-pattern>
+	</servlet-mapping>
+	
 	
   <welcome-file-list>
     <welcome-file>xforms-jsp/index.jsp</welcome-file>

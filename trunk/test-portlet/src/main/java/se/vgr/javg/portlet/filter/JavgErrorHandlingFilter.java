@@ -19,6 +19,8 @@ import javax.portlet.filter.RenderFilter;
 /**
  * TODO When ready - move this to reference architecture/javg.
  * TODO add support for serveResource
+ * TODO Fetch info about the logged in user (from ldap)
+ * TODO If possible - fetch info about the portlet and/or page that caused the error
  * @author sofiajonsson
  *
  */
@@ -46,7 +48,6 @@ public class JavgErrorHandlingFilter implements RenderFilter, ActionFilter {
 	}
 
 	private String createTyckTillPopupLink(String errorMessage) throws UnsupportedEncodingException {
-		//TODO the javascript does not seem to work in IE
 		String errorFormUrl = tyckTillErrorFormURL + "?errorMessage=" + URLEncoder.encode(errorMessage, "UTF-8") + "&timestamp=" + URLEncoder.encode(df.format(new Date()), "UTF-8");
 		StringBuffer buf = new StringBuffer();
 		buf.append("<script language=\"javascript\">\n");
@@ -64,10 +65,6 @@ public class JavgErrorHandlingFilter implements RenderFilter, ActionFilter {
 		return buf.toString();
 	}
 
-	public void destroy() {
-		// TODO Auto-generated method stub
-
-	}
 
 	public void init(FilterConfig arg0) throws PortletException {
 		tyckTillErrorFormURL = arg0.getInitParameter("TyckTillErrorFormURL");
@@ -83,6 +80,12 @@ public class JavgErrorHandlingFilter implements RenderFilter, ActionFilter {
 			//Save the error for the view phase, where we can take control over the response-rendering
 			arg1.setRenderParameter("errorInActionPhase", (e.toString()));
 		}
+
+	}
+	
+
+	public void destroy() {
+		// TODO Auto-generated method stub
 
 	}
 	

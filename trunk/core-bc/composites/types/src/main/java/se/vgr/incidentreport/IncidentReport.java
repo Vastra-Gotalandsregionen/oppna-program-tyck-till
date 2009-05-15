@@ -17,10 +17,12 @@ package se.vgr.incidentreport;
  *   Boston, MA 02111-1307  USA
  */
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IncidentReport {
 	String reportType = "error";
-	String[] errorTypes = new String[0];
+	List<String> errorTypes = new ArrayList<String>();
 	String timeStamp;
 	String browser;
 	String description;
@@ -30,10 +32,10 @@ public class IncidentReport {
 	boolean feedbackByMail;
 	String emailAddress;
 	boolean feedbackByPhone;
-	String phoneNumber; // might be different from the sms-phone-number above
-	
+	String phoneNumber; // might be different from the sms-phone-number above	
 	boolean sendScreenShot;
-	File[] screenShots = new File[0];
+	
+	List<File> screenShots = new ArrayList<File>();
 	
 	public String getReportType() {
 		return reportType;
@@ -141,20 +143,23 @@ public class IncidentReport {
 		this.sendScreenShot = sendScreenShot;
 	}	
 
-	public String[] getErrorTypes() {
+	
+
+	public List<String> getErrorTypes() {
 		return errorTypes;
 	}
 
-	public void setErrorTypes(String[] errorTypes) {
-		this.errorTypes = errorTypes;
+	public void addErrorType(String errorType){
+		this.errorTypes.add(errorType);
 	}
 
-	public File[] getScreenShots() {
+	public List<File> getScreenShots() {
 		return screenShots;
 	}
 
-	public void setScreenShots(File[] screenShots) {
-		this.screenShots = screenShots;
+
+	public void addScreenShot(File screenShot){
+		this.screenShots.add(screenShot);
 	}
 
 	public IncidentReport(){}

@@ -6,6 +6,15 @@ public class IncidentReport {
 	String reportType = "error";
 	String[] errorTypes = new String[0];
 	String timeStamp;
+	String browser;
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
 	String description;
 	boolean sendFeedback;
 	boolean feedbackBySms;
@@ -116,13 +125,7 @@ public class IncidentReport {
 
 	public void setSendScreenShot(boolean sendScreenShot) {
 		this.sendScreenShot = sendScreenShot;
-	}
-
-
-
-
-
-	
+	}	
 
 	public String[] getErrorTypes() {
 		return errorTypes;
@@ -141,7 +144,7 @@ public class IncidentReport {
 	}
 
 	public IncidentReport(){}
-	
+
 	
 	
 	

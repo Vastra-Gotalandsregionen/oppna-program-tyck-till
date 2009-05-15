@@ -38,6 +38,7 @@ public class IncidentReportResource {
     @POST 
     @Produces("application/xml")
     public IncidentReport post(@Context UriInfo uriInfo, IncidentReport ir) {
+    	//TODO anropa servicen som kontakt UC.
     	System.out.println("In postIncidentReport [" + ir.description + "]"); 
     	return ir;
     }

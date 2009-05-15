@@ -43,6 +43,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 			ir.setReportType(parseString(doc, "reportType"));
 			ir.setErrorTypes(parseString(doc,"errorType").split(" "));
 			ir.setDescription(parseString(doc, "description"));
+			ir.setDescription(parseString(doc, "browser"));
 			
 			ir.setSendFeedback(parseBoolean(doc, "sendFeedback"));
 			if (ir.isSendFeedback()){

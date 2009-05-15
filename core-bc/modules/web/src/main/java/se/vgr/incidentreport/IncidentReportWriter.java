@@ -36,6 +36,7 @@ public class IncidentReportWriter implements MessageBodyWriter<IncidentReport> {
 		}
 		sb.append("</errorType>");
 		sb.append("<timeStamp/>"); //TODO add this.
+		sb.append("<browser/>"); //TODO add this.
 		
 		sb.append("<defaultErrorMessage/>"); //TODO add this.
 		sb.append("<description>").append(c.getDescription()).append("</description>");

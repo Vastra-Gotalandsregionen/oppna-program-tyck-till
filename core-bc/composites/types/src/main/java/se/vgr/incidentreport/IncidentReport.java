@@ -7,14 +7,6 @@ public class IncidentReport {
 	String[] errorTypes = new String[0];
 	String timeStamp;
 	String browser;
-	public String getBrowser() {
-		return browser;
-	}
-
-	public void setBrowser(String browser) {
-		this.browser = browser;
-	}
-
 	String description;
 	boolean sendFeedback;
 	boolean feedbackBySms;
@@ -35,7 +27,13 @@ public class IncidentReport {
 		this.reportType = reportType;
 	}
 
+	public String getBrowser() {
+		return browser;
+	}
 
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	
 
 	public String getTimeStamp() {

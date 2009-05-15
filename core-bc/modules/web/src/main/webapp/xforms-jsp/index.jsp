@@ -91,7 +91,9 @@
             <xf:bind nodeset="screenShot" relevant="/incidentReport/defaultErrorMessage = ''"/>
             <xf:bind nodeset="screenShot/sendScreenShot" type="xs:boolean" readonly="false()" />
             
-            <xf:bind nodeset="screenShot/files/file" type="xs:base64Binary" 
+<!--            <xf:bind nodeset="screenShot/files/file" type="xs:base64Binary" -->
+<!--            	readonly="/incidentReport/screenShot/sendScreenShot = 'false'" />   This does not seem to work initially? -->
+            <xf:bind nodeset="screenShot/files/file" type="xs:anyURI" 
             	readonly="/incidentReport/screenShot/sendScreenShot = 'false'" />  <!-- This does not seem to work initially? -->
            
            <!-- Instance that holds the different reportTypes -->

@@ -17,6 +17,7 @@
  */
 package se.vgr.incidentreport;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
@@ -35,8 +36,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import sun.misc.BASE64Decoder;
 
 
 @Consumes("application/xml")
@@ -57,7 +56,11 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 			Document doc = builder.parse(is);
 			
 			ir.setReportType(parseString(doc, "reportType"));
-			ir.setErrorTypes(parseString(doc,"errorType").split(" "));
+			String[] errorTypes = parseString(doc,"errorType").split(" ");
+			for (String errorType : errorTypes) {
+				ir.addErrorType(errorType);
+			}
+			
 			ir.setDescription(parseString(doc, "description"));
 			ir.setBrowser(parseString(doc, "browser"));
 			ir.setTimeStamp(parseString(doc, "timestamp"));
@@ -88,11 +91,17 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 				NodeList files = doc.getElementsByTagName("file");
 				for (int i = 0; i < files.getLength(); i++){
 					Node fileNode = files.item(i);
-					BASE64Decoder decoder = new BASE64Decoder();
-					if (fileNode.getFirstChild() != null){
-						byte[] fileBytes = decoder.decodeBuffer(fileNode.getFirstChild().getTextContent());
-					}
-					//File file = new File()
+					File file = new File(fileNode.getFirstChild().getTextContent().replaceFirst("file:", ""));
+					ir.addScreenShot(file);
+//					BASE64Decoder decoder = new BASE64Decoder();
+//					if (fileNode.getFirstChild() != null){
+//						byte[] fileBytes = decoder.decodeBuffer(fileNode.getFirstChild().getTextContent());
+//					}
+					
+//					FileOutputStream fos =
+//		                    new FileOutputStream("tmpfiles/file"+i+".jpg"); // where to put the file?
+//		                fos.write(fileBytes);
+//		                fos.close();
 				}
 			}
 			

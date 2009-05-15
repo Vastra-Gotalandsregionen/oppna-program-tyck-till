@@ -99,6 +99,31 @@ encoding/<project>=UTF-8]]>
       <scope>test</scope>
     </dependency>
   </dependencies>
+ 
+   <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>se.vgr.javg</groupId>
+        <artifactId>javg-rt-support</artifactId>
+        <version>${javg.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring</artifactId>
+        <version>${spring.fw.version}</version>
+      </dependency>
+	 
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${spring.fw.version}</version>
+      </dependency>
+
+
+
+    </dependencies>
+  </dependencyManagement>
 
 <!-- Used by "mvn deploy" to deploy artefacts to a central maven repository. Use settings.xml to set username and password for this repository, see wagon-svn for more information -->
   <distributionManagement>

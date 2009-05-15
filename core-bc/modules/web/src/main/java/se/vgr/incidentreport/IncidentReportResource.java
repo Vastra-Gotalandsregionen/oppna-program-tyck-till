@@ -17,28 +17,35 @@
  */
 package se.vgr.incidentreport;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
+import com.sun.jersey.api.spring.Autowire;
+import com.sun.jersey.spi.inject.Inject;
+
+@Autowire
 @Path("incidentReport")
 public class IncidentReportResource {
 
-    @GET 
-    @Produces("application/xml")
-    public IncidentReport get() {
-    	System.out.println("In getIncidentReport");
-    	
-     	return new IncidentReport();
-    }
+//    @GET 
+//    @Produces("application/xml")
+//    public IncidentReport get() {
+//    	System.out.println("In getIncidentReport");
+//    	
+//     	return new IncidentReport();
+//    }
+	
+	@Inject
+    private IncidentReportService incidentReportService;
+
     
     @POST 
     @Produces("application/xml")
     public IncidentReport post(@Context UriInfo uriInfo, IncidentReport ir) {
-    	//TODO anropa servicen som kontakt UC.
+    	//TODO anropa servicen som skickar in felrapport till UC.
     	System.out.println("In postIncidentReport [" + ir.description + "]"); 
     	return ir;
     }

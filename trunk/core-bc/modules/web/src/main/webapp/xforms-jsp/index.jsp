@@ -26,7 +26,7 @@
 <!-- TODO fixa så att det går att köra utan mus... tabindex etc -->
 
 
-<html xmlns:xf="http://www.w3.org/2002/xforms"
+<%@page import="java.net.URLEncoder"%><html xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -47,10 +47,11 @@
             <xf:instance id="incidentReport-instance">
                 <incidentReport xmlns="">
                 	<reportType>error</reportType>
-                	<errorType/>
+                	<errorType><%=(request.getParameter("errorMessage") == null) ? "": "errorMessage" %></errorType>
 	                	
-                	<timeStamp/>
-                	<defaultErrorMessage><%=(request.getParameter("errorMessage") == null)? "": request.getParameter("errorMessage") %></defaultErrorMessage>
+                	<timestamp><%=(request.getParameter("timestamp") == null) ? "": request.getParameter("timestamp") %></timestamp>
+                	<browser><%=request.getHeader("User-Agent") %></browser>
+                	<defaultErrorMessage><%=(request.getParameter("errorMessage") == null) ? "": request.getParameter("errorMessage") %></defaultErrorMessage>
                 	<description></description>
                 	<feedback>
 	                	<sendFeedback>true</sendFeedback>
@@ -147,12 +148,6 @@
                 	<errorType value="someMiscError">
 	                	<label><fmt:message key="incidentreport.errorTypes.someMiscError.label"/></label>
                 	</errorType>
-                	<errorType value="someOtherError">
-                		<label><fmt:message key="incidentreport.errorTypes.someMiscError.label"/></label>
-                	</errorType>
-                	<errorType value="someOtherError2">
-	                	<label><fmt:message key="incidentreport.errorTypes.someMiscError.label"/></label>
-                	</errorType>
                 </errorTypes>
             </xf:instance>
             
@@ -181,7 +176,8 @@
 				action="<%=request.getRequestURL().toString().replace(request.getServletPath(), "") %>/resource/incidentReport"
 				method="post"
 				replace="none" instance="incidentReport-instance">
-				<xf:load resource="<%=request.getRequestURL() + "?" + request.getQueryString()%>"
+				<xf:load resource="<%=request.getRequestURL() + 
+					((request.getQueryString() == null) ? "" : ("?" + request.getQueryString().replaceAll("&", "&amp;")))%>"
 						            show="replace" ev:event="xforms-submit-done"/>
 			</xf:submission>
         </xf:model>
@@ -350,7 +346,7 @@
 					      </xf:trigger> -->
 					     <xf:trigger>
 						    <xf:label><fmt:message key="incidentreport.cancel.label"/></xf:label>
-						    <xf:load resource="<%=request.getRequestURL() + "?" + request.getQueryString()%>"
+						    <xf:load resource="<%=request.getRequestURL() + ((request.getQueryString() == null) ? "" : ("?" + request.getQueryString().replaceAll("&", "&amp;")))%>"
 						            show="replace" ev:event="DOMActivate"/>
 						 </xf:trigger> 
 					</p>

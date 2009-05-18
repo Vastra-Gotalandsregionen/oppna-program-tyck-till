@@ -31,7 +31,8 @@
 	src="<%=portletConfig.getInitParameter("tyck_till_form_url") %>?email=<%=URLEncoder.encode(request.getAttribute("email").toString(), "UTF-8") %>&phoneNumber=<%=URLEncoder.encode(request.getAttribute("phoneNumber").toString(), "UTF-8") %>" 
 	width="100%" 
 	height="600px"
-	frameborder="0">
+	frameborder="0"
+	scrolling="no">
   <p>Din webbläsare stödjer ej IFrames.</p>
 </iframe>
 

@@ -29,6 +29,8 @@ seem to support jsp in portlet mode (?)-->
 <!-- TODO Check and fix the user interface according to the VGR guidelines (as much as possible, 
 we still have to rely on javascript since Orbeons no-script-mode isn't working properly 
 in the beta-version we're using), e.g. it should be possible to use without a mouse etc. -->
+<!-- TODO when the page times out orbeon sends out it's default error message - 
+see if this is configurable in Orbeon -->
 
 
 <%@page import="java.net.URLEncoder"%><html xmlns:xf="http://www.w3.org/2002/xforms"

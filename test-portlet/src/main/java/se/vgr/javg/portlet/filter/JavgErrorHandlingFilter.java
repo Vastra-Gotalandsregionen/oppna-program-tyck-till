@@ -20,7 +20,11 @@ import javax.portlet.filter.RenderFilter;
  * TODO When ready - move this to reference architecture/javg.
  * TODO add support for portlet methods missing, e.g. serveResource
  * TODO Fetch info about the logged in user (from LDAP)
- * TODO If possible - fetch info about the portlet and/or page that caused the error
+ * TODO Fetch info about the portlet and/or portal page 
+ * that caused the error (Note: just url is probably not that interesting since we're
+ * within the portal)
+ * TODO Create a "cancel"-link/button (that links back to the portal's start page?). 
+ * TODO Make the user interface more like the "interaktionsdesign".
  * @author sofiajonsson
  *
  */
@@ -57,6 +61,7 @@ public class JavgErrorHandlingFilter implements RenderFilter, ActionFilter {
 		errorFormUrl.append("&timestamp=" + URLEncoder.encode(df.format(new Date()), "UTF-8"));
 		errorFormUrl.append("&email=" + URLEncoder.encode(email, "UTF-8"));
 		errorFormUrl.append("&phoneNumber=" + URLEncoder.encode(phoneNumber, "UTF-8"));
+		
 		
 		StringBuffer buf = new StringBuffer();
 		buf.append("<script language=\"javascript\">\n");

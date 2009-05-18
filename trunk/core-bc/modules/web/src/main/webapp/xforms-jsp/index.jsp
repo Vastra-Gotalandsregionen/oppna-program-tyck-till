@@ -189,8 +189,11 @@ see if this is configurable in Orbeon -->
           	
           	 <!-- Bindings for the control instance that is used under screenShots --> 
           	<xf:bind nodeset="instance('control-instance')">
-            	<xf:bind nodeset="add-upload-trigger" readonly="false()"/>
-            	<xf:bind nodeset="remove-upload-trigger" relevant="count(instance('incidentReport-instance')/screenShot/files/file) &gt; 1"/>
+            	<xf:bind nodeset="add-upload-trigger" 
+            		readonly="instance('incidentReport-instance')/screenShot/sendScreenShot = 'false'" />
+            	<xf:bind nodeset="remove-upload-trigger" 
+            		readonly="instance('incidentReport-instance')/screenShot/sendScreenShot = 'false'" 
+            		relevant="count(instance('incidentReport-instance')/screenShot/files/file) &gt; 1"/>
             </xf:bind>
             
              <!-- Submission of the main instance --> 
@@ -338,7 +341,7 @@ see if this is configurable in Orbeon -->
 		                         
 		       	    	</xf:repeat>
 		       	       <xf:group ref="instance('control-instance')/remove-upload-trigger">
-				          	<xf:trigger appearance="minimal">
+				          	<xf:trigger appearance="minimal" ref="instance('control-instance')/remove-upload-trigger">
 				            	<xf:label><fmt:message key="incidentreport.screenShot.remove.label"/></xf:label>
 				                <xf:delete ev:event="DOMActivate" nodeset="instance('incidentReport-instance')/screenShot/files/file" at="last()"/>
 				             </xf:trigger>
@@ -351,7 +354,7 @@ see if this is configurable in Orbeon -->
 				    </p>
 	           		<p>
 		             <xf:group ref="instance('control-instance')/add-upload-trigger">
-		            	<xf:trigger appearance="minimal">
+		            	<xf:trigger appearance="minimal" ref="instance('control-instance')/add-upload-trigger">
 		                	<xf:label><fmt:message key="incidentreport.screenShot.add.label"/></xf:label>
 		                    <xf:insert ev:event="DOMActivate" nodeset="instance('incidentReport-instance')/screenShot/files/file" at="last()" position="after" origin="instance('file-template')"/>
 		                </xf:trigger>

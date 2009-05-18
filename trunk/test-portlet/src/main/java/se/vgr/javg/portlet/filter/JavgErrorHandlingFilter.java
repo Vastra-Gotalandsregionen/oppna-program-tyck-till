@@ -17,7 +17,7 @@ import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.RenderFilter;
 /**
- * TODO When ready - move this to reference architecture/javg.
+ * TODO When ready - move this to reference architecture/javg. Document usage within the reference architecture, in document Anvisningar_Anslutningsskikt_Portlet.doc. 
  * TODO add support for portlet methods missing, e.g. serveResource
  * TODO Fetch info about the logged in user (from LDAP)
  * TODO Fetch info about the portlet and/or portal page 

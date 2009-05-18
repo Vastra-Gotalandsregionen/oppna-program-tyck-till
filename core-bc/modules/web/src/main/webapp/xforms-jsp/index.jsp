@@ -21,9 +21,14 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!-- TODO Fixa urler till REST-gränssnittet -->
-<!-- TODO If/when deploying as a portlet we must remove all jsp-tags -->
-<!-- TODO fixa så att det går att köra utan mus... tabindex etc -->
+<!-- TODO Ev fixa urlerna till REST-gränssnittet, som i dagsläget är "relativa" 
+kontra denna jsp-sidas url (Orbeon verkar dock inte stödja riktiga relativa länkar 
+så detta är "fulkodat" - se submission nedan) -->
+<!-- TODO If/when deploying as a portlet we must remove all jsp-tags. Orbeon doesn't 
+seem to support jsp in portlet mode (?)-->
+<!-- TODO Check and fix the user interface according to the VGR guidelines (as much as possible, 
+we still have to rely on javascript since Orbeons no-script-mode isn't working properly 
+in the beta-version we're using), e.g. it should be possible to use without a mouse etc. -->
 
 
 <%@page import="java.net.URLEncoder"%><html xmlns:xf="http://www.w3.org/2002/xforms"
@@ -37,6 +42,13 @@
  			
  	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css"/>
 	<link rel="stylesheet" type="text/css" href="../style/style.css"/>
+	<script type="text/javascript">
+      var closePopup= function()
+      	{
+    		window.close();
+        }            
+    </script>
+
 	
 	<fmt:setBundle basename="messages"/>
 	
@@ -77,7 +89,7 @@
       		<!-- Bindings for the main instance -->
       		<xf:bind nodeset="reportType" relevant="/incidentReport/defaultErrorMessage = ''"/>
             <xf:bind nodeset="timeStamp" type="xs:dateTime" calculate="if (. = '') then current-dateTime() else ." readonly="false()"/> 
-            <xf:bind nodeset="defaultErrorMessage" relevant="if (. = '') then false() else true()" readonly="true()"/>
+            <xf:bind nodeset="defaultErrorMessage" relevant="if (. = '') then false() else true()" readonly="true()"/><!-- defaultErrorMessage is only relevant if it's not empty -->
             
             <xf:bind nodeset="feedback/sendFeedback" type="xs:boolean" />
             
@@ -181,6 +193,15 @@
 					((request.getQueryString() == null) ? "" : ("?" + request.getQueryString().replaceAll("&", "&amp;")))%>"
 						            show="replace" ev:event="xforms-submit-done"/>
 			</xf:submission>
+			
+			<xf:submission id="submitIncidentReportAndClose"
+				action="<%=request.getRequestURL().toString().replace(request.getServletPath(), "") %>/resource/incidentReport"
+				method="post"
+				replace="none" instance="incidentReport-instance">
+					<xf:load resource="javascript:closePopup()" ev:event="xforms-submit-done"/>
+			</xf:submission>
+			
+			
         </xf:model>
 </head>
 <body> 
@@ -189,7 +210,7 @@
 		<div id="bd">
 			<xf:group ref="reportType"><!-- Group on reportType means that the heading 
 			will only be shown when the reportType is relevant (active), 
-			i.e. when there are no defaultErrorMessage -->
+			i.e. when we're not in the "automatic send error message"-mode -->
 				<h2><fmt:message key="incidentreport.reportTypes.heading"/></h2>
 			</xf:group>
 				<!-- The reportType will only be shown when there are no defaultErrorMessage 
@@ -334,23 +355,37 @@
 				<div id="yui-u first"/>
 				<div id="yui-u" style="text-align: right">
 					<br/>
-					<p>
-						<xf:submit submission="submitIncidentReport">
-							<xf:label><fmt:message key="incidentreport.submit.label"/></xf:label>
-						</xf:submit> 
-						
-						<!-- xf:reset is unfortunately not supported in Orbeon: http://forge.ow2.org/tracker/index.php?func=detail&aid=303946&group_id=168&atid=350207 
-						otherwise this would have been a nicer way to do this than a load
-						 <xf:trigger>
-					        <xf:label><fmt:message key="incidentreport.cancel.label"/></xf:label>
-					        <xf:reset ev:event="DOMActivate" model="main-model"/>
-					      </xf:trigger> -->
-					     <xf:trigger>
-						    <xf:label><fmt:message key="incidentreport.cancel.label"/></xf:label>
-						    <xf:load resource="<%=request.getRequestURL() + ((request.getQueryString() == null) ? "" : ("?" + request.getQueryString().replaceAll("&", "&amp;")))%>"
-						            show="replace" ev:event="DOMActivate"/>
-						 </xf:trigger> 
-					</p>
+					<!-- defaultErrorMessage and reportType is mutually exclusive. If defaultErrorMessage
+					is relevant then we are in the pop up-mode, when an error has occured in a portlet -->
+					<xf:group ref="defaultErrorMessage">
+						<p>
+							<xf:submit submission="submitIncidentReportAndClose">
+								<xf:label><fmt:message key="incidentreport.submitandclose.label"/></xf:label>
+							</xf:submit> 
+							
+						     <xf:trigger>
+							    <xf:label><fmt:message key="incidentreport.cancel.label"/></xf:label>
+							    <xf:load resource="javascript:closePopup()" ev:event="DOMActivate"/>
+							 </xf:trigger> 
+						</p>
+					</xf:group>
+					<!-- if reportType is relevant then we are in the IFrame-mode, i.e. the user has
+					manually  pressed "Tyck till" in the portal -->
+					<xf:group ref="reportType">
+						<p>
+							<xf:submit submission="submitIncidentReport">
+								<xf:label><fmt:message key="incidentreport.submit.label"/></xf:label>
+							</xf:submit> 
+							
+							<!-- Note: xf:reset is unfortunately not supported in Orbeon: http://forge.ow2.org/tracker/index.php?func=detail&aid=303946&group_id=168&atid=350207 
+							otherwise this would have been a nicer way to do this than a load-->
+						     <xf:trigger>
+							    <xf:label><fmt:message key="incidentreport.clean.label"/></xf:label>
+							    <xf:load resource="<%=request.getRequestURL() + ((request.getQueryString() == null) ? "" : ("?" + request.getQueryString().replaceAll("&", "&amp;")))%>"
+							            show="replace" ev:event="DOMActivate"/>
+							 </xf:trigger> 
+						</p>
+					</xf:group>
 				</div>
 			</div>
 		</div>

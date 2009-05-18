@@ -91,8 +91,10 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 				NodeList files = doc.getElementsByTagName("file");
 				for (int i = 0; i < files.getLength(); i++){
 					Node fileNode = files.item(i);
-					File file = new File(fileNode.getFirstChild().getTextContent().replaceFirst("file:", ""));
-					ir.addScreenShot(file);
+					if (fileNode != null && fileNode.getFirstChild() != null){
+						File file = new File(fileNode.getFirstChild().getTextContent().replaceFirst("file:", ""));
+						ir.addScreenShot(file);
+					}
 				}
 			}
 			

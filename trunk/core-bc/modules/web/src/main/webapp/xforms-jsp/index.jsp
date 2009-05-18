@@ -56,13 +56,13 @@
                 	<feedback>
 	                	<sendFeedback>true</sendFeedback>
 	                	<feedbackBySms activated="false">
-	                		<phoneNumber></phoneNumber>
+	                		<phoneNumber><%=(request.getParameter("phoneNumber") == null) ? "": request.getParameter("phoneNumber") %></phoneNumber>
 	                	</feedbackBySms>
 	                	<feedbackByPhone activated="false">
-	                		<phoneNumber></phoneNumber>
+	                		<phoneNumber><%=(request.getParameter("phoneNumber") == null) ? "": request.getParameter("phoneNumber") %></phoneNumber>
 	                	</feedbackByPhone>
 	                	<feedbackByMail activated="false">
-	                		<email></email>
+	                		<email><%=(request.getParameter("email") == null) ? "": request.getParameter("email") %></email>
 	                	</feedbackByMail>
                 	</feedback>
                 	<screenShot>
@@ -90,11 +90,10 @@
             
             <xf:bind nodeset="screenShot" relevant="/incidentReport/defaultErrorMessage = ''"/>
             <xf:bind nodeset="screenShot/sendScreenShot" type="xs:boolean" readonly="false()" />
-            
-<!--            <xf:bind nodeset="screenShot/files/file" type="xs:base64Binary" -->
-<!--            	readonly="/incidentReport/screenShot/sendScreenShot = 'false'" />   This does not seem to work initially? -->
+
+			<!-- anyURI means the file will be uploaded to a temp directory upon submission -->            
             <xf:bind nodeset="screenShot/files/file" type="xs:anyURI" 
-            	readonly="/incidentReport/screenShot/sendScreenShot = 'false'" />  <!-- This does not seem to work initially? -->
+            	readonly="/incidentReport/screenShot/sendScreenShot = 'false'" />  <!-- Note: "Readonly" on sendScreenShot does not seem to work initially for some reason.-->
            
            <!-- Instance that holds the different reportTypes -->
              <xf:instance id="reportTypes-instance">
@@ -340,7 +339,7 @@
 							<xf:label><fmt:message key="incidentreport.submit.label"/></xf:label>
 						</xf:submit> 
 						
-						<!-- xf:reset is unfortunately not supported: http://forge.ow2.org/tracker/index.php?func=detail&aid=303946&group_id=168&atid=350207 
+						<!-- xf:reset is unfortunately not supported in Orbeon: http://forge.ow2.org/tracker/index.php?func=detail&aid=303946&group_id=168&atid=350207 
 						otherwise this would have been a nicer way to do this than a load
 						 <xf:trigger>
 					        <xf:label><fmt:message key="incidentreport.cancel.label"/></xf:label>

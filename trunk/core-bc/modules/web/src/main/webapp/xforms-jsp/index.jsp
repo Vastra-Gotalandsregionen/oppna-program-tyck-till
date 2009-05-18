@@ -65,9 +65,7 @@ see if this is configurable in Orbeon -->
 	                	
                 	<timestamp><%=(request.getParameter("timestamp") == null) ? "": request.getParameter("timestamp") %></timestamp>
                 	<browser><%=request.getHeader("User-Agent") %></browser>
-                	<defaultErrorMessage><%=(request.getParameter("errorMessage") == null) ? "": "Autogenererad text som skickas med: " + request.getParameter("errorMessage") %></defaultErrorMessage>
-                	
-     	
+                	<defaultErrorMessage><%=(request.getParameter("errorMessage") == null) ? "": request.getParameter("errorMessage") %></defaultErrorMessage>
                 	<description></description>
                 	<feedback>
 	                	<sendFeedback>true</sendFeedback>
@@ -286,10 +284,16 @@ see if this is configurable in Orbeon -->
 				
 				<h2><fmt:message key="incidentreport.description.heading"/></h2>
 				<p>
+					
 					<xf:group ref="defaultErrorMessage">
-						<xf:textarea ref="."/>
-						<br/><br/>
+						<div id="defaultErrorMessageDiv">
+							<xf:output ref=".">
+								<xf:label><fmt:message key="incidentreport.description.auto"/><br/></xf:label>
+							</xf:output>
+						</div>
+						<br/>
 					</xf:group>
+					
 				</p>
 				<p><xf:textarea ref="description"  incremental="true" /></p>
 	            

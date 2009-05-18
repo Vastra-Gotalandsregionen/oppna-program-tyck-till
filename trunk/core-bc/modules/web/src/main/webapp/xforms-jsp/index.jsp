@@ -288,7 +288,7 @@ see if this is configurable in Orbeon -->
 					<xf:group ref="defaultErrorMessage">
 						<div id="defaultErrorMessageDiv">
 							<xf:output ref=".">
-								<xf:label><fmt:message key="incidentreport.description.auto"/><br/></xf:label>
+								<xf:label><b><fmt:message key="incidentreport.description.auto"/></b>&nbsp;</xf:label>
 							</xf:output>
 						</div>
 						<br/>

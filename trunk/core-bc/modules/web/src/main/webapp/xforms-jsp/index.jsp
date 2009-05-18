@@ -367,8 +367,9 @@ see if this is configurable in Orbeon -->
 				<div id="yui-u first"/>
 				<div id="yui-u" style="text-align: right">
 					<br/>
-					<!-- defaultErrorMessage and reportType is mutually exclusive. If defaultErrorMessage
-					is relevant then we are in the pop up-mode, when an error has occured in a portlet -->
+					<!-- Get the right buttons for each "mode", i.e. the default error-popup or when the user has pressed "Tyck till".
+					This is done by grouping on defaultErrorMessage and reportType, which are mutually exclusive. If defaultErrorMessage
+					is relevant then we are in the pop up-mode (when an error has occured in a portlet) -->
 					<xf:group ref="defaultErrorMessage">
 						<p>
 							<xf:submit submission="submitIncidentReportAndClose">
@@ -381,8 +382,8 @@ see if this is configurable in Orbeon -->
 							 </xf:trigger> 
 						</p>
 					</xf:group>
-					<!-- if reportType is relevant then we are in the IFrame-mode, i.e. the user has
-					manually  pressed "Tyck till" in the portal -->
+					<!-- If reportType is relevant then we are in the IFrame-mode, i.e. the user has
+					manually pressed "Tyck till" in the portal -->
 					<xf:group ref="reportType">
 						<p>
 							<xf:submit submission="submitIncidentReport">

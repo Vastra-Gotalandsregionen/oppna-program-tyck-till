@@ -75,7 +75,7 @@ see if this is configurable in Orbeon -->
 	                	<feedbackByPhone activated="false">
 	                		<phoneNumber><%=(request.getParameter("phoneNumber") == null) ? "": request.getParameter("phoneNumber") %></phoneNumber>
 	                	</feedbackByPhone>
-	                	<feedbackByMail activated="false">
+	                	<feedbackByMail activated="true">
 	                		<email><%=(request.getParameter("email") == null) ? "": request.getParameter("email") %></email>
 	                	</feedbackByMail>
                 	</feedback>
@@ -101,6 +101,13 @@ see if this is configurable in Orbeon -->
             	readonly="/incidentReport/feedback/sendFeedback = 'false'" calculate="if(/incidentReport/feedback/sendFeedback ='false') then 'false' else . "/>
             <xf:bind nodeset="feedback/feedbackByPhone/@activated" type="xs:boolean" 
             	readonly="/incidentReport/feedback/sendFeedback = 'false'" calculate="if(/incidentReport/feedback/sendFeedback ='false') then 'false' else . "/>
+            
+            <xf:bind nodeset="feedback/feedbackBySms/phoneNumber" type="xs:string" 
+            	readonly="/incidentReport/feedback/feedbackBySms/@activated = 'false'"/>
+            <xf:bind nodeset="feedback/feedbackByPhone/phoneNumber" type="xs:string" 
+            	readonly="/incidentReport/feedback/feedbackByPhone/@activated = 'false'"/>
+            <xf:bind nodeset="feedback/feedbackByMail/email" type="xs:string" 
+            	readonly="/incidentReport/feedback/feedbackByMail/@activated = 'false'"/>
             
             <xf:bind nodeset="screenShot" relevant="/incidentReport/defaultErrorMessage = ''"/>
             <xf:bind nodeset="screenShot/sendScreenShot" type="xs:boolean" readonly="false()" />

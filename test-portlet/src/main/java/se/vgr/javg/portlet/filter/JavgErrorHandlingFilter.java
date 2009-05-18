@@ -18,8 +18,8 @@ import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.RenderFilter;
 /**
  * TODO When ready - move this to reference architecture/javg.
- * TODO add support for serveResource
- * TODO Fetch info about the logged in user (from ldap)
+ * TODO add support for portlet methods missing, e.g. serveResource
+ * TODO Fetch info about the logged in user (from LDAP)
  * TODO If possible - fetch info about the portlet and/or page that caused the error
  * @author sofiajonsson
  *
@@ -48,7 +48,16 @@ public class JavgErrorHandlingFilter implements RenderFilter, ActionFilter {
 	}
 
 	private String createTyckTillPopupLink(String errorMessage) throws UnsupportedEncodingException {
-		String errorFormUrl = tyckTillErrorFormURL + "?errorMessage=" + URLEncoder.encode(errorMessage, "UTF-8") + "&timestamp=" + URLEncoder.encode(df.format(new Date()), "UTF-8");
+		//TODO Fetch actual values from LDAP! 
+		String email = "john.doe@domain.com";
+		String phoneNumber = "070-555555";
+		
+		StringBuffer errorFormUrl = new StringBuffer(tyckTillErrorFormURL);
+		errorFormUrl.append("?errorMessage=" + URLEncoder.encode(errorMessage, "UTF-8")); 
+		errorFormUrl.append("&timestamp=" + URLEncoder.encode(df.format(new Date()), "UTF-8"));
+		errorFormUrl.append("&email=" + URLEncoder.encode(email, "UTF-8"));
+		errorFormUrl.append("&phoneNumber=" + URLEncoder.encode(phoneNumber, "UTF-8"));
+		
 		StringBuffer buf = new StringBuffer();
 		buf.append("<script language=\"javascript\">\n");
 		buf.append("function openPopup(url) {\n");

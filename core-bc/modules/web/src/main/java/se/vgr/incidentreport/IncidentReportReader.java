@@ -93,15 +93,6 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 					Node fileNode = files.item(i);
 					File file = new File(fileNode.getFirstChild().getTextContent().replaceFirst("file:", ""));
 					ir.addScreenShot(file);
-//					BASE64Decoder decoder = new BASE64Decoder();
-//					if (fileNode.getFirstChild() != null){
-//						byte[] fileBytes = decoder.decodeBuffer(fileNode.getFirstChild().getTextContent());
-//					}
-					
-//					FileOutputStream fos =
-//		                    new FileOutputStream("tmpfiles/file"+i+".jpg"); // where to put the file?
-//		                fos.write(fileBytes);
-//		                fos.close();
 				}
 			}
 			

@@ -23,11 +23,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="javax.portlet.*"%>
+<%@ page import="java.net.URLEncoder" %>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 
 <portlet:defineObjects />
 <iframe 
-	src="<%=portletConfig.getInitParameter("tyck_till_form_url") %>" 
+	src="<%=portletConfig.getInitParameter("tyck_till_form_url") %>?email=<%=URLEncoder.encode(request.getAttribute("email").toString(), "UTF-8") %>&phoneNumber=<%=URLEncoder.encode(request.getAttribute("phoneNumber").toString(), "UTF-8") %>" 
 	width="100%" 
 	height="600px"
 	frameborder="0">

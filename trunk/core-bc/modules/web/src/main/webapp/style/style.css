@@ -48,11 +48,10 @@ h3{
 
 
 #defaultErrorMessageDiv {
-	width: 54.5em;
-	border: 1px solid gray;
+	width: 54em;
+	border: 0.1em solid gray;
 	padding: 0.2em;
 	font-family:Arial,Helvetica,Geneva,sans-serif;
-	font-size:99%;
 	color:grey;
 }
 

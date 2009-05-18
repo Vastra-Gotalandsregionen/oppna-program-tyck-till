@@ -227,8 +227,9 @@ see if this is configurable in Orbeon -->
 			</xf:group>
 				<!-- The reportType will only be shown when there are no defaultErrorMessage 
 				(see 'relevant' attr for reportType in the bind section above) -->
-				<xf:select1 ref="reportType" appearance="full">
-					<p>
+				<p>
+					<xf:select1 ref="reportType" appearance="full">
+					
 						        <xf:itemset nodeset="instance('reportTypes-instance')/reportType" >
 						            <xf:label ref="label"  class="newline"/>
 						        	<xf:value ref="@value"/>
@@ -237,10 +238,9 @@ see if this is configurable in Orbeon -->
 								<xf:setvalue ev:event="xforms-value-changed" 
 								 	ref="instance('incidentReport-instance')/screenShot/sendScreenShot" 
 								 	value="if(/incidentReport/reportType ='criticism') then 'false' else 'true'"/> 
-								 	 
-					</p>		     
-				</xf:select1>
-				
+							     
+					</xf:select1>
+				</p>
 				
 		    <h2><fmt:message key="incidentreport.errorTypes.heading"/></h2>			
 				<div class="yui-gb"> 

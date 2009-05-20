@@ -111,11 +111,11 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 		return ir;
 	}
 
-	private String parseString(Element feedbackByMail, String elmName) {
-		if (feedbackByMail.getElementsByTagName(elmName).getLength() == 0)
+	private String parseString(Element parent, String elmName) {
+		if (parent.getElementsByTagName(elmName).getLength() == 0)
 			return null;
-		Element elm = (Element)feedbackByMail.getElementsByTagName(elmName).item(0);
-		return elm.getFirstChild().getTextContent();
+		Element elm = (Element)parent.getElementsByTagName(elmName).item(0);
+		return (elm.getFirstChild() == null ? null : elm.getFirstChild().getTextContent());
 		
 	}
 

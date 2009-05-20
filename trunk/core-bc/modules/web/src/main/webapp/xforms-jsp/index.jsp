@@ -176,7 +176,7 @@ see if this is configurable in Orbeon -->
             <!-- A template that is inserted into the main incidentReport instance if the 
             user wants to add another file under screenShot --> 
             <xf:instance id="file-template">
-            	<file filename="" mediatype="" size="" xmlns=""/>
+            	<file filename="" mediatype="" xmlns=""/>
             </xf:instance>
             
             <!-- Control instance that is used under screenShots --> 

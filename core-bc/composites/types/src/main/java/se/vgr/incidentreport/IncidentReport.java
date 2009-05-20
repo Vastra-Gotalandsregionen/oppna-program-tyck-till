@@ -34,6 +34,7 @@ public class IncidentReport {
 	boolean feedbackByPhone;
 	String phoneNumber; // might be different from the sms-phone-number above	
 	boolean sendScreenShot;
+	String defaultErrorMessage;
 	
 	List<File> screenShots = new ArrayList<File>();
 	
@@ -164,6 +165,13 @@ public class IncidentReport {
 
 	public IncidentReport(){}
 
+	public String getDefaultErrorMessage() {
+		return this.defaultErrorMessage;
+	}
+
+	public void setDefaultErrorMessage(String defaultErrorMessage){
+		this.defaultErrorMessage = defaultErrorMessage;
+	}
 	
 	
 	

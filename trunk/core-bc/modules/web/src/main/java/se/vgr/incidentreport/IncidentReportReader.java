@@ -31,11 +31,13 @@ import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 
 @Consumes("application/xml")
@@ -50,58 +52,63 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 			throws IOException, WebApplicationException {
 		
 		try {
-			
-			IncidentReport ir = new IncidentReport();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc = builder.parse(is);
-			
-			ir.setReportType(parseString(doc, "reportType"));
-			String[] errorTypes = parseString(doc,"errorType").split(" ");
-			for (String errorType : errorTypes) {
-				ir.addErrorType(errorType);
-			}
-			
-			ir.setDescription(parseString(doc, "description"));
-			ir.setBrowser(parseString(doc, "browser"));
-			ir.setTimeStamp(parseString(doc, "timestamp"));
-			
-			ir.setSendFeedback(parseBoolean(doc, "sendFeedback"));
-			if (ir.isSendFeedback()){
-				Element feedbackByMail = getElm(doc,"feedbackByMail");
-				ir.setFeedbackByMail(feedbackByMail.getAttribute("activated").equals("true"));
-				if (ir.isFeedbackByMail()){
-					ir.setEmailAddress(parseString(feedbackByMail, "email"));
-				}
-				
-				Element feedbackBySms = getElm(doc,"feedbackBySms");
-				ir.setFeedbackBySms(feedbackBySms.getAttribute("activated").equals("true"));
-				if (ir.isFeedbackBySms()){
-					ir.setSmsPhoneNumber(parseString(feedbackBySms, "phoneNumber"));
-				}
-				
-				Element feedbackByPhone = getElm(doc,"feedbackByPhone");
-				ir.setFeedbackByPhone(feedbackByPhone.getAttribute("activated").equals("true"));
-				if (ir.isFeedbackByPhone()){
-					ir.setPhoneNumber(parseString(feedbackByPhone, "phoneNumber"));
-				}
-			}
-			
-			ir.setSendScreenShot(parseBoolean(doc, "sendScreenShot"));
-			if (ir.isSendScreenShot()){
-				NodeList files = doc.getElementsByTagName("file");
-				for (int i = 0; i < files.getLength(); i++){
-					Node fileNode = files.item(i);
-					if (fileNode != null && fileNode.getFirstChild() != null){
-						File file = new File(fileNode.getFirstChild().getTextContent().replaceFirst("file:", ""));
-						ir.addScreenShot(file);
-					}
-				}
-			}
-			
-			return ir;
+			return parseIncidentReport(is);
 		} catch (Exception e) {
 			throw new WebApplicationException(e);
 		}
+	}
+
+	protected IncidentReport parseIncidentReport(InputStream is)
+			throws ParserConfigurationException, SAXException, IOException {
+		IncidentReport ir = new IncidentReport();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document doc = builder.parse(is);
+		
+		ir.setReportType(parseString(doc, "reportType"));
+		String[] errorTypes = parseString(doc,"errorType").split(" ");
+		for (String errorType : errorTypes) {
+			ir.addErrorType(errorType);
+		}
+		
+		ir.setDescription(parseString(doc, "description"));
+		ir.setDefaultErrorMessage(parseString(doc, "defaultErrorMessage"));
+		ir.setBrowser(parseString(doc, "browser"));
+		ir.setTimeStamp(parseString(doc, "timestamp"));
+		
+		ir.setSendFeedback(parseBoolean(doc, "sendFeedback"));
+		if (ir.isSendFeedback()){
+			Element feedbackByMail = getElm(doc,"feedbackByMail");
+			ir.setFeedbackByMail(feedbackByMail.getAttribute("activated").equals("true"));
+			if (ir.isFeedbackByMail()){
+				ir.setEmailAddress(parseString(feedbackByMail, "email"));
+			}
+			
+			Element feedbackBySms = getElm(doc,"feedbackBySms");
+			ir.setFeedbackBySms(feedbackBySms.getAttribute("activated").equals("true"));
+			if (ir.isFeedbackBySms()){
+				ir.setSmsPhoneNumber(parseString(feedbackBySms, "phoneNumber"));
+			}
+			
+			Element feedbackByPhone = getElm(doc,"feedbackByPhone");
+			ir.setFeedbackByPhone(feedbackByPhone.getAttribute("activated").equals("true"));
+			if (ir.isFeedbackByPhone()){
+				ir.setPhoneNumber(parseString(feedbackByPhone, "phoneNumber"));
+			}
+		}
+		
+		ir.setSendScreenShot(parseBoolean(doc, "sendScreenShot"));
+		if (ir.isSendScreenShot()){
+			NodeList files = doc.getElementsByTagName("file");
+			for (int i = 0; i < files.getLength(); i++){
+				Node fileNode = files.item(i);
+				if (fileNode != null && fileNode.getFirstChild() != null){
+					File file = new File(fileNode.getFirstChild().getTextContent().replaceFirst("file:", ""));
+					ir.addScreenShot(file);
+				}
+			}
+		}
+		
+		return ir;
 	}
 
 	private String parseString(Element feedbackByMail, String elmName) {

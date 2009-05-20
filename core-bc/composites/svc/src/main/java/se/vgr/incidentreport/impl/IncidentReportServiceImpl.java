@@ -26,8 +26,8 @@ import se.vgr.incidentreport.IncidentReportService;
 public class IncidentReportServiceImpl implements IncidentReportService {
 
 	public IncidentReport reportIncident(IncidentReport ir) {
-		// TODO Call UC and report incident.
-		// TODO Decide what the method should return? Will UC return a status code 
+		// TODO Call USD and report incident.
+		// TODO Decide what the method should return? Will USD return a status code 
 		// or something similar that we should return?
 		return null;
 	}

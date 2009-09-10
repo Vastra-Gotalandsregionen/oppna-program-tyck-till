@@ -37,6 +37,11 @@ This is the Web-app Maven POM.
   </build>
 
   <dependencies>  
+     <dependency>
+      <groupId>se.vgr.ldap-service</groupId>
+      <artifactId>ldap-service-core-bc-composite-svc</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>se.vgr.javg</groupId>
       <artifactId>javg-rt-support</artifactId>

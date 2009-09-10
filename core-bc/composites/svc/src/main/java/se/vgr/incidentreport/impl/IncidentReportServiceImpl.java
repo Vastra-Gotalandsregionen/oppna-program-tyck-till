@@ -29,6 +29,12 @@ public class IncidentReportServiceImpl implements IncidentReportService {
 		// TODO Call USD and report incident.
 		// TODO Decide what the method should return? Will USD return a status code 
 		// or something similar that we should return?
+		
+		System.out.println("=====TEST BEGIN=====");
+		System.out.println(ir.getEmailAddress());
+		System.out.println(ir.getPhoneNumber());
+		System.out.println("======TEST END======");
+		
 		return null;
 	}
 

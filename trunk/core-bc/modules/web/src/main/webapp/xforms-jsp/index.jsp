@@ -66,7 +66,14 @@ see if this is configurable in Orbeon -->
 	                	
                 	<timestamp><%=(request.getParameter("timestamp") == null) ? "": request.getParameter("timestamp") %></timestamp>
                 	<browser><%=request.getHeader("User-Agent") %></browser>
-                	<defaultErrorMessage><%=(request.getParameter("errorMessage") == null) ? "": request.getParameter("errorMessage") %></defaultErrorMessage>
+                    <referer><%=request.getHeader("Referer") %></referer>
+                    <ip-address><%=request.getRemoteAddr() %></ip-address>
+                    <application-name><%=request.getParameter("context") %></application-name>
+                	<name-space><%=request.getParameter("namespace") %></name-space>
+                    <report-method><%=request.getParameter("reportMethod") %></report-method>
+                    <report-email><%=request.getParameter("reportEmail") %></report-email>
+                    <userid><%=request.getParameter("userid") %></userid>
+                    <defaultErrorMessage><%=(request.getParameter("errorMessage") == null) ? "": request.getParameter("errorMessage") %></defaultErrorMessage>
                 	<description></description>
                 	<feedback>
 	                	<sendFeedback>true</sendFeedback>

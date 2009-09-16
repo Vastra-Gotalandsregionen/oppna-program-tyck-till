@@ -15,19 +15,28 @@
   </portlet>
   <filter>
   	<filter-name>ErrorHandlingFilter</filter-name>
-  	<filter-class>se.vgr.javg.portlet.filter.JavgErrorHandlingFilter</filter-class>
+  	<filter-class>se.vgr.javg.portlet.filter.PortletErrorHandlingFilter</filter-class>
   	<lifecycle>ACTION_PHASE</lifecycle>
   	<lifecycle>RENDER_PHASE</lifecycle>
   	<init-param>
   		<name>TyckTillErrorFormURL</name>
-  		<value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value> 
+  		<value>http://140.166.209.92:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp</value>
+  		<!-- <value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value> -->
   		<!--  <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> -->
   	</init-param>
   	<init-param>
   		<name>ldapPropertiesFileName</name>
-  		<value>D:/WebApplications/tyck-till/trunk/test-portlet/src/main/resources/ldap.properties</value> 
+  		<value>/WEB-INF/classes/ldap.properties</value> 
   		<!--  <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> -->
   	</init-param>
+        <init-param>
+        <name>TyckTillReportMethod</name>
+        <value>Email</value> 
+    </init-param>
+    <init-param>
+        <name>TyckTillReportEmail</name>
+        <value>andrew.culbert@vgregion.se</value> 
+    </init-param>
   </filter>
   <filter-mapping>
   	<filter-name>ErrorHandlingFilter</filter-name>

@@ -39,7 +39,6 @@ public class IncidentReportPortlet extends GenericPortlet {
 	public void doView(RenderRequest request, RenderResponse response)
 			throws PortletException, IOException {
 
-		// TODO Replace these fake values with the actual logged in user's values (fetch from LDap)
 		request.setAttribute("email", "john.doe@domain.com");
 		request.setAttribute("phoneNumber", "070-555555");
 		response.setContentType("text/html");

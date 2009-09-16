@@ -26,5 +26,13 @@
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
+	<bean id="usdService" class="se.vgr.usdservice.USDServiceImpl" >
+	<constructor-arg ref="usdProperties" />
+	</bean>
+	
+	<bean id="usdProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:usd.properties" />
+	</bean>
     
 </beans>

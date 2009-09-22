@@ -30,18 +30,14 @@ import com.sun.jersey.spi.inject.Inject;
 @Path("incidentReport")
 public class IncidentReportResource {
 
-
-	
-	@Inject
+    @Inject
     private IncidentReportService incidentReportService;
 
-    
-    @POST 
+    @POST
     @Produces("application/xml")
     public void post(@Context UriInfo uriInfo, IncidentReport ir) {
-    	System.out.println("In IncidentReportResource.post ir="+ir); 
-    	incidentReportService.reportIncident(ir);
+        System.out.println("In IncidentReportResource.post ir=" + ir);
+        incidentReportService.reportIncident(ir);
     }
 
 }
-

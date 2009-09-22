@@ -238,6 +238,18 @@ public class IncidentReport {
         sb.append("Referer: " + this.getReferer() + "<br/>");
         sb.append("Error message: " + this.getDefaultErrorMessage() + "<br/>");
         sb.append("Timestamp: " + this.getTimeStamp() + "<br/>");
+        sb.append("Reporttype: " + this.getReportType() + "<br/>");
+        sb.append("ReportMethod: " + this.getReportMethod() + "<br/>");
+        sb.append("ReportEmail: " + this.getReportEmail() + "<br/>");
+        if (this.getErrorTypes() != null) {
+            List<String> errTypes = this.getErrorTypes();
+            sb.append("Errortypes:");
+            for (String type : errTypes) {
+                sb.append(type + "|");
+            }
+            sb.append("<br/>");
+        }
+
         sb.append("User ID: " + this.getUserId() + "<br/>");
 
         return sb.toString();

@@ -17,6 +17,7 @@ import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.RenderFilter;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -42,6 +43,8 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
     private String reportEmail;
     private String reportMethod;
 
+    private static final Logger logger = Logger.getLogger(PortletErrorHandlingFilter.class);
+
     public void doFilter(RenderRequest arg0, RenderResponse arg1, FilterChain arg2) throws IOException,
             PortletException {
 
@@ -61,10 +64,15 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
                 // itself)
                 arg2.doFilter(arg0, arg1);
             }
-            catch (Exception e) {
+            catch (Throwable e) {
+                logger.info("Exception caught in PortletErrorHandlingFilter", e);
+                try {
+                    arg1.getWriter().write(createTyckTillPopupLink(e.toString(), arg0.getRemoteUser(), nameSpace));
+                }
+                catch (Throwable t) {
+                    logger.error("Failed to create link", t);
 
-                arg1.getWriter().write(createTyckTillPopupLink(e.toString(), arg0.getRemoteUser(), nameSpace));
-
+                }
             }
         }
 
@@ -92,10 +100,10 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
             errorFormUrl.append("&phoneNumber=" + URLEncoder.encode(phoneNumber, "UTF-8"));
         }
 
-        errorFormUrl.append("&context=" + contextName);
-        errorFormUrl.append("&namespace=" + nameSpace);
-        errorFormUrl.append("&reportMethod=" + reportMethod);
-        errorFormUrl.append("&reportEmail=" + reportEmail);
+        errorFormUrl.append("&context=" + URLEncoder.encode(contextName, "UTF-8"));
+        errorFormUrl.append("&namespace=" + URLEncoder.encode(nameSpace, "UTF-8"));
+        errorFormUrl.append("&reportMethod=" + URLEncoder.encode(reportMethod, "UTF-8"));
+        errorFormUrl.append("&reportEmail=" + URLEncoder.encode(reportEmail, "UTF-8"));
         errorFormUrl.append("&userid=" + userId);
 
         StringBuffer buf = new StringBuffer();
@@ -119,7 +127,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
         reportMethod = arg0.getInitParameter("TyckTillReportMethod");
         reportEmail = arg0.getInitParameter("TyckTillReportEmail");
 
-        getLdapService(); // Test Before use
+        getLdapService(); // Test connection Before use
     }
 
     public void doFilter(ActionRequest arg0, ActionResponse arg1, FilterChain arg2) throws IOException,

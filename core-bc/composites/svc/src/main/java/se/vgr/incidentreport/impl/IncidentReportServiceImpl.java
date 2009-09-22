@@ -32,9 +32,26 @@ import se.vgr.util.EMailClient;
 @Service("incidentReportService")
 public class IncidentReportServiceImpl implements IncidentReportService {
 
-    private static final String INCIDENT_REPORT_SERVICE_ADMIN_EMAIL = "culberto@hotmail.com";
+    /**
+     * Reciever of messages when the regular report recievers can´t be reached.
+     */
+    private static final String INCIDENT_REPORT_SERVICE_ADMIN_EMAIL = "ulcan@wmdata.com";
+
+    /**
+     * Email reply address.
+     */
     private static final String INCIDENT_REPORT_SERVICE_NOREPLY = "IncidentReportService-noreply@vgregion.se";
-    private static final String INCIDENT_REPORT_EMAIL_SUBJECT = "IncidentReportService Error";
+
+    /**
+     * Email subject when something is not working as expected in Tyck till
+     */
+    private static final String INCIDENT_REPORT_ERROR_EMAIL_SUBJECT = "IncidentReportService error";
+
+    /**
+     * Email subject
+     */
+    private static final String INCIDENT_REPORT_EMAIL_SUBJECT = "IncidentReportService message";
+
     @Autowired
     private USDService usdService;
 
@@ -53,11 +70,11 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                 }
                 catch (Exception e) {
                     e.printStackTrace();
-                    sendReportByEmail(ir);
+                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT);
                 }
             }
             else {
-                sendReportByEmail(ir);
+                sendReportByEmail(ir, INCIDENT_REPORT_EMAIL_SUBJECT);
             }
         }
         catch (Exception e) {
@@ -67,7 +84,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         return result;
     }
 
-    private void sendReportByEmail(IncidentReport ir) throws MessagingException {
+    private void sendReportByEmail(IncidentReport ir, String subject) throws MessagingException {
         String reportEmail = ir.getReportEmail();
 
         if (reportEmail != null && !"".equals(reportEmail)) {
@@ -75,16 +92,15 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             String[] reportEmailArray = { reportEmail };
             body += ir.toString();
             try {
-                new EMailClient().postMail(reportEmailArray, INCIDENT_REPORT_EMAIL_SUBJECT, "" + body,
-                        INCIDENT_REPORT_SERVICE_NOREPLY);
+                new EMailClient().postMail(reportEmailArray, subject, "" + body, INCIDENT_REPORT_SERVICE_NOREPLY);
             }
             catch (Throwable e1) {
 
                 e1.printStackTrace();
                 String[] emailTo = { INCIDENT_REPORT_SERVICE_ADMIN_EMAIL };
 
-                new EMailClient().postMail(emailTo, INCIDENT_REPORT_EMAIL_SUBJECT, "" + e1.getMessage() + "\n"
-                        + body, INCIDENT_REPORT_SERVICE_NOREPLY);
+                new EMailClient().postMail(emailTo, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT, "" + e1.getMessage()
+                        + "\n" + body, INCIDENT_REPORT_SERVICE_NOREPLY);
 
             }
 

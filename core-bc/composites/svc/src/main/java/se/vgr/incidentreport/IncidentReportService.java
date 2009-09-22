@@ -18,7 +18,7 @@
 package se.vgr.incidentreport;
 
 public interface IncidentReportService {
-	
-	public int reportIncident(IncidentReport ir);
+
+    public int reportIncident(IncidentReport ir);
 
 }

@@ -51,6 +51,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         catch (Exception e) {
             throw new WebApplicationException(e);
         }
+
     }
 
     protected IncidentReport parseIncidentReport(InputStream is) {

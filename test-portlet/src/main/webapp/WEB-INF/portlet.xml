@@ -20,7 +20,7 @@
   	<lifecycle>RENDER_PHASE</lifecycle>
   	<init-param>
   		<name>TyckTillErrorFormURL</name>
-  		<value>http://140.166.209.92:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp</value>
+  		<value>http://localhost:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp</value>
   		<!-- <value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value> -->
   		<!--  <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> -->
   	</init-param>
@@ -35,7 +35,7 @@
     </init-param>
     <init-param>
         <name>TyckTillReportEmail</name>
-        <value>andrew.culbert@vgregion.se</value> 
+        <value>ulcan@wmdata.com</value> 
     </init-param>
   </filter>
   <filter-mapping>

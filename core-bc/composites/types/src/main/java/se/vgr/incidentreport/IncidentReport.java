@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IncidentReport {
+    public static final String NEWLINE = "\n";
     String reportType = "error";
     List<String> errorTypes = new ArrayList<String>();
     String timeStamp;
@@ -229,28 +230,33 @@ public class IncidentReport {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("Application name: " + this.getApplicationName() + "<br/>");
-        sb.append("Namespace: " + this.getNameSpace() + "<br/>");
-        sb.append("Description: " + this.getDescription() + "<br/>");
-        sb.append("IP Address: " + this.getIpAddress() + "<br/>");
-        sb.append("User email: " + this.getEmailAddress() + "<br/>");
-        sb.append("Browser: " + this.getBrowser() + "<br/>");
-        sb.append("Referer: " + this.getReferer() + "<br/>");
-        sb.append("Error message: " + this.getDefaultErrorMessage() + "<br/>");
-        sb.append("Timestamp: " + this.getTimeStamp() + "<br/>");
-        sb.append("Reporttype: " + this.getReportType() + "<br/>");
-        sb.append("ReportMethod: " + this.getReportMethod() + "<br/>");
-        sb.append("ReportEmail: " + this.getReportEmail() + "<br/>");
+        sb.append("Application name: " + this.getApplicationName() + NEWLINE);
+        sb.append("Error message: " + this.getDefaultErrorMessage() + NEWLINE);
+
+        sb.append("Description: " + this.getDescription() + NEWLINE);
+        sb.append("IP Address: " + this.getIpAddress() + NEWLINE);
+        sb.append("User email: " + this.getEmailAddress() + NEWLINE);
+        sb.append("User phone: " + this.getPhoneNumber() + NEWLINE);
+        sb.append("User SMS: " + this.getSmsPhoneNumber() + NEWLINE);
+        sb.append("Feedback by phone: " + this.isFeedbackByPhone() + NEWLINE);
+        sb.append("Feedback by email: " + this.isFeedbackByMail() + NEWLINE);
+        sb.append("Feedback by SMS: " + this.isFeedbackBySms() + NEWLINE);
+        sb.append("Browser: " + this.getBrowser() + NEWLINE);
+        sb.append("Referer: " + this.getReferer() + NEWLINE);
+        sb.append("Timestamp: " + this.getTimeStamp() + NEWLINE);
+        sb.append("Reporttype: " + this.getReportType() + NEWLINE);
+        sb.append("ApplicationReportMethod: " + this.getReportMethod() + NEWLINE);
+        sb.append("ApplicationReportEmail: " + this.getReportEmail() + NEWLINE);
         if (this.getErrorTypes() != null) {
             List<String> errTypes = this.getErrorTypes();
             sb.append("Errortypes:");
             for (String type : errTypes) {
                 sb.append(type + "|");
             }
-            sb.append("<br/>");
+            sb.append(NEWLINE);
         }
 
-        sb.append("User ID: " + this.getUserId() + "<br/>");
+        sb.append("User ID: " + this.getUserId() + NEWLINE);
 
         return sb.toString();
     }

@@ -36,7 +36,7 @@
   	</init-param>
     <init-param>
         <param-name>TyckTillReportMethod</param-name>
-        <param-value>USD</param-value> 
+        <param-value>EMAIL</param-value> 
     </init-param>
     <init-param>
         <param-name>TyckTillReportEmail</param-name>

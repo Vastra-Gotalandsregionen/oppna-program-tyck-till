@@ -1,37 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-  id="TyckTillTestPortlet" version="2.0">
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" id="se.vgregion.portal.tycktill">
+
   
   <portlet>
-    <portlet-name>TyckTillTestPortlet</portlet-name>
+    <portlet-name>tycktilltestportlet</portlet-name>
+    <display-name>TyckTillTestPortlet</display-name>
     <portlet-class>se.vgr.tycktill.portlet.TyckTillTestPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>VIEW</portlet-mode>
     </supports>
-  </portlet>
+    <portlet-info>
+            <title>TyckTillTestPortlet</title>
+            <short-title>TyckTillTestPortlet</short-title>
+            <keywords>TyckTillTestPortlet</keywords>
+    </portlet-info>
+    <!-- 
+    <security-role-ref>
+            <role-name>administrator</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>guest</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>power-user</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>user</role-name>
+        </security-role-ref>
+         -->
+    </portlet>
   <filter>
-  	<filter-name>ErrorHandlingFilter</filter-name>
-  	<filter-class>se.vgr.javg.portlet.filter.PortletErrorHandlingFilter</filter-class>
-  	<lifecycle>ACTION_PHASE</lifecycle>
-  	<lifecycle>RENDER_PHASE</lifecycle>
-  	<init-param>
-  		<name>TyckTillErrorFormURL</name>
-  		<value>http://localhost:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp</value>
-  		<!-- <value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value> -->
-  		<!--  <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> -->
-  	</init-param>
-  	<init-param>
-  		<name>ldapPropertiesFileName</name>
-  		<value>/WEB-INF/classes/ldap.properties</value> 
-  		<!--  <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> -->
-  	</init-param>
+    <filter-name>ErrorHandlingFilter</filter-name>
+    <filter-class>se.vgr.javg.portlet.filter.PortletErrorHandlingFilter</filter-class>
+    <lifecycle>ACTION_PHASE</lifecycle>
+    <lifecycle>RENDER_PHASE</lifecycle>
+    <init-param>
+        <name>TyckTillErrorFormURL</name>
+        <value>http://localhost:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp</value>
+        <!-- <value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value> -->
+        <!--  <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> -->
+    </init-param>
+    <init-param>
+        <name>ldapPropertiesFileName</name>
+        <value>/WEB-INF/classes/ldap.properties</value> 
+        <!--  <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> -->
+    </init-param>
         <init-param>
         <name>TyckTillReportMethod</name>
-        <value>Email</value> 
+        <value>USD</value> 
     </init-param>
     <init-param>
         <name>TyckTillReportEmail</name>
@@ -39,8 +57,10 @@
     </init-param>
   </filter>
   <filter-mapping>
-  	<filter-name>ErrorHandlingFilter</filter-name>
-  	<portlet-name>TyckTillTestPortlet</portlet-name>
+    <filter-name>ErrorHandlingFilter</filter-name>
+    <portlet-name>tycktilltestportlet</portlet-name>
   </filter-mapping>
   
 </portlet-app>
+
+    

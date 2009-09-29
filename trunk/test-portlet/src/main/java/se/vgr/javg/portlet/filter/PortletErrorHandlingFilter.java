@@ -47,6 +47,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
     public void doFilter(RenderRequest arg0, RenderResponse arg1, FilterChain arg2) throws IOException,
             PortletException {
+        System.out.println("in PortletErrorHandlingFilter doFilter");
 
         String nameSpace = "";
 

@@ -45,7 +45,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
     /**
      * Email subject when something is not working as expected in Tyck till
      */
-    private static final String INCIDENT_REPORT_ERROR_EMAIL_SUBJECT = "IncidentReportService error";
+    private static final String INCIDENT_REPORT_ERROR_EMAIL_SUBJECT = "IncidentReportService ERROR!";
 
     /**
      * Email subject
@@ -70,7 +70,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                 }
                 catch (Exception e) {
                     e.printStackTrace();
-                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT);
+                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
                 }
             }
             else {
@@ -90,17 +90,19 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         if (reportEmail != null && !"".equals(reportEmail)) {
             String body = "";
             String[] reportEmailArray = { reportEmail };
-            body += ir.toString();
+            body += ir.toString().replaceAll(IncidentReport.NEWLINE, "</br>");
             try {
-                new EMailClient().postMail(reportEmailArray, subject, "" + body, INCIDENT_REPORT_SERVICE_NOREPLY);
+                new EMailClient().postMail(reportEmailArray, ir.getApplicationName() + " " + subject, "" + body,
+                        INCIDENT_REPORT_SERVICE_NOREPLY);
             }
             catch (Throwable e1) {
 
                 e1.printStackTrace();
                 String[] emailTo = { INCIDENT_REPORT_SERVICE_ADMIN_EMAIL };
 
-                new EMailClient().postMail(emailTo, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT, "" + e1.getMessage()
-                        + "\n" + body, INCIDENT_REPORT_SERVICE_NOREPLY);
+                new EMailClient().postMail(emailTo, ir.getApplicationName() + " "
+                        + INCIDENT_REPORT_ERROR_EMAIL_SUBJECT, "" + e1.getMessage() + "\n" + body,
+                        INCIDENT_REPORT_SERVICE_NOREPLY);
 
             }
 
@@ -121,8 +123,9 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         p.setProperty("z_organization", "org:5527E3F8D19F49409036F162493C7DD0");
         p.setProperty("z_telefon_nr", ir.getPhoneNumber() != null ? ir.getPhoneNumber() : "N/A");
         StringBuffer descBuf = new StringBuffer();
-        descBuf.append("User agent:" + ir.getBrowser() + "\n");
-        descBuf.append("Beskrivning:" + ir.getDescription() + "\n");
+        // descBuf.append("User agent:" + ir.getBrowser() + "\n");
+        // descBuf.append("Beskrivning:" + ir.getDescription() + "\n");
+        descBuf.append(ir.toString() + "\n");
         p.setProperty("description", descBuf.toString());
 
         return p;

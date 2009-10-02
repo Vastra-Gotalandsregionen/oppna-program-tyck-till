@@ -43,6 +43,12 @@ public class IncidentReport {
     String defaultErrorMessage;
     String reportMethod;
 
+    String reportEmail;
+
+    List<File> screenShots = new ArrayList<File>();
+    private String nameSpace;
+    private String javaScript = "";
+
     public String getReportMethod() {
         return reportMethod;
     }
@@ -59,10 +65,9 @@ public class IncidentReport {
         this.reportEmail = reportEmail;
     }
 
-    String reportEmail;
-
-    List<File> screenShots = new ArrayList<File>();
-    private String nameSpace;
+    public String getJavaScript() {
+        return javaScript;
+    }
 
     public String getNameSpace() {
         return nameSpace;
@@ -242,6 +247,7 @@ public class IncidentReport {
         sb.append("Feedback by email: " + this.isFeedbackByMail() + NEWLINE);
         sb.append("Feedback by SMS: " + this.isFeedbackBySms() + NEWLINE);
         sb.append("Browser: " + this.getBrowser() + NEWLINE);
+        sb.append("Javascript: " + this.getJavaScript() + NEWLINE);
         sb.append("Referer: " + this.getReferer() + NEWLINE);
         sb.append("Timestamp: " + this.getTimeStamp() + NEWLINE);
         sb.append("Reporttype: " + this.getReportType() + NEWLINE);
@@ -255,9 +261,21 @@ public class IncidentReport {
             }
             sb.append(NEWLINE);
         }
+        if (this.getScreenShots() != null) {
+            List<File> files = this.getScreenShots();
+            sb.append("Files:");
+            for (File file : files) {
+                sb.append(file.getName() + "|");
+            }
+            sb.append(NEWLINE);
+        }
 
         sb.append("User ID: " + this.getUserId() + NEWLINE);
 
         return sb.toString();
+    }
+
+    public void setJavascript(String js) {
+        this.javaScript = js;
     }
 }

@@ -77,6 +77,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         ir.setDescription(parseString(doc, "description"));
         ir.setDefaultErrorMessage(parseString(doc, "defaultErrorMessage"));
         ir.setBrowser(parseString(doc, "browser"));
+        ir.setJavascript(parseString(doc, "javascript-enabled"));
         ir.setTimeStamp(parseString(doc, "timestamp"));
         ir.setIpAddress(parseString(doc, "ip-address"));
         ir.setReferer(parseString(doc, "referer"));

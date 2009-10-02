@@ -8,22 +8,25 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.apache.log4j.Logger;
+
 public class TyckTillTestPortlet extends GenericPortlet {
+    private final static Logger log = Logger.getLogger(TyckTillTestPortlet.class);
 
     @Override
     protected void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        System.out.println("in TyckTillTestPortlet doView");
+        System.out.println("in TyckTillTestPortlet doView2");
+        log.info("Logging in TyckTillTestPortlet doView");
         if (request.getParameter("throwExceptionInView") != null) {
             throw new RuntimeException("An error occured in doView");
         }
-        PortletRequestDispatcher dispatcher = getPortletContext().getRequestDispatcher("/jsp/test.jsp");
-        dispatcher.forward(request, response);
+        getPortletContext().getRequestDispatcher("/jsp/test.jsp").include(request, response);
+        // System.out.println("dispatcher=" + dispatcher);
     }
 
     @Override

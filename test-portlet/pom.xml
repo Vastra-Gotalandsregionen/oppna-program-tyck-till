@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!--
+  <!--
 This is the Web-app Maven POM.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -36,8 +36,8 @@ This is the Web-app Maven POM.
     </plugins>
   </build>
 
-  <dependencies>  
-     <dependency>
+  <dependencies>
+    <dependency>
       <groupId>se.vgr.ldap-service</groupId>
       <artifactId>ldap-service-core-bc-composite-svc</artifactId>
       <version>1.0-SNAPSHOT</version>
@@ -58,12 +58,18 @@ This is the Web-app Maven POM.
       <version>2.4</version>
       <scope>provided</scope>
     </dependency>
-        <dependency>
+    <dependency>
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-api</artifactId>
       <version>2.0</version>
       <scope>provided</scope>
     </dependency>
-   </dependencies>
-  
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc-portlet</artifactId>
+      <version>${spring.fw.version}</version>
+    </dependency>
+
+  </dependencies>
+
 </project>

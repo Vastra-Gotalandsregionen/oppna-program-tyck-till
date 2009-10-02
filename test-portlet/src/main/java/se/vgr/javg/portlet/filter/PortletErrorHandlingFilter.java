@@ -19,7 +19,7 @@ import javax.portlet.filter.RenderFilter;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.web.portlet.context.PortletApplicationContextUtils;
 
 import se.vgr.ldapservice.LdapService;
 import se.vgr.ldapservice.LdapUser;
@@ -49,12 +49,12 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
             PortletException {
         System.out.println("in PortletErrorHandlingFilter doFilter");
 
-        String nameSpace = "";
+        String nameSpace = arg1.getNamespace();
 
         if (arg0.getParameter("errorInActionPhase") != null) {
             // if the portlet threw an exception during the action phase we
             // won't go into the view phase
-            nameSpace = arg1.getNamespace();
+
             arg1.getWriter().write(
                     createTyckTillPopupLink(arg0.getParameter("errorInActionPhase"), arg0.getRemoteUser(),
                             nameSpace));
@@ -90,6 +90,9 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
             email = ldapUser.getAttributeValue("mail");
             phoneNumber = ldapUser.getAttributeValue("telephoneNumber");
         }
+        else {
+            userId = "anonymous";
+        }
 
         StringBuffer errorFormUrl = new StringBuffer(tyckTillErrorFormURL);
         errorFormUrl.append("?errorMessage=" + URLEncoder.encode(errorMessage, "UTF-8"));
@@ -109,7 +112,9 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
         StringBuffer buf = new StringBuffer();
         buf.append("Ett ov&#228;ntat fel har uppst&#229;tt, ");
-        buf.append("<a href=\"" + errorFormUrl + "\" target=\"_blank\">");
+        // Javascript enabled implies that onClick will run
+        buf.append("<a href=\"" + errorFormUrl + "\" " + "onClick=\"this.href='" + errorFormUrl
+                + "&javascript=yes'\" \"target=\"_blank\">");
         buf
                 .append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");
         return buf.toString();
@@ -122,8 +127,12 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
     public void init(FilterConfig arg0) throws PortletException {
         tyckTillErrorFormURL = arg0.getInitParameter("TyckTillErrorFormURL");
-        String ldapContextConfigLocation = arg0.getPortletContext().getInitParameter("ldapContextConfigLocation");
-        ac = new FileSystemXmlApplicationContext(ldapContextConfigLocation);
+
+        // String ldapContextConfigLocation =
+        // arg0.getPortletContext().getInitParameter("ldapContextConfigLocation");
+
+        ac = PortletApplicationContextUtils.getWebApplicationContext(arg0.getPortletContext());
+
         contextName = arg0.getPortletContext().getPortletContextName();
         reportMethod = arg0.getInitParameter("TyckTillReportMethod");
         reportEmail = arg0.getInitParameter("TyckTillReportEmail");

@@ -104,7 +104,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         if (reportEmail != null && !"".equals(reportEmail)) {
             String body = "";
             String[] reportEmailArray = { reportEmail };
-            body += ir.toString().replaceAll(IncidentReport.NEWLINE, "</br>");
+            body += ir.toString().replaceAll(IncidentReport.NEWLINE, "\n</br>");
             try {
                 new EMailClient().postMail(reportEmailArray, ir.getApplicationName() + ":" + subject, "" + body,
                         INCIDENT_REPORT_SERVICE_NOREPLY, ir.getScreenShots());

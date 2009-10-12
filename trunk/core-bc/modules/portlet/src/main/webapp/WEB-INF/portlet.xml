@@ -9,7 +9,7 @@
      <init-param>
       <name>tyck_till_form_url</name>
       <!-- <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> --><!-- Test/dev server -->
-      <value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value><!-- Local env -->
+      <value>http://antonio.vgregion.se:8080/group/vgregion/tyck-till</value><!-- Local env -->
      </init-param>
     
     <expiration-cache>0</expiration-cache>

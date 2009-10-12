@@ -17,16 +17,23 @@
  */
 package se.vgr.incidentreport.impl;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import se.vgr.incidentreport.IncidentReport;
 import se.vgr.incidentreport.IncidentReportService;
+import se.vgr.incidentreport.Screenshot;
 import se.vgr.usdservice.USDService;
+import se.vgr.usdservice.USDServiceImpl;
 import se.vgr.util.EMailClient;
 
 @Service("incidentReportService")
@@ -45,12 +52,14 @@ public class IncidentReportServiceImpl implements IncidentReportService {
     /**
      * Email subject when something is not working as expected in Tyck till
      */
-    private static final String INCIDENT_REPORT_ERROR_EMAIL_SUBJECT = "IncidentReportService ERROR!";
+    private static final String INCIDENT_REPORT_ERROR_EMAIL_SUBJECT = "*ERROR in IncidentReportService* ";
 
     /**
      * Email subject
      */
     private static final String INCIDENT_REPORT_EMAIL_SUBJECT = "IncidentReportService message";
+
+    private static final Log log = LogFactory.getLog(USDServiceImpl.class);
 
     @Autowired
     private USDService usdService;
@@ -66,10 +75,15 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             if ("usd".equalsIgnoreCase(method)) {
                 try {
                     Properties parameters = mapToRequestParameters(ir);
-                    usdService.createRequest(parameters, ir.getUserId());
+                    List<Screenshot> ss = ir.getScreenShots();
+                    List<File> files = new ArrayList<File>();
+                    for (Screenshot s : ss) {
+                        files.add(new File(s.getPath()));
+                    }
+                    usdService.createRequest(parameters, ir.getUserId(), files);
                 }
                 catch (Exception e) {
-                    e.printStackTrace();
+                    log.warn(e);
                     sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
                 }
             }
@@ -78,7 +92,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             result = -1;
         }
         return result;
@@ -92,17 +106,17 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             String[] reportEmailArray = { reportEmail };
             body += ir.toString().replaceAll(IncidentReport.NEWLINE, "</br>");
             try {
-                new EMailClient().postMail(reportEmailArray, ir.getApplicationName() + " " + subject, "" + body,
-                        INCIDENT_REPORT_SERVICE_NOREPLY);
+                new EMailClient().postMail(reportEmailArray, ir.getApplicationName() + ":" + subject, "" + body,
+                        INCIDENT_REPORT_SERVICE_NOREPLY, ir.getScreenShots());
             }
             catch (Throwable e1) {
 
-                e1.printStackTrace();
+                log.warn(e1);
                 String[] emailTo = { INCIDENT_REPORT_SERVICE_ADMIN_EMAIL };
 
-                new EMailClient().postMail(emailTo, ir.getApplicationName() + " "
+                new EMailClient().postMail(emailTo, ir.getApplicationName() + ":"
                         + INCIDENT_REPORT_ERROR_EMAIL_SUBJECT, "" + e1.getMessage() + "\n" + body,
-                        INCIDENT_REPORT_SERVICE_NOREPLY);
+                        INCIDENT_REPORT_SERVICE_NOREPLY, ir.getScreenShots());
 
             }
 
@@ -113,7 +127,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         Properties p = new Properties();
         p.setProperty("affected_resource", "nr:BF5880E3AF1C8542B2546B93922C25A7");
         p.setProperty("category", "pcat:400023");
-
+        // map to group using application name?
         p.setProperty("group", "cnt:A455761E38B4B8488B5F0999BE5A4637");
         p.setProperty("impact", "imp:1603");
         p.setProperty("priority", "pri:500");
@@ -122,9 +136,9 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         p.setProperty("z_location", "loc:67F817D782E87B45A8298FC5512B6A9C");
         p.setProperty("z_organization", "org:5527E3F8D19F49409036F162493C7DD0");
         p.setProperty("z_telefon_nr", ir.getPhoneNumber() != null ? ir.getPhoneNumber() : "N/A");
+
         StringBuffer descBuf = new StringBuffer();
-        // descBuf.append("User agent:" + ir.getBrowser() + "\n");
-        // descBuf.append("Beskrivning:" + ir.getDescription() + "\n");
+
         descBuf.append(ir.toString() + "\n");
         p.setProperty("description", descBuf.toString());
 

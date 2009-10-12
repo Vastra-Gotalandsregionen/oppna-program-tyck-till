@@ -89,6 +89,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
             LdapUser ldapUser = getLdapService().getLdapUser(null, "(uid=" + userId + ")");
             email = ldapUser.getAttributeValue("mail");
             phoneNumber = ldapUser.getAttributeValue("telephoneNumber");
+
         }
         else {
             userId = "anonymous";

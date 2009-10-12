@@ -17,7 +17,6 @@ package se.vgr.incidentreport;
  *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  *   Boston, MA 02111-1307  USA
  */
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +44,15 @@ public class IncidentReport {
 
     String reportEmail;
 
-    List<File> screenShots = new ArrayList<File>();
+    List<Screenshot> screenShots = new ArrayList<Screenshot>();
+
     private String nameSpace;
     private String javaScript = "";
+    private String os;
+
+    public String getOs() {
+        return os;
+    }
 
     public String getReportMethod() {
         return reportMethod;
@@ -209,12 +214,12 @@ public class IncidentReport {
         this.errorTypes.add(errorType);
     }
 
-    public List<File> getScreenShots() {
+    public List<Screenshot> getScreenShots() {
         return screenShots;
     }
 
-    public void addScreenShot(File screenShot) {
-        this.screenShots.add(screenShot);
+    public void addScreenShot(Screenshot ss) {
+        this.screenShots.add(ss);
     }
 
     public IncidentReport() {
@@ -240,13 +245,18 @@ public class IncidentReport {
 
         sb.append("Description: " + this.getDescription() + NEWLINE);
         sb.append("IP Address: " + this.getIpAddress() + NEWLINE);
-        sb.append("User email: " + this.getEmailAddress() + NEWLINE);
-        sb.append("User phone: " + this.getPhoneNumber() + NEWLINE);
-        sb.append("User SMS: " + this.getSmsPhoneNumber() + NEWLINE);
-        sb.append("Feedback by phone: " + this.isFeedbackByPhone() + NEWLINE);
-        sb.append("Feedback by email: " + this.isFeedbackByMail() + NEWLINE);
-        sb.append("Feedback by SMS: " + this.isFeedbackBySms() + NEWLINE);
+        if (this.feedbackByMail) {
+            sb.append("User email: " + this.getEmailAddress() + NEWLINE);
+        }
+        if (this.feedbackByPhone) {
+            sb.append("User phone: " + this.getPhoneNumber() + NEWLINE);
+        }
+        if (this.feedbackBySms) {
+            sb.append("User SMS: " + this.getSmsPhoneNumber() + NEWLINE);
+        }
+
         sb.append("Browser: " + this.getBrowser() + NEWLINE);
+        sb.append("OS: " + this.getOs() + NEWLINE);
         sb.append("Javascript: " + this.getJavaScript() + NEWLINE);
         sb.append("Referer: " + this.getReferer() + NEWLINE);
         sb.append("Timestamp: " + this.getTimeStamp() + NEWLINE);
@@ -262,10 +272,10 @@ public class IncidentReport {
             sb.append(NEWLINE);
         }
         if (this.getScreenShots() != null) {
-            List<File> files = this.getScreenShots();
-            sb.append("Files:");
-            for (File file : files) {
-                sb.append(file.getName() + "|");
+            List<Screenshot> files = this.getScreenShots();
+            sb.append("Screenshots:");
+            for (Screenshot file : files) {
+                sb.append(file.getFileName() + "|");
             }
             sb.append(NEWLINE);
         }
@@ -277,5 +287,9 @@ public class IncidentReport {
 
     public void setJavascript(String js) {
         this.javaScript = js;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
     }
 }

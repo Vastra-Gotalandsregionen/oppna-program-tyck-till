@@ -66,7 +66,7 @@ see if this is configurable in Orbeon -->
                   <errorType>error</errorType>
                   <timestamp>${param.timestamp}</timestamp>  
                     <browser>${header["user-agent"]}</browser>
-                    <referer>${header.Referer}</referer>
+                    <referer></referer>
                     <ip-address>${pageContext.request.remoteAddr}</ip-address>
                     <application-name>${param.context}</application-name>
                     <name-space>${param.namespace}</name-space>

@@ -36,6 +36,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import se.vgr.util.UserAgentUtils;
+
 @Consumes("application/xml")
 @Provider
 public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
@@ -76,7 +78,8 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 
         ir.setDescription(parseString(doc, "description"));
         ir.setDefaultErrorMessage(parseString(doc, "defaultErrorMessage"));
-        ir.setBrowser(parseString(doc, "browser"));
+        ir.setBrowser(UserAgentUtils.getBrowser(parseString(doc, "browser")));
+        ir.setOs(UserAgentUtils.getOS(parseString(doc, "browser")));
         ir.setJavascript(parseString(doc, "javascript-enabled"));
         ir.setTimeStamp(parseString(doc, "timestamp"));
         ir.setIpAddress(parseString(doc, "ip-address"));
@@ -113,8 +116,22 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             for (int i = 0; i < files.getLength(); i++) {
                 Node fileNode = files.item(i);
                 if (fileNode != null && fileNode.getFirstChild() != null) {
-                    File file = new File(fileNode.getFirstChild().getTextContent().replaceFirst("file:", ""));
-                    ir.addScreenShot(file);
+                    String path = fileNode.getFirstChild().getTextContent().replaceFirst("file:", "").trim();
+                    path = path.replaceAll("%20", " ");
+                    File file = new File(path);
+                    Screenshot ss = new Screenshot();
+                    String fileName = "noname";
+                    try {
+                        fileName = fileNode.getAttributes().getNamedItem("filename").getTextContent();
+
+                    }
+                    catch (Exception e) {
+
+                    }
+                    ss.setFileName(fileName);
+                    ss.setPath(file.getAbsolutePath());
+                    ir.addScreenShot(ss);
+
                 }
             }
         }

@@ -80,6 +80,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                     for (Screenshot s : ss) {
                         files.add(new File(s.getPath()));
                     }
+
                     usdService.createRequest(parameters, ir.getUserId(), files);
                 }
                 catch (Exception e) {

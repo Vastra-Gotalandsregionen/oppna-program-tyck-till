@@ -1,11 +1,8 @@
 <?xml version="1.0"?>
-<!--
-This is the Service-composite Maven POM.
-
-
-Template version: 1.2-SNAPSHOT
-Generation time : 2009-09-08 10:42:34 CEST
--->
+  <!--
+    This is the Service-composite Maven POM. Template version: 1.2-SNAPSHOT Generation time : 2009-09-08 10:42:34
+    CEST
+  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -19,99 +16,71 @@ Generation time : 2009-09-08 10:42:34 CEST
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
 
-<build>
-
-<plugins>
-
-<plugin>
-
-<artifactId>maven-compiler-plugin</artifactId>
-
-<configuration>
-
-<source>1.5</source>
-
-<target>1.5</target>
-
-<optimize>false</optimize>
-
-<debug>true</debug>
-
-</configuration>
-
-</plugin>
-
-<plugin>
-
-<groupId>org.apache.maven.plugins</groupId>
-
-<artifactId>maven-source-plugin</artifactId>
-
-<executions>
-
-<execution>
-
-<id>attach-sources</id>
-
-<phase>verify</phase>
-
-<goals>
-
-<goal>jar</goal>
-
-</goals>
-
-</execution>
-
-</executions>
-
-</plugin>
-
-<plugin>
-
-<groupId>org.apache.maven.plugins</groupId>
-
-<artifactId>maven-eclipse-plugin</artifactId>
-
-<configuration>
-
-<wtpversion>1.5</wtpversion>
-
-<downloadJavadocs>true</downloadJavadocs>
-
-<downloadSources>true</downloadSources>
-
-<additionalProjectnatures>
-
-<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
-
-</additionalProjectnatures>
-
-</configuration>
-
-</plugin>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+          <optimize>false</optimize>
+          <debug>true</debug>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <configuration>
+          <wtpversion>1.5</wtpversion>
+          <downloadJavadocs>true</downloadJavadocs>
+          <downloadSources>true</downloadSources>
+          <additionalProjectnatures>
+            <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+          </additionalProjectnatures>
+        </configuration>
+      </plugin>
+    </plugins>
 
 
-</plugins>
+    <!-- needed for SVN-deployment -->
 
-
-<!-- needed for SVN-deployment -->
-
-<extensions>
-
-<extension>
-
-<groupId>org.jvnet.wagon-svn</groupId>
-
-<artifactId>wagon-svn</artifactId>
-
-<version>1.8</version>
-
-</extension>
-
-</extensions>
-
-</build>
+    <extensions>
+      <extension>
+        <groupId>org.jvnet.wagon-svn</groupId>
+        <artifactId>wagon-svn</artifactId>
+        <version>1.8</version>
+      </extension>
+    </extensions>
+  </build>
+  <profiles>
+    <profile>
+      <id>prod</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <optimize>true</optimize>
+              <debug>false</debug>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 
 

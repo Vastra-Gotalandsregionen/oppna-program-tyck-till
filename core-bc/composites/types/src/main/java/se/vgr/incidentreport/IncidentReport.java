@@ -241,6 +241,9 @@ public class IncidentReport {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("Application name: " + this.getApplicationName() + NEWLINE);
+        if (this.nameSpace != null) {
+            sb.append("Portlet name: " + this.getNameSpace() + NEWLINE);
+        }
         sb.append("Error message: " + this.getDefaultErrorMessage() + NEWLINE);
 
         sb.append("Description: " + this.getDescription() + NEWLINE);

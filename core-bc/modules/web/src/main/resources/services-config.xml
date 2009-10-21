@@ -28,11 +28,17 @@
 
 	<bean id="usdService" class="se.vgr.usdservice.USDServiceImpl" >
 	<constructor-arg ref="usdProperties" />
+    <property name="usdAppToGroupMappings"  ref="usdAppToGroupMappings" />
 	</bean>
 	
 	<bean id="usdProperties"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="location" value="classpath:usd.properties" />
 	</bean>
+  
+  <bean id="usdAppToGroupMappings"
+        class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:usdAppToGroup.properties" />
+    </bean>
     
 </beans>

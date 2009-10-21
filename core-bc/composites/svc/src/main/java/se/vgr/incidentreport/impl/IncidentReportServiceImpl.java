@@ -27,13 +27,13 @@ import javax.mail.MessagingException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import se.vgr.incidentreport.IncidentReport;
 import se.vgr.incidentreport.IncidentReportService;
 import se.vgr.incidentreport.Screenshot;
 import se.vgr.usdservice.USDService;
-import se.vgr.usdservice.USDServiceImpl;
 import se.vgr.util.EMailClient;
 
 @Service("incidentReportService")
@@ -59,9 +59,10 @@ public class IncidentReportServiceImpl implements IncidentReportService {
      */
     private static final String INCIDENT_REPORT_EMAIL_SUBJECT = "IncidentReportService message";
 
-    private static final Log log = LogFactory.getLog(USDServiceImpl.class);
+    private static final Log log = LogFactory.getLog(IncidentReportServiceImpl.class);
 
     @Autowired
+    @Qualifier("usdService")
     private USDService usdService;
 
     public int reportIncident(IncidentReport ir) {
@@ -129,7 +130,11 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         p.setProperty("affected_resource", "nr:BF5880E3AF1C8542B2546B93922C25A7");
         p.setProperty("category", "pcat:400023");
         // map to group using application name?
-        p.setProperty("group", "cnt:A455761E38B4B8488B5F0999BE5A4637");
+        String appName = ir.getApplicationName().replaceAll(" ", "_");
+        System.out.println("getting group for appName=" + appName);
+        String groupName = usdService.getUSDGroupHandleForApplicationName(appName);
+        // p.setProperty("group", "cnt:A455761E38B4B8488B5F0999BE5A4637");
+        p.setProperty("group", groupId);
         p.setProperty("impact", "imp:1603");
         p.setProperty("priority", "pri:500");
         p.setProperty("type", "crt:182");

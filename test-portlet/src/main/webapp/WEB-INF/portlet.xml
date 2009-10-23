@@ -16,7 +16,7 @@
             <short-title>TyckTillTestPortlet</short-title>
             <keywords>TyckTillTestPortlet</keywords>
     </portlet-info>
-    <!-- 
+    
     <security-role-ref>
             <role-name>administrator</role-name>
         </security-role-ref>
@@ -29,7 +29,7 @@
         <security-role-ref>
             <role-name>user</role-name>
         </security-role-ref>
-         -->
+       
     </portlet>
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>
@@ -37,10 +37,13 @@
     <lifecycle>ACTION_PHASE</lifecycle>
     <lifecycle>RENDER_PHASE</lifecycle>
     <init-param>
+        <name>ApplicationName</name>
+        <value>Tyck till test portlet</value>
+    </init-param>
+    <init-param>
         <name>TyckTillErrorFormURL</name>
-        <value>http://140.166.209.27:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp</value>
-        <!-- <value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value> -->
-        <!--  <value>http://webbisar.vgregion.se/tyck-till/xforms-jsp/index.jsp</value> -->
+        <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp</value>
+        
     </init-param>
     <init-param>
         <name>ldapPropertiesFileName</name>

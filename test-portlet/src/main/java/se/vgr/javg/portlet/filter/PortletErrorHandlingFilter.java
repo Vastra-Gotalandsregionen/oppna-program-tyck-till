@@ -6,10 +6,12 @@ import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.filter.ActionFilter;
@@ -45,30 +47,33 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
     private static final Logger logger = Logger.getLogger(PortletErrorHandlingFilter.class);
 
-    public void doFilter(RenderRequest arg0, RenderResponse arg1, FilterChain arg2) throws IOException,
+    public void doFilter(RenderRequest request, RenderResponse arg1, FilterChain arg2) throws IOException,
             PortletException {
         System.out.println("in PortletErrorHandlingFilter doFilter");
 
         String nameSpace = arg1.getNamespace();
 
-        if (arg0.getParameter("errorInActionPhase") != null) {
+        Map<String, ?> userInfo = (Map<String, ?>) request.getAttribute(PortletRequest.USER_INFO);
+        String userId = (String) ((userInfo != null) ? userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID
+                .toString()) : "");
+
+        if (request.getParameter("errorInActionPhase") != null) {
             // if the portlet threw an exception during the action phase we
             // won't go into the view phase
 
             arg1.getWriter().write(
-                    createTyckTillPopupLink(arg0.getParameter("errorInActionPhase"), arg0.getRemoteUser(),
-                            nameSpace));
+                    createTyckTillPopupLink(request.getParameter("errorInActionPhase"), userId, nameSpace));
         }
         else {
             try {
                 // call next in line (either another filter or the portlet
                 // itself)
-                arg2.doFilter(arg0, arg1);
+                arg2.doFilter(request, arg1);
             }
             catch (Throwable e) {
                 logger.info("Exception caught in PortletErrorHandlingFilter", e);
                 try {
-                    arg1.getWriter().write(createTyckTillPopupLink(e.toString(), arg0.getRemoteUser(), nameSpace));
+                    arg1.getWriter().write(createTyckTillPopupLink(e.toString(), userId, nameSpace));
                 }
                 catch (Throwable t) {
                     logger.error("Failed to create link", t);
@@ -87,8 +92,10 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
         if (userId != null && "" != userId) {
             LdapUser ldapUser = getLdapService().getLdapUser(null, "(uid=" + userId + ")");
-            email = ldapUser.getAttributeValue("mail");
-            phoneNumber = ldapUser.getAttributeValue("telephoneNumber");
+            if (ldapUser != null) {
+                email = ldapUser.getAttributeValue("mail");
+                phoneNumber = ldapUser.getAttributeValue("telephoneNumber");
+            }
 
         }
         else {
@@ -134,7 +141,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
         ac = PortletApplicationContextUtils.getWebApplicationContext(arg0.getPortletContext());
 
-        contextName = arg0.getPortletContext().getPortletContextName();
+        contextName = arg0.getInitParameter("ApplicationName");
         reportMethod = arg0.getInitParameter("TyckTillReportMethod");
         reportEmail = arg0.getInitParameter("TyckTillReportEmail");
 

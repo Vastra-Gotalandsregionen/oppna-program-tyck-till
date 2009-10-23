@@ -33,6 +33,7 @@ import org.springframework.stereotype.Service;
 import se.vgr.incidentreport.IncidentReport;
 import se.vgr.incidentreport.IncidentReportService;
 import se.vgr.incidentreport.Screenshot;
+import se.vgr.incidentreport.pivotaltracker.PivotalTrackerService;
 import se.vgr.usdservice.USDService;
 import se.vgr.util.EMailClient;
 
@@ -65,6 +66,9 @@ public class IncidentReportServiceImpl implements IncidentReportService {
     @Qualifier("usdService")
     private USDService usdService;
 
+    @Autowired
+    private PivotalTrackerService pivotalTrackerClient;
+
     public int reportIncident(IncidentReport ir) {
 
         int result = 0;
@@ -89,6 +93,9 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                     sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
                 }
             }
+            else if ("pivotaltracker".equalsIgnoreCase(method)) {
+                createUserStory(ir);
+            }
             else {
                 sendReportByEmail(ir, INCIDENT_REPORT_EMAIL_SUBJECT);
             }
@@ -98,6 +105,11 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             result = -1;
         }
         return result;
+    }
+
+    private void createUserStory(IncidentReport ir) {
+        pivotalTrackerClient.createuserStory(ir);
+        throw new UnsupportedOperationException("TODO: Implement this method");
     }
 
     private void sendReportByEmail(IncidentReport ir, String subject) throws MessagingException {

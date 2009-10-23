@@ -41,4 +41,15 @@
         <property name="location" value="classpath:usdAppToGroup.properties" />
     </bean>
     
+    <bean id="pivotalTrackerProperties"
+        class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:pivotalTracker.properties" />
+    </bean>
+  
+    <bean id="pivotalTrackerService" class="se.vgr.incidentreport.pivotaltracker.impl.PivotalTrackerServiceImpl" >
+    <constructor-arg ref="pivotalTrackerProperties" />
+    
+    </bean>
+  
+    
 </beans>

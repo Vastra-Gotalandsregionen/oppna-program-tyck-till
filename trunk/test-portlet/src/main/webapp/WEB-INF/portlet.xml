@@ -52,7 +52,7 @@
     </init-param>
         <init-param>
         <name>TyckTillReportMethod</name>
-        <value>USD</value> 
+        <value>pivotaltracker</value> 
     </init-param>
     <init-param>
         <name>TyckTillReportEmail</name>

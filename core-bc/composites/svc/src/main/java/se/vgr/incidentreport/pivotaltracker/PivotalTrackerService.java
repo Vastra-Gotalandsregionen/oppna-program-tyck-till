@@ -6,7 +6,11 @@ import se.vgr.incidentreport.IncidentReport;
 
 public interface PivotalTrackerService {
 
-    void createuserStory(IncidentReport ir);
+    /**
+     * @param ir
+     * @return the url of the story in PT
+     */
+    String createuserStory(IncidentReport ir);
 
     Properties getPivotalTrackerMappings();
 

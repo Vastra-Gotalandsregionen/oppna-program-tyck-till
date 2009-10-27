@@ -174,6 +174,8 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
             HttpEntity entity = response.getEntity();
             String xmlout = convertStreamToString(entity.getContent());
             System.out.println(xmlout);
+            String url = getTagValue(xmlout, 0, "url");
+            result = url;
 
             // Convert the xml response into an object
             // result = getProjectData((entity.getContent()));
@@ -335,16 +337,17 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
         }
     }
 
-    public void createuserStory(IncidentReport ir) {
+    public String createuserStory(IncidentReport ir) {
 
-        String applicationName = ir.getApplicationName();
+        String applicationName = ir.getApplicationName().replaceAll(" ", "_");
         String projectId = lookupProjectId(applicationName);
         PTStory story = new PTStory();
         story.setName(applicationName + ": IncidentReportService message");
         story.setType("bug");
         story.setRequestedBy(TYCK_TILL_PT_USER);
         story.setDescription(ir.toString());
-        addStoryForProject(projectId, story);
+        String url = addStoryForProject(projectId, story);
+        return url;
     }
 
     private String lookupProjectId(String applicationName) {

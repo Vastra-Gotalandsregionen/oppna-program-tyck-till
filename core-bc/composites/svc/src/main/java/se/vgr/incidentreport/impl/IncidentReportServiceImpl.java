@@ -24,8 +24,8 @@ import java.util.Properties;
 
 import javax.mail.MessagingException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -60,7 +60,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
      */
     private static final String INCIDENT_REPORT_EMAIL_SUBJECT = "IncidentReportService message";
 
-    private static final Log log = LogFactory.getLog(IncidentReportServiceImpl.class);
+    final Logger logger = LoggerFactory.getLogger(IncidentReportServiceImpl.class);
 
     @Autowired
     @Qualifier("usdService")
@@ -76,20 +76,21 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         try {
 
             String method = ir.getReportMethod();
-            String appName = ir.getApplicationName();
-            String PTId = pivotalTrackerClient.getPivotalTrackerMappings().getProperty(appName);
-            // Pivotaltracker is used if mapping exists
-            if (PTId != null) {
-                try {
-                    createUserStory(ir);
-                }
-                catch (Exception e) {
-                    log.warn(e);
-                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
-                }
-
-            }
-            else if ("usd".equalsIgnoreCase(method)) {
+            // String appName = ir.getApplicationName().replaceAll(" ", "_");
+            // String PTId = pivotalTrackerClient.getPivotalTrackerMappings().getProperty(appName);
+            // // Pivotaltracker is used if mapping exists
+            // if (PTId != null) {
+            // try {
+            // createUserStory(ir);
+            // }
+            // catch (Exception e) {
+            // log.warn(e);
+            // sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
+            // }
+            //
+            // }
+            // else
+            if ("usd".equalsIgnoreCase(method)) {
                 try {
                     Properties parameters = mapToRequestParameters(ir);
                     List<Screenshot> ss = ir.getScreenShots();
@@ -101,7 +102,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                     usdService.createRequest(parameters, ir.getUserId(), files);
                 }
                 catch (Exception e) {
-                    log.warn(e);
+                    logger.warn("USD service could not be reached, trying email instead.", e);
                     sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
                 }
             }
@@ -110,7 +111,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                     createUserStory(ir);
                 }
                 catch (Exception e) {
-                    log.warn(e);
+                    logger.warn("Pivotal tracker could not be reached, trying email instead.");
                     sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
                 }
             }
@@ -119,15 +120,30 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             }
         }
         catch (Exception e) {
-            log.error(e);
+            logger.error("Incident report could not be sent:", e);
             result = -1;
         }
         return result;
     }
 
     private void createUserStory(IncidentReport ir) {
-        pivotalTrackerClient.createuserStory(ir);
-        throw new UnsupportedOperationException("TODO: Implement this method");
+
+        String url = pivotalTrackerClient.createuserStory(ir);
+
+        // attachments cannot be sent to Pivotal Tracker and thus have to be emailed
+        List<Screenshot> attachments = ir.getScreenShots();
+        if (url != null && attachments != null && attachments.size() > 0) {
+            if (ir.getReportEmail() != null && ir.getReportEmail().length() > 0) {
+                try {
+                    ir.setDescription("PivotalTracker :" + url + " \n" + ir.getDescription());
+                    sendReportByEmail(ir, ir.getApplicationName() + ":Attachments for upload in pivotal tracker");
+                }
+                catch (MessagingException e) {
+
+                }
+            }
+        }
+
     }
 
     private void sendReportByEmail(IncidentReport ir, String subject) throws MessagingException {
@@ -143,7 +159,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             }
             catch (Throwable e1) {
 
-                log.warn(e1);
+                logger.warn("Email submission failed:", e1);
                 String[] emailTo = { INCIDENT_REPORT_SERVICE_ADMIN_EMAIL };
 
                 new EMailClient().postMail(emailTo, ir.getApplicationName() + ":"

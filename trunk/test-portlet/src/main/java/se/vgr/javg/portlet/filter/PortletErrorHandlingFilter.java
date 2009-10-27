@@ -19,7 +19,8 @@ import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.RenderFilter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.portlet.context.PortletApplicationContextUtils;
 
@@ -45,7 +46,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
     private String reportEmail;
     private String reportMethod;
 
-    private static final Logger logger = Logger.getLogger(PortletErrorHandlingFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(PortletErrorHandlingFilter.class);
 
     public void doFilter(RenderRequest request, RenderResponse arg1, FilterChain arg2) throws IOException,
             PortletException {

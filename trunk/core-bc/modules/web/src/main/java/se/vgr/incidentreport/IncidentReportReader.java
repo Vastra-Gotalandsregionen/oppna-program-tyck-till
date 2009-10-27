@@ -31,6 +31,8 @@ import javax.ws.rs.ext.Provider;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -41,6 +43,8 @@ import se.vgr.util.UserAgentUtils;
 @Consumes("application/xml")
 @Provider
 public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
+
+    private static final Logger logger = LoggerFactory.getLogger(IncidentReportReader.class);
 
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -64,7 +68,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         try {
             builder = factory.newDocumentBuilder();
             doc = builder.parse(is);
-            System.out.println(doc.getTextContent());
+            // System.out.println(doc.getTextContent());
         }
         catch (Exception e) {
             throw new RuntimeException("Error creating xml", e);
@@ -126,7 +130,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 
                     }
                     catch (Exception e) {
-
+                        logger.warn("Filename could not be read.", e);
                     }
                     ss.setFileName(fileName);
                     ss.setPath(file.getAbsolutePath());

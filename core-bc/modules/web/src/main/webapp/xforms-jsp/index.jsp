@@ -219,7 +219,7 @@ see if this is configurable in Orbeon -->
                 action="<%=request.getRequestURL().toString().replace(request.getServletPath(), "") %>/resource/incidentReport"
                 method="post"
                 replace="none" instance="incidentReport-instance">
-                    <xf:load resource="javascript:closePopup()" ev:event="xforms-submit-done"/>
+                    <xf:load resource="thankyou.html" ev:event="xforms-submit-done"/>
             </xf:submission>
             
             

@@ -1,10 +1,13 @@
 package se.vgr.incidentreport.pivotaltracker;
-import org.apache.commons.logging.Log;
+
+import java.util.Properties;
 
 import se.vgr.incidentreport.IncidentReport;
 
 public interface PivotalTrackerService {
 
     void createuserStory(IncidentReport ir);
+
+    Properties getPivotalTrackerMappings();
 
 }

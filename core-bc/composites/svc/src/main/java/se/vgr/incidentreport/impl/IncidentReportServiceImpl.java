@@ -76,8 +76,20 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         try {
 
             String method = ir.getReportMethod();
+            String appName = ir.getApplicationName();
+            String PTId = pivotalTrackerClient.getPivotalTrackerMappings().getProperty(appName);
+            // Pivotaltracker is used if mapping exists
+            if (PTId != null) {
+                try {
+                    createUserStory(ir);
+                }
+                catch (Exception e) {
+                    log.warn(e);
+                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
+                }
 
-            if ("usd".equalsIgnoreCase(method)) {
+            }
+            else if ("usd".equalsIgnoreCase(method)) {
                 try {
                     Properties parameters = mapToRequestParameters(ir);
                     List<Screenshot> ss = ir.getScreenShots();
@@ -94,7 +106,13 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                 }
             }
             else if ("pivotaltracker".equalsIgnoreCase(method)) {
-                createUserStory(ir);
+                try {
+                    createUserStory(ir);
+                }
+                catch (Exception e) {
+                    log.warn(e);
+                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
+                }
             }
             else {
                 sendReportByEmail(ir, INCIDENT_REPORT_EMAIL_SUBJECT);

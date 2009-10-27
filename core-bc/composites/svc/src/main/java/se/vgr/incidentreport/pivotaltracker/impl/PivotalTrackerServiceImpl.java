@@ -33,17 +33,28 @@ import se.vgr.util.HTTPUtils;
  */
 public class PivotalTrackerServiceImpl implements PivotalTrackerService {
 
+    private static final String TYCKTILL_PT_PWD = "tycktill3333";
+    private static final String TYCK_TILL_PT_USER = "TyckTill";
     private static final String GET_USER_TOKEN = "https://www.pivotaltracker.com/services/tokens/active";
     private static final String GET_PROJECT = "http://www.pivotaltracker.com/services/v2/projects";
 
     /** */
-    private String token = null;
+    // private String token = null;
+    private Properties pivotalTrackerMappings;
 
     /** */
     public PivotalTrackerServiceImpl(Properties p) {
     }
 
     public PivotalTrackerServiceImpl() {
+    }
+
+    public Properties getPivotalTrackerMappings() {
+        return pivotalTrackerMappings;
+    }
+
+    public void setPivotalTrackerMappings(Properties pivotalTrackerMappings) {
+        this.pivotalTrackerMappings = pivotalTrackerMappings;
     }
 
     /**
@@ -57,7 +68,7 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
      * @throws Exception
      *             when there is http problems
      */
-    public String getUserToken(String username, String password) throws Exception {
+    private String getUserToken(String username, String password) {
         DefaultHttpClient client = new DefaultHttpClient();
         String tokenFound = null;
         try {
@@ -75,7 +86,10 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
             String guid = getTagValue(xml, 0, "guid");
             System.out.println("guid=" + guid);
 
-            this.token = guid;
+            tokenFound = guid;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("TODO: Handle this exception better", e);
         }
         finally {
             client.getConnectionManager().shutdown();
@@ -94,15 +108,15 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
     }
 
     /** */
-    public TyckTillProjectData getSingleProject(String projectId) throws Exception {
-        if (this.token == null) {
+    private TyckTillProjectData getSingleProject(String projectId, String token) throws Exception {
+        if (token == null) {
             throw new RuntimeException("Token cannot be null. Please set it first.");
         }
 
         DefaultHttpClient client = new DefaultHttpClient();
         TyckTillProjectData result = null;
         try {
-            HttpResponse response = HTTPUtils.makeRequest(GET_PROJECT + "/" + projectId, this.token, client);
+            HttpResponse response = HTTPUtils.makeRequest(GET_PROJECT + "/" + projectId, token, client);
             HttpEntity entity = response.getEntity();
 
             // Convert the xml response into an object
@@ -117,14 +131,14 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
         return result;
     }
 
-    public String getStoriesForProject(String projectId) {
-        if (this.token == null) {
+    private String getStoriesForProject(String projectId, String token) {
+        if (token == null) {
             throw new RuntimeException("Token cannot be null. Please set it first.");
         }
         DefaultHttpClient client = new DefaultHttpClient();
         String result = null;
         try {
-            HttpResponse response = HTTPUtils.makeRequest(GET_PROJECT + "/" + projectId + "/stories", this.token,
+            HttpResponse response = HTTPUtils.makeRequest(GET_PROJECT + "/" + projectId + "/stories", token,
                     client);
             HttpEntity entity = response.getEntity();
             String xml = convertStreamToString(entity.getContent());
@@ -144,7 +158,8 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
     }
 
     public String addStoryForProject(String projectId, PTStory story) {
-        if (this.token == null) {
+        String token = getUserToken(TYCK_TILL_PT_USER, TYCKTILL_PT_PWD);
+        if (token == null) {
             throw new RuntimeException("Token cannot be null. Please set it first.");
         }
         DefaultHttpClient client = new DefaultHttpClient();
@@ -154,7 +169,7 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
                 + story.getRequestedBy() + "</requested_by></story>";
 
         try {
-            HttpResponse response = HTTPUtils.makePostXML(GET_PROJECT + "/" + projectId + "/stories", this.token,
+            HttpResponse response = HTTPUtils.makePostXML(GET_PROJECT + "/" + projectId + "/stories", token,
                     client, xml);
             HttpEntity entity = response.getEntity();
             String xmlout = convertStreamToString(entity.getContent());
@@ -175,21 +190,24 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
 
     /** */
     @SuppressWarnings("deprecation")
-    public List<TyckTillProjectData> getAllProjects() throws Exception {
-        if (this.token == null) {
+    private List<TyckTillProjectData> getAllProjects(String token) {
+        if (token == null) {
             throw new RuntimeException("Token cannot be null. Please set it first.");
         }
 
         DefaultHttpClient client = new DefaultHttpClient();
         List result = null;
         try {
-            HttpResponse response = HTTPUtils.makeRequest(GET_PROJECT, this.token, client);
+            HttpResponse response = HTTPUtils.makeRequest(GET_PROJECT, token, client);
             HttpEntity entity = response.getEntity();
             // entity.writeTo(System.out);
 
             // Convert the xml response into an object
             result = getProjectData((entity.getContent()));
 
+        }
+        catch (Exception e) {
+            throw new RuntimeException("TODO: Handle this exception better", e);
         }
         finally {
             client.getConnectionManager().shutdown();
@@ -256,11 +274,6 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
         return result;
     }
 
-    /** */
-    public String getToken() {
-        return this.token;
-    }
-
     public String convertStreamToString(InputStream is) {
         /*
          * To convert the InputStream to String we use the BufferedReader.readLine() method. We iterate until the
@@ -306,15 +319,16 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
             PTStory story = new PTStory();
             story.setName("Meddelande från Tyck till : " + new Date());
             story.setType("bug");
-            // story.setRequestedBy("Andrew Culbert");
+            story.setRequestedBy("TyckTill");
             story.setDescription("Testar att skicka meddelanden via Tyck Till.");
             System.out.println(pt.addStoryForProject("35420", story));
 
-            List<TyckTillProjectData> l = pt.getAllProjects();
+            String token = pt.getUserToken(TYCK_TILL_PT_USER, TYCKTILL_PT_PWD);
+            List<TyckTillProjectData> l = pt.getAllProjects(token);
             for (TyckTillProjectData d : l) {
                 System.out.println(d);
             }
-            System.out.println(pt.getStoriesForProject("35420"));
+            System.out.println(pt.getStoriesForProject("35420", token));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -322,10 +336,20 @@ public class PivotalTrackerServiceImpl implements PivotalTrackerService {
     }
 
     public void createuserStory(IncidentReport ir) {
-        /*
-         * String applicationName=ir.getApplicationName(); String projectId=lookupProject(applicationName); PTStory
-         * story = new PTStory(); story.setName(applicationName+": IncidentReportService message");
-         * story.setType("bug"); // story.setRequestedBy("Andrew Culbert");
-         * story.setDescription(ir.getDescription()); // addStoryForProject(projectId, story);
-         */}
+
+        String applicationName = ir.getApplicationName();
+        String projectId = lookupProjectId(applicationName);
+        PTStory story = new PTStory();
+        story.setName(applicationName + ": IncidentReportService message");
+        story.setType("bug");
+        story.setRequestedBy(TYCK_TILL_PT_USER);
+        story.setDescription(ir.toString());
+        addStoryForProject(projectId, story);
+    }
+
+    private String lookupProjectId(String applicationName) {
+        String result = pivotalTrackerMappings.getProperty(applicationName);
+        return result;
+
+    }
 }

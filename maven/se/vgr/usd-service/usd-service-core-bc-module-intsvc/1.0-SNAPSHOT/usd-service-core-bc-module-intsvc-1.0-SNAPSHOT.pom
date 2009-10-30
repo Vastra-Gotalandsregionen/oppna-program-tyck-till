@@ -44,11 +44,11 @@ Generation time : 2009-09-08 14:11:25 CEST
       <artifactId>usd-service-core-bc-composite-schema</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-      <version>${spring.fw.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.springframework</groupId>-->
+<!--      <artifactId>spring-web</artifactId>-->
+<!--      <version>${spring.fw.version}</version>-->
+<!--    </dependency>-->
   </dependencies>
 
 </project>

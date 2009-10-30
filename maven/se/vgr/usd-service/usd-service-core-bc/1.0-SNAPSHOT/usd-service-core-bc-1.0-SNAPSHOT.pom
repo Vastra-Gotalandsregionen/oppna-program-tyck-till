@@ -38,12 +38,26 @@ Generation time : 2009-09-08 14:11:25 CEST
     <module>composites/svc</module>
     <module>composites/webcomp</module>
     <module>composites/schema</module>
-    <module>modules/web</module>
+    <!--<module>modules/web</module> -->
     <module>modules/intsvc</module>
     <module>applications/core-bc</module>
   </modules>
   
   <build>
+  
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.0.2</version>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  
+
   <!-- needed for SVN-deployment -->
 		<extensions>
 			<extension>

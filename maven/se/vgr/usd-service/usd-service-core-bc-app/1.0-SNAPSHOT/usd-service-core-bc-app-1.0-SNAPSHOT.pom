@@ -26,13 +26,6 @@ Generation time : 2009-09-08 14:11:25 CEST
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>usd-service-core-bc-module-web</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
-    </dependency>
-
-    <dependency>
-      <groupId>${project.groupId}</groupId>
       <artifactId>usd-service-core-bc-module-intsvc</artifactId>
       <version>${project.version}</version>
       <type>war</type>

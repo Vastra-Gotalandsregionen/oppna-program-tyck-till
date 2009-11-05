@@ -33,12 +33,17 @@ import org.springframework.stereotype.Service;
 import se.vgr.incidentreport.IncidentReport;
 import se.vgr.incidentreport.IncidentReportService;
 import se.vgr.incidentreport.Screenshot;
+import se.vgr.incidentreport.pivotaltracker.PTStory;
 import se.vgr.incidentreport.pivotaltracker.PivotalTrackerService;
 import se.vgr.usdservice.USDService;
 import se.vgr.util.EMailClient;
 
 @Service("incidentReportService")
 public class IncidentReportServiceImpl implements IncidentReportService {
+
+    @Autowired
+    @Qualifier("pivotalTrackerMappings")
+    private Properties pivotalTrackerMappings;
 
     /**
      * Reciever of messages when the regular report recievers can´t be reached.
@@ -127,8 +132,16 @@ public class IncidentReportServiceImpl implements IncidentReportService {
     }
 
     private void createUserStory(IncidentReport ir) {
-
-        String url = pivotalTrackerClient.createuserStory(ir);
+        String applicationName = ir.getApplicationName().replaceAll(" ", "_");
+        String projectId = lookupProjectId(applicationName);
+        PTStory story = new PTStory();
+        story.setName(applicationName + ": IncidentReportService message");
+        story.setType("bug");
+        story.setProjectId(projectId);
+        // story.setRequestedBy(TYCK_TILL_PT_USER);
+        story.setDescription(ir.toString());
+        // String url = addStoryForProject(projectId, story);
+        String url = pivotalTrackerClient.createuserStory(story);
 
         // attachments cannot be sent to Pivotal Tracker and thus have to be emailed
         List<Screenshot> attachments = ir.getScreenShots();
@@ -195,6 +208,20 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         p.setProperty("description", descBuf.toString());
 
         return p;
+    }
+
+    private String lookupProjectId(String applicationName) {
+        String result = pivotalTrackerMappings.getProperty(applicationName);
+        return result;
+
+    }
+
+    public Properties getPivotalTrackerMappings() {
+        return pivotalTrackerMappings;
+    }
+
+    public void setPivotalTrackerMappings(Properties pivotalTrackerMappings) {
+        this.pivotalTrackerMappings = pivotalTrackerMappings;
     }
 
 }

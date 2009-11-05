@@ -22,8 +22,10 @@ Generation time : 2009-04-17 09:01:59 CEST
   <!-- common library versions -->
   <properties>
     <javg.version>1.2-SNAPSHOT</javg.version>
-    <spring.fw.version>2.5.5</spring.fw.version>
+    <spring.fw.version>3.0.0.RC1</spring.fw.version>
     <apache.cxf.version>2.1.1</apache.cxf.version>
+    <portlet-api.version>2.0</portlet-api.version>
+    <jstl.version>1.2</jstl.version>
   </properties>
 
   <modules>
@@ -122,7 +124,7 @@ encoding/<project>=UTF-8]]>
 
       <dependency>
         <groupId>org.springframework</groupId>
-        <artifactId>spring</artifactId>
+        <artifactId>spring-core</artifactId>
         <version>${spring.fw.version}</version>
       </dependency>
 	 

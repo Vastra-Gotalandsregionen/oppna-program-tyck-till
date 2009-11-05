@@ -50,10 +50,10 @@
         class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location" value="classpath:pivotalTracker.properties" />
     </bean>
+    
   
     <bean id="pivotalTrackerService" class="se.vgr.incidentreport.pivotaltracker.impl.PivotalTrackerServiceImpl" >
-    <constructor-arg ref="pivotalTrackerProperties" />
-    <property name="pivotalTrackerMappings"  ref="pivotalTrackerMappings" />
+        <constructor-arg ref="pivotalTrackerProperties" />
     </bean>
     
   

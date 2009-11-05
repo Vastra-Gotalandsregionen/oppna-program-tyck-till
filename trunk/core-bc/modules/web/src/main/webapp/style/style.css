@@ -46,7 +46,9 @@ h3{
 	height: 4em;
 }
 
-
+input{
+    float: left;
+  }
 
 #defaultErrorMessageDiv {
 	width: 54em;

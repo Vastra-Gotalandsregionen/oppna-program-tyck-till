@@ -90,7 +90,8 @@ Generation time : 2009-04-17 09:01:59 CEST
 	
 	 <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring</artifactId>
+      <artifactId>spring-core</artifactId>
+	  <version>${spring.fw.version}</version>
       
     </dependency>
 	

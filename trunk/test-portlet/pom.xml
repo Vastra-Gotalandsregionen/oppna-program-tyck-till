@@ -38,16 +38,17 @@ This is the Web-app Maven POM.
 
   <dependencies>
     <dependency>
-      <groupId>se.vgr.ldap-service</groupId>
-      <artifactId>ldap-service-core-bc-composite-svc</artifactId>
+      <groupId>se.vgr.commons-util</groupId>
+    <artifactId>commons-util-core-bc-composite-svc-ldap</artifactId>
       <version>1.0-SNAPSHOT</version>
+    
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>se.vgr.javg</groupId>
       <artifactId>javg-rt-support</artifactId>
       <version>${javg.version}</version>
     </dependency>
-    <dependency>
+    --><dependency>
       <groupId>taglibs</groupId>
       <artifactId>standard</artifactId>
       <version>1.1.2</version>

@@ -104,7 +104,10 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
         }
 
         StringBuffer errorFormUrl = new StringBuffer(tyckTillErrorFormURL);
+
         errorFormUrl.append("?errorMessage=" + URLEncoder.encode(errorMessage, "UTF-8"));
+        errorFormUrl.append("&errorType=" + URLEncoder.encode("errorMessage", "UTF-8"));
+
         errorFormUrl.append("&timestamp=" + URLEncoder.encode(df.format(new Date()), "UTF-8"));
         if (email != null && "" != email) {
             errorFormUrl.append("&email=" + URLEncoder.encode(email, "UTF-8"));
@@ -120,10 +123,18 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
         errorFormUrl.append("&userid=" + userId);
 
         StringBuffer buf = new StringBuffer();
+        buf.append("<script language=\"javascript\">\n");
+        buf.append("function openPopup(url) {\n");
+        buf.append("newwindow=window.open(url,'name','menubar=no,width=670,height=450,toolbar=no');\n");
+        buf.append("if (window.focus) {newwindow.focus()}\n");
+        buf.append("return false;\n");
+        buf.append("}\n");
+        buf.append("// -->\n");
+        buf.append("</script>\n");
         buf.append("Ett ov&#228;ntat fel har uppst&#229;tt, ");
         // Javascript enabled implies that onClick will run
-        buf.append("<a href=\"" + errorFormUrl + "\" " + "onClick=\"this.href='" + errorFormUrl
-                + "&javascript=yes'\" \"target=\"_blank\">");
+        buf.append("<a href=\"" + errorFormUrl + "\" " + "onClick=\"javascript:openPopup('" + errorFormUrl
+                + "&javasscript=yes')\" >");
         buf
                 .append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");
         return buf.toString();
@@ -155,7 +166,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
             // call next in line (either another filter or the portlet itself)
             arg2.doFilter(arg0, arg1);
         }
-        catch (Exception e) {
+        catch (Throwable e) {
             // Save the error for the view phase, where we can take control over
             // the response-rendering
             arg1.setRenderParameter("errorInActionPhase", (e.toString()));

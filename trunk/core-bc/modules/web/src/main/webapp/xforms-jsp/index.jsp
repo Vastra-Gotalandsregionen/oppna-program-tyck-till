@@ -63,14 +63,14 @@ see if this is configurable in Orbeon -->
             <xf:instance id="incidentReport-instance">
                 <incidentReport xmlns="">
                     <reportType>error</reportType>
-                  <errorType>error</errorType>
-                  <timestamp>${param.timestamp}</timestamp>  
+                    <errorType>${param.errorType}</errorType>
+                    <timestamp>${param.timestamp}</timestamp>  
                     <browser>${header["user-agent"]}</browser>
                     <referer></referer>
                     <ip-address>${pageContext.request.remoteAddr}</ip-address>
                     <application-name>${param.context}</application-name>
                     <name-space>${param.namespace}</name-space>
-                    <javascript-enabled>${param.javascript}</javascript-enabled>
+                    <javascript-enabled>${param.javasscript}</javascript-enabled>
                     <report-method>${param.reportMethod}</report-method>
                     <report-email>${param.reportEmail}</report-email>
                     <userid>${param.userid}</userid>
@@ -210,8 +210,7 @@ see if this is configurable in Orbeon -->
                 action="<%=request.getRequestURL().toString().replace(request.getServletPath(), "") %>/resource/incidentReport"
                 method="post"
                 replace="none" instance="incidentReport-instance">
-                <xf:load resource="<%=request.getRequestURL() + 
-                    ((request.getQueryString() == null) ? "" : ("?" + request.getQueryString().replaceAll("&", "&amp;")))%>"
+                <xf:load resource="<%=request.getRequestURL().toString().replace(request.getServletPath(), "") %>/tack.jsp"
                                     show="replace" ev:event="xforms-submit-done"/>
             </xf:submission>
             
@@ -219,7 +218,7 @@ see if this is configurable in Orbeon -->
                 action="<%=request.getRequestURL().toString().replace(request.getServletPath(), "") %>/resource/incidentReport"
                 method="post"
                 replace="none" instance="incidentReport-instance">
-                    <xf:load resource="thankyou.html" ev:event="xforms-submit-done"/>
+                    <xf:load resource="<%=request.getRequestURL().toString().replace(request.getServletPath(), "") %>/tack.jsp" ev:event="xforms-submit-done"/>
             </xf:submission>
             
             
@@ -262,7 +261,8 @@ see if this is configurable in Orbeon -->
                                     <xf:label ref="label"/>
                                     <xf:value ref="@value"/>
                                 </xf:itemset>
-                            </xf:select> 
+                            </xf:select>
+                             
                        </p> 
                     </div> 
                     <div class="yui-u"> 

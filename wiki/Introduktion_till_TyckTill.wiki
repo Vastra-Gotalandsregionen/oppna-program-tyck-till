@@ -8,20 +8,20 @@
 = Introduktion =
 Tyck Till är en applikation som används för att skicka felrapporter samt övrig feedback. Den används för att hantera felrapporter och övrig feedback i portalen. Felrapporterna skickas vidare till konfigurerbara mål(idag USD, Pivotal Tracker eller EMail). Ett portlet-filter samt ett servlet-filter finns för att fånga Java Exceptions som inte hanteras på annat sätt. 
 
-Komponenter:
+==Komponenter:==
 tyck-till-test-portlet (Visar hur en portlet anpassas för Tyck-till m.h.a. portletFilter)
 tyck-till-test-servlet  (Visar hur en webapp anpassas för Tyck-till  m.h.a. servlet Filter)
 
 tyck-till-core-bc-module-web (Tyck-till applikationen)
 tyck-till-core-bc-composite-svc ( Logik för routning av felrapporter till de olika målen)
 
-Beroenden (oppna-program):
+==Beroenden (oppna-program):==
 
 commons-util-core-bc-composite-svc-ldap
 commons-util-core-bc-composite-svc-usd
 commons-util-core-bc-composite-svc-pivotaltracker
 
-Beroenden (tredje part):
+==Beroenden (tredje part):==
 
 Spring, Jersey, Axis, Orbeon, slf4j, aop-alliance, commons-codec, ... (se pom-filer för detaljer)
 

@@ -10,6 +10,7 @@ Tyck Till är en applikation som används för att skicka felrapporter samt övr
 
 ==Komponenter:==
 tyck-till-test-portlet (Visar hur en portlet anpassas för Tyck-till m.h.a. portletFilter)
+
 tyck-till-test-servlet  (Visar hur en webapp anpassas för Tyck-till  m.h.a. servlet Filter)
 
 tyck-till-core-bc-module-web (Tyck-till applikationen)
@@ -18,7 +19,9 @@ tyck-till-core-bc-composite-svc ( Logik för routning av felrapporter till de ol
 ==Beroenden (oppna-program):==
 
 commons-util-core-bc-composite-svc-ldap
+
 commons-util-core-bc-composite-svc-usd
+
 commons-util-core-bc-composite-svc-pivotaltracker
 
 ==Beroenden (tredje part):==

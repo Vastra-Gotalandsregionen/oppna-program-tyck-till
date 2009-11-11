@@ -13,7 +13,10 @@ tyck-till-test-portlet (Visar hur en portlet anpassas för Tyck-till m.h.a. port
 
 tyck-till-test-servlet  (Visar hur en webapp anpassas för Tyck-till  m.h.a. servlet Filter)
 
+tyck-till-core-bc-module-portlet(Tyck-till portlet med formulär i Iframe)
+
 tyck-till-core-bc-module-web (Tyck-till applikationen)
+
 tyck-till-core-bc-composite-svc ( Logik för routning av felrapporter till de olika målen)
 
 ==Beroenden (oppna-program):==
@@ -35,15 +38,13 @@ Applikationen bygger på ett formulär implementerat enligt standarden [http://w
 Nuvarande beta-version av Orbeon har inte gått att köra varken på !WebSphere Portal 6.1 eller LifeRay 5.2.3. Därför kör vi Tyck till som en webapplikation på Tomcat tills vidare. Webbapplikationen är sedan inlänkad i portalen via en IFrame. 
 
 Test-portlet-modulen innehåller en enkelt testportlet som är till för att testa portletfiltret, som öppnar upp felformuläret i ett popupfönster. Filtret fångar både information om felet som uppstått samt om vilken användare som var inloggad. 
-
-
  
  
 == Orbeon-konfiguration ==
 
 Tyck till kör _separat deployment_ av Orbeon enligt instruktionerna som återfinns [http://www.orbeon.com/ops/doc/reference-xforms-java här]. Orbeon.war har döpts om till orbeon-3.7.0.war och deployats på Tomcat - detta för att man ska kunna köra flera olika versioner samtidigt.
 
-Observera att filterklassen är felaktigt namngiven i Orbeon-dokumentationen ovan. För orbeon-3.7.0beta1 ska det vara (se web.xml i core-bc/modules/web modulen): 
+Observera att filterklassen är felaktigt namngiven i Orbeon-dokumentationen ovan. För orbeon-3.7.1 ska det vara (se web.xml i core-bc/modules/web modulen): 
 {{{
 <filter-name>orbeon-xforms-filter</filter-name>
   	<filter-class>org.orbeon.oxf.servlet.OPSXFormsFilter</filter-class>
@@ -62,7 +63,7 @@ För att utveckla och köra projektet lokalt används referensarkitekturens utve
 
 == Installation av Orbeon ==
 
-Ladda hem Orbeon 3.7.0_beta1 från http://forge.ow2.org/project/showfiles.php?group_id=168. 
+Ladda hem Orbeon 3.7.1 från http://forge.ow2.org/project/showfiles.php?group_id=168. 
 
 Packa upp distributionen till en temporär katalog. Gå till Eclipse. Välj import->war-file. Peka ut orbeon.war som ligger i roten på orbeon-distributionen. Använd defaultinställningar. 
 
@@ -77,7 +78,7 @@ Deploya även /tyck-till-core-bc-module-web-projektet i Tomcat från Eclipse. Fo
 
 == Testa portlets lokalt ==
 
-Tyck till innehåller två portlets. Maven-modulen core-bc/module/portlet innehåller produktionsportletten, som länkar in tyck-till-formuläret i en IFrame. Test-portlet-modulen innehåller en enkelt testportlet som är till för att kasta exceptions och testa Portletfiltret, som i sin tur öppnar upp felformuläret i ett popupfönster. Båda portlettarna har inställningar i portlet.xml där urlen till formläret pekas ut. Denna inställning behöver ändras beroende på vilken miljö man vill köra mot. 
+Tyck till innehåller två portlets. Maven-modulen core-bc/module/portlet innehåller produktionsportletten, som länkar in tyck-till-formuläret i en IFrame. Test-portlet-modulen innehåller en enkelt testportlet som är till för att kasta exceptions och testa Portletfiltret, som i sin tur öppnar upp felformuläret i ett popupfönster. Båda portlettarna har inställningar i portlet.xml . Dessa inställningar behöver ändras beroende på vilken miljö man vill köra mot. 
 {{{
 
 }}}
@@ -96,7 +97,7 @@ Gör på samma vis för att deploya tyck-till-test-portlet.war.
 Att skapa en release: 
 
 TODO
-OBS! Använd hellre maven release-plugin 
+*OBS! Använd hellre maven release-plugin*
 Se http://maven.apache.org/plugins/maven-release-plugin/
 
   * Kopiera från trunk till tag

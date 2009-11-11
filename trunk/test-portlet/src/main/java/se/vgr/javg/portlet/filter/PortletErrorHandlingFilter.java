@@ -54,14 +54,12 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
         String nameSpace = arg1.getNamespace();
 
-        Map<String, ?> userInfo = (Map<String, ?>) request.getAttribute(PortletRequest.USER_INFO);
-        String userId = (String) ((userInfo != null) ? userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID
-                .toString()) : "");
-
         if (request.getParameter("errorInActionPhase") != null) {
             // if the portlet threw an exception during the action phase we
             // won't go into the view phase
-
+            Map<String, ?> userInfo = (Map<String, ?>) request.getAttribute(PortletRequest.USER_INFO);
+            String userId = (String) ((userInfo != null) ? userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID
+                    .toString()) : "");
             arg1.getWriter().write(
                     createTyckTillPopupLink(request.getParameter("errorInActionPhase"), userId, nameSpace));
         }
@@ -73,6 +71,9 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
             }
             catch (Throwable e) {
                 logger.info("Exception caught in PortletErrorHandlingFilter", e);
+                Map<String, ?> userInfo = (Map<String, ?>) request.getAttribute(PortletRequest.USER_INFO);
+                String userId = (String) ((userInfo != null) ? userInfo
+                        .get(PortletRequest.P3PUserInfos.USER_LOGIN_ID.toString()) : "");
                 try {
                     arg1.getWriter().write(createTyckTillPopupLink(e.toString(), userId, nameSpace));
                 }
@@ -133,10 +134,19 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
         buf.append("</script>\n");
         buf.append("Ett ov&#228;ntat fel har uppst&#229;tt, ");
         // Javascript enabled implies that onClick will run
-        buf.append("<a href=\"" + errorFormUrl + "\" " + "onClick=\"javascript:openPopup('" + errorFormUrl
+        // buf.append("<script language=\"javascript\">\n");
+        buf.append("<a href='#pop' " + "onClick=\"javascript:openPopup('" + errorFormUrl
                 + "&javasscript=yes')\" >");
         buf
                 .append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");
+        // buf.append("// -->\n");
+        // buf.append("</script>\n");
+
+        buf.append("<noscript>\n");
+        buf.append("<a href=\"" + errorFormUrl + "\" >");
+        buf
+                .append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");
+        buf.append("</noscript>\n");
         return buf.toString();
     }
 
@@ -147,10 +157,6 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
     public void init(FilterConfig arg0) throws PortletException {
         tyckTillErrorFormURL = arg0.getInitParameter("TyckTillErrorFormURL");
-
-        // String ldapContextConfigLocation =
-        // arg0.getPortletContext().getInitParameter("ldapContextConfigLocation");
-
         ac = PortletApplicationContextUtils.getWebApplicationContext(arg0.getPortletContext());
 
         contextName = arg0.getInitParameter("ApplicationName");

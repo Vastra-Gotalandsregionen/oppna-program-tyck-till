@@ -22,6 +22,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
@@ -45,6 +48,7 @@ import se.vgr.util.UserAgentUtils;
 public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 
     private static final Logger logger = LoggerFactory.getLogger(IncidentReportReader.class);
+    private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -85,7 +89,11 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         ir.setBrowser(UserAgentUtils.getBrowser(parseString(doc, "browser")));
         ir.setOs(UserAgentUtils.getOS(parseString(doc, "browser")));
         ir.setJavascript(parseString(doc, "javascript-enabled"));
-        ir.setTimeStamp(parseString(doc, "timestamp"));
+        String timestamp = parseString(doc, "timestamp");
+        if (timestamp == null || "".equals(timestamp)) {
+            timestamp = df.format(new Date());
+        }
+        ir.setTimeStamp(timestamp);
         ir.setIpAddress(parseString(doc, "ip-address"));
         ir.setReferer(parseString(doc, "referer"));
         ir.setApplicationName(parseString(doc, "application-name"));

@@ -16,7 +16,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import se.vgr.ldapservice.LdapService;
 import se.vgr.ldapservice.LdapUser;
@@ -36,39 +36,45 @@ public class WebErrorHandlingFilter implements Filter {
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
     private String tyckTillErrorFormURL;
     private ApplicationContext ac;
-    private Object contextName;
+    private String contextName;
     private String reportMethod;
     private String reportEmail;
 
-    public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2) throws IOException,
+    public void doFilter(ServletRequest request, ServletResponse arg1, FilterChain arg2) throws IOException,
             ServletException {
-
+        System.out.println("in doFilter(ServletRequest");
         try {
-            // call next in line (either another filter or the portlet
-            // itself)
-            arg2.doFilter(arg0, arg1);
+
+            arg2.doFilter(request, arg1);
         }
         catch (Exception e) {
+
             arg1.getWriter().write(
-                    createTyckTillPopupLink(e.toString(), ((HttpServletRequest) arg0).getRemoteUser()));
+                    createTyckTillPopupLink(e.toString(), ((HttpServletRequest) request).getRemoteUser()));
         }
     }
 
     private String createTyckTillPopupLink(String errorMessage, String userId) throws UnsupportedEncodingException {
-
         String email = "";
         String phoneNumber = "";
 
-        userId = "andcu1";
-
         if (userId != null && "" != userId) {
             LdapUser ldapUser = getLdapService().getLdapUser(null, "(uid=" + userId + ")");
-            email = ldapUser.getAttributeValue("mail");
-            phoneNumber = ldapUser.getAttributeValue("telephoneNumber");
+            if (ldapUser != null) {
+                email = ldapUser.getAttributeValue("mail");
+                phoneNumber = ldapUser.getAttributeValue("telephoneNumber");
+            }
+
+        }
+        else {
+            userId = "anonymous";
         }
 
         StringBuffer errorFormUrl = new StringBuffer(tyckTillErrorFormURL);
+
         errorFormUrl.append("?errorMessage=" + URLEncoder.encode(errorMessage, "UTF-8"));
+        errorFormUrl.append("&errorType=" + URLEncoder.encode("errorMessage", "UTF-8"));
+
         errorFormUrl.append("&timestamp=" + URLEncoder.encode(df.format(new Date()), "UTF-8"));
         if (email != null && "" != email) {
             errorFormUrl.append("&email=" + URLEncoder.encode(email, "UTF-8"));
@@ -77,16 +83,36 @@ public class WebErrorHandlingFilter implements Filter {
             errorFormUrl.append("&phoneNumber=" + URLEncoder.encode(phoneNumber, "UTF-8"));
         }
 
-        errorFormUrl.append("&context=" + contextName);
-        errorFormUrl.append("&reportMethod=" + reportMethod);
-        errorFormUrl.append("&reportEmail=" + reportEmail);
+        errorFormUrl.append("&context=" + URLEncoder.encode(contextName, "UTF-8"));
+        // errorFormUrl.append("&namespace=" + URLEncoder.encode(nameSpace, "UTF-8"));
+        errorFormUrl.append("&reportMethod=" + URLEncoder.encode(reportMethod, "UTF-8"));
+        errorFormUrl.append("&reportEmail=" + URLEncoder.encode(reportEmail, "UTF-8"));
         errorFormUrl.append("&userid=" + userId);
 
         StringBuffer buf = new StringBuffer();
+        buf.append("<script language=\"javascript\">\n");
+        buf.append("function openPopup(url) {\n");
+        buf.append("newwindow=window.open(url,'name','menubar=no,width=670,height=450,toolbar=no');\n");
+        buf.append("if (window.focus) {newwindow.focus()}\n");
+        buf.append("return false;\n");
+        buf.append("}\n");
+        buf.append("// -->\n");
+        buf.append("</script>\n");
         buf.append("Ett ov&#228;ntat fel har uppst&#229;tt, ");
-        buf.append("<a href=\"" + errorFormUrl + "\" target=\"_blank\">");
+        // Javascript enabled implies that onClick will run
+        // buf.append("<script language=\"javascript\">\n");
+        buf.append("<a href='#pop' " + "onClick=\"javascript:openPopup('" + errorFormUrl
+                + "&javasscript=yes')\" >");
         buf
                 .append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");
+        // buf.append("// -->\n");
+        // buf.append("</script>\n");
+
+        buf.append("<noscript>\n");
+        buf.append("<a href=\"" + errorFormUrl + "\" >");
+        buf
+                .append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");
+        buf.append("</noscript>\n");
         return buf.toString();
     }
 
@@ -97,8 +123,10 @@ public class WebErrorHandlingFilter implements Filter {
 
     public void init(FilterConfig arg0) throws ServletException {
         tyckTillErrorFormURL = arg0.getInitParameter("TyckTillErrorFormURL");
-        String ldapContextConfigLocation = arg0.getServletContext().getInitParameter("ldapContextConfigLocation");
-        ac = new FileSystemXmlApplicationContext(ldapContextConfigLocation);
+        // String ldapContextConfigLocation =
+        // arg0.getServletContext().getInitParameter("ldapContextConfigLocation");
+        ac = WebApplicationContextUtils.getWebApplicationContext(arg0.getServletContext());
+
         contextName = arg0.getServletContext().getServletContextName();
         reportMethod = arg0.getInitParameter("TyckTillReportMethod");
         reportEmail = arg0.getInitParameter("TyckTillReportEmail");

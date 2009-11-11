@@ -73,7 +73,7 @@ public class EMailClient {
 
             // create some properties and get the default Session
             Session session = Session.getDefaultInstance(props, null);
-            session.setDebug(debug);
+            // session.setDebug(debug);
 
             // create a message
             Message msg = new MimeMessage(session);

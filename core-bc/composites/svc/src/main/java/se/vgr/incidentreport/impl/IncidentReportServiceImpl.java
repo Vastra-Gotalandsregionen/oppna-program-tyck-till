@@ -212,6 +212,9 @@ public class IncidentReportServiceImpl implements IncidentReportService {
 
     private String lookupProjectId(String applicationName) {
         String result = pivotalTrackerMappings.getProperty(applicationName);
+        if (result == null || result.length() == 0) {
+            result = applicationName;
+        }
         return result;
 
     }

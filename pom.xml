@@ -159,7 +159,7 @@ encoding/<project>=UTF-8]]>
      <repository>
       <uniqueVersion>false</uniqueVersion>
       <id>svn-repo</id>
-      <url>svn:https://oppna-program-tyck-till.googlecode.com/svn/maven/repo/</url> 
+      <url>svn:https://oppna-program.googlecode.com/svn/maven/repo/</url> 
 	 </repository>
   </distributionManagement>
 

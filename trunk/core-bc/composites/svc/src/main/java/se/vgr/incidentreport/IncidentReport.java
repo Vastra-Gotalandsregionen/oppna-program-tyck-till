@@ -49,6 +49,7 @@ public class IncidentReport {
     private String nameSpace;
     private String javaScript = "";
     private String os;
+    private String url;
 
     public String getOs() {
         return os;
@@ -241,6 +242,9 @@ public class IncidentReport {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("Application name: " + this.getApplicationName() + NEWLINE);
+        if (this.url != null && url.length() > 0) {
+            sb.append(url + " " + NEWLINE);
+        }
         if (this.nameSpace != null && nameSpace.length() > 0) {
             sb.append("Portlet name: " + this.getNameSpace() + NEWLINE + NEWLINE);
         }
@@ -319,5 +323,9 @@ public class IncidentReport {
     public static void main(String[] args) {
         IncidentReport ir = new IncidentReport();
         System.out.println(ir);
+    }
+
+    public void setLink(String url) {
+        this.url = url;
     }
 }

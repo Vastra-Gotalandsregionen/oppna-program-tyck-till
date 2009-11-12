@@ -10,19 +10,18 @@ Usage:  Define all truly common things for the system here.
 Template version: 1.1-RC1
 Generation time : 2009-04-17 09:01:59 CEST
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.vgr.tyck-till</groupId>
   <artifactId>tyck-till-system</artifactId>
   <packaging>pom</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>${project.artifactId}</name>
   
   <scm>
     <!-- <connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection> -->
-    <developerConnection>scm:svn:https://oppna-program-commons.googlecode.com/svn/trunk</developerConnection>
-    <url>http://oppna-program-tyck-till.googlecode.com/</url>
+    <developerConnection>scm:svn:https://oppna-program-commons.googlecode.com/svn/tags/tyck-till-system-1.0</developerConnection>
+    <url>http://oppna-program-tyck-till.googlecode.com/tags/tyck-till-system-1.0</url>
   </scm>
 
   <!-- common library versions -->

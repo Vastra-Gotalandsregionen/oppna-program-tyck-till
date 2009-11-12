@@ -45,11 +45,11 @@ Generation time : 2009-04-17 09:01:59 CEST
       <artifactId>commons-util-core-bc-composite-svc-ldap</artifactId>
       <version>1.0</version>
     </dependency>
-    <dependency>
+    <!-- <dependency>
       <groupId>se.vgr.javg</groupId>
       <artifactId>javg-rt-support</artifactId>
       <version>${javg.version}</version>
-    </dependency>
+    </dependency> -->
     <dependency>
       <groupId>taglibs</groupId>
       <artifactId>standard</artifactId>

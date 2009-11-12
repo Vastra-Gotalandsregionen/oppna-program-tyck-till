@@ -18,6 +18,12 @@ Generation time : 2009-04-17 09:01:59 CEST
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>${project.artifactId}</name>
+  
+  <scm>
+    <!-- <connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection> -->
+    <developerConnection>scm:svn:https://oppna-program-commons.googlecode.com/svn/trunk</developerConnection>
+    <url>http://oppna-program-tyck-till.googlecode.com/</url>
+  </scm>
 
   <!-- common library versions -->
   <properties>

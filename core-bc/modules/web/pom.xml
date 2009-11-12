@@ -40,10 +40,7 @@ Generation time : 2009-04-17 09:01:59 CEST
   </build>
 
   <dependencies>  
-    <dependency>
-      <groupId>se.vgr.javg</groupId>
-      <artifactId>javg-rt-support</artifactId>
-    </dependency>
+    
     
      <dependency>
       <groupId>se.vgr.tyck-till</groupId>

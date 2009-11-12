@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+  id="TyckTill" version="2.0">
+  <portlet>
+    <portlet-name>IncidentReportPortlet</portlet-name>
+    <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
+    
+    <init-param>
+      <name>ApplicationName</name>
+      <value>Antonio_portal</value>
+    </init-param>
+    <init-param>
+      <name>TyckTillErrorFormURL</name>
+      <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp
+      </value>
+
+    </init-param>
+    <init-param>
+      <name>ldapPropertiesFileName</name>
+      <value>/WEB-INF/classes/ldap.properties</value>
+    </init-param>
+    <init-param>
+      <name>TyckTillReportMethod</name>
+      <value>pivotaltracker</value>
+    </init-param>
+    <init-param>
+      <name>TyckTillReportEmail</name>
+      <value>ulcan@wmdata.com</value>
+    </init-param>
+
+    <expiration-cache>0</expiration-cache>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
+    <resource-bundle>IncidentReport</resource-bundle>
+  </portlet>
+  
+  <user-attribute>
+    <description>User Login Id</description>
+    <name>user.login.id</name>
+  </user-attribute>
+
+</portlet-app>

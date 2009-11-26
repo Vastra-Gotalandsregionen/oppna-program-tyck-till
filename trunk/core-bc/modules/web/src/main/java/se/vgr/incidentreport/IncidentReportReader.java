@@ -22,9 +22,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
@@ -49,6 +53,9 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 
     private static final Logger logger = LoggerFactory.getLogger(IncidentReportReader.class);
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+
+    private Locale svLocale = new Locale("sv", "SE");
+    private ResourceBundle rb = ResourceBundle.getBundle("messages", svLocale);
 
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -77,11 +84,26 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         catch (Exception e) {
             throw new RuntimeException("Error creating xml", e);
         }
-
-        ir.setReportType(parseString(doc, "reportType"));
+        String reportType = parseString(doc, "reportType");
+        String reportType2 = reportType;
+        try {
+            reportType2 = rb.getString("incidentreport.reportTypes." + reportType + ".label");
+        }
+        catch (Exception e) {
+            // ignore
+        }
+        ir.setReportType(reportType2);
         String[] errorTypes = parseString(doc, "errorType").split(" ");
         for (String errorType : errorTypes) {
-            ir.addErrorType(errorType);
+            String errorType2 = errorType;
+            try {
+                errorType2 = rb.getString("incidentreport.errorTypes." + errorType + ".label");
+            }
+            catch (Exception e) {
+                // ignore
+            }
+
+            ir.addErrorType(errorType2);
         }
 
         ir.setDescription(parseString(doc, "description"));
@@ -128,9 +150,18 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             for (int i = 0; i < files.getLength(); i++) {
                 Node fileNode = files.item(i);
                 if (fileNode != null && fileNode.getFirstChild() != null) {
-                    String path = fileNode.getFirstChild().getTextContent().replaceFirst("file:", "").trim();
-                    path = path.replaceAll("%20", " ");
-                    File file = new File(path);
+                    String path = fileNode.getFirstChild().getTextContent().trim();
+                    URL url;
+                    File file = null;
+                    try {
+                        url = new URL(path);
+                        file = new File(url.toURI());
+                    }
+                    catch (Exception e1) {
+                        logger.warn("Filename could not be read.", e1);
+                        continue;
+                    }
+
                     Screenshot ss = new Screenshot();
                     String fileName = "noname";
                     try {
@@ -139,6 +170,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
                     }
                     catch (Exception e) {
                         logger.warn("Filename could not be read.", e);
+                        continue;
                     }
                     ss.setFileName(fileName);
                     ss.setPath(file.getAbsolutePath());
@@ -187,6 +219,20 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 
     public boolean isReadable(Class<?> cls, Type arg1, Annotation[] arg2, javax.ws.rs.core.MediaType arg3) {
         return IncidentReport.class.isAssignableFrom(cls);
+    }
+
+    public static void main(String[] argv) {
+        try {
+            Locale svLocale = new Locale("sv", "SE");
+            ResourceBundle rb = ResourceBundle.getBundle("messages", svLocale);
+
+            System.out.println(rb.getString("incidentreport.errorTypes.badContrastError.label"));
+            // System.out.println(rb.getString("Goodbye"));
+
+        }
+        catch (MissingResourceException mre) {
+            mre.printStackTrace();
+        }
     }
 
 }

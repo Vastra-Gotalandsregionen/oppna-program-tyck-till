@@ -72,14 +72,14 @@ public class IncidentReportPortlet extends GenericPortlet {
 
         if (userId != null && "" != userId) {
             LdapUser ldapUser = getLdapService().getLdapUser(null, "(uid=" + userId + ")");
-            System.out.println("Ldap values:" + ldapUser.getAttributes());
+            // System.out.println("Ldap values:" + ldapUser.getAttributes());
             if (ldapUser != null) {
                 email = ldapUser.getAttributeValue("mail");
                 phoneNumber = ldapUser.getAttributeValue("telephoneNumber");
-                if (phoneNumber == null || phoneNumber.length() < 5) {
-                    phoneNumber = ldapUser.getAttributeValue("hsaSedfSwitchboardTelephoneNo");
-                }
-                System.out.println("email=" + email + " phoneNumber=" + phoneNumber);
+                // if (phoneNumber == null || phoneNumber.length() < 5) {
+                // phoneNumber = ldapUser.getAttributeValue("hsaSedfSwitchboardTelephoneNo");
+                // }
+                // System.out.println("email=" + email + " phoneNumber=" + phoneNumber);
             }
 
         }

@@ -100,15 +100,17 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                     Properties parameters = mapToRequestParameters(ir);
                     List<Screenshot> ss = ir.getScreenShots();
                     List<File> files = new ArrayList<File>();
+                    List<String> filenames = new ArrayList<String>();
                     for (Screenshot s : ss) {
                         files.add(new File(s.getPath()));
+                        filenames.add(s.getFileName());
                     }
 
-                    usdService.createRequest(parameters, ir.getUserId(), files);
+                    usdService.createRequest(parameters, ir.getUserId(), files, filenames);
                 }
                 catch (Exception e) {
                     logger.warn("USD service could not be reached, trying email instead.", e);
-                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
+                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + "USD-" + e.getMessage());
                 }
             }
             else if ("pivotaltracker".equalsIgnoreCase(method)) {
@@ -117,7 +119,8 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                 }
                 catch (Exception e) {
                     logger.warn("Pivotal tracker could not be reached, trying email instead.");
-                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + e.getMessage());
+                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + "PivotalTracker-"
+                            + e.getMessage());
                 }
             }
             else {

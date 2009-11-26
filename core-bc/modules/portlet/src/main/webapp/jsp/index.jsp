@@ -27,12 +27,16 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 
 <portlet:defineObjects />
+<script language="javascript" >
+document.write("<iframe src='<%=portletConfig.getInitParameter("TyckTillErrorFormURL") %>?<%=request.getAttribute("errorFormParams")  %>&javasscript=yes' width='100%' 	height='600px' 	frameborder='0' scrolling='no'>  <p>Din webbläsare stödjer ej IFrames.</p></iframe>");
+</script>
+<noscript>
 <iframe 
-	src="<%=portletConfig.getInitParameter("TyckTillErrorFormURL") %>?<%=request.getAttribute("errorFormParams")  %>" 
-	width="100%" 
-	height="600px"
-	frameborder="0"
-	scrolling="no">
+    src="<%=portletConfig.getInitParameter("TyckTillErrorFormURL") %>?<%=request.getAttribute("errorFormParams")  %>&javasscript=no" 
+    width="100%" 
+    height="600px"
+    frameborder="0"
+    scrolling="no">
   <p>Din webbläsare stödjer ej IFrames.</p>
 </iframe>
-
+</noscript>

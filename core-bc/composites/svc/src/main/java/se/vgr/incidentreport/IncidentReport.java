@@ -279,13 +279,13 @@ public class IncidentReport {
         }
         sb.append(NEWLINE);
         if (this.getEmailAddress() != null) {
-            sb.append("-Användaren email: " + this.getEmailAddress() + NEWLINE);
+            sb.append("- Användaren email: " + this.getEmailAddress() + NEWLINE);
         }
         if (this.getPhoneNumber() != null) {
-            sb.append("-Användaren telefon: " + this.getPhoneNumber() + NEWLINE);
+            sb.append("- Användaren telefon: " + this.getPhoneNumber() + NEWLINE);
         }
         if (this.getSmsPhoneNumber() != null) {
-            sb.append("-Användaren SMS: " + this.getSmsPhoneNumber() + NEWLINE);
+            sb.append("- Användaren SMS: " + this.getSmsPhoneNumber() + NEWLINE);
         }
 
         if (this.getScreenShots() != null) {
@@ -298,13 +298,13 @@ public class IncidentReport {
         }
 
         sb.append(NEWLINE + "Uppgifter automatgenererade" + NEWLINE);
-        sb.append("-Användar ID: " + this.getUserId() + NEWLINE);
-        sb.append("-IP Adress: " + this.getIpAddress() + NEWLINE);
-        sb.append("-Browser: " + this.getBrowser() + NEWLINE);
-        sb.append("-OS: " + this.getOs() + NEWLINE);
-        sb.append("-Javascript: " + this.getJavaScript() + NEWLINE);
-        sb.append("-Referer: " + this.getReferer() + NEWLINE);
-        sb.append("-Timestamp: " + this.getTimeStamp() + NEWLINE);
+        sb.append("- Användar ID: " + this.getUserId() + NEWLINE);
+        sb.append("- IP Adress: " + this.getIpAddress() + NEWLINE);
+        sb.append("- Browser: " + this.getBrowser() + NEWLINE);
+        sb.append("- OS: " + this.getOs() + NEWLINE);
+        sb.append("- Javascript: " + this.getJavaScript() + NEWLINE);
+        sb.append("- Referer: " + this.getReferer() + NEWLINE);
+        sb.append("- Timestamp: " + this.getTimeStamp() + NEWLINE);
 
         sb.append(NEWLINE + "Valt rapporteringsätt för applikationen: " + this.getReportMethod() + NEWLINE);
         sb.append("Email till applikationsansvarig: " + this.getReportEmail() + NEWLINE);

@@ -36,7 +36,7 @@ public class IncidentReportResource {
     @POST
     @Produces("application/xml")
     public void post(@Context UriInfo uriInfo, IncidentReport ir) {
-        System.out.println("In IncidentReportResource.post ir=" + ir);
+        // System.out.println("In IncidentReportResource.post ir=" + ir);
         incidentReportService.reportIncident(ir);
     }
 

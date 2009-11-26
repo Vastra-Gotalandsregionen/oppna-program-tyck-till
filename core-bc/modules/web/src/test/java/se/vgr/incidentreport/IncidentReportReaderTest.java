@@ -70,9 +70,9 @@ public class IncidentReportReaderTest extends TestCase {
         IncidentReport ir = reader.parseIncidentReport(new StringBufferInputStream(incidentReport1));
         assertNotNull(ir);
 
-        assertEquals("error", ir.getReportType());
+        assertEquals("Detta fungerar inte", ir.getReportType());
         assertEquals(1, ir.getErrorTypes().size());
-        assertEquals("errorMessage", ir.getErrorTypes().get(0));
+        assertEquals("Felmeddelande", ir.getErrorTypes().get(0));
         // assertTrue(ir.getBrowser().indexOf("Mozilla") > -1);
         assertEquals("defaultErrorMessage", ir.getDefaultErrorMessage());
         assertEquals("description", ir.getDescription());
@@ -95,9 +95,9 @@ public class IncidentReportReaderTest extends TestCase {
         IncidentReport ir = reader.parseIncidentReport(new StringBufferInputStream(incidentReport2));
         assertNotNull(ir);
 
-        assertEquals("error", ir.getReportType());
+        assertEquals("Detta fungerar inte", ir.getReportType());
         assertEquals(1, ir.getErrorTypes().size());
-        assertEquals("errorMessage", ir.getErrorTypes().get(0));
+        assertEquals("Felmeddelande", ir.getErrorTypes().get(0));
         // assertEquals("Mozilla", ir.getBrowser());
         assertEquals("defaultErrorMessage", ir.getDefaultErrorMessage());
         assertEquals("description", ir.getDescription());

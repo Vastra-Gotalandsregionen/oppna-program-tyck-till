@@ -25,5 +25,13 @@ Generation time : 2009-04-17 09:01:59 CEST
     <module>modules/web</module>
 	<module>modules/portlet</module>
   </modules>
+  
+  <repositories> 
+  <repository>  
+  <id>springsource maven repo</id> 
+  <url>http://maven.springframework.org/milestone</url>
+  </repository>
+  </repositories>
+
 
 </project>

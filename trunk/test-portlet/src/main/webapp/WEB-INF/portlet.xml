@@ -44,7 +44,7 @@
     </init-param>
     <init-param>
       <name>TyckTillErrorFormURL</name>
-      <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp
+      <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp
       </value>
 
     </init-param>
@@ -54,7 +54,7 @@
     </init-param>
     <init-param>
       <name>TyckTillReportMethod</name>
-      <value>pivotaltracker</value>
+      <value>usd</value>
     </init-param>
     <init-param>
       <name>TyckTillReportEmail</name>

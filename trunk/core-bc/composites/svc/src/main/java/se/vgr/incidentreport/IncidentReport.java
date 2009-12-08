@@ -256,6 +256,8 @@ public class IncidentReport {
             sb.append("Felrapporten har triggats av användare" + NEWLINE);
         }
         sb.append(NEWLINE + "Uppgifter inmatade av användaren" + NEWLINE);
+        sb.append("- Förklara felet med egna ord: " + this.getDescription() + NEWLINE);
+        sb.append(NEWLINE);
         sb.append("- Typ av feedback: " + this.getReportType() + NEWLINE);
         if (this.getErrorTypes() != null) {
             List<String> errTypes = this.getErrorTypes();
@@ -265,7 +267,7 @@ public class IncidentReport {
             }
             sb.append(NEWLINE);
         }
-        sb.append("- Förklara felet med egna ord: " + this.getDescription() + NEWLINE);
+        
 
         sb.append("- Användaren vill ha feedback via: ");
         if (this.feedbackByMail) {

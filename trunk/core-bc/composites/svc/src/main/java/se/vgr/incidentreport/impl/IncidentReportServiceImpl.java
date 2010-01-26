@@ -146,9 +146,15 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         // String url = addStoryForProject(projectId, story);
         String url = pivotalTrackerClient.createuserStory(story);
 
-        // attachments cannot be sent to Pivotal Tracker and thus have to be emailed
+        // attachments cannot be sent to Pivotal Tracker and thus have to be emailed...
         List<Screenshot> attachments = ir.getScreenShots();
+        List <File> atts=new ArrayList<File>();
+        for (int i=0;i<attachments.size();i++) {
+        	atts.add(new File(attachments.get(i).getPath()));
+		}
+         story.setAttachments(atts);
         if (url != null && attachments != null && attachments.size() > 0) {
+        	//pivotalTrackerClient.
             if (ir.getReportEmail() != null && ir.getReportEmail().length() > 0) {
                 try {
                     ir.setLink("User story: <a href='" + url + "'>" + url + "</a></b>");

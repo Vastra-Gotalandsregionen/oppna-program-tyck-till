@@ -10,7 +10,7 @@ Generation time : 2009-04-17 09:01:59 CEST
   <parent>
     <groupId>se.vgr.tyck-till</groupId>
     <artifactId>tyck-till-core-bc</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
   </parent>
   <artifactId>tyck-till-core-bc-module-web</artifactId>
   <packaging>war</packaging>
@@ -44,12 +44,12 @@ Generation time : 2009-04-17 09:01:59 CEST
      <dependency>
       <groupId>se.vgr.tyck-till</groupId>
       <artifactId>tyck-till-core-bc-composite-svc</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>se.vgr.tyck-till</groupId>
       <artifactId>tyck-till-core-bc-composite-types</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
 <!--    <dependency>-->
 <!--      <groupId>taglibs</groupId>-->

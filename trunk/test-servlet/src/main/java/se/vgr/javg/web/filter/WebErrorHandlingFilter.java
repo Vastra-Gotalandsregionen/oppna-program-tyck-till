@@ -59,7 +59,7 @@ public class WebErrorHandlingFilter implements Filter {
         String phoneNumber = "";
 
         if (userId != null && "" != userId) {
-            LdapUser ldapUser = getLdapService().getLdapUser(null, "(uid=" + userId + ")");
+            LdapUser ldapUser = getLdapService().getLdapUserByUid(userId);
             if (ldapUser != null) {
                 email = ldapUser.getAttributeValue("mail");
                 phoneNumber = ldapUser.getAttributeValue("telephoneNumber");

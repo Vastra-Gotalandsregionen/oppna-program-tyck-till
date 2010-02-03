@@ -71,7 +71,7 @@ public class IncidentReportPortlet extends GenericPortlet {
         String phoneNumber = "";
 
         if (userId != null && "" != userId) {
-            LdapUser ldapUser = getLdapService().getLdapUser(null, "(uid=" + userId + ")");
+            LdapUser ldapUser = getLdapService().getLdapUserByUid(userId);
             // System.out.println("Ldap values:" + ldapUser.getAttributes());
             if (ldapUser != null) {
                 email = ldapUser.getAttributeValue("mail");

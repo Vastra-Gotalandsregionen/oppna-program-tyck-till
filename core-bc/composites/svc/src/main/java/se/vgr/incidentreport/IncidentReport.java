@@ -322,10 +322,7 @@ public class IncidentReport {
         this.os = os;
     }
 
-    public static void main(String[] args) {
-        IncidentReport ir = new IncidentReport();
-        System.out.println(ir);
-    }
+    
 
     public void setLink(String url) {
         this.url = url;

@@ -20,7 +20,7 @@ public class TyckTillTestPortlet extends GenericPortlet {
 
     @Override
     protected void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        System.out.println("in TyckTillTestPortlet doView2");
+        //System.out.println("in TyckTillTestPortlet doView2");
         log.info("Logging in TyckTillTestPortlet doView");
         if (request.getParameter("throwExceptionInView") != null) {
             throw new RuntimeException("An error occured in doView");

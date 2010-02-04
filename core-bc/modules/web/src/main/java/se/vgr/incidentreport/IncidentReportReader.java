@@ -221,18 +221,6 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         return IncidentReport.class.isAssignableFrom(cls);
     }
 
-    public static void main(String[] argv) {
-        try {
-            Locale svLocale = new Locale("sv", "SE");
-            ResourceBundle rb = ResourceBundle.getBundle("messages", svLocale);
-
-            System.out.println(rb.getString("incidentreport.errorTypes.badContrastError.label"));
-            // System.out.println(rb.getString("Goodbye"));
-
-        }
-        catch (MissingResourceException mre) {
-            mre.printStackTrace();
-        }
-    }
+    
 
 }

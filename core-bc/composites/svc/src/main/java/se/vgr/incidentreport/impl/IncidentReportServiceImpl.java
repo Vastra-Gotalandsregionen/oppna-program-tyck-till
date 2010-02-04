@@ -221,7 +221,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
 		p.setProperty("category", "pcat:400023");
 		// map to group using application name?
 		String appName = ir.getApplicationName().trim().replaceAll(" ", "_");
-		System.out.println("getting group for appName=" + appName);
+		//System.out.println("getting group for appName=" + appName);
 		String groupHandle = usdService
 				.getUSDGroupHandleForApplicationName(appName);
 		// p.setProperty("group", "cnt:A455761E38B4B8488B5F0999BE5A4637");

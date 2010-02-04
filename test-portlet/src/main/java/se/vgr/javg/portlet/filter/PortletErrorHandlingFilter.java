@@ -50,7 +50,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
     public void doFilter(RenderRequest request, RenderResponse arg1, FilterChain arg2) throws IOException,
             PortletException {
-        System.out.println("in PortletErrorHandlingFilter doFilter");
+        //System.out.println("in PortletErrorHandlingFilter doFilter");
 
         String nameSpace = arg1.getNamespace();
 
@@ -58,6 +58,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
             // if the portlet threw an exception during the action phase we
             // won't go into the view phase
             Map<String, ?> userInfo = (Map<String, ?>) request.getAttribute(PortletRequest.USER_INFO);
+            //System.out.println("UserInfo:"+userInfo);
             String userId = (String) ((userInfo != null) ? userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID
                     .toString()) : "");
             arg1.getWriter().write(

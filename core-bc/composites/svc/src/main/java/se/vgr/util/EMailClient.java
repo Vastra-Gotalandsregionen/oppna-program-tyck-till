@@ -109,11 +109,11 @@ public class EMailClient {
                 File file = new File(ss.getPath());
                 for (int i = 0; i < 10; i++) {
                     if (file.exists()) {
-                        System.out.println("File exists:" + file.getAbsolutePath());
+                        //System.out.println("File exists:" + file.getAbsolutePath());
                         i = 10;
                     }
                     else {
-                        System.out.println("File not found here:" + file.getAbsolutePath());
+                        //System.out.println("File not found here:" + file.getAbsolutePath());
                         try {
 
                             Thread.sleep(1000);

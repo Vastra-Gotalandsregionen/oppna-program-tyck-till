@@ -65,6 +65,8 @@ public class IncidentReportPortlet extends GenericPortlet {
     @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Map<String, ?> userInfo = (Map<String, ?>) request.getAttribute(PortletRequest.USER_INFO);
+        
+        //System.out.println("UserInfo:"+userInfo);
         String userId = (String) ((userInfo != null) ? userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID
                 .toString()) : "");
         String email = "";

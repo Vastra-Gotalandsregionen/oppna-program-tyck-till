@@ -218,6 +218,10 @@ encoding/<project>=UTF-8]]>
     <url>http://oppna-program.googlecode.com/svn/maven/</url>
   </repository>
   <repository>
+    <id>oppna-program-snapshot-repo</id>
+    <url>http://oppna-program.googlecode.com/svn/maven-snapshots/</url>
+  </repository>
+  <repository>
     <id>oppna-program-commons-repo</id>
     <url>http://oppna-program-commons.googlecode.com/svn/maven/</url>
   </repository>

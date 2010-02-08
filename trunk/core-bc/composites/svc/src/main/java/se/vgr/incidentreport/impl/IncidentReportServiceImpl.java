@@ -18,7 +18,9 @@
 package se.vgr.incidentreport.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -40,6 +42,11 @@ import se.vgr.util.EMailClient;
 
 @Service("incidentReportService")
 public class IncidentReportServiceImpl implements IncidentReportService {
+
+	/**
+	 * Time in minutes when a file is considered old in the temp file directory, and hence is removed.
+	 */
+	private static final int TEMP_FILES_OLDMINUTES = 15;
 
 	@Autowired
 	@Qualifier("pivotalTrackerMappings")
@@ -80,24 +87,10 @@ public class IncidentReportServiceImpl implements IncidentReportService {
 		int result = 0;
 
 		try {
-
+			
+			cleanupTemporaryFiles();
 			String method = ir.getReportMethod();
-			// String appName = ir.getApplicationName().replaceAll(" ", "_");
-			// String PTId =
-			// pivotalTrackerClient.getPivotalTrackerMappings().getProperty(appName);
-			// // Pivotaltracker is used if mapping exists
-			// if (PTId != null) {
-			// try {
-			// createUserStory(ir);
-			// }
-			// catch (Exception e) {
-			// log.warn(e);
-			// sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" +
-			// e.getMessage());
-			// }
-			//
-			// }
-			// else
+			
 			if ("usd".equalsIgnoreCase(method)) {
 				try {
 					Properties parameters = mapToRequestParameters(ir);
@@ -138,6 +131,28 @@ public class IncidentReportServiceImpl implements IncidentReportService {
 		return result;
 	}
 
+	private void cleanupTemporaryFiles() {
+		//System.out.println("Deleting temp files..");
+		Date now=new Date();
+		try {
+			File f=File.createTempFile("cleanup", "tmp");
+			File tempDir=f.getParentFile();
+			File[] tempfiles=tempDir.listFiles();
+			for (int i = 0; i < tempfiles.length; i++) {
+				// Remove files older than
+				if(tempfiles[i].lastModified()+(TEMP_FILES_OLDMINUTES*60*1000)< now.getTime()){
+					tempfiles[i].delete();
+					
+				}
+			}
+		} catch (IOException e) {
+			// ignore
+			
+		}
+		
+		
+	}
+
 	private void createUserStory(IncidentReport ir) {
 		String applicationName = ir.getApplicationName().replaceAll(" ", "_");
 		String projectId = lookupProjectId(applicationName);
@@ -150,8 +165,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
 		// String url = addStoryForProject(projectId, story);
 		String url = pivotalTrackerClient.createuserStory(story);
 
-		// attachments cannot be sent to Pivotal Tracker and thus have to be
-		// emailed...
+		
 		List<Screenshot> attachments = ir.getScreenShots();
 		List<File> atts = new ArrayList<File>();
 		for (int i = 0; i < attachments.size(); i++) {
@@ -169,6 +183,8 @@ public class IncidentReportServiceImpl implements IncidentReportService {
 						story);
 			} catch (Exception ex) {
 				logger.warn("Pivotal tracker attachments not working", ex);
+				// attachments that cannot be sent to Pivotal Tracker must be
+				// emailed...
 				if (ir.getReportEmail() != null
 						&& ir.getReportEmail().length() > 0) {
 					try {

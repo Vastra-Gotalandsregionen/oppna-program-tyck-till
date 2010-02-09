@@ -33,8 +33,5 @@
       classpath*:/applicationContext.xml classpath*:/*-portlet.xml
     </param-value>
   </context-param>
-  <context-param>
-        <param-name>ldapContextConfigLocation</param-name>
-        <param-value>/WEB-INF/classes/ldapContext.xml</param-value>
-   </context-param>
+  
 </web-app>

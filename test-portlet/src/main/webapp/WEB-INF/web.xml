@@ -9,47 +9,17 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>
-      classpath*:/applicationContext.xml classpath*:/*-portlet.xml
-    </param-value>
+    <param-value>classpath*:/applicationContext.xml classpath*:/*-portlet.xml</param-value>
   </context-param>
 
   <display-name>Tyck till test Portlet</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-
-  <!--
-    <context-param> <param-name>ldapContextConfigLocation</param-name>
-    <param-value>/WEB-INF/classes/ldapContext.xml</param-value> </context-param>
-  -->
-  <listener>
-    <listener-class>com.liferay.portal.kernel.servlet.PortletContextListener</listener-class>
-  </listener>
-  <servlet>
-    <servlet-name>tycktilltestportlet</servlet-name>
-    <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
-    <init-param>
-      <param-name>portlet-class</param-name>
-      <param-value>se.vgr.tycktill.portlet.TyckTillTestPortlet</param-value>
-    </init-param>
-    <load-on-startup>0</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>tycktilltestportlet</servlet-name>
-    <url-pattern>/tycktilltestportlet/*</url-pattern>
-  </servlet-mapping>
+  
   <!--
     This is setup by the application that use "tyck till" <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> </listener>
-  -->
+ 
 
-  <!-- filter is setup in portlet.xml
+  filter is setup in portlet.xml
     <filter> <filter-name>ErrorHandlingFilter</filter-name>
     <filter-class>se.vgr.javg.portlet.filter.JavgErrorHandlingFilter</filter-class> <init-param>
     <param-name>TyckTillErrorFormURL</param-name>

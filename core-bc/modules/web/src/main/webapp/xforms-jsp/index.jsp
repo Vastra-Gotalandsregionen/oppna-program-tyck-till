@@ -1,8 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%--
 
-    Copyright 2009 Västra Götalandsregionen
+    Copyright 2010 VÃ¤stra GÃ¶talandsregionen
 
       This library is free software; you can redistribute it and/or modify
       it under the terms of version 2.1 of the GNU Lesser General Public
@@ -18,12 +16,17 @@
       Free Software Foundation, Inc., 59 Temple Place, Suite 330,
       Boston, MA 02111-1307  USA
 
+
 --%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!-- TODO Ev fixa urlerna till REST-gränssnittet, som i dagsläget är "relativa" 
-kontra denna jsp-sidas url (Orbeon verkar dock inte stödja riktiga relativa länkar 
-så detta är "fulkodat" - se submission nedan) -->
+<!-- TODO Ev fixa urlerna till REST-grï¿½nssnittet, som i dagslï¿½get ï¿½r "relativa" 
+kontra denna jsp-sidas url (Orbeon verkar dock inte stï¿½dja riktiga relativa lï¿½nkar 
+sï¿½ detta ï¿½r "fulkodat" - se submission nedan) -->
 <!-- TODO If/when deploying as a portlet we must remove all jsp-tags. Orbeon doesn't 
 seem to support jsp in portlet mode (?)-->
 <!-- TODO Check and fix the user interface according to the VGR guidelines (as much as possible, 

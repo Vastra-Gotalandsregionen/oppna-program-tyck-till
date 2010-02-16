@@ -21,7 +21,7 @@ Generation time : 2009-04-17 09:01:59 CEST
   <groupId>se.vgr.tyck-till</groupId>
   <artifactId>tyck-till-system</artifactId>
   <packaging>pom</packaging>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <name>${project.artifactId}</name>
   
   <modules>
@@ -31,8 +31,8 @@ Generation time : 2009-04-17 09:01:59 CEST
   </modules>
 
   <scm>
-    <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/trunk</developerConnection>
-    <url>http://oppna-program-tyck-till.googlecode.com/</url>
+    <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/tags/tyck-till-system-1.1</developerConnection>
+    <url>http://oppna-program-tyck-till.googlecode.com/tags/tyck-till-system-1.1</url>
   </scm>
   
 

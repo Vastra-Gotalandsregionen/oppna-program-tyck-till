@@ -34,7 +34,6 @@ Generation time : 2009-04-17 09:01:59 CEST
     <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/trunk</developerConnection>
     <url>http://oppna-program-tyck-till.googlecode.com/</url>
   </scm>
-  
 
 <!-- Used by "mvn deploy" to deploy artefacts to a central maven repository. Use settings.xml to set username and password for this repository, see wagon-svn for more information -->
   <distributionManagement>

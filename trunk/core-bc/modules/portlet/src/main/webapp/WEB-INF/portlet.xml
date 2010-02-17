@@ -35,11 +35,6 @@
       <name>TyckTillErrorFormURL</name>
       <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp
       </value>
-
-    </init-param>
-    <init-param>
-      <name>ldapPropertiesFileName</name>
-      <value>/WEB-INF/classes/ldap.properties</value>
     </init-param>
     <init-param>
       <name>TyckTillReportMethod</name>
@@ -70,11 +65,6 @@
       <name>TyckTillErrorFormURL</name>
       <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp
       </value>
-
-    </init-param>
-    <init-param>
-      <name>ldapPropertiesFileName</name>
-      <value>/WEB-INF/classes/ldap.properties</value>
     </init-param>
     <init-param>
       <name>TyckTillReportMethod</name>
@@ -105,11 +95,6 @@
       <name>TyckTillErrorFormURL</name>
       <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp
       </value>
-
-    </init-param>
-    <init-param>
-      <name>ldapPropertiesFileName</name>
-      <value>/WEB-INF/classes/ldap.properties</value>
     </init-param>
     <init-param>
       <name>TyckTillReportMethod</name>

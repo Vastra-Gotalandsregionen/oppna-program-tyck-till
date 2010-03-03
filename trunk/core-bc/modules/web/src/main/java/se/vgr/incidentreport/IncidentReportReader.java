@@ -29,7 +29,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.ws.rs.Consumes;
@@ -66,8 +65,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             throws IOException, WebApplicationException {
         try {
             return parseIncidentReport(is);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new WebApplicationException(e);
         }
 
@@ -82,16 +80,14 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             builder = factory.newDocumentBuilder();
             doc = builder.parse(is);
             // System.out.println(doc.getTextContent());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException("Error creating xml", e);
         }
         String reportType = parseString(doc, "reportType");
         String reportType2 = reportType;
         try {
             reportType2 = rb.getString("incidentreport.reportTypes." + reportType + ".label");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // ignore
         }
         ir.setReportType(reportType2);
@@ -100,8 +96,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             String errorType2 = errorType;
             try {
                 errorType2 = rb.getString("incidentreport.errorTypes." + errorType + ".label");
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 // ignore
             }
 
@@ -158,8 +153,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
                     try {
                         url = new URL(path);
                         file = new File(url.toURI());
-                    }
-                    catch (Exception e1) {
+                    } catch (Exception e1) {
                         logger.warn("Filename could not be read.", e1);
                         continue;
                     }
@@ -169,8 +163,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
                     try {
                         fileName = fileNode.getAttributes().getNamedItem("filename").getTextContent();
 
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         logger.warn("Filename could not be read.", e);
                         continue;
                     }
@@ -190,7 +183,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             return null;
         }
         Element elm = (Element) parent.getElementsByTagName(elmName).item(0);
-        return (elm.getFirstChild() == null ? null : elm.getFirstChild().getTextContent());
+        return elm.getFirstChild() == null ? null : elm.getFirstChild().getTextContent();
 
     }
 
@@ -200,7 +193,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         }
         Element elm = (Element) doc.getElementsByTagName(elmName).item(0);
 
-        return (elm.getFirstChild() == null) ? "" : elm.getFirstChild().getTextContent();
+        return elm.getFirstChild() == null ? "" : elm.getFirstChild().getTextContent();
     }
 
     private Element getElm(Document doc, String elmName) {
@@ -216,13 +209,11 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             return false;
         }
         Element elm = (Element) doc.getElementsByTagName(elmName).item(0);
-        return (elm.getFirstChild() == null) ? false : elm.getFirstChild().getTextContent().equals("true");
+        return elm.getFirstChild() == null ? false : elm.getFirstChild().getTextContent().equals("true");
     }
 
     public boolean isReadable(Class<?> cls, Type arg1, Annotation[] arg2, javax.ws.rs.core.MediaType arg3) {
         return IncidentReport.class.isAssignableFrom(cls);
     }
-
-    
 
 }

@@ -63,11 +63,10 @@ public class UserAgentUtils {
                     res.append(c);
                     break;
                 case 2: // <SPAN class="codecomment"> Space encountered - Might need to end the parsing</span>
-                    if ((Character.isLetter(c) && Character.isLowerCase(c)) || Character.isDigit(c)) {
+                    if (Character.isLetter(c) && Character.isLowerCase(c) || Character.isDigit(c)) {
                         res.append(c);
                         status = 1;
-                    }
-                    else {
+                    } else {
                         return res.toString().trim();
                     }
                     break;
@@ -92,31 +91,25 @@ public class UserAgentUtils {
         if ((pos = userAgent.indexOf("help.yahoo.com/")) > -1) {
             res = "Yahoo";
             pos += 7;
-        }
-        else if ((pos = userAgent.indexOf("google/")) > -1) {
+        } else if ((pos = userAgent.indexOf("google/")) > -1) {
             res = "Google";
             pos += 7;
-        }
-        else if ((pos = userAgent.indexOf("msnbot/")) > -1) {
+        } else if ((pos = userAgent.indexOf("msnbot/")) > -1) {
             res = "MSNBot";
             pos += 7;
-        }
-        else if ((pos = userAgent.indexOf("googlebot/")) > -1) {
+        } else if ((pos = userAgent.indexOf("googlebot/")) > -1) {
             res = "Google";
             pos += 10;
-        }
-        else if ((pos = userAgent.indexOf("webcrawler/")) > -1) {
+        } else if ((pos = userAgent.indexOf("webcrawler/")) > -1) {
             res = "WebCrawler";
             pos += 11;
-        }
-        else
+        } else
         // <SPAN class="codecomment"> The following two bots don't have any version number in their User-Agent
         // strings.</span>
         if ((pos = userAgent.indexOf("inktomi")) > -1) {
             res = "Inktomi";
             pos = -1;
-        }
-        else if ((pos = userAgent.indexOf("teoma")) > -1) {
+        } else if ((pos = userAgent.indexOf("teoma")) > -1) {
             res = "Teoma";
             pos = -1;
         }
@@ -134,60 +127,44 @@ public class UserAgentUtils {
         int pos;
         if ((pos = userAgent.indexOf("Windows-NT")) > -1) {
             res = getArray("Win", "WinNT", "Win" + getVersionNumber(userAgent, pos + 8));
-        }
-        else if (userAgent.indexOf("Windows NT") > -1) {
+        } else if (userAgent.indexOf("Windows NT") > -1) {
             // <SPAN class="codecomment"> The different versions of Windows NT are decoded in the verbosity level
             // 2</span>
             // <SPAN class="codecomment"> ie: Windows NT 5.1 = Windows XP</span>
             if ((pos = userAgent.indexOf("Windows NT 5.1")) > -1) {
                 res = getArray("Win", "WinXP", "Win" + getVersionNumber(userAgent, pos + 7));
-            }
-            else if ((pos = userAgent.indexOf("Windows NT 6.0")) > -1) {
+            } else if ((pos = userAgent.indexOf("Windows NT 6.0")) > -1) {
                 res = getArray("Win", "Vista", "Vista" + getVersionNumber(userAgent, pos + 7));
-            }
-            else if ((pos = userAgent.indexOf("Windows NT 6.1")) > -1) {
+            } else if ((pos = userAgent.indexOf("Windows NT 6.1")) > -1) {
                 res = getArray("Win", "Seven", "Seven " + getVersionNumber(userAgent, pos + 7));
-            }
-            else if ((pos = userAgent.indexOf("Windows NT 5.0")) > -1) {
+            } else if ((pos = userAgent.indexOf("Windows NT 5.0")) > -1) {
                 res = getArray("Win", "Win2000", "Win" + getVersionNumber(userAgent, pos + 7));
-            }
-            else if ((pos = userAgent.indexOf("Windows NT 5.2")) > -1) {
+            } else if ((pos = userAgent.indexOf("Windows NT 5.2")) > -1) {
                 res = getArray("Win", "Win2003", "Win" + getVersionNumber(userAgent, pos + 7));
-            }
-            else if ((pos = userAgent.indexOf("Windows NT 4.0")) > -1) {
+            } else if ((pos = userAgent.indexOf("Windows NT 4.0")) > -1) {
                 res = getArray("Win", "WinNT4", "Win" + getVersionNumber(userAgent, pos + 7));
-            }
-            else if ((pos = userAgent.indexOf("Windows NT)")) > -1) {
+            } else if ((pos = userAgent.indexOf("Windows NT)")) > -1) {
                 res = getArray("Win", "WinNT", "WinNT");
-            }
-            else if ((pos = userAgent.indexOf("Windows NT;")) > -1) {
+            } else if ((pos = userAgent.indexOf("Windows NT;")) > -1) {
                 res = getArray("Win", "WinNT", "WinNT");
-            }
-            else {
+            } else {
                 res = getArray("Win", "<B>WinNT?</B>", "<B>WinNT?</B>");
             }
-        }
-        else if (userAgent.indexOf("Win") > -1) {
+        } else if (userAgent.indexOf("Win") > -1) {
             if (userAgent.indexOf("Windows") > -1) {
                 if ((pos = userAgent.indexOf("Windows 98")) > -1) {
                     res = getArray("Win", "Win98", "Win" + getVersionNumber(userAgent, pos + 7));
-                }
-                else if ((pos = userAgent.indexOf("Windows_98")) > -1) {
+                } else if ((pos = userAgent.indexOf("Windows_98")) > -1) {
                     res = getArray("Win", "Win98", "Win" + getVersionNumber(userAgent, pos + 8));
-                }
-                else if ((pos = userAgent.indexOf("Windows 2000")) > -1) {
+                } else if ((pos = userAgent.indexOf("Windows 2000")) > -1) {
                     res = getArray("Win", "Win2000", "Win" + getVersionNumber(userAgent, pos + 7));
-                }
-                else if ((pos = userAgent.indexOf("Windows 95")) > -1) {
+                } else if ((pos = userAgent.indexOf("Windows 95")) > -1) {
                     res = getArray("Win", "Win95", "Win" + getVersionNumber(userAgent, pos + 7));
-                }
-                else if ((pos = userAgent.indexOf("Windows 9x")) > -1) {
+                } else if ((pos = userAgent.indexOf("Windows 9x")) > -1) {
                     res = getArray("Win", "Win9x", "Win" + getVersionNumber(userAgent, pos + 7));
-                }
-                else if ((pos = userAgent.indexOf("Windows ME")) > -1) {
+                } else if ((pos = userAgent.indexOf("Windows ME")) > -1) {
                     res = getArray("Win", "WinME", "Win" + getVersionNumber(userAgent, pos + 7));
-                }
-                else if ((pos = userAgent.indexOf("Windows 3.1")) > -1) {
+                } else if ((pos = userAgent.indexOf("Windows 3.1")) > -1) {
                     res = getArray("Win", "Win31", "Win" + getVersionNumber(userAgent, pos + 7));
                 }
                 // <SPAN class="codecomment"> If no version was found, rely on the following code to detect
@@ -198,64 +175,54 @@ public class UserAgentUtils {
             if (res == null) {
                 if ((pos = userAgent.indexOf("Win98")) > -1) {
                     res = getArray("Win", "Win98", "Win" + getVersionNumber(userAgent, pos + 3));
-                }
-                else if ((pos = userAgent.indexOf("Win31")) > -1) {
+                } else if ((pos = userAgent.indexOf("Win31")) > -1) {
                     res = getArray("Win", "Win31", "Win" + getVersionNumber(userAgent, pos + 3));
-                }
-                else if ((pos = userAgent.indexOf("Win95")) > -1) {
+                } else if ((pos = userAgent.indexOf("Win95")) > -1) {
                     res = getArray("Win", "Win95", "Win" + getVersionNumber(userAgent, pos + 3));
-                }
-                else if ((pos = userAgent.indexOf("Win 9x")) > -1) {
+                } else if ((pos = userAgent.indexOf("Win 9x")) > -1) {
                     res = getArray("Win", "Win9x", "Win" + getVersionNumber(userAgent, pos + 3));
-                }
-                else if ((pos = userAgent.indexOf("WinNT4.0")) > -1) {
+                } else if ((pos = userAgent.indexOf("WinNT4.0")) > -1) {
                     res = getArray("Win", "WinNT4", "Win" + getVersionNumber(userAgent, pos + 3));
-                }
-                else if ((pos = userAgent.indexOf("WinNT")) > -1) {
+                } else if ((pos = userAgent.indexOf("WinNT")) > -1) {
                     res = getArray("Win", "WinNT", "Win" + getVersionNumber(userAgent, pos + 3));
                 }
             }
             if (res == null) {
                 if ((pos = userAgent.indexOf("Windows")) > -1) {
-                    res = getArray("Win", "<B>Win?</B>", "<B>Win?" + getVersionNumber(userAgent, pos + 7) + "</B>");
-                }
-                else if ((pos = userAgent.indexOf("Win")) > -1) {
-                    res = getArray("Win", "<B>Win?</B>", "<B>Win?" + getVersionNumber(userAgent, pos + 3) + "</B>");
-                }
-                else {
+                    res =
+                            getArray("Win", "<B>Win?</B>", "<B>Win?" + getVersionNumber(userAgent, pos + 7)
+                                    + "</B>");
+                } else if ((pos = userAgent.indexOf("Win")) > -1) {
+                    res =
+                            getArray("Win", "<B>Win?</B>", "<B>Win?" + getVersionNumber(userAgent, pos + 3)
+                                    + "</B>");
+                } else {
                     // <SPAN class="codecomment"> Should not happen at this point</span>
                     res = getArray("Win", "<B>Win?</B>", "<B>Win?</B>");
                 }
             }
-        }
-        else if ((pos = userAgent.indexOf("Mac OS X")) > -1) {
-            if ((userAgent.indexOf("iPhone")) > -1) {
+        } else if ((pos = userAgent.indexOf("Mac OS X")) > -1) {
+            if (userAgent.indexOf("iPhone") > -1) {
                 pos = userAgent.indexOf("iPhone OS");
-                res = getArray("Mac", "MacOSX-iPhone", "MacOS-iPhone "
-                        + ((pos < 0) ? "" : getVersionNumber(userAgent, pos + 9)));
-            }
-            else {
+                res =
+                        getArray("Mac", "MacOSX-iPhone", "MacOS-iPhone "
+                                + (pos < 0 ? "" : getVersionNumber(userAgent, pos + 9)));
+            } else {
                 res = getArray("Mac", "MacOSX", "MacOS " + getVersionNumber(userAgent, pos + 8));
             }
-        }
-        else if ((pos = userAgent.indexOf("Mac_PowerPC")) > -1) {
+        } else if ((pos = userAgent.indexOf("Mac_PowerPC")) > -1) {
             res = getArray("Mac", "MacPPC", "MacOS " + getVersionNumber(userAgent, pos + 3));
-        }
-        else if ((pos = userAgent.indexOf("Macintosh")) > -1) {
+        } else if ((pos = userAgent.indexOf("Macintosh")) > -1) {
             if (userAgent.indexOf("PPC") > -1) {
                 res = getArray("Mac", "MacPPC", "MacOS?");
-            }
-            else {
+            } else {
                 res = getArray("Mac?", "Mac?", "MacOS?");
             }
-        }
-        else if ((pos = userAgent.indexOf("FreeBSD")) > -1) {
+        } else if ((pos = userAgent.indexOf("FreeBSD")) > -1) {
             res = getArray("*BSD", "*BSD FreeBSD", "FreeBSD " + getVersionNumber(userAgent, pos + 7));
-        }
-        else if ((pos = userAgent.indexOf("OpenBSD")) > -1) {
+        } else if ((pos = userAgent.indexOf("OpenBSD")) > -1) {
             res = getArray("*BSD", "*BSD OpenBSD", "OpenBSD " + getVersionNumber(userAgent, pos + 7));
-        }
-        else if ((pos = userAgent.indexOf("Linux")) > -1) {
+        } else if ((pos = userAgent.indexOf("Linux")) > -1) {
             String detail = "Linux " + getVersionNumber(userAgent, pos + 5);
             String med = "Linux";
             if ((pos = userAgent.indexOf("Ubuntu/")) > -1) {
@@ -263,41 +230,29 @@ public class UserAgentUtils {
                 med += " Ubuntu";
             }
             res = getArray("Linux", med, detail);
-        }
-        else if ((pos = userAgent.indexOf("CentOS")) > -1) {
+        } else if ((pos = userAgent.indexOf("CentOS")) > -1) {
             res = getArray("Linux", "Linux CentOS", "CentOS");
-        }
-        else if ((pos = userAgent.indexOf("NetBSD")) > -1) {
+        } else if ((pos = userAgent.indexOf("NetBSD")) > -1) {
             res = getArray("*BSD", "*BSD NetBSD", "NetBSD " + getVersionNumber(userAgent, pos + 6));
-        }
-        else if ((pos = userAgent.indexOf("Unix")) > -1) {
+        } else if ((pos = userAgent.indexOf("Unix")) > -1) {
             res = getArray("Linux", "Linux", "Linux " + getVersionNumber(userAgent, pos + 4));
-        }
-        else if ((pos = userAgent.indexOf("SunOS")) > -1) {
+        } else if ((pos = userAgent.indexOf("SunOS")) > -1) {
             res = getArray("Unix", "SunOS", "SunOS" + getVersionNumber(userAgent, pos + 5));
-        }
-        else if ((pos = userAgent.indexOf("IRIX")) > -1) {
+        } else if ((pos = userAgent.indexOf("IRIX")) > -1) {
             res = getArray("Unix", "IRIX", "IRIX" + getVersionNumber(userAgent, pos + 4));
-        }
-        else if ((pos = userAgent.indexOf("SonyEricsson")) > -1) {
+        } else if ((pos = userAgent.indexOf("SonyEricsson")) > -1) {
             res = getArray("SonyEricsson", "SonyEricsson", "SonyEricsson" + getVersionNumber(userAgent, pos + 12));
-        }
-        else if ((pos = userAgent.indexOf("Nokia")) > -1) {
+        } else if ((pos = userAgent.indexOf("Nokia")) > -1) {
             res = getArray("Nokia", "Nokia", "Nokia" + getVersionNumber(userAgent, pos + 5));
-        }
-        else if ((pos = userAgent.indexOf("BlackBerry")) > -1) {
+        } else if ((pos = userAgent.indexOf("BlackBerry")) > -1) {
             res = getArray("BlackBerry", "BlackBerry", "BlackBerry" + getVersionNumber(userAgent, pos + 10));
-        }
-        else if ((pos = userAgent.indexOf("SymbianOS")) > -1) {
+        } else if ((pos = userAgent.indexOf("SymbianOS")) > -1) {
             res = getArray("SymbianOS", "SymbianOS", "SymbianOS" + getVersionNumber(userAgent, pos + 10));
-        }
-        else if ((pos = userAgent.indexOf("BeOS")) > -1) {
+        } else if ((pos = userAgent.indexOf("BeOS")) > -1) {
             res = getArray("BeOS", "BeOS", "BeOS");
-        }
-        else if ((pos = userAgent.indexOf("Nintendo Wii")) > -1) {
+        } else if ((pos = userAgent.indexOf("Nintendo Wii")) > -1) {
             res = getArray("Nintendo Wii", "Nintendo Wii", "Nintendo Wii" + getVersionNumber(userAgent, pos + 10));
-        }
-        else {
+        } else {
             res = getArray("<b>?</b>", "<b>?</b>", "<b>?</b>");
         }
         String result = "";
@@ -316,112 +271,88 @@ public class UserAgentUtils {
         int pos;
         if ((pos = userAgent.indexOf("Lotus-Notes/")) > -1) {
             res = getArray("LotusNotes", "LotusNotes", "LotusNotes" + getVersionNumber(userAgent, pos + 12));
-        }
-        else if ((pos = userAgent.indexOf("Opera")) > -1) {
-            res = getArray("Opera", "Opera" + getFirstVersionNumber(userAgent, pos + 5, 1), "Opera"
-                    + getVersionNumber(userAgent, pos + 5));
-        }
-        else if (userAgent.indexOf("MSIE") > -1) {
+        } else if ((pos = userAgent.indexOf("Opera")) > -1) {
+            res =
+                    getArray("Opera", "Opera" + getFirstVersionNumber(userAgent, pos + 5, 1), "Opera"
+                            + getVersionNumber(userAgent, pos + 5));
+        } else if (userAgent.indexOf("MSIE") > -1) {
             if ((pos = userAgent.indexOf("MSIE 6.0")) > -1) {
                 res = getArray("MSIE", "MSIE6", "MSIE" + getVersionNumber(userAgent, pos + 4));
-            }
-            else if ((pos = userAgent.indexOf("MSIE 5.0")) > -1) {
+            } else if ((pos = userAgent.indexOf("MSIE 5.0")) > -1) {
                 res = getArray("MSIE", "MSIE5", "MSIE" + getVersionNumber(userAgent, pos + 4));
-            }
-            else if ((pos = userAgent.indexOf("MSIE 5.5")) > -1) {
+            } else if ((pos = userAgent.indexOf("MSIE 5.5")) > -1) {
                 res = getArray("MSIE", "MSIE5.5", "MSIE" + getVersionNumber(userAgent, pos + 4));
-            }
-            else if ((pos = userAgent.indexOf("MSIE 5.")) > -1) {
+            } else if ((pos = userAgent.indexOf("MSIE 5.")) > -1) {
                 res = getArray("MSIE", "MSIE5.x", "MSIE" + getVersionNumber(userAgent, pos + 4));
-            }
-            else if ((pos = userAgent.indexOf("MSIE 4")) > -1) {
+            } else if ((pos = userAgent.indexOf("MSIE 4")) > -1) {
                 res = getArray("MSIE", "MSIE4", "MSIE" + getVersionNumber(userAgent, pos + 4));
-            }
-            else if ((pos = userAgent.indexOf("MSIE 7")) > -1) {
+            } else if ((pos = userAgent.indexOf("MSIE 7")) > -1) {
                 res = getArray("MSIE", "MSIE7", "MSIE" + getVersionNumber(userAgent, pos + 4));
-            }
-            else if ((pos = userAgent.indexOf("MSIE 8")) > -1) {
+            } else if ((pos = userAgent.indexOf("MSIE 8")) > -1) {
                 res = getArray("MSIE", "MSIE8", "MSIE" + getVersionNumber(userAgent, pos + 4));
+            } else {
+                res =
+                        getArray("MSIE", "<B>MSIE?</B>", "<B>MSIE?"
+                                + getVersionNumber(userAgent, userAgent.indexOf("MSIE") + 4) + "</B>");
             }
-            else {
-                res = getArray("MSIE", "<B>MSIE?</B>", "<B>MSIE?"
-                        + getVersionNumber(userAgent, userAgent.indexOf("MSIE") + 4) + "</B>");
-            }
-        }
-        else if ((pos = userAgent.indexOf("Gecko/")) > -1) {
+        } else if ((pos = userAgent.indexOf("Gecko/")) > -1) {
             res = getArray("Gecko", "Gecko", "Gecko" + getFirstVersionNumber(userAgent, pos + 5, 4));
             if ((pos = userAgent.indexOf("Camino/")) > -1) {
                 res[1] += "(Camino)";
                 res[2] += "(Camino" + getVersionNumber(userAgent, pos + 7) + ")";
-            }
-            else if ((pos = userAgent.indexOf("Chimera/")) > -1) {
+            } else if ((pos = userAgent.indexOf("Chimera/")) > -1) {
                 res[1] += "(Chimera)";
                 res[2] += "(Chimera" + getVersionNumber(userAgent, pos + 8) + ")";
-            }
-            else if ((pos = userAgent.indexOf("Firebird/")) > -1) {
+            } else if ((pos = userAgent.indexOf("Firebird/")) > -1) {
                 res[1] += "(Firebird)";
                 res[2] += "(Firebird" + getVersionNumber(userAgent, pos + 9) + ")";
-            }
-            else if ((pos = userAgent.indexOf("Phoenix/")) > -1) {
+            } else if ((pos = userAgent.indexOf("Phoenix/")) > -1) {
                 res[1] += "(Phoenix)";
                 res[2] += "(Phoenix" + getVersionNumber(userAgent, pos + 8) + ")";
-            }
-            else if ((pos = userAgent.indexOf("Galeon/")) > -1) {
+            } else if ((pos = userAgent.indexOf("Galeon/")) > -1) {
                 res[1] += "(Galeon)";
                 res[2] += "(Galeon" + getVersionNumber(userAgent, pos + 7) + ")";
-            }
-            else if ((pos = userAgent.indexOf("Firefox/")) > -1) {
+            } else if ((pos = userAgent.indexOf("Firefox/")) > -1) {
                 res[1] += "(Firefox)";
                 res[2] += "(Firefox" + getVersionNumber(userAgent, pos + 8) + ")";
-            }
-            else if ((pos = userAgent.indexOf("Netscape/")) > -1) {
+            } else if ((pos = userAgent.indexOf("Netscape/")) > -1) {
                 if ((pos = userAgent.indexOf("Netscape/6")) > -1) {
                     res[1] += "(NS6)";
                     res[2] += "(NS" + getVersionNumber(userAgent, pos + 9) + ")";
-                }
-                else if ((pos = userAgent.indexOf("Netscape/7")) > -1) {
+                } else if ((pos = userAgent.indexOf("Netscape/7")) > -1) {
                     res[1] += "(NS7)";
                     res[2] += "(NS" + getVersionNumber(userAgent, pos + 9) + ")";
-                }
-                else {
+                } else {
                     res[1] += "(NS?)";
                     res[2] += "(NS?" + getVersionNumber(userAgent, userAgent.indexOf("Netscape/") + 9) + ")";
                 }
             }
-        }
-        else if ((pos = userAgent.indexOf("Netscape/")) > -1) {
+        } else if ((pos = userAgent.indexOf("Netscape/")) > -1) {
             if ((pos = userAgent.indexOf("Netscape/4")) > -1) {
                 res = getArray("NS", "NS4", "NS" + getVersionNumber(userAgent, pos + 9));
-            }
-            else {
+            } else {
                 res = getArray("NS", "NS?", "NS?" + getVersionNumber(userAgent, pos + 9));
             }
-        }
-        else if ((pos = userAgent.indexOf("Chrome/")) > -1) {
+        } else if ((pos = userAgent.indexOf("Chrome/")) > -1) {
             res = getArray("KHTML", "KHTML(Chrome)", "KHTML(Chrome" + getVersionNumber(userAgent, pos + 6) + ")");
-        }
-        else if ((pos = userAgent.indexOf("Safari/")) > -1) {
+        } else if ((pos = userAgent.indexOf("Safari/")) > -1) {
             res = getArray("KHTML", "KHTML(Safari)", "KHTML(Safari" + getVersionNumber(userAgent, pos + 6) + ")");
-        }
-        else if ((pos = userAgent.indexOf("Konqueror/")) > -1) {
-            res = getArray("KHTML", "KHTML(Konqueror)", "KHTML(Konqueror" + getVersionNumber(userAgent, pos + 9)
-                    + ")");
-        }
-        else if ((pos = userAgent.indexOf("KHTML")) > -1) {
+        } else if ((pos = userAgent.indexOf("Konqueror/")) > -1) {
+            res =
+                    getArray("KHTML", "KHTML(Konqueror)", "KHTML(Konqueror" + getVersionNumber(userAgent, pos + 9)
+                            + ")");
+        } else if ((pos = userAgent.indexOf("KHTML")) > -1) {
             res = getArray("KHTML", "KHTML?", "KHTML?(" + getVersionNumber(userAgent, pos + 5) + ")");
-        }
-        else if ((pos = userAgent.indexOf("NetFront")) > -1) {
+        } else if ((pos = userAgent.indexOf("NetFront")) > -1) {
             res = getArray("NetFront", "NetFront", "NetFront " + getVersionNumber(userAgent, pos + 8));
-        }
-        else
+        } else
         // <SPAN class="codecomment"> We will interpret Mozilla/4.x as Netscape Communicator is and only if
         // x</span>
         // <SPAN class="codecomment"> is not 0 or 5</span>
         if (userAgent.indexOf("Mozilla/4.") == 0 && userAgent.indexOf("Mozilla/4.0") < 0
                 && userAgent.indexOf("Mozilla/4.5 ") < 0) {
             res = getArray("Communicator", "Communicator", "Communicator" + getVersionNumber(userAgent, pos + 8));
-        }
-        else {
+        } else {
             res = getArray("<B>?</B>", "<B>?</B>", "<B>?</B>");
         }
         String result = "";

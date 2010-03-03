@@ -253,8 +253,7 @@ public class IncidentReport {
         String thrownErrorMessage = this.getDefaultErrorMessage();
         if (thrownErrorMessage != null && thrownErrorMessage.length() > 0) {
             sb.append("Felrapporten har triggats av fel: " + thrownErrorMessage + NEWLINE);
-        }
-        else {
+        } else {
             sb.append("Felrapporten har triggats av användare" + NEWLINE);
         }
         sb.append(NEWLINE + "Uppgifter inmatade av användaren" + NEWLINE);
@@ -269,7 +268,6 @@ public class IncidentReport {
             }
             sb.append(NEWLINE);
         }
-        
 
         sb.append("- Användaren vill ha feedback via: ");
         if (this.feedbackByMail) {
@@ -323,8 +321,6 @@ public class IncidentReport {
     public void setOs(String os) {
         this.os = os;
     }
-
-    
 
     public void setLink(String url) {
         this.url = url;

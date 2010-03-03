@@ -19,31 +19,149 @@
 
 package se.vgr.incidentreport.impl;
 
-import junit.framework.TestCase;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import se.vgr.incidentreport.IncidentReport;
+import se.vgr.incidentreport.Screenshot;
+import se.vgr.incidentreport.pivotaltracker.PTStory;
+import se.vgr.incidentreport.pivotaltracker.PivotalTrackerService;
+import se.vgr.usdservice.USDService;
 
-public class IncidentReportServiceImplTest extends TestCase {
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(IncidentReportServiceImpl.class)
+public class IncidentReportServiceImplTest {
     private static final Log log = LogFactory.getLog(IncidentReportServiceImplTest.class);
     private IncidentReportServiceImpl reportService;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         reportService = new IncidentReportServiceImpl();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @Test
+    public void testCreateStoryException() throws IOException {
+        File tempFile = File.createTempFile("incidentReportTest", "test");
+        IncidentReport ir = new IncidentReport();
+        ir.setReportMethod("usd");
+        Screenshot screenshot = new Screenshot();
+        screenshot.setPath(tempFile.getAbsolutePath());
+        screenshot.setFileName(tempFile.getName());
+        ir.addScreenShot(screenshot);
+
+        String appName = "Tyck_till_test_portlet";
+        ir.setReportMethod("pivotaltracker");
+        ir.setUserId("testUser");
+        ir.setApplicationName(appName);
+        PivotalTrackerService pivotalTrackerClientMock = mock(PivotalTrackerService.class);
+        Properties pivotalTrackerMappingsMock = mock(Properties.class);
+        ReflectionTestUtils.setField(reportService, "pivotalTrackerClient", pivotalTrackerClientMock,
+                PivotalTrackerService.class);
+        ReflectionTestUtils.setField(reportService, "pivotalTrackerMappings", pivotalTrackerMappingsMock,
+                Properties.class);
+        when(pivotalTrackerClientMock.createuserStory(any(PTStory.class))).thenReturn("http://fakeURL");
+        doThrow(new RuntimeException()).when(pivotalTrackerClientMock).addAttachmentToStory(anyString(),
+                any(PTStory.class));
+        ir.setReportEmail("culberto@hotmail.com");
+        reportService.reportIncident(ir);
+
+        ReflectionTestUtils.setField(ir, "screenShots", null, List.class);
+        reportService.reportIncident(ir);
     }
 
-    public void testReportIncident() {
+    @Test
+    public void testReportIncident() throws Exception {
+        File tempFile = File.createTempFile("incidentReportTest", "test");
+
+        String appName = "Tyck_till_test_portlet";
         IncidentReport ir = new IncidentReport();
-        // TODO
-        // reportService.reportIncident(ir);
+        ir.setUserId("testUser");
+        ir.setApplicationName(appName);
+
+        // ==================================================================
+        // Test USD reporting
+        ir.setReportMethod("usd");
+        Screenshot screenshot = new Screenshot();
+        screenshot.setPath(tempFile.getAbsolutePath());
+        screenshot.setFileName(tempFile.getName());
+        ir.addScreenShot(screenshot);
+        USDService usdServiceMock = mock(USDService.class);
+        when(usdServiceMock.getUSDGroupHandleForApplicationName(appName)).thenReturn("01 Gbg.SC.Service Desk IT");
+
+        // Set autowired usdService property
+        ReflectionTestUtils.setField(reportService, "usdService", usdServiceMock, USDService.class);
+
+        reportService.reportIncident(ir);
+        verify(usdServiceMock).createRequest(any(Properties.class), anyString(), anyListOf(File.class),
+                anyListOf(String.class));
+
+        // test the method when an exception is thrown
+        ir.setApplicationName(null);
+        ir.setReportEmail("culberto@hotmail.com");
+        reportService.reportIncident(ir);
+
+        // need to set a proper application name so that the rest of the tests run
+        ir.setApplicationName(appName);
+
+        // ==================================================================
+        // Test Pivotal Tracker reporting
+        ir.setReportMethod("pivotaltracker");
+        PivotalTrackerService pivotalTrackerClientMock = mock(PivotalTrackerService.class);
+        Properties pivotalTrackerMappingsMock = mock(Properties.class);
+        ReflectionTestUtils.setField(reportService, "pivotalTrackerClient", pivotalTrackerClientMock,
+                PivotalTrackerService.class);
+        ReflectionTestUtils.setField(reportService, "pivotalTrackerMappings", pivotalTrackerMappingsMock,
+                Properties.class);
+
+        when(pivotalTrackerMappingsMock.getProperty(appName)).thenReturn("35420");
+        when(pivotalTrackerClientMock.createuserStory(any(PTStory.class))).thenReturn("http://fakeURL");
+        reportService.reportIncident(ir);
+
+        // same as above, test the method when an exception is thrown
+        ir.setApplicationName(null);
+        reportService.reportIncident(ir);
+        // need to set a proper application name so that the rest of the tests run
+        ir.setApplicationName(appName);
+        // ==================================================================
+
+        // ==================================================================
+        // Test when no method is specified, should indicate email report
+        ir.setReportMethod("");
+        reportService.reportIncident(ir);
+        verifyPrivate(reportService).invoke("sendReportByEmail", ir, "*ERROR in IncidentReportService* ");
+
+        // test the method when an exception is thrown
+        ir.setApplicationName(null);
+        reportService.reportIncident(ir);
+        // need to set a proper application name so that the rest of the tests run
+        ir.setApplicationName(appName);
+        // ==================================================================
+
+        // ==================================================================
+        // finally, cause an error at the top of the reportIncident method
+        ir = null;
+        reportService.reportIncident(ir);
+        // ==================================================================
     }
+
 }

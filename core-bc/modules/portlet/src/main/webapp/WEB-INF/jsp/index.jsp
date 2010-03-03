@@ -26,7 +26,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="javax.portlet.*"%>
 <%@ page import="java.net.URLEncoder" %>
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
+<%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0"%>
 
 <portlet:defineObjects />
 <script language="javascript" >

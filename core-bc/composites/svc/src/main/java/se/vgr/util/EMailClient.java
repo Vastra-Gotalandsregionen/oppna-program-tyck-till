@@ -83,8 +83,7 @@ public class EMailClient {
         boolean debug = false;
         if (list == null || list.size() == 0) {
             postMail(recipients, subject, message, from);
-        }
-        else {
+        } else {
 
             // Set the host smtp address
             Properties props = new Properties();
@@ -128,16 +127,14 @@ public class EMailClient {
                 File file = new File(ss.getPath());
                 for (int i = 0; i < 10; i++) {
                     if (file.exists()) {
-                        //System.out.println("File exists:" + file.getAbsolutePath());
+                        // System.out.println("File exists:" + file.getAbsolutePath());
                         i = 10;
-                    }
-                    else {
-                        //System.out.println("File not found here:" + file.getAbsolutePath());
+                    } else {
+                        // System.out.println("File not found here:" + file.getAbsolutePath());
                         try {
 
                             Thread.sleep(1000);
-                        }
-                        catch (InterruptedException e) {
+                        } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }

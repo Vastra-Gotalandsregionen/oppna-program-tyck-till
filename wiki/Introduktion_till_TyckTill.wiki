@@ -94,6 +94,4 @@ Gör på samma vis för att deploya tyck-till-test-portlet.war.
 
 = Att skapa en release på google code =
 
-Att skapa en release: 
-
 Instruktioner finns [http://code.google.com/p/oppna-program/wiki/Bygganvisningar_Oppna_Program här].

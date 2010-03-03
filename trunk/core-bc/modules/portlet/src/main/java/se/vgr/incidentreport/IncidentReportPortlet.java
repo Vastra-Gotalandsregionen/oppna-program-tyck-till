@@ -42,6 +42,9 @@ import org.springframework.web.portlet.context.PortletApplicationContextUtils;
 import se.vgr.ldapservice.LdapService;
 import se.vgr.ldapservice.LdapUser;
 
+/**
+ * Gathers information about the user and presents the user input form.
+ */
 public class IncidentReportPortlet extends GenericPortlet {
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
@@ -116,12 +119,9 @@ public class IncidentReportPortlet extends GenericPortlet {
 
     private LdapService getLdapService() {
         return (LdapService) ac.getBean("ldapService");
-
     }
 
     @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
-
     }
-
 }

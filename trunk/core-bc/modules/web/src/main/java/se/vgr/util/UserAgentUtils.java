@@ -19,6 +19,9 @@
 
 package se.vgr.util;
 
+/**
+ * Gathers information about the user who experienced the problem.
+ */
 public class UserAgentUtils {
 
     private static String getFirstVersionNumber(String a_userAgent, int a_position, int numDigits) {
@@ -119,6 +122,12 @@ public class UserAgentUtils {
         return getArray(res, res, res + getVersionNumber(userAgent, pos));
     }
 
+    /**
+     * Finds out the OS of the user.
+     * 
+     * @param userAgent String that contains information about the users OS.
+     * @return The OS of the user.
+     */
     public static String getOS(String userAgent) {
         if (getBotName(userAgent) != null) {
             return "Bot";
@@ -262,6 +271,12 @@ public class UserAgentUtils {
         return result;
     }
 
+    /**
+     * Finds out the browser of the user.
+     * 
+     * @param userAgent String that contains information about the users browser.
+     * @return The browser of the user.
+     */
     public static String getBrowser(String userAgent) {
         String[] botName;
         if ((botName = getBotName(userAgent)) != null) {
@@ -345,22 +360,23 @@ public class UserAgentUtils {
             res = getArray("KHTML", "KHTML?", "KHTML?(" + getVersionNumber(userAgent, pos + 5) + ")");
         } else if ((pos = userAgent.indexOf("NetFront")) > -1) {
             res = getArray("NetFront", "NetFront", "NetFront " + getVersionNumber(userAgent, pos + 8));
-        } else
-        // <SPAN class="codecomment"> We will interpret Mozilla/4.x as Netscape Communicator is and only if
-        // x</span>
-        // <SPAN class="codecomment"> is not 0 or 5</span>
-        if (userAgent.indexOf("Mozilla/4.") == 0 && userAgent.indexOf("Mozilla/4.0") < 0
-                && userAgent.indexOf("Mozilla/4.5 ") < 0) {
-            res = getArray("Communicator", "Communicator", "Communicator" + getVersionNumber(userAgent, pos + 8));
         } else {
-            res = getArray("<B>?</B>", "<B>?</B>", "<B>?</B>");
+            // <SPAN class="codecomment"> We will interpret Mozilla/4.x as Netscape Communicator is and only if
+            // x</span>
+            // <SPAN class="codecomment"> is not 0 or 5</span>
+            if (userAgent.indexOf("Mozilla/4.") == 0 && userAgent.indexOf("Mozilla/4.0") < 0
+                    && userAgent.indexOf("Mozilla/4.5 ") < 0) {
+                res =
+                        getArray("Communicator", "Communicator", "Communicator"
+                                + getVersionNumber(userAgent, pos + 8));
+            } else {
+                res = getArray("<B>?</B>", "<B>?</B>", "<B>?</B>");
+            }
         }
         String result = "";
         for (String s : res) {
             result += s + " ";
         }
         return result;
-
     }
-
 }

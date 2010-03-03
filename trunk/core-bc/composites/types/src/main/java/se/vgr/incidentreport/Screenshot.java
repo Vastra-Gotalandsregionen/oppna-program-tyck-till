@@ -19,6 +19,9 @@
 
 package se.vgr.incidentreport;
 
+/**
+ * This represents a screenshot used for describing the incident.
+ */
 public class Screenshot {
     String path;
     String fileName;
@@ -38,5 +41,4 @@ public class Screenshot {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
-
 }

@@ -42,6 +42,9 @@ import se.vgr.incidentreport.pivotaltracker.PivotalTrackerService;
 import se.vgr.usdservice.USDService;
 import se.vgr.util.EMailClient;
 
+/**
+ * Implementation of the incident report service.
+ */
 @Service("incidentReportService")
 public class IncidentReportServiceImpl implements IncidentReportService {
 

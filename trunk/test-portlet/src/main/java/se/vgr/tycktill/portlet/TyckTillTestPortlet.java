@@ -34,6 +34,9 @@ import javax.portlet.ResourceResponse;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Portlet for testing the Tyck till system.
+ */
 public class TyckTillTestPortlet extends GenericPortlet {
     private final static Logger log = Logger.getLogger(TyckTillTestPortlet.class);
 
@@ -64,5 +67,4 @@ public class TyckTillTestPortlet extends GenericPortlet {
     public void serveResource(ResourceRequest arg0, ResourceResponse arg1) throws PortletException, IOException {
         System.out.println("in serveResource");
     }
-
 }

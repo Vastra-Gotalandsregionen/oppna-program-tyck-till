@@ -38,10 +38,22 @@ import javax.mail.internet.MimeMultipart;
 
 import se.vgr.incidentreport.Screenshot;
 
+/**
+ * Utility class for email sending support.
+ */
 public class EMailClient {
 
     private static final String MAILHOST_VGREGION_SE = "mailhost.vgregion.se";
 
+    /**
+     * Sends email to specified recipients with specified content.
+     * 
+     * @param recipients A string array containing the recipients.
+     * @param subject Subject of the email.
+     * @param message Body content.
+     * @param from The email appears to come from this address.
+     * @throws MessagingException Thrown if email sending is unsuccessful, eg. if the recipients are invalid.
+     */
     public void postMail(String recipients[], String subject, String message, String from)
             throws MessagingException {
         boolean debug = false;
@@ -78,9 +90,18 @@ public class EMailClient {
         Transport.send(msg);
     }
 
+    /**
+     * Sends email to specified recipients with specified content, including attachment support
+     * 
+     * @param recipients A string array containing the recipients.
+     * @param subject Subject of the email.
+     * @param message Body content.
+     * @param from The email appears to come from this address.
+     * @param list List of file attachments.
+     * @throws MessagingException Thrown if email sending is unsuccessful, eg. if the recipients are invalid.
+     */
     public void postMail(String recipients[], String subject, String message, String from, List<Screenshot> list)
             throws MessagingException {
-        boolean debug = false;
         if (list == null || list.size() == 0) {
             postMail(recipients, subject, message, from);
         } else {
@@ -151,7 +172,5 @@ public class EMailClient {
             // Send the message
             Transport.send(msg);
         }
-
     }
-
 }

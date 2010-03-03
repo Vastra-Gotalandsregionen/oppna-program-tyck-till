@@ -28,6 +28,9 @@ import javax.ws.rs.core.UriInfo;
 import com.sun.jersey.api.spring.Autowire;
 import com.sun.jersey.spi.inject.Inject;
 
+/**
+ * Web service that receives an incident report object and calls the report service. 
+ */
 @Autowire
 @Path("incidentReport")
 public class IncidentReportResource {
@@ -41,5 +44,4 @@ public class IncidentReportResource {
         // System.out.println("In IncidentReportResource.post ir=" + ir);
         incidentReportService.reportIncident(ir);
     }
-
 }

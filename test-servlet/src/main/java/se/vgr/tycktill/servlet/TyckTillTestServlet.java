@@ -26,11 +26,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet for testing the Tyck till system.
+ */
 public class TyckTillTestServlet extends HttpServlet {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -1814042617856695712L;
 
     @Override
@@ -39,7 +39,5 @@ public class TyckTillTestServlet extends HttpServlet {
         if (req.getParameter("throwExceptionInGet") != null) {
             throw new RuntimeException("An error occured in doGet!");
         }
-
     }
-
 }

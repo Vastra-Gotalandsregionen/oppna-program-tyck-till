@@ -30,7 +30,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet Filter implementation class P3PFilter
+ * Servlet Filter implementation class P3PFilter.
  */
 public class P3PFilter implements Filter {
 
@@ -66,5 +66,4 @@ public class P3PFilter implements Filter {
     public void init(FilterConfig fConfig) throws ServletException {
         // TODO Auto-generated method stub
     }
-
 }

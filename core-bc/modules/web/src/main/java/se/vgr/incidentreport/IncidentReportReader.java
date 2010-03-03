@@ -48,6 +48,9 @@ import org.w3c.dom.NodeList;
 
 import se.vgr.util.UserAgentUtils;
 
+/**
+ * Collects the information about the incident.
+ */
 @Consumes("application/xml")
 @Provider
 public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
@@ -68,11 +71,9 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         } catch (Exception e) {
             throw new WebApplicationException(e);
         }
-
     }
-
+    
     protected IncidentReport parseIncidentReport(InputStream is) {
-
         IncidentReport ir = new IncidentReport();
         DocumentBuilder builder;
         Document doc;
@@ -99,10 +100,9 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             } catch (Exception e) {
                 // ignore
             }
-
             ir.addErrorType(errorType2);
         }
-
+        
         ir.setDescription(parseString(doc, "description"));
         ir.setDefaultErrorMessage(parseString(doc, "defaultErrorMessage"));
         ir.setBrowser(UserAgentUtils.getBrowser(parseString(doc, "browser")));
@@ -170,11 +170,9 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
                     ss.setFileName(fileName);
                     ss.setPath(file.getAbsolutePath());
                     ir.addScreenShot(ss);
-
                 }
             }
         }
-
         return ir;
     }
 
@@ -184,7 +182,6 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         }
         Element elm = (Element) parent.getElementsByTagName(elmName).item(0);
         return elm.getFirstChild() == null ? null : elm.getFirstChild().getTextContent();
-
     }
 
     private String parseString(Document doc, String elmName) {
@@ -192,7 +189,6 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             return "";
         }
         Element elm = (Element) doc.getElementsByTagName(elmName).item(0);
-
         return elm.getFirstChild() == null ? "" : elm.getFirstChild().getTextContent();
     }
 
@@ -201,7 +197,6 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             return null;
         }
         return (Element) doc.getElementsByTagName(elmName).item(0);
-
     }
 
     private boolean parseBoolean(Document doc, String elmName) {
@@ -215,5 +210,4 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
     public boolean isReadable(Class<?> cls, Type arg1, Annotation[] arg2, javax.ws.rs.core.MediaType arg3) {
         return IncidentReport.class.isAssignableFrom(cls);
     }
-
 }

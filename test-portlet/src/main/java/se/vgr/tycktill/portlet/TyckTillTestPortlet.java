@@ -38,12 +38,12 @@ import org.apache.log4j.Logger;
  * Portlet for testing the Tyck till system.
  */
 public class TyckTillTestPortlet extends GenericPortlet {
-    private final static Logger log = Logger.getLogger(TyckTillTestPortlet.class);
+    private static final Logger LOG = Logger.getLogger(TyckTillTestPortlet.class);
 
     @Override
     protected void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        //System.out.println("in TyckTillTestPortlet doView2");
-        log.info("Logging in TyckTillTestPortlet doView");
+        // System.out.println("in TyckTillTestPortlet doView2");
+        LOG.info("Logging in TyckTillTestPortlet doView");
         if (request.getParameter("throwExceptionInView") != null) {
             throw new RuntimeException("An error occured in doView");
         }

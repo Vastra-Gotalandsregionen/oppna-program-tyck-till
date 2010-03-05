@@ -49,7 +49,7 @@ public class P3PFilter implements Filter {
     }
 
     /**
-     * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+     * {@inheritDoc}
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
             ServletException {
@@ -61,7 +61,7 @@ public class P3PFilter implements Filter {
     }
 
     /**
-     * @see Filter#init(FilterConfig)
+     * {@inheritDoc}
      */
     public void init(FilterConfig fConfig) throws ServletException {
         // TODO Auto-generated method stub

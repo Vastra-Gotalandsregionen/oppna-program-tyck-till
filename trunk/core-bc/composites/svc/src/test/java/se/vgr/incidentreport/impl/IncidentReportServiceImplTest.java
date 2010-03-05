@@ -33,8 +33,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +49,6 @@ import se.vgr.usdservice.USDService;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(IncidentReportServiceImpl.class)
 public class IncidentReportServiceImplTest {
-    private static final Log log = LogFactory.getLog(IncidentReportServiceImplTest.class);
     private IncidentReportServiceImpl reportService;
 
     @Before

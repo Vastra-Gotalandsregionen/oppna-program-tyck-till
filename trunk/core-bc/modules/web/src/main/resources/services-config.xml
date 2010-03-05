@@ -35,7 +35,7 @@
 	
 	<bean id="usdProperties"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		<property name="location" value="classpath:usd.properties" />
+		<property name="location" value="classpath:security.properties" />
 	</bean>
   
   <bean id="usdAppToGroupMappings"
@@ -50,7 +50,7 @@
     
     <bean id="pivotalTrackerProperties"
         class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="location" value="classpath:pivotalTracker.properties" />
+        <property name="location" value="classpath:security.properties" />
     </bean>
     
   

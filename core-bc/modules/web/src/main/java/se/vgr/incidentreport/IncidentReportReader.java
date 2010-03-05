@@ -55,14 +55,17 @@ import se.vgr.util.UserAgentUtils;
 @Provider
 public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
 
-    private static final Logger logger = LoggerFactory.getLogger(IncidentReportReader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IncidentReportReader.class);
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
     private Locale svLocale = new Locale("sv", "SE");
     private ResourceBundle rb = ResourceBundle.getBundle("messages", svLocale);
 
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    private DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
+    /**
+     * {@inheritDoc}
+     */
     public IncidentReport readFrom(Class<IncidentReport> c, Type genericType, Annotation[] annotations,
             javax.ws.rs.core.MediaType arg3, MultivaluedMap<String, String> arg4, InputStream is)
             throws IOException, WebApplicationException {
@@ -72,7 +75,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             throw new WebApplicationException(e);
         }
     }
-    
+
     protected IncidentReport parseIncidentReport(InputStream is) {
         IncidentReport ir = new IncidentReport();
         DocumentBuilder builder;
@@ -89,7 +92,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
         try {
             reportType2 = rb.getString("incidentreport.reportTypes." + reportType + ".label");
         } catch (Exception e) {
-            // ignore
+            LOGGER.error(e.getMessage(), e);
         }
         ir.setReportType(reportType2);
         String[] errorTypes = parseString(doc, "errorType").split(" ");
@@ -98,11 +101,11 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             try {
                 errorType2 = rb.getString("incidentreport.errorTypes." + errorType + ".label");
             } catch (Exception e) {
-                // ignore
+                LOGGER.error(e.getMessage(), e);
             }
             ir.addErrorType(errorType2);
         }
-        
+
         ir.setDescription(parseString(doc, "description"));
         ir.setDefaultErrorMessage(parseString(doc, "defaultErrorMessage"));
         ir.setBrowser(UserAgentUtils.getBrowser(parseString(doc, "browser")));
@@ -154,7 +157,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
                         url = new URL(path);
                         file = new File(url.toURI());
                     } catch (Exception e1) {
-                        logger.warn("Filename could not be read.", e1);
+                        LOGGER.warn("Filename could not be read.", e1);
                         continue;
                     }
 
@@ -164,7 +167,7 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
                         fileName = fileNode.getAttributes().getNamedItem("filename").getTextContent();
 
                     } catch (Exception e) {
-                        logger.warn("Filename could not be read.", e);
+                        LOGGER.warn("Filename could not be read.", e);
                         continue;
                     }
                     ss.setFileName(fileName);
@@ -181,7 +184,11 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             return null;
         }
         Element elm = (Element) parent.getElementsByTagName(elmName).item(0);
-        return elm.getFirstChild() == null ? null : elm.getFirstChild().getTextContent();
+        if (elm.getFirstChild() == null) {
+            return "";
+        } else {
+            return elm.getFirstChild().getTextContent();
+        }
     }
 
     private String parseString(Document doc, String elmName) {
@@ -189,7 +196,12 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             return "";
         }
         Element elm = (Element) doc.getElementsByTagName(elmName).item(0);
-        return elm.getFirstChild() == null ? "" : elm.getFirstChild().getTextContent();
+
+        if (elm.getFirstChild() == null) {
+            return "";
+        } else {
+            return elm.getFirstChild().getTextContent();
+        }
     }
 
     private Element getElm(Document doc, String elmName) {
@@ -204,9 +216,18 @@ public class IncidentReportReader implements MessageBodyReader<IncidentReport> {
             return false;
         }
         Element elm = (Element) doc.getElementsByTagName(elmName).item(0);
-        return elm.getFirstChild() == null ? false : elm.getFirstChild().getTextContent().equals("true");
+
+        if (elm.getFirstChild() == null) {
+            return false;
+        } else {
+            return elm.getFirstChild().getTextContent().equals("true");
+        }
+
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean isReadable(Class<?> cls, Type arg1, Annotation[] arg2, javax.ws.rs.core.MediaType arg3) {
         return IncidentReport.class.isAssignableFrom(cls);
     }

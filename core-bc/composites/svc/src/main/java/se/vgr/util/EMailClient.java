@@ -43,18 +43,28 @@ import se.vgr.incidentreport.Screenshot;
  */
 public class EMailClient {
 
+    /**
+     * 
+     */
+    private static final int FILE_RETRY_ATTEMPTS = 10;
     private static final String MAILHOST_VGREGION_SE = "mailhost.vgregion.se";
+    private static final int SLEEP_TIME = 1000;
 
     /**
      * Sends email to specified recipients with specified content.
      * 
-     * @param recipients A string array containing the recipients.
-     * @param subject Subject of the email.
-     * @param message Body content.
-     * @param from The email appears to come from this address.
-     * @throws MessagingException Thrown if email sending is unsuccessful, eg. if the recipients are invalid.
+     * @param recipients
+     *            A string array containing the recipients.
+     * @param subject
+     *            Subject of the email.
+     * @param message
+     *            Body content.
+     * @param from
+     *            The email appears to come from this address.
+     * @throws MessagingException
+     *             Thrown if email sending is unsuccessful, eg. if the recipients are invalid.
      */
-    public void postMail(String recipients[], String subject, String message, String from)
+    public void postMail(String[] recipients, String subject, String message, String from)
             throws MessagingException {
         boolean debug = false;
 
@@ -91,16 +101,22 @@ public class EMailClient {
     }
 
     /**
-     * Sends email to specified recipients with specified content, including attachment support
+     * Sends email to specified recipients with specified content, including attachment support.
      * 
-     * @param recipients A string array containing the recipients.
-     * @param subject Subject of the email.
-     * @param message Body content.
-     * @param from The email appears to come from this address.
-     * @param list List of file attachments.
-     * @throws MessagingException Thrown if email sending is unsuccessful, eg. if the recipients are invalid.
+     * @param recipients
+     *            A string array containing the recipients.
+     * @param subject
+     *            Subject of the email.
+     * @param message
+     *            Body content.
+     * @param from
+     *            The email appears to come from this address.
+     * @param list
+     *            List of file attachments.
+     * @throws MessagingException
+     *             Thrown if email sending is unsuccessful, eg. if the recipients are invalid.
      */
-    public void postMail(String recipients[], String subject, String message, String from, List<Screenshot> list)
+    public void postMail(String[] recipients, String subject, String message, String from, List<Screenshot> list)
             throws MessagingException {
         if (list == null || list.size() == 0) {
             postMail(recipients, subject, message, from);
@@ -146,15 +162,14 @@ public class EMailClient {
             // Part two is attachment
             for (Screenshot ss : list) {
                 File file = new File(ss.getPath());
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < FILE_RETRY_ATTEMPTS; i++) {
                     if (file.exists()) {
                         // System.out.println("File exists:" + file.getAbsolutePath());
-                        i = 10;
+                        i = FILE_RETRY_ATTEMPTS;
                     } else {
                         // System.out.println("File not found here:" + file.getAbsolutePath());
                         try {
-
-                            Thread.sleep(1000);
+                            Thread.sleep(SLEEP_TIME);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

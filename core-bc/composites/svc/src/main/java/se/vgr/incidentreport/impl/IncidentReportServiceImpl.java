@@ -48,6 +48,9 @@ import se.vgr.util.EMailClient;
 @Service("incidentReportService")
 public class IncidentReportServiceImpl implements IncidentReportService {
 
+    private static final int SECONDS_PER_MINUTE = 60;
+    private static final int MILLISECONDS_PER_SECOND = 1000;
+
     /**
      * Time in minutes when a file is considered old in the temp file directory, and hence is removed.
      */
@@ -77,7 +80,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
      */
     private static final String INCIDENT_REPORT_EMAIL_SUBJECT = "IncidentReportService message";
 
-    final Logger logger = LoggerFactory.getLogger(IncidentReportServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IncidentReportServiceImpl.class);
 
     @Autowired
     @Qualifier("usdService")
@@ -87,7 +90,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
     private PivotalTrackerService pivotalTrackerClient;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public int reportIncident(IncidentReport ir) {
         int result = 0;
@@ -106,14 +109,14 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                     }
                     usdService.createRequest(parameters, ir.getUserId(), files, filenames);
                 } catch (Exception e) {
-                    logger.warn("USD service could not be reached, trying email instead.", e);
+                    LOGGER.warn("USD service could not be reached, trying email instead.", e);
                     sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + "USD-" + e.getMessage());
                 }
             } else if ("pivotaltracker".equalsIgnoreCase(method)) {
                 try {
                     createUserStory(ir);
                 } catch (Exception e) {
-                    logger.warn("Pivotal tracker could not be reached, trying email instead.");
+                    LOGGER.warn("Pivotal tracker could not be reached, trying email instead.");
                     sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + "PivotalTracker-"
                             + e.getMessage());
                 }
@@ -121,7 +124,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                 sendReportByEmail(ir, INCIDENT_REPORT_EMAIL_SUBJECT);
             }
         } catch (Exception e) {
-            logger.error("Incident report could not be sent:", e);
+            LOGGER.error("Incident report could not be sent:", e);
             result = -1;
         }
         return result;
@@ -136,12 +139,13 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             File[] tempfiles = tempDir.listFiles();
             for (int i = 0; i < tempfiles.length; i++) {
                 // Remove files older than
-                if (tempfiles[i].lastModified() + TEMP_FILES_OLDMINUTES * 60 * 1000 < now.getTime()) {
+                if (tempfiles[i].lastModified() + TEMP_FILES_OLDMINUTES * SECONDS_PER_MINUTE
+                        * MILLISECONDS_PER_SECOND < now.getTime()) {
                     tempfiles[i].delete();
                 }
             }
         } catch (IOException e) {
-            // ignore
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -152,9 +156,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         story.setName(applicationName + ": IncidentReportService message");
         story.setType("bug");
         story.setProjectId(projectId);
-        // story.setRequestedBy(TYCK_TILL_PT_USER);
         story.setDescription(ir.toString());
-        // String url = addStoryForProject(projectId, story);
         String url = pivotalTrackerClient.createuserStory(story);
 
         List<Screenshot> attachments = ir.getScreenShots();
@@ -172,7 +174,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             try {
                 pivotalTrackerClient.addAttachmentToStory(story.getProjectId(), story);
             } catch (Exception ex) {
-                logger.warn("Pivotal tracker attachments not working", ex);
+                LOGGER.warn("Pivotal tracker attachments not working", ex);
                 // attachments that cannot be sent to Pivotal Tracker must be
                 // emailed...
                 if (ir.getReportEmail() != null && ir.getReportEmail().length() > 0) {
@@ -181,7 +183,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
 
                         sendReportByEmail(ir, "Bifogade filer som skall till pivotal tracker.");
                     } catch (MessagingException e) {
-                        logger.warn("attachments sending failed ", e);
+                        LOGGER.warn("attachments sending failed ", e);
                     }
                 }
             }
@@ -199,7 +201,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                 new EMailClient().postMail(reportEmailArray, ir.getApplicationName() + ":" + subject, "" + body,
                         INCIDENT_REPORT_SERVICE_NOREPLY, ir.getScreenShots());
             } catch (Throwable e1) {
-                logger.warn("Email submission failed:", e1);
+                LOGGER.warn("Email submission failed:", e1);
                 String[] emailTo = {INCIDENT_REPORT_SERVICE_ADMIN_EMAIL};
 
                 new EMailClient().postMail(emailTo, ir.getApplicationName() + ":"
@@ -215,9 +217,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         p.setProperty("category", "pcat:400023");
         // map to group using application name?
         String appName = ir.getApplicationName().trim().replaceAll(" ", "_");
-        // System.out.println("getting group for appName=" + appName);
         String groupHandle = usdService.getUSDGroupHandleForApplicationName(appName);
-        // p.setProperty("group", "cnt:A455761E38B4B8488B5F0999BE5A4637");
         p.setProperty("group", groupHandle);
         p.setProperty("impact", "imp:1603");
         p.setProperty("priority", "pri:500");
@@ -225,8 +225,11 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         p.setProperty("urgency", "urg:1100");
         p.setProperty("z_location", "loc:67F817D782E87B45A8298FC5512B6A9C");
         p.setProperty("z_organization", "org:5527E3F8D19F49409036F162493C7DD0");
-        p.setProperty("z_telefon_nr", ir.getPhoneNumber() != null ? ir.getPhoneNumber() : "N/A");
-
+        if (ir.getPhoneNumber() != null) {
+            p.setProperty("z_telefon_nr", ir.getPhoneNumber());
+        } else {
+            p.setProperty("z_telefon_nr", "N/A");
+        }
         StringBuffer descBuf = new StringBuffer();
         descBuf.append(ir.toString() + "\n");
         p.setProperty("description", descBuf.toString());

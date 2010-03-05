@@ -65,40 +65,42 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
     private String reportEmail;
     private String reportMethod;
 
-    private static final Logger logger = LoggerFactory.getLogger(PortletErrorHandlingFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PortletErrorHandlingFilter.class);
 
+    @Override
     public void doFilter(RenderRequest request, RenderResponse arg1, FilterChain arg2) throws IOException,
             PortletException {
-        //System.out.println("in PortletErrorHandlingFilter doFilter");
-
         String nameSpace = arg1.getNamespace();
 
         if (request.getParameter("errorInActionPhase") != null) {
             // if the portlet threw an exception during the action phase we
             // won't go into the view phase
             Map<String, ?> userInfo = (Map<String, ?>) request.getAttribute(PortletRequest.USER_INFO);
-            //System.out.println("UserInfo:"+userInfo);
-            String userId = (String) ((userInfo != null) ? userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID
-                    .toString()) : "");
+            String userId = "";
+
+            if (userInfo != null) {
+                userId = (String) userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID.toString());
+            }
+
             arg1.getWriter().write(
                     createTyckTillPopupLink(request.getParameter("errorInActionPhase"), userId, nameSpace));
-        }
-        else {
+        } else {
             try {
                 // call next in line (either another filter or the portlet
                 // itself)
                 arg2.doFilter(request, arg1);
-            }
-            catch (Throwable e) {
-                logger.info("Exception caught in PortletErrorHandlingFilter", e);
+            } catch (Throwable e) {
+                LOGGER.info("Exception caught in PortletErrorHandlingFilter", e);
                 Map<String, ?> userInfo = (Map<String, ?>) request.getAttribute(PortletRequest.USER_INFO);
-                String userId = (String) ((userInfo != null) ? userInfo
-                        .get(PortletRequest.P3PUserInfos.USER_LOGIN_ID.toString()) : "");
+                String userId = "";
+                if (userInfo != null) {
+                    userId = (String) userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID.toString());
+                }
+
                 try {
                     arg1.getWriter().write(createTyckTillPopupLink(e.toString(), userId, nameSpace));
-                }
-                catch (Throwable t) {
-                    logger.error("Failed to create link", t);
+                } catch (Throwable t) {
+                    LOGGER.error("Failed to create link", t);
 
                 }
             }
@@ -119,8 +121,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
                 phoneNumber = ldapUser.getAttributeValue("telephoneNumber");
             }
 
-        }
-        else {
+        } else {
             userId = "anonymous";
         }
 
@@ -157,15 +158,15 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
         // buf.append("<script language=\"javascript\">\n");
         buf.append("<a href='#pop' " + "onClick=\"javascript:openPopup('" + errorFormUrl
                 + "&javasscript=yes')\" >");
-        buf
-                .append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");
+        buf.append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa "
+                + "portalen att bli b&#257;ttre genom att skicka en felrapport.");
         // buf.append("// -->\n");
         // buf.append("</script>\n");
 
         buf.append("<noscript>\n");
         buf.append("<a href=\"" + errorFormUrl + "\" >");
-        buf
-                .append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa portalen att bli b&#257;ttre genom att skicka en felrapport.");
+        buf.append("klicka h&#257;r</a> f&#246;r att hj&#257;lpa "
+                + "portalen att bli b&#257;ttre genom att skicka en felrapport.");
         buf.append("</noscript>\n");
         return buf.toString();
     }
@@ -175,6 +176,7 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
     }
 
+    @Override
     public void init(FilterConfig arg0) throws PortletException {
         tyckTillErrorFormURL = arg0.getInitParameter("TyckTillErrorFormURL");
         ac = PortletApplicationContextUtils.getWebApplicationContext(arg0.getPortletContext());
@@ -186,13 +188,13 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
         getLdapService(); // Test connection Before use
     }
 
+    @Override
     public void doFilter(ActionRequest arg0, ActionResponse arg1, FilterChain arg2) throws IOException,
             PortletException {
         try {
             // call next in line (either another filter or the portlet itself)
             arg2.doFilter(arg0, arg1);
-        }
-        catch (Throwable e) {
+        } catch (Throwable e) {
             // Save the error for the view phase, where we can take control over
             // the response-rendering
             arg1.setRenderParameter("errorInActionPhase", (e.toString()));
@@ -200,9 +202,9 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
     }
 
+    @Override
     public void destroy() {
         // TODO Auto-generated method stub
-
     }
 
 }

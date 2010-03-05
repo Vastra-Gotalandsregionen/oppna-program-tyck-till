@@ -23,30 +23,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IncidentReport {
+
     public static final String NEWLINE = "\n";
-    String reportType = "";
-    List<String> errorTypes = new ArrayList<String>();
-    String timeStamp;
-    String browser;
-    String userId;
-    String referer;
-    String ipAddress;
-    String applicationName;
-    String description;
-    boolean sendFeedback;
-    boolean feedbackBySms;
-    String smsPhoneNumber;
-    boolean feedbackByMail;
-    String emailAddress;
-    boolean feedbackByPhone;
-    String phoneNumber; // might be different from the sms-phone-number above
-    boolean sendScreenShot;
-    String defaultErrorMessage;
-    String reportMethod;
+    private String reportType = "";
+    private List<String> errorTypes = new ArrayList<String>();
+    private String timeStamp;
+    private String browser;
+    private String userId;
+    private String referer;
+    private String ipAddress;
+    private String applicationName;
+    private String description;
+    private boolean sendFeedback;
+    private boolean feedbackBySms;
+    private String smsPhoneNumber;
+    private boolean feedbackByMail;
+    private String emailAddress;
+    private boolean feedbackByPhone;
+    private String phoneNumber; // might be different from the sms-phone-number above
+    private boolean sendScreenShot;
+    private String defaultErrorMessage;
+    private String reportMethod;
 
-    String reportEmail;
+    private String reportEmail;
 
-    List<Screenshot> screenShots = new ArrayList<Screenshot>();
+    private List<Screenshot> screenShots = new ArrayList<Screenshot>();
 
     private String nameSpace;
     private String javaScript = "";
@@ -213,6 +214,12 @@ public class IncidentReport {
         return errorTypes;
     }
 
+    /**
+     * If the incident report was created because of a java error, these are added via this method.
+     * 
+     * @param errorType
+     *            The java error that was thrown
+     */
     public void addErrorType(String errorType) {
         this.errorTypes.add(errorType);
     }
@@ -221,10 +228,19 @@ public class IncidentReport {
         return screenShots;
     }
 
+    /**
+     * Adds a screenshot to be emailed, sent to USD, or attached to the user story in pivotal tracker.
+     * 
+     * @param ss
+     *            Screenshot object
+     */
     public void addScreenShot(Screenshot ss) {
         this.screenShots.add(ss);
     }
 
+    /**
+     * Public constructor for the class.
+     */
     public IncidentReport() {
     }
 

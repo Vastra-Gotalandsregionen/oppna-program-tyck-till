@@ -27,8 +27,9 @@ public interface IncidentReportService {
     /**
      * Reports incident via specified report method.
      * 
-     * @param ir Incident report which should be reported.
+     * @param ir
+     *            Incident report which should be reported.
      * @return An integer indicating status of the reporting action. 0 = success, -1 = failure.
      */
-    public int reportIncident(IncidentReport ir);
+    int reportIncident(IncidentReport ir);
 }

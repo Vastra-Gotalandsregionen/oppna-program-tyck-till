@@ -7,7 +7,7 @@ This is the Web-app Maven POM.
   <parent>
     <groupId>se.vgr.tyck-till</groupId>
     <artifactId>tyck-till-system</artifactId>
-    <version>1.3</version>
+    <version>1.4-SNAPSHOT</version>
   </parent>
   <artifactId>tyck-till-test-servlet</artifactId>
   <packaging>war</packaging>

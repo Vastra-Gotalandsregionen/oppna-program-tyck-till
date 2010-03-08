@@ -255,7 +255,7 @@ public class UserAgentUtils {
                 }
             }
         } else if (userAgent.indexOf("Mac OS X") > -1) {
-            userAgent.indexOf("Mac OS X");
+            pos=userAgent.indexOf("Mac OS X");
             if (userAgent.indexOf("iPhone") > -1) {
                 pos = userAgent.indexOf("iPhone OS");
                 res = getArray("Mac", "MacOSX-iPhone", "MacOS-iPhone "

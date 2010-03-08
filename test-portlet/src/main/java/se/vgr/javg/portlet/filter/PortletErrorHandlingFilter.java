@@ -40,6 +40,7 @@ import javax.portlet.filter.RenderFilter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.portlet.context.PortletApplicationContextUtils;
 
@@ -105,12 +106,10 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
                 }
             }
         }
-
     }
 
     private String createTyckTillPopupLink(String errorMessage, String userId, String nameSpace)
             throws UnsupportedEncodingException {
-
         String email = "";
         String phoneNumber = "";
 
@@ -126,7 +125,6 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
         }
 
         StringBuffer errorFormUrl = new StringBuffer(tyckTillErrorFormURL);
-
         errorFormUrl.append("?errorMessage=" + URLEncoder.encode(errorMessage, "UTF-8"));
         errorFormUrl.append("&errorType=" + URLEncoder.encode("errorMessage", "UTF-8"));
 
@@ -173,7 +171,6 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
 
     private LdapService getLdapService() {
         return (LdapService) ac.getBean("ldapService");
-
     }
 
     @Override
@@ -184,8 +181,6 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
         contextName = arg0.getInitParameter("ApplicationName");
         reportMethod = arg0.getInitParameter("TyckTillReportMethod");
         reportEmail = arg0.getInitParameter("TyckTillReportEmail");
-
-        getLdapService(); // Test connection Before use
     }
 
     @Override
@@ -199,12 +194,10 @@ public class PortletErrorHandlingFilter implements RenderFilter, ActionFilter {
             // the response-rendering
             arg1.setRenderParameter("errorInActionPhase", (e.toString()));
         }
-
     }
 
     @Override
     public void destroy() {
         // TODO Auto-generated method stub
     }
-
 }

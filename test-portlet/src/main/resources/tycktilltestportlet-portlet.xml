@@ -18,9 +18,11 @@
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-  <!-- Spring ldap -->
+  <!-- Enables annotations -->
+  <context:annotation-config />  
 
-  <bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+  <!-- Spring ldap -->
+  <bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource" lazy-init="true">
     <property name="url" value="${BIND_URL}" />
     <property name="base" value="${BASE}" />
     <property name="userDn" value="${BIND_DN}" />
@@ -28,21 +30,21 @@
     <property name="pooled" value="true" />
   </bean>
 
-  <bean id="ldapTemplate" class="org.springframework.ldap.core.simple.SimpleLdapTemplate">
+  <bean id="ldapTemplate" class="org.springframework.ldap.core.simple.SimpleLdapTemplate" lazy-init="true">
     <constructor-arg ref="contextSource" />
   </bean>
 
-  <bean id="ldapService" class="se.vgr.ldapservice.SimpleLdapServiceImpl">
+  <bean id="ldapService" class="se.vgr.ldapservice.SimpleLdapServiceImpl" lazy-init="true">
     <constructor-arg ref="ldapTemplate" />
   </bean>
 
-  <bean id="propertyPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+  <bean id="propertyPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="true">
     <property name="locations">
       <list>
         <value>classpath:ldap.properties</value>
         <value>classpath:security.properties</value>
       </list>
     </property>
-    <property name="ignoreResourceNotFound" value="true" />
+    <property name="ignoreResourceNotFound" value="false" />
   </bean>
 </beans>

@@ -11,7 +11,7 @@ Generation time : 2009-04-17 09:01:59 CEST
   <parent>
     <groupId>se.vgr.tyck-till</groupId>
     <artifactId>tyck-till-core-bc</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.3</version>
   </parent>
   <artifactId>tyck-till-core-bc-composite-types</artifactId>
   <packaging>jar</packaging>

@@ -60,7 +60,6 @@
 		<dependency>
 			<groupId>com.sun.portal</groupId>
 			<artifactId>portlet-container</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

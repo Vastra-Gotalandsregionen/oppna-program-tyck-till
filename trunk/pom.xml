@@ -29,14 +29,6 @@
     <url>http://oppna-program-tyck-till.googlecode.com/</url>
   </scm>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.sun.portal</groupId>
-      <artifactId>portlet-container</artifactId>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
-
   <!--
     Used by "mvn deploy" to deploy artefacts to a central maven repository. Use settings.xml to set username and
     password for this repository, see wagon-svn for more information
@@ -54,6 +46,10 @@
     </snapshotRepository>
   </distributionManagement>
   <repositories>
+    <repository>
+      <id>oppna-program-tyck-till-repo</id>
+      <url>http://oppna-program-tyck-till.googlecode.com/svn/maven</url>
+    </repository>
     <repository>
       <id>oppnaprogram-release</id>
       <name>oppna program release repo</name>

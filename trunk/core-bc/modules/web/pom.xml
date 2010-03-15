@@ -90,15 +90,5 @@
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.sun.portal</groupId>
-			<artifactId>portlet-container</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.portlet</groupId>
-			<artifactId>portlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 </project>

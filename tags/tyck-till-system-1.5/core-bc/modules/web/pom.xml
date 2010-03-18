@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+	<!--
+		This is the Web-app Maven POM. Template version: 1.1-RC1 Generation
+		time : 2009-04-17 09:01:59 CEST
+	-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>se.vgr.tyck-till</groupId>
+		<artifactId>tyck-till-core-bc</artifactId>
+		<version>1.5</version>
+	</parent>
+	<artifactId>tyck-till-core-bc-module-web</artifactId>
+	<packaging>war</packaging>
+	<name>${project.artifactId}</name>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<!--
+					Configure eclipse plug-in to generate a context root that does not
+					have the version number on it
+				-->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<wtpContextName>${project.artifactId}</wtpContextName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins
+        </groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>tyck-till</warName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>se.vgr.tyck-till</groupId>
+			<artifactId>tyck-till-core-bc-composite-svc</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>se.vgr.tyck-till</groupId>
+			<artifactId>tyck-till-core-bc-composite-types</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>orbeon</groupId>
+			<artifactId>orbeon-xforms-filter</artifactId>
+			<version>3.7.0beta1</version>
+		</dependency>
+		<!--
+			We use jersey as the implementation of jsr 311 ,TODO: change to
+			Apache cxf?
+		-->
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>jsr311-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-spring</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+		</dependency>
+	</dependencies>
+</project>

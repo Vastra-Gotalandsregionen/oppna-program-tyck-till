@@ -26,8 +26,8 @@
 
 
   <portlet>
-    <portlet-name>tycktilltestportlet10</portlet-name>
-    <display-name>TyckTillTestPortlet 1.0</display-name>
+    <portlet-name>tycktilltestportlet</portlet-name>
+    <display-name>TyckTillTestPortlet</display-name>
     <portlet-class>se.vgr.tycktill.portlet.TyckTillTestPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
@@ -35,8 +35,8 @@
       <portlet-mode>VIEW</portlet-mode>
     </supports>
     <portlet-info>
-      <title>TyckTillTestPortlet 1.0</title>
-      <short-title>TyckTillTestPortlet 1.0</short-title>
+      <title>TyckTillTestPortlet</title>
+      <short-title>TyckTillTestPortlet</short-title>
       <keywords>TyckTillTestPortlet</keywords>
     </portlet-info>
 

@@ -25,11 +25,12 @@
   id="TyckTill" version="2.0">
   <portlet>
     <portlet-name>IncidentReportPortletPivotal</portlet-name>
+	<display-name>TyckTill Pivotal</display-name>
     <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
     
     <init-param>
       <name>ApplicationName</name>
-      <value>Antonio_portal</value>
+      <value>Portal_project</value>
     </init-param>
     <init-param>
       <name>TyckTillErrorFormURL</name>
@@ -51,15 +52,23 @@
       <portlet-mode>VIEW</portlet-mode>
     </supports>
     <resource-bundle>IncidentReport</resource-bundle>
+	
+	<portlet-info>
+      <title>Tyck till Pivotal</title>
+      <short-title>Tyck till Pivotal</short-title>
+      <keywords>Tyck till Pivotal</keywords>
+    </portlet-info>
   </portlet>
   
+  <!--
   <portlet>
     <portlet-name>IncidentReportPortletUSD</portlet-name>
+	<display-name>TyckTill USD</display-name>
     <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
     
     <init-param>
       <name>ApplicationName</name>
-      <value>Antonio_portal</value>
+      <value>Portal_project</value>
     </init-param>
     <init-param>
       <name>TyckTillErrorFormURL</name>
@@ -81,15 +90,22 @@
       <portlet-mode>VIEW</portlet-mode>
     </supports>
     <resource-bundle>IncidentReport</resource-bundle>
+	
+	<portlet-info>
+      <title>Tyck till USD</title>
+      <short-title>Tyck till USD</short-title>
+      <keywords>Tyck till USD</keywords>
+    </portlet-info>
   </portlet>
   
   <portlet>
     <portlet-name>IncidentReportPortletEmail</portlet-name>
+	<display-name>TyckTill Email</display-name>
     <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
     
     <init-param>
       <name>ApplicationName</name>
-      <value>Antonio_portal</value>
+      <value>Portal_project</value>
     </init-param>
     <init-param>
       <name>TyckTillErrorFormURL</name>
@@ -111,7 +127,14 @@
       <portlet-mode>VIEW</portlet-mode>
     </supports>
     <resource-bundle>IncidentReport</resource-bundle>
+	
+	<portlet-info>
+      <title>Tyck till Email</title>
+      <short-title>Tyck till Email</short-title>
+      <keywords>Tyck till Email</keywords>
+    </portlet-info>
   </portlet>
+  -->
   
   <user-attribute>
     <description>User Login Id</description>

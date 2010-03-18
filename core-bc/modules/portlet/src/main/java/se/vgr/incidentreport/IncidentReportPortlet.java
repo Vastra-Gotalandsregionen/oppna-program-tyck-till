@@ -72,9 +72,8 @@ public class IncidentReportPortlet extends GenericPortlet {
         Map<String, ?> userInfo = (Map<String, ?>) request.getAttribute(PortletRequest.USER_INFO);
 
         // System.out.println("UserInfo:"+userInfo);
-        String userId =
-                (String) (userInfo != null ? userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID.toString())
-                        : "");
+        String userId = (String) (userInfo != null ? userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID
+                .toString()) : "");
         String email = "";
         String phoneNumber = "";
 
@@ -112,7 +111,7 @@ public class IncidentReportPortlet extends GenericPortlet {
         request.setAttribute("errorFormParams", errorFormParams.toString());
 
         response.setContentType("text/html");
-        PortletRequestDispatcher dispatcher = getPortletContext().getRequestDispatcher("/jsp/index.jsp");
+        PortletRequestDispatcher dispatcher = getPortletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp");
 
         dispatcher.include(request, response);
     }

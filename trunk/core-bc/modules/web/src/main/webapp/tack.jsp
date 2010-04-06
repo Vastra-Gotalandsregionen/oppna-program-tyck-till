@@ -1,4 +1,4 @@
-<%--
+﻿<%--
 
     Copyright 2010 Västra Götalandsregionen
 
@@ -19,4 +19,4 @@
 
 --%>
 
-<P>Tack f�r att du anm�ler till Tyck Till</P>
+<P>Tack för din anmälan</P>

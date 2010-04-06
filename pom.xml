@@ -15,7 +15,7 @@
   <groupId>se.vgr.tyck-till</groupId>
   <artifactId>tyck-till-system</artifactId>
   <packaging>pom</packaging>
-  <version>1.7</version>
+  <version>1.8-SNAPSHOT</version>
   <name>${project.artifactId}</name>
 
   <modules>
@@ -32,7 +32,7 @@
   </repositories>
   
   <scm>
-    <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/tags/tyck-till-system-1.7</developerConnection>
-    <url>http://oppna-program-tyck-till.googlecode.com/svn/tags/tyck-till-system-1.7</url>
+    <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/trunk</developerConnection>
+    <url>http://oppna-program-tyck-till.googlecode.com/svn/trunk</url>
   </scm>
 </project>

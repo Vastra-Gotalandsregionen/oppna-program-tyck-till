@@ -24,7 +24,14 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
   version="2.4">
+  <display-name>Tyck till</display-name>
   <description>Tyck till Portlet</description>
+  
+  <!-- 
+  <listener>
+    <listener-class>com.liferay.portal.kernel.servlet.PortletContextListener</listener-class>
+  </listener>
+   -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -35,5 +42,19 @@
       classpath*:/applicationContext.xml classpath*:/*-portlet.xml
     </param-value>
   </context-param>
-  
+  <!-- 
+  <servlet>
+    <servlet-name>IncidentReportPortletPivotal</servlet-name>
+    <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+    <init-param>
+      <param-name>portlet-class</param-name>
+      <param-value>se.vgr.incidentreport.IncidentReportPortlet</param-value>
+    </init-param>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IncidentReportPortletPivotal</servlet-name>
+    <url-pattern>/IncidentReportPortletPivotal/*</url-pattern>
+  </servlet-mapping>
+   -->
 </web-app>

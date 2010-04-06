@@ -8,7 +8,7 @@
   <parent>
     <groupId>se.vgregion.common</groupId>
     <artifactId>profile</artifactId>
-    <version>1.4</version>
+    <version>1.10</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>

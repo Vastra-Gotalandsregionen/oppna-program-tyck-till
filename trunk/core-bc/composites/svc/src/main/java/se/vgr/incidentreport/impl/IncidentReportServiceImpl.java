@@ -63,7 +63,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
     /**
      * Reciever of messages when the regular report recievers can´t be reached.
      */
-    private static final String INCIDENT_REPORT_SERVICE_ADMIN_EMAIL = "ulcan@wmdata.com";
+    private static final String INCIDENT_REPORT_SERVICE_ADMIN_EMAIL = "tycktill@vgregion.se";
 
     /**
      * Email reply address.
@@ -109,14 +109,14 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                     }
                     usdService.createRequest(parameters, ir.getUserId(), files, filenames);
                 } catch (Exception e) {
-                    LOGGER.warn("USD service could not be reached, trying email instead.", e);
+                    LOGGER.error("USD service could not be reached, trying email instead.", e);
                     sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + "USD-" + e.getMessage());
                 }
             } else if ("pivotaltracker".equalsIgnoreCase(method)) {
                 try {
                     createUserStory(ir);
                 } catch (Exception e) {
-                    LOGGER.warn("Pivotal tracker could not be reached, trying email instead.");
+                    LOGGER.error("Pivotal tracker could not be reached, trying email instead.", e);
                     sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + "PivotalTracker-"
                             + e.getMessage());
                 }
@@ -195,14 +195,14 @@ public class IncidentReportServiceImpl implements IncidentReportService {
 
         if (reportEmail != null && !"".equals(reportEmail)) {
             String body = "";
-            String[] reportEmailArray = {reportEmail};
+            String[] reportEmailArray = { reportEmail };
             body += ir.toString().replaceAll(IncidentReport.NEWLINE, "</br>");
             try {
                 new EMailClient().postMail(reportEmailArray, ir.getApplicationName() + ":" + subject, "" + body,
                         INCIDENT_REPORT_SERVICE_NOREPLY, ir.getScreenShots());
             } catch (Throwable e1) {
-                LOGGER.warn("Email submission failed:", e1);
-                String[] emailTo = {INCIDENT_REPORT_SERVICE_ADMIN_EMAIL};
+                LOGGER.error("Email submission failed:", e1);
+                String[] emailTo = { INCIDENT_REPORT_SERVICE_ADMIN_EMAIL };
 
                 new EMailClient().postMail(emailTo, ir.getApplicationName() + ":"
                         + INCIDENT_REPORT_ERROR_EMAIL_SUBJECT, "" + e1.getMessage() + "\n" + body,

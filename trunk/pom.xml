@@ -24,15 +24,41 @@
     <module>test-servlet</module>
   </modules>
 
-  <repositories>
-    <repository>
-      <id>oppna-program-repo</id>
-      <url>http://oppna-program.googlecode.com/svn/maven</url>
-    </repository>
-  </repositories>
-  
+  <!--
+    Used by "mvn deploy" to deploy artefacts to a central maven repository. Use settings.xml to set username and
+    password for this repository, see wagon-svn for more information
+  -->
+  <distributionManagement>
+	<repository>
+	  <id>svn-repo</id>
+	  <name>Öppna Program Release Repo</name>
+	  <url>svn:https://oppna-program.googlecode.com/svn/maven</url>
+	</repository>
+	<snapshotRepository>
+	  <id>svn-repo</id>
+	  <name>Öppna Program Snapshot Repo</name>
+	  <url>svn:https://oppna-program.googlecode.com/svn/maven-snapshots</url>
+	</snapshotRepository>
+  </distributionManagement>
+
   <scm>
     <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/trunk</developerConnection>
     <url>http://oppna-program-tyck-till.googlecode.com/svn/trunk</url>
   </scm>
+
+  <repositories>
+    <repository>
+          <id>svn-repo</id>
+		  <name>Öppna Program Release Repo</name>
+          <url>http://oppna-program.googlecode.com/svn/maven</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+          <id>svn-repo</id>
+		  <name>Öppna Program Release Repo</name>
+          <url>http://oppna-program.googlecode.com/svn/maven</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>

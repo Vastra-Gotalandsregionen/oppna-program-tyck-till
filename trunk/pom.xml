@@ -15,7 +15,7 @@
   <groupId>se.vgr.tyck-till</groupId>
   <artifactId>tyck-till-system</artifactId>
   <packaging>pom</packaging>
-  <version>1.7-SNAPSHOT</version>
+  <version>1.7</version>
   <name>${project.artifactId}</name>
 
   <modules>
@@ -24,46 +24,15 @@
     <module>test-servlet</module>
   </modules>
 
-  <scm>
-    <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/trunk</developerConnection>
-    <url>http://oppna-program-tyck-till.googlecode.com/</url>
-  </scm>
-
-  <!--
-    Used by "mvn deploy" to deploy artefacts to a central maven repository. Use settings.xml to set username and
-    password for this repository, see wagon-svn for more information
-  -->
-  <distributionManagement>
-    <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>svn-repo</id>
-      <url>svn:https://oppna-program.googlecode.com/svn/maven</url>
-    </repository>
-    <snapshotRepository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>svn-repo</id>
-      <url>svn:https://oppna-program.googlecode.com/svn/maven-snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
   <repositories>
     <repository>
-      <id>oppna-program-tyck-till-repo</id>
-      <url>http://oppna-program-tyck-till.googlecode.com/svn/maven</url>
-    </repository>
-    <repository>
-      <id>oppnaprogram-release</id>
-      <name>oppna program release repo</name>
+      <id>oppna-program-repo</id>
       <url>http://oppna-program.googlecode.com/svn/maven</url>
-      <releases>
-        <updatePolicy>never</updatePolicy>
-        <checksumPolicy>warn</checksumPolicy>
-        <enabled>true</enabled>
-      </releases>
-    </repository>
-    <repository>
-      <id>oppnaprogram-snapshot</id>
-      <name>oppna program snapshot repo</name>
-      <url>http://oppna-program.googlecode.com/svn/maven-snapshots</url>
     </repository>
   </repositories>
+  
+  <scm>
+    <developerConnection>scm:svn:https://oppna-program-tasklist.googlecode.com/svn/tags/tyck-till-system-1.7</developerConnection>
+    <url>http://oppna-program-tasklist.googlecode.com/svn/tags/tyck-till-system-1.7</url>
+  </scm>
 </project>

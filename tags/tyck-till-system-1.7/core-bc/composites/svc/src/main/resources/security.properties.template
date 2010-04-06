@@ -1,0 +1,10 @@
+#Endpoint for USD service
+endpoint=
+#Username for USD service
+user=
+#Password for USD service
+password=
+#Username for PivotalTracker
+PT_USER=
+#Password for PivotalTracker
+PT_PWD=

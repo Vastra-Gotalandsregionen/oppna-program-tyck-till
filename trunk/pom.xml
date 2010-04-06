@@ -32,7 +32,7 @@
   </repositories>
   
   <scm>
-    <developerConnection>scm:svn:https://oppna-program-tasklist.googlecode.com/svn/trunk</developerConnection>
-    <url>http://oppna-program-tasklist.googlecode.com/svn/trunk</url>
+    <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/trunk</developerConnection>
+    <url>http://oppna-program-tyck-till.googlecode.com/svn/trunk</url>
   </scm>
 </project>

@@ -28,8 +28,17 @@
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-    <!-- Spring ldap -->
+  <bean id="propertyPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+        <list>
+        <value>classpath:ldap.properties</value>
+        <value>classpath:security.properties</value>
+        </list>
+    </property>
+    <property name="ignoreResourceNotFound" value="true" />
+  </bean>
 
+  <!-- Spring ldap -->
 	<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
 		<property name="url" value="${BIND_URL}" />
 		<property name="base" value="${BASE}" />
@@ -45,15 +54,5 @@
 	<bean id="ldapService" class="se.vgr.ldapservice.SimpleLdapServiceImpl">
 		<constructor-arg ref="ldapTemplate" />
 	</bean>
-
-  <bean id="propertyPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="locations">
-        <list>
-        <value>classpath:ldap.properties</value>
-        <value>classpath:security.properties</value>
-        </list>
-    </property>
-    <property name="ignoreResourceNotFound" value="true" />
-  </bean>
     
 </beans>

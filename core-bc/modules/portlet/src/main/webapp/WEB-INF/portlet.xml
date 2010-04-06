@@ -24,8 +24,9 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
   id="TyckTill" version="2.0">
   <portlet>
+    <description>Portlet for Tyck till application using Pivotal Tracker</description>
     <portlet-name>IncidentReportPortletPivotal</portlet-name>
-	<display-name>TyckTill Pivotal</display-name>
+    <display-name>Tyck till - Pivotal</display-name>
     <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
     
     <init-param>
@@ -34,8 +35,7 @@
     </init-param>
     <init-param>
       <name>TyckTillErrorFormURL</name>
-      <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp
-      </value>
+      <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value>
     </init-param>
     <init-param>
       <name>TyckTillReportMethod</name>
@@ -43,98 +43,23 @@
     </init-param>
     <init-param>
       <name>TyckTillReportEmail</name>
-      <value>susanne.e.lindqvist@vgregion.se</value>
+      <value>tycktill@vgregion.se</value>
     </init-param>
 
     <expiration-cache>0</expiration-cache>
-    <supports>
-      <mime-type>text/html</mime-type>
-      <portlet-mode>VIEW</portlet-mode>
-    </supports>
-    <resource-bundle>IncidentReport</resource-bundle>
-	
-	<portlet-info>
-      <title>Tyck till Pivotal</title>
-      <short-title>Tyck till Pivotal</short-title>
-      <keywords>Tyck till Pivotal</keywords>
-    </portlet-info>
-  </portlet>
-  
-  <!--
-  <portlet>
-    <portlet-name>IncidentReportPortletUSD</portlet-name>
-	<display-name>TyckTill USD</display-name>
-    <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
     
-    <init-param>
-      <name>ApplicationName</name>
-      <value>Portal_project</value>
-    </init-param>
-    <init-param>
-      <name>TyckTillErrorFormURL</name>
-      <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp
-      </value>
-    </init-param>
-    <init-param>
-      <name>TyckTillReportMethod</name>
-      <value>usd</value>
-    </init-param>
-    <init-param>
-      <name>TyckTillReportEmail</name>
-      <value>susanne.e.lindqvist@vgregion.se</value>
-    </init-param>
-
-    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>VIEW</portlet-mode>
     </supports>
-    <resource-bundle>IncidentReport</resource-bundle>
-	
-	<portlet-info>
-      <title>Tyck till USD</title>
-      <short-title>Tyck till USD</short-title>
-      <keywords>Tyck till USD</keywords>
-    </portlet-info>
-  </portlet>
-  
-  <portlet>
-    <portlet-name>IncidentReportPortletEmail</portlet-name>
-	<display-name>TyckTill Email</display-name>
-    <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
     
-    <init-param>
-      <name>ApplicationName</name>
-      <value>Portal_project</value>
-    </init-param>
-    <init-param>
-      <name>TyckTillErrorFormURL</name>
-      <value>http://itguiden.vgregion.se:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp
-      </value>
-    </init-param>
-    <init-param>
-      <name>TyckTillReportMethod</name>
-      <value>email</value>
-    </init-param>
-    <init-param>
-      <name>TyckTillReportEmail</name>
-      <value>susanne.e.lindqvist@vgregion.se</value>
-    </init-param>
-
-    <expiration-cache>0</expiration-cache>
-    <supports>
-      <mime-type>text/html</mime-type>
-      <portlet-mode>VIEW</portlet-mode>
-    </supports>
     <resource-bundle>IncidentReport</resource-bundle>
-	
-	<portlet-info>
-      <title>Tyck till Email</title>
-      <short-title>Tyck till Email</short-title>
-      <keywords>Tyck till Email</keywords>
+    
+    <portlet-info>
+        <title>Tyck till - Pivotal</title>
+        <short-title>Tyck till - Pivotal</short-title>
     </portlet-info>
   </portlet>
-  -->
   
   <user-attribute>
     <description>User Login Id</description>

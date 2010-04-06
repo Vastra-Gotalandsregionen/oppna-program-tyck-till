@@ -19,4 +19,4 @@
 
 --%>
 
-<P>Tack fï¿½r att du anmï¿½ler till Tyck Till</P>
+<P>Tack för att du anmäler till Tyck Till</P>

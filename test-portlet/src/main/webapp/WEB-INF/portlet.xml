@@ -65,7 +65,7 @@
     </init-param>
     <init-param>
       <name>TyckTillReportEmail</name>
-      <value>susanne.e.lindqvist@vgregion.se</value>
+      <value>tycktill@vgregion.se</value>
     </init-param>
   </filter>
   <filter-mapping>

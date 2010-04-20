@@ -11,17 +11,16 @@ Generation time : 2009-04-17 09:01:59 CEST
   <parent>
     <groupId>se.vgregion.tyck-till</groupId>
     <artifactId>tyck-till-system</artifactId>
-    <version>1.8-SNAPSHOT</version>
+    <version>1.7-SNAPSHOT</version>
   </parent>
   <artifactId>tyck-till-core-bc</artifactId>
   <packaging>pom</packaging>
-  <version>1.8-SNAPSHOT</version>
+  <version>1.7-SNAPSHOT</version>
   <name>${project.artifactId}</name>
 
   <modules>
     <module>composites/types</module>
     <module>composites/svc</module>
-    <module>composites/schema</module>
     <module>modules/web</module>
 	<module>modules/portlet</module>
   </modules>

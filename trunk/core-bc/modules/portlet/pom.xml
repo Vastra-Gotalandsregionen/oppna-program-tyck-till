@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>se.vgregion.tyck-till</groupId>
 		<artifactId>tyck-till-core-bc</artifactId>
-		<version>1.8-SNAPSHOT</version>
+		<version>1.7-SNAPSHOT</version>
 	</parent>
 	<artifactId>tyck-till-core-bc-module-portlet</artifactId>
 	<packaging>war</packaging>

@@ -5,9 +5,9 @@ This is the Web-app Maven POM.
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>se.vgr.tyck-till</groupId>
+		<groupId>se.vgregion.tyck-till</groupId>
 		<artifactId>tyck-till-system</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 	<artifactId>tyck-till-test-portlet</artifactId>
 	<packaging>war</packaging>
@@ -45,7 +45,7 @@ This is the Web-app Maven POM.
 			<version>1.1</version>
 		</dependency>
 		<!--
-			<dependency> <groupId>se.vgr.javg</groupId>
+			<dependency> <groupId>se.vgregion.javg</groupId>
 			<artifactId>javg-rt-support</artifactId>
 			<version>${javg.version}</version> </dependency>
 		-->

@@ -6,9 +6,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>se.vgr.tyck-till</groupId>
+		<groupId>se.vgregion.tyck-till</groupId>
 		<artifactId>tyck-till-core-bc</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 	<artifactId>tyck-till-core-bc-module-web</artifactId>
 	<packaging>war</packaging>
@@ -41,14 +41,14 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>se.vgr.tyck-till</groupId>
+			<groupId>se.vgregion.tyck-till</groupId>
 			<artifactId>tyck-till-core-bc-composite-svc</artifactId>
-			<version>1.7-SNAPSHOT</version>
+			<version>1.7</version>
 		</dependency>
 		<dependency>
-			<groupId>se.vgr.tyck-till</groupId>
+			<groupId>se.vgregion.tyck-till</groupId>
 			<artifactId>tyck-till-core-bc-composite-types</artifactId>
-			<version>1.7-SNAPSHOT</version>
+			<version>1.7</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

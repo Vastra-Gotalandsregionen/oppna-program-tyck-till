@@ -5,12 +5,6 @@
     2009-04-17 09:01:59 CEST
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <parent>
-    <groupId>se.vgregion.common</groupId>
-    <artifactId>profile</artifactId>
-    <version>1.11</version>
-  </parent>
-
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.vgr.tyck-till</groupId>
   <artifactId>tyck-till-system</artifactId>
@@ -18,47 +12,21 @@
   <version>1.7-SNAPSHOT</version>
   <name>${project.artifactId}</name>
 
+  <parent>
+    <groupId>se.vgregion.common</groupId>
+    <artifactId>profile-open</artifactId>
+    <version>2.4</version>
+  </parent>
+  
   <modules>
     <module>core-bc</module>
     <module>test-portlet</module>
     <module>test-servlet</module>
   </modules>
 
-  <!--
-    Used by "mvn deploy" to deploy artefacts to a central maven repository. Use settings.xml to set username and
-    password for this repository, see wagon-svn for more information
-  -->
-  <distributionManagement>
-	<repository>
-	  <id>svn-repo</id>
-	  <name>Öppna Program Release Repo</name>
-	  <url>svn:https://oppna-program.googlecode.com/svn/maven</url>
-	</repository>
-	<snapshotRepository>
-	  <id>svn-repo</id>
-	  <name>Öppna Program Snapshot Repo</name>
-	  <url>svn:https://oppna-program.googlecode.com/svn/maven-snapshots</url>
-	</snapshotRepository>
-  </distributionManagement>
-
   <scm>
     <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/trunk</developerConnection>
     <url>http://oppna-program-tyck-till.googlecode.com/svn/trunk</url>
   </scm>
 
-  <repositories>
-    <repository>
-          <id>svn-repo</id>
-		  <name>Öppna Program Release Repo</name>
-          <url>http://oppna-program.googlecode.com/svn/maven</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-          <id>svn-repo</id>
-		  <name>Öppna Program Release Repo</name>
-          <url>http://oppna-program.googlecode.com/svn/maven</url>
-    </pluginRepository>
-  </pluginRepositories>
 </project>

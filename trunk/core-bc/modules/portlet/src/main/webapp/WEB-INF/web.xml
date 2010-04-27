@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
-
     Copyright 2010 Västra Götalandsregionen
 
       This library is free software; you can redistribute it and/or modify
@@ -16,8 +15,6 @@
       License along with this library; if not, write to the
       Free Software Foundation, Inc., 59 Temple Place, Suite 330,
       Boston, MA 02111-1307  USA
-
-
 -->
 
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
@@ -27,11 +24,9 @@
   <display-name>Tyck till</display-name>
   <description>Tyck till Portlet</description>
   
-  <!-- 
   <listener>
     <listener-class>com.liferay.portal.kernel.servlet.PortletContextListener</listener-class>
   </listener>
-   -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -42,7 +37,7 @@
       classpath*:/applicationContext.xml classpath*:/*-portlet.xml
     </param-value>
   </context-param>
-  <!-- 
+  
   <servlet>
     <servlet-name>IncidentReportPortletPivotal</servlet-name>
     <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -56,5 +51,33 @@
     <servlet-name>IncidentReportPortletPivotal</servlet-name>
     <url-pattern>/IncidentReportPortletPivotal/*</url-pattern>
   </servlet-mapping>
-   -->
+  
+  <servlet>
+    <servlet-name>IncidentReportPortletUSD</servlet-name>
+    <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+    <init-param>
+      <param-name>portlet-class</param-name>
+      <param-value>se.vgr.incidentreport.IncidentReportPortlet</param-value>
+    </init-param>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IncidentReportPortletUSD</servlet-name>
+    <url-pattern>/IncidentReportPortletUSD/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>IncidentReportPortletEmail</servlet-name>
+    <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+    <init-param>
+      <param-name>portlet-class</param-name>
+      <param-value>se.vgr.incidentreport.IncidentReportPortlet</param-value>
+    </init-param>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IncidentReportPortletEmail</servlet-name>
+    <url-pattern>/IncidentReportPortletEmail/*</url-pattern>
+  </servlet-mapping>
+   
 </web-app>

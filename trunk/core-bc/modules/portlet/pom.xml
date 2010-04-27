@@ -66,5 +66,5 @@
 			<artifactId>spring-webmvc-portlet</artifactId>
 		</dependency>
 	</dependencies>
-
+	
 </project>

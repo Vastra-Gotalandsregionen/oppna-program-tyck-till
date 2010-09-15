@@ -31,7 +31,7 @@
     <!-- Enable Fine-Grained Autowiring with Annotations -->
     <context:annotation-config/>
     <!-- Scans for @Repository, @Service and @Component -->
-    <context:component-scan base-package="se.vgr.incidentreport"/>
+    <context:component-scan base-package="se.vgregion.incidentreport"/>
     
     
 

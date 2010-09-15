@@ -42,7 +42,7 @@
 
   filter is setup in portlet.xml
     <filter> <filter-name>ErrorHandlingFilter</filter-name>
-    <filter-class>se.vgr.javg.portlet.filter.JavgErrorHandlingFilter</filter-class> <init-param>
+    <filter-class>se.vgregion.javg.portlet.filter.JavgErrorHandlingFilter</filter-class> <init-param>
     <param-name>TyckTillErrorFormURL</param-name>
     <param-value>http://localhost:8082/tyck-till-core-bc-module-web-1.0-SNAPSHOT/xforms-jsp/index.jsp</param-value>
     <value>http://localhost:8082/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</value>

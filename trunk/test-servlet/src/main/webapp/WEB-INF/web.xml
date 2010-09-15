@@ -36,7 +36,7 @@
 
 	<servlet>
 		<servlet-name>ThrowError</servlet-name>
-		<servlet-class>se.vgr.tycktill.servlet.TyckTillTestServlet</servlet-class>
+		<servlet-class>se.vgregion.tycktill.servlet.TyckTillTestServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ThrowError</servlet-name>
@@ -45,7 +45,7 @@
 	
 	<filter>
   	<filter-name>ErrorHandlingFilter</filter-name>
-  	<filter-class>se.vgr.javg.web.filter.WebErrorHandlingFilter</filter-class>
+  	<filter-class>se.vgregion.javg.web.filter.WebErrorHandlingFilter</filter-class>
   	<init-param>
   		<param-name>TyckTillErrorFormURL</param-name>
         <param-value>http://tycktill.vgregion.se/tyck-till-core-bc-module-web/xforms-jsp/index.jsp</param-value>

@@ -40,15 +40,11 @@ This is the Web-app Maven POM.
 
 	<dependencies>
 		<dependency>
-			<groupId>se.vgr.commons-util</groupId>
+			<groupId>se.vgregion.commons-util</groupId>
 			<artifactId>commons-util-core-bc-composite-svc-ldap</artifactId>
-			<version>1.1</version>
+			<version>2.1</version>
 		</dependency>
-		<!--
-			<dependency> <groupId>se.vgregion.javg</groupId>
-			<artifactId>javg-rt-support</artifactId>
-			<version>${javg.version}</version> </dependency>
-		-->
+		
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>

@@ -27,7 +27,7 @@
   <portlet>
     <portlet-name>tycktilltestportlet</portlet-name>
     <display-name>TyckTillTestPortlet</display-name>
-    <portlet-class>se.vgr.tycktill.portlet.TyckTillTestPortlet</portlet-class>
+    <portlet-class>se.vgregion.tycktill.portlet.TyckTillTestPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
@@ -42,7 +42,7 @@
   
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>
-    <filter-class>se.vgr.javg.portlet.filter.PortletErrorHandlingFilter</filter-class>
+    <filter-class>se.vgregion.javg.portlet.filter.PortletErrorHandlingFilter</filter-class>
     <lifecycle>ACTION_PHASE</lifecycle>
     <lifecycle>RENDER_PHASE</lifecycle>
     <init-param>

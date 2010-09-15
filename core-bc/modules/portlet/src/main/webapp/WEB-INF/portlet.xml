@@ -25,7 +25,7 @@
     <description>Portlet for Tyck till application using Pivotal Tracker</description>
     <portlet-name>IncidentReportPortletPivotal</portlet-name>
     <display-name>Tyck till Pivotal</display-name>
-    <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
+    <portlet-class>se.vgregion.incidentreport.IncidentReportPortlet</portlet-class>
     
     <init-param>
       <name>ApplicationName</name>
@@ -61,7 +61,7 @@
     <description>Portlet for Tyck till application using USD</description>
     <portlet-name>IncidentReportPortletUSD</portlet-name>
     <display-name>Tyck till USD</display-name>
-    <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
+    <portlet-class>se.vgregion.incidentreport.IncidentReportPortlet</portlet-class>
     
     <init-param>
       <name>ApplicationName</name>
@@ -98,7 +98,7 @@
     <description>Portlet for Tyck till application using Email</description>
     <portlet-name>IncidentReportPortletEmail</portlet-name>
     <display-name>Tyck till Email</display-name>
-    <portlet-class>se.vgr.incidentreport.IncidentReportPortlet</portlet-class>
+    <portlet-class>se.vgregion.incidentreport.IncidentReportPortlet</portlet-class>
     
     <init-param>
       <name>ApplicationName</name>

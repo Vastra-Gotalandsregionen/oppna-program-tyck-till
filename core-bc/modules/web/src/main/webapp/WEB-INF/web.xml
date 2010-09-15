@@ -85,7 +85,7 @@
    <filter>
     <display-name>P3PFilter</display-name>
     <filter-name>P3PFilter</filter-name>
-    <filter-class>se.vgr.incidentreport.web.P3PFilter</filter-class>
+    <filter-class>se.vgregion.incidentreport.web.P3PFilter</filter-class>
   </filter>
 
   <filter-mapping>
@@ -106,7 +106,7 @@
         </init-param> 
         <init-param>
             <param-name>com.sun.ws.rest.config.property.packages</param-name>
-            <param-value>se.vgr.incidentreport</param-value>
+            <param-value>se.vgregion.incidentreport</param-value>
         </init-param>
         </servlet>
     <servlet-mapping>

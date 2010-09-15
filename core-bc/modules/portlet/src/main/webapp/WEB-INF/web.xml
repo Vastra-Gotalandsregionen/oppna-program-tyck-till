@@ -43,7 +43,7 @@
     <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
     <init-param>
       <param-name>portlet-class</param-name>
-      <param-value>se.vgr.incidentreport.IncidentReportPortlet</param-value>
+      <param-value>se.vgregion.incidentreport.IncidentReportPortlet</param-value>
     </init-param>
     <load-on-startup>0</load-on-startup>
   </servlet>
@@ -57,7 +57,7 @@
     <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
     <init-param>
       <param-name>portlet-class</param-name>
-      <param-value>se.vgr.incidentreport.IncidentReportPortlet</param-value>
+      <param-value>se.vgregion.incidentreport.IncidentReportPortlet</param-value>
     </init-param>
     <load-on-startup>0</load-on-startup>
   </servlet>
@@ -71,7 +71,7 @@
     <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
     <init-param>
       <param-name>portlet-class</param-name>
-      <param-value>se.vgr.incidentreport.IncidentReportPortlet</param-value>
+      <param-value>se.vgregion.incidentreport.IncidentReportPortlet</param-value>
     </init-param>
     <load-on-startup>0</load-on-startup>
   </servlet>

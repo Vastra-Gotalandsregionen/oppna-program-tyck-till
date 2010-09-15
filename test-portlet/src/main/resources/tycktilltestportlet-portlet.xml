@@ -34,7 +34,7 @@
     <constructor-arg ref="contextSource" />
   </bean>
 
-  <bean id="ldapService" class="se.vgr.ldapservice.SimpleLdapServiceImpl" lazy-init="true">
+  <bean id="ldapService" class="se.vgregion.ldapservice.SimpleLdapServiceImpl" lazy-init="true">
     <constructor-arg ref="ldapTemplate" />
   </bean>
 

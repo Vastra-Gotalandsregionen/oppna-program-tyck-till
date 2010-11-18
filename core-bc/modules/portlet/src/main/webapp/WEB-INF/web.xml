@@ -34,50 +34,33 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-      classpath*:/applicationContext.xml classpath*:/*-portlet.xml
+      classpath*:/*-portlet.xml
     </param-value>
   </context-param>
   
+  <!-- ViewRendererServlet converts PortletRequests into HttpServletRequests -->
   <servlet>
-    <servlet-name>IncidentReportPortletPivotal</servlet-name>
-    <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
-    <init-param>
-      <param-name>portlet-class</param-name>
-      <param-value>se.vgregion.incidentreport.IncidentReportPortlet</param-value>
-    </init-param>
-    <load-on-startup>0</load-on-startup>
+    <servlet-name>view</servlet-name>
+    <servlet-class>org.springframework.web.servlet.ViewRendererServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>IncidentReportPortletPivotal</servlet-name>
-    <url-pattern>/IncidentReportPortletPivotal/*</url-pattern>
+    <servlet-name>view</servlet-name>
+    <url-pattern>/WEB-INF/servlet/view</url-pattern>
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>IncidentReportPortletUSD</servlet-name>
+    <servlet-name>TyckTill</servlet-name>
     <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
     <init-param>
       <param-name>portlet-class</param-name>
-      <param-value>se.vgregion.incidentreport.IncidentReportPortlet</param-value>
+      <param-value>org.springframework.web.portlet.DispatcherPortlet</param-value>
     </init-param>
     <load-on-startup>0</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>IncidentReportPortletUSD</servlet-name>
-    <url-pattern>/IncidentReportPortletUSD/*</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>IncidentReportPortletEmail</servlet-name>
-    <servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
-    <init-param>
-      <param-name>portlet-class</param-name>
-      <param-value>se.vgregion.incidentreport.IncidentReportPortlet</param-value>
-    </init-param>
-    <load-on-startup>0</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>IncidentReportPortletEmail</servlet-name>
-    <url-pattern>/IncidentReportPortletEmail/*</url-pattern>
+    <servlet-name>TyckTill</servlet-name>
+    <url-pattern>/TyckTill/*</url-pattern>
   </servlet-mapping>
    
 </web-app>

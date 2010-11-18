@@ -54,11 +54,11 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>orbeon</groupId>
 			<artifactId>orbeon-xforms-filter</artifactId>
-			<version>3.7.0beta1</version>
-		</dependency>
+			<version>3.7.0</version>
+		</dependency -->
 		<!--
 			We use jersey as the implementation of jsr 311 ,TODO: change to
 			Apache cxf?

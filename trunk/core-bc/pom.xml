@@ -20,11 +20,11 @@ Generation time : 2009-04-17 09:01:59 CEST
 
   <modules>
     <!--
+    <module>modules/portlet</module>
+    -->
     <module>composites/types</module>
     <module>composites/svc</module>
     <module>modules/web</module>
-    -->
-    <module>modules/portlet</module>
   </modules>
   
 </project>

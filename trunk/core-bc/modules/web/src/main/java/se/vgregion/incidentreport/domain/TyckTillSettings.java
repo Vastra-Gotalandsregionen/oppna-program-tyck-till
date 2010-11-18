@@ -17,30 +17,22 @@
  *
  */
 
-package se.vgregion.incidentreport;
+package se.vgregion.incidentreport.domain;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
-
-//import com.sun.jersey.api.spring.Autowire;
-//import com.sun.jersey.spi.inject.Inject;
+import java.io.Serializable;
 
 /**
- * Web service that receives an incident report object and calls the report service. 
+ * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
-//@Autowire
-//@Path("incidentReport")
-public class IncidentReportResource {
+public class TyckTillSettings implements Serializable {
+    
+    String testAttribute;
 
-//    @Inject
-    private IncidentReportService incidentReportService;
+    public String getTestAttribute() {
+        return testAttribute;
+    }
 
-    @POST
-    @Produces("application/xml")
-    public void post(@Context UriInfo uriInfo, IncidentReport ir) {
-        // System.out.println("In IncidentReportResource.post ir=" + ir);
-        incidentReportService.reportIncident(ir);
+    public void setTestAttribute(String testAttribute) {
+        this.testAttribute = testAttribute;
     }
 }

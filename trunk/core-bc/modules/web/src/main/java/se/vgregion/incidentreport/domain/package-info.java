@@ -17,30 +17,7 @@
  *
  */
 
-package se.vgregion.incidentreport;
-
-import javax.ws.rs.POST;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
-
-//import com.sun.jersey.api.spring.Autowire;
-//import com.sun.jersey.spi.inject.Inject;
-
 /**
- * Web service that receives an incident report object and calls the report service. 
+ * Provides classes for Raindance notifier domain structure.
  */
-//@Autowire
-//@Path("incidentReport")
-public class IncidentReportResource {
-
-//    @Inject
-    private IncidentReportService incidentReportService;
-
-    @POST
-    @Produces("application/xml")
-    public void post(@Context UriInfo uriInfo, IncidentReport ir) {
-        // System.out.println("In IncidentReportResource.post ir=" + ir);
-        incidentReportService.reportIncident(ir);
-    }
-}
+package se.vgregion.portal.raindancenotifier.domain;

@@ -37,7 +37,8 @@ see if this is configurable in Orbeon -->
 <!-- TODO see if we can use css to make the upload-field bigger somehow -->
 
 
-<%@page import="java.net.URLEncoder"%><html xmlns:xf="http://www.w3.org/2002/xforms"
+<%@page import="java.net.URLEncoder"%>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

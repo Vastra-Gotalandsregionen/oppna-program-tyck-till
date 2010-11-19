@@ -18,7 +18,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/tyckTillForm")
+@RequestMapping("/KontaktaOss")
 @SessionAttributes("userFeedback")
 public class TyckTillController {
     private String mainHeading = "Default main heading";
@@ -70,7 +70,7 @@ public class TyckTillController {
 
         System.out.println("Message: "+ userFeedback.getMessage());
 
-        return "feedbackSent";
+        return "Tacksida";
     }
 
     private void processAttachment(MultipartFile file, UserFeedback userFeedback) {

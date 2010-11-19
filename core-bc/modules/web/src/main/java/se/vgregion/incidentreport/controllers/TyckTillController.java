@@ -18,7 +18,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/KontaktaOss")
+@RequestMapping(value = {"/", "/KontaktaOss"})
 @SessionAttributes("userFeedback")
 public class TyckTillController {
     private String mainHeading = "Default main heading";
@@ -26,7 +26,7 @@ public class TyckTillController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public void setupForm(@RequestParam(value="mainHeading", required = false) String mainHeading,
+    public String setupForm(@RequestParam(value="mainHeading", required = false) String mainHeading,
                           @RequestParam(value="leadText", required = false) String leadText,
                           ModelMap model) {
         if (mainHeading != null) {
@@ -48,6 +48,8 @@ public class TyckTillController {
         model.addAttribute("healthcareCategories", UserFeedback.HealthcareCategory.getLabelMap());
 
         model.addAttribute("contactOptions", UserFeedback.UserContactOption.getLabelMap());
+
+        return "KontaktaOss";
 
     }
 

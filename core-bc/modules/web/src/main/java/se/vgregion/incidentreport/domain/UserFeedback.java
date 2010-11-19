@@ -19,12 +19,8 @@
 
 package se.vgregion.incidentreport.domain;
 
-import org.springframework.context.annotation.Scope;
-
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class represents a feedback instance.
@@ -43,7 +39,7 @@ public class UserFeedback extends FeedbackForm implements Serializable {
 
     /* Helthcare issue subheading */
 
-    private HealthcareSubHeadings healthCareSubHeadings;
+    private HealthcareCategory healthcareCategory;
 
     /* Webpage function subheadings */
     private boolean pageDoesNotExist;
@@ -61,16 +57,18 @@ public class UserFeedback extends FeedbackForm implements Serializable {
 
     /* Screendumps */
     private boolean attachScreenDump;
-    private List<Byte[]> screenDumps;
+
+    private Attachments attachments = new Attachments();
+
 
     /**
      * @author Arakun
      * 
      */
     public enum CaseSubject {
-        webpageContentRelated(CONTENT_RELATED),
-        webpageFunctionRelated(FUNCTION_RELATED),
-        healthcareRelated(HEALTHCARE_RELATED),
+        webpageContent(CONTENT_RELATED),
+        webpageFunction(FUNCTION_RELATED),
+        healthcare(HEALTHCARE_RELATED),
         other(OTHER_RELATED);
 
         private String label;
@@ -93,7 +91,7 @@ public class UserFeedback extends FeedbackForm implements Serializable {
         static  {
             labelMap = new HashMap<String,String>();
             for(CaseSubject c : CaseSubject.values())  {
-                labelMap.put(c.label, c.name());
+                labelMap.put(c.name(), c.label);
             }
         }
 
@@ -119,13 +117,13 @@ public class UserFeedback extends FeedbackForm implements Serializable {
      * @author Arakun
      * 
      */
-    public enum HealthcareSubHeadings {
+    public enum HealthcareCategory {
         fees(HEALTHCARE_FEES), healthcareAbroad(HEALTHCARE_ABROAD), careAssurances(HEALTHCARE_ASSURANCES), waitingTime(
                 HEALTHCARE_WAITING_TIMES), freedomOfChoice(HEALTHCARE_FREEDOM_OF_CHOICE), otherHealthcareIssues(HEALTHCARE_OTHER);
 
         private String label;
 
-        private HealthcareSubHeadings(String label) {
+        private HealthcareCategory(String label) {
             this.label = label;
         }
 
@@ -134,12 +132,17 @@ public class UserFeedback extends FeedbackForm implements Serializable {
         }
 
         /* Helper functions to map between enum names and labels */
-        private static Map<String,String> labelMap;
+        private static Map<HealthcareCategory,String> labelMap;
 
         static  {
-            labelMap = new HashMap<String,String>();
-            for(HealthcareSubHeadings c : HealthcareSubHeadings.values())  {
-                labelMap.put(c.label, c.name());
+            labelMap = new TreeMap<HealthcareCategory, String>(new Comparator<HealthcareCategory> (){
+                @Override
+                public int compare(HealthcareCategory h1, HealthcareCategory h2) {
+                    return h1.ordinal() - h2.ordinal();
+                }
+            });
+            for(HealthcareCategory c : HealthcareCategory.values())  {
+                labelMap.put(c, c.label);
             }
         }
 
@@ -148,10 +151,11 @@ public class UserFeedback extends FeedbackForm implements Serializable {
          *
          * @return  .
          */
-        public static Map<String,String> getLabelMap()   {
+        public static Map<HealthcareCategory, String> getLabelMap()   {
             return labelMap;
         }
     }
+
     /* Human friendly names for enum constants */
     private static final String HEALTHCARE_FEES = "Avgifter";
     private static final String HEALTHCARE_ABROAD = "Utomlandsvård";
@@ -159,6 +163,7 @@ public class UserFeedback extends FeedbackForm implements Serializable {
     private static final String HEALTHCARE_WAITING_TIMES = "Väntetider";
     private static final String HEALTHCARE_FREEDOM_OF_CHOICE = "Valfrihet i vården";
     private static final String HEALTHCARE_OTHER = "Övriga vårdfrågor";
+
 
     public CaseSubject getCaseSubject() {
         return caseSubject;
@@ -176,12 +181,12 @@ public class UserFeedback extends FeedbackForm implements Serializable {
         this.attachScreenDump = attachScreenDump;
     }
 
-    public HealthcareSubHeadings getHealthCareSubHeadings() {
-        return healthCareSubHeadings;
+    public HealthcareCategory getHealthcareCategory() {
+        return healthcareCategory;
     }
 
-    public void setHealthCareSubHeadings(HealthcareSubHeadings healthCareSubHeadings) {
-        this.healthCareSubHeadings = healthCareSubHeadings;
+    public void setHealthcareCategory(HealthcareCategory healthcareCategory) {
+        this.healthcareCategory = healthcareCategory;
     }
 
     public boolean isPageDoesNotExist() {
@@ -240,23 +245,19 @@ public class UserFeedback extends FeedbackForm implements Serializable {
         this.cannotFindInformation = cannotFindInformation;
     }
 
-    public List<Byte[]> getScreenDumps() {
-        return screenDumps;
-    }
-
-    public void setScreenDumps(List<Byte[]> screenDumps) {
-        this.screenDumps = screenDumps;
-    }
-
-    public void addScreenDump(Byte[] screenDump) {
-        this.screenDumps.add(screenDump);
-    }
-
     public String getMessage() {
         return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Attachments getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(Attachments attachments) {
+        this.attachments = attachments;
     }
 }

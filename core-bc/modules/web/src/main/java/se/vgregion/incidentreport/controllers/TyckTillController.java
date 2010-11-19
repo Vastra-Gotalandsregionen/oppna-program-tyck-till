@@ -2,11 +2,14 @@ package se.vgregion.incidentreport.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import se.vgregion.incidentreport.domain.UserFeedback;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * This action do that and that, if it has something special it is.
@@ -37,15 +40,28 @@ public class TyckTillController {
         model.addAttribute("leadText", this.leadText);
         model.addAttribute("userFeedback", new UserFeedback());
 
-        model.addAttribute("caseSubjects_contentRelated", UserFeedback.CaseSubject.webpageContentRelated);
-        model.addAttribute("caseSubjects_functionRelated", UserFeedback.CaseSubject.webpageFunctionRelated);
-        model.addAttribute("healthCareSubHeadings", UserFeedback.HealthcareSubHeadings.getLabelMap().entrySet());
+        model.addAttribute("subject_content", UserFeedback.CaseSubject.webpageContent);
+        model.addAttribute("subject_function", UserFeedback.CaseSubject.webpageFunction);
+        model.addAttribute("subject_healthcare", UserFeedback.CaseSubject.healthcare);
+        model.addAttribute("subject_other", UserFeedback.CaseSubject.other);
+
+        model.addAttribute("healthcareCategories", UserFeedback.HealthcareCategory.getLabelMap());
+
+        model.addAttribute("contactOptions", UserFeedback.UserContactOption.getLabelMap());
+
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String sendUserFeedback(@RequestParam(value = "userFeedback", required = false) UserFeedback userFeedback,
+    public String sendUserFeedback(@ModelAttribute("userFeedback") UserFeedback userFeedback,
+                                   MultipartHttpServletRequest multipartRequest,
                                    ModelMap model) {
         System.out.println("Sending...");
+
+        for (Iterator<String> filenameIterator = multipartRequest.getFileNames();filenameIterator.hasNext();) {
+            String fileName = filenameIterator.next();
+
+            processAttachment(multipartRequest.getFile(fileName), userFeedback);
+        }
 
         UserFeedback.CaseSubject caseSubject = userFeedback.getCaseSubject();
         if (caseSubject != null) {
@@ -55,5 +71,17 @@ public class TyckTillController {
         System.out.println("Message: "+ userFeedback.getMessage());
 
         return "feedbackSent";
+    }
+
+    private void processAttachment(MultipartFile file, UserFeedback userFeedback) {
+        if (file.isEmpty()) return;
+
+        Map<String, byte[]> attachmentMap = userFeedback.getAttachments().getFileMap();
+        try {
+            attachmentMap.put(file.getOriginalFilename(), file.getBytes());
+            System.out.println("File: "+file.getOriginalFilename());
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 }

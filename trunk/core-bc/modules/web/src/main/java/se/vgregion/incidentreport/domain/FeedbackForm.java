@@ -20,6 +20,9 @@
 package se.vgregion.incidentreport.domain;
 
 import java.io.Serializable;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * This class represents a feedback instance.
@@ -34,10 +37,10 @@ public class FeedbackForm implements Serializable {
     private boolean shouldContactUser;
 
     /* User contact options */
-    private boolean contactByEmail;
-    private boolean contactByPhonenumber;
+    private UserContactOption contactOption;
     private String userEmail;
     private String userPhonenumber;
+    private String userName;
 
     public boolean isShouldContactUser() {
         return shouldContactUser;
@@ -63,35 +66,60 @@ public class FeedbackForm implements Serializable {
         this.userPhonenumber = userPhonenumber;
     }
 
-    public boolean isContactByEmail() {
-        return contactByEmail;
+    public UserContactOption getContactOption() {
+        return contactOption;
     }
 
-    public void setContactByEmail(boolean contactByEmail) {
-        this.contactByEmail = contactByEmail;
+    public void setContactOption(UserContactOption contactOption) {
+        this.contactOption = contactOption;
     }
 
-    public boolean isContactByPhonenumber() {
-        return contactByPhonenumber;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setContactByPhonenumber(boolean contactByPhonenumber) {
-        this.contactByPhonenumber = contactByPhonenumber;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
      * List of ways user can be contacted.
      */
-    enum UserContactOptions {
+    public enum UserContactOption {
         email("e-post"), telephone("Telefon");
-        private String displayText;
 
-        private UserContactOptions(String displaytext) {
-            this.displayText = displaytext;
+        private String label;
+
+        private UserContactOption(String label) {
+            this.label = label;
         }
 
-        public String getDisplayText() {
-            return displayText;
+        public String getLabel() {
+            return label;
+        }
+
+        /* Helper functions to map between enum names and labels */
+        private static Map<UserContactOption,String> labelMap;
+
+        static  {
+            labelMap = new TreeMap<UserContactOption, String>(new Comparator<UserContactOption>(){
+                @Override
+                public int compare(UserContactOption c1, UserContactOption c2) {
+                    return c1.ordinal() - c2.ordinal();
+                }
+            });
+            for(UserContactOption c : UserContactOption.values())  {
+                labelMap.put(c, c.label);
+            }
+        }
+
+        /**
+         * Get a map linking human friendly labels to the enum constant names.
+         *
+         * @return  .
+         */
+        public static Map<UserContactOption, String> getLabelMap()   {
+            return labelMap;
         }
     }
 }

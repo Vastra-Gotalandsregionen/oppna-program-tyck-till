@@ -21,8 +21,8 @@ import java.util.Map;
 @RequestMapping(value = {"/", "/KontaktaOss"})
 @SessionAttributes("userFeedback")
 public class TyckTillController {
-    private String mainHeading = "Default main heading";
-    private String leadText = "Default lead text";
+    private String mainHeading = "Kontakta oss";
+    private String leadText = "Här kan du lämna synpunkter och ställa frågor om webbplatsen. Har du frågor om vården kan du ställa dem här också.";
 
 
     @RequestMapping(method = RequestMethod.GET)

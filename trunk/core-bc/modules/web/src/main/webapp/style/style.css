@@ -29,7 +29,7 @@ body {
     height: 100%;
 	font: 62.5% Arial, Verdana, Helvetica, sans-serif;
 	background:#fff;
-	padding: 0;
+	padding: 10px;
 	margin: 0;
 	margin-left: 0.5em
 }
@@ -66,7 +66,7 @@ h3{
 }
 
 input{
-    float: left;
+    /*float: left;*/
   }
 
 #defaultErrorMessageDiv {
@@ -90,7 +90,7 @@ input{
 }
 
 
-p {
+.leadtext {
 	-x-system-font:none;
 	color:#222222;
 	font-family:Verdana,Arial,Helvetica,sans-serif;
@@ -101,8 +101,9 @@ p {
 	font-variant:normal;
 	font-weight:normal;
 	line-height:1.3em;
-	margin-bottom:0;
+	margin-bottom:20px;
 	margin-top:0;
+    width: 300px;
 }
 
 input.btn {
@@ -118,4 +119,20 @@ div.addrow {
 
 div.header {
 	margin-bottom:0.4em;
+}
+
+div {
+    clear: both;
+}
+
+div.subselect {
+    padding-left: 2.0em;
+}
+
+.checkbox {
+    vertical-align: middle;
+}
+
+.msglabel {
+    vertical-align: top;
 }

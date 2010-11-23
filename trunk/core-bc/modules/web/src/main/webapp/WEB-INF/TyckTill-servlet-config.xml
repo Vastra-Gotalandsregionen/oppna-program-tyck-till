@@ -22,7 +22,7 @@
             - The URI scheme is controller using @RequestMapping annotations
     -->
 
-  <context:component-scan base-package="se.vgregion.incidentreport.controllers"/>
+  <context:component-scan base-package="se.vgregion.userfeedback.controllers"/>
 
   <mvc:annotation-driven />
 

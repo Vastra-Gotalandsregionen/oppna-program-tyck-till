@@ -36,7 +36,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import se.vgregion.incidentreport.Screenshot;
+import se.vgregion.userfeedback.Screenshot;
 
 /**
  * Utility class for email sending support.

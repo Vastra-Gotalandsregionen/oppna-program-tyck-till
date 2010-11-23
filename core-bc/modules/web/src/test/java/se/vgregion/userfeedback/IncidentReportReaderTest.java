@@ -17,16 +17,13 @@
  *
  */
 
-package se.vgregion.incidentreport;
+package se.vgregion.userfeedback;
 
 import java.io.StringBufferInputStream;
 
 import junit.framework.TestCase;
 
 import org.junit.Test;
-
-import se.vgregion.incidentreport.IncidentReport;
-import se.vgregion.incidentreport.IncidentReportReader;
 
 public class IncidentReportReaderTest extends TestCase {
 

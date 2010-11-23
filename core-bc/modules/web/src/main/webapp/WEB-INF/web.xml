@@ -55,7 +55,7 @@ defined in the configuration files above.  These beans represent the services us
   <filter>
     <display-name>P3PFilter</display-name>
     <filter-name>P3PFilter</filter-name>
-    <filter-class>se.vgregion.incidentreport.web.P3PFilter</filter-class>
+    <filter-class>se.vgregion.userfeedback.web.P3PFilter</filter-class>
   </filter>
 
   <filter-mapping>

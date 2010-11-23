@@ -17,7 +17,7 @@
  *
  */
 
-package se.vgregion.incidentreport.impl;
+package se.vgregion.userfeedback.impl;
 
 import static org.mockito.Matchers.*;
 import static org.powermock.api.mockito.PowerMockito.*;
@@ -35,9 +35,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import se.vgregion.incidentreport.IncidentReport;
-import se.vgregion.incidentreport.Screenshot;
-import se.vgregion.incidentreport.impl.IncidentReportServiceImpl;
+import se.vgregion.userfeedback.IncidentReport;
 import se.vgregion.incidentreport.pivotaltracker.PTStory;
 import se.vgregion.incidentreport.pivotaltracker.PivotalTrackerService;
 import se.vgregion.usdservice.USDService;
@@ -57,7 +55,7 @@ public class IncidentReportServiceImplTest {
         File tempFile = File.createTempFile("incidentReportTest", "test");
         IncidentReport ir = new IncidentReport();
         ir.setReportMethod("usd");
-        Screenshot screenshot = new Screenshot();
+        se.vgregion.userfeedback.Screenshot screenshot = new se.vgregion.userfeedback.Screenshot();
         screenshot.setPath(tempFile.getAbsolutePath());
         screenshot.setFileName(tempFile.getName());
         ir.addScreenShot(screenshot);
@@ -94,7 +92,7 @@ public class IncidentReportServiceImplTest {
         // ==================================================================
         // Test USD reporting
         ir.setReportMethod("usd");
-        Screenshot screenshot = new Screenshot();
+        se.vgregion.userfeedback.Screenshot screenshot = new se.vgregion.userfeedback.Screenshot();
         screenshot.setPath(tempFile.getAbsolutePath());
         screenshot.setFileName(tempFile.getName());
         ir.addScreenShot(screenshot);

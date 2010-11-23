@@ -20,9 +20,9 @@
 
 
 <div>
-    <h1>${mainHeading}</h1>
+    <h1>${template.name}</h1>
 
-    <div class="leadtext">${leadText}</div>
+    <div class="leadtext">${template.name}</div>
 
     <form:form commandName="userFeedback" enctype="multipart/form-data">
 

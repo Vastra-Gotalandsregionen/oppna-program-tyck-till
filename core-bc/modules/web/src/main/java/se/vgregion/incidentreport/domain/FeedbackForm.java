@@ -36,6 +36,8 @@ public class FeedbackForm implements Serializable {
 
     private boolean shouldContactUser;
 
+    private String breadcrumb;
+
     /* User contact options */
     private UserContactOption contactOption;
     private String userEmail;
@@ -80,6 +82,14 @@ public class FeedbackForm implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getBreadcrumb() {
+        return breadcrumb;
+    }
+
+    public void setBreadcrumb(String breadcrumb) {
+        this.breadcrumb = breadcrumb;
     }
 
     /**

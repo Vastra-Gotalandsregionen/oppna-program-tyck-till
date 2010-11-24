@@ -25,8 +25,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * This class represents a feedback instance.
- * 
  * @author Robert de Bésche
  * 
  */

@@ -120,5 +120,11 @@
       <groupId>taglibs</groupId>
       <artifactId>standard</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>4.1.0.Final</version>
+    </dependency>
   </dependencies>
 </project>

@@ -2,7 +2,6 @@ package se.vgregion.userfeedback.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,8 +16,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * This action do that and that, if it has something special it is.
- *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 
@@ -33,7 +30,6 @@ public class TyckTillController {
     private FormTemplateRepository formTemplateRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    @Transactional
     public String setupForm(@RequestParam(value="formName", required = false) String formName,
                           @RequestParam(value="breadcrumb", required = false) String breadcrumb,
                           ModelMap model) {

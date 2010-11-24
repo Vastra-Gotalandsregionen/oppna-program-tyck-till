@@ -1,33 +1,29 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: david
-  Date: Nov 18, 2010
-  Time: 11:10:26 AM
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head><title>Simple jsp page</title></head>
-<style type="text/css">
-    <%@ include file="/style/style.css"%>
-</style>
+<head>
+    <title>TyckTill</title>
 
-<script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="/js/jquery-ui-1.8.6.custom.min.js"></script>
-<script type="text/javascript" src="/js/layout-effects.js"></script>
+    <style type="text/css">
+        <%@ include file="/style/style.css"%>
+    </style>
 
+    <script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="/js/layout-effects.js"></script>
+</head>
 <body>
 
 
 <div>
-    <h1>${template.name}</h1>
+    <h1>${template.title}</h1>
 
-    <div class="leadtext">${template.name}</div>
+    <div class="leadtext">${template.description}</div>
 
     <form:form commandName="userFeedback" enctype="multipart/form-data">
 
         <div class="breadcrumb">
-            <form:input path="breadcrumb" />
+            <form:hidden path="breadcrumb"/>
         </div>
 
         <div class="subject">

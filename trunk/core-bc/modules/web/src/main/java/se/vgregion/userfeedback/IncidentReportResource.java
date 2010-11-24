@@ -24,9 +24,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-//import com.sun.jersey.api.spring.Autowire;
-//import com.sun.jersey.spi.inject.Inject;
-
 /**
  * Web service that receives an incident report object and calls the report service. 
  */

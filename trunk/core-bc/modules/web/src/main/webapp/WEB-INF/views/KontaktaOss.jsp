@@ -16,6 +16,8 @@
 
 
 <div>
+    <p class="${userFeedback.breadcrumb != null ? 'show' : 'hide'}">${userFeedback.breadcrumb}</p>
+
     <h1>${template.title}</h1>
 
     <div class="leadtext">${template.description}</div>
@@ -29,7 +31,7 @@
         <div class="subject">
             <span>Vad handlar ditt ärende om?</span><br/>
 
-            <div id="webpageContentCategory">
+            <div id="webpageContentCategory" class="${template.showContent ? 'show' : 'hide'}">
 
                 <form:radiobutton id="contentCase" path="caseSubject" value="${subject_content.name}"
                                   label="${subject_content.label}"/><br/>
@@ -42,7 +44,7 @@
                 </div>
             </div>
 
-            <div id="webpageFunctionCategory">
+            <div id="webpageFunctionCategory" class="${template.showFunction ? 'show' : 'hide'}">
                 <form:radiobutton id="functionCase" path="caseSubject" value="${subject_function.name}"
                                   label="${subject_function.label}"/><br/>
 
@@ -54,7 +56,7 @@
                 </div>
             </div>
 
-            <div id="healthcareCategory">
+            <div id="healthcareCategory" class="${template.showHeathcareSubject ? 'show' : 'hide'}">
                 <form:radiobutton id="healthCase" path="caseSubject" value="${subject_healthcare.name}"
                                   label="${subject_healthcare.label}"/><br/>
 
@@ -76,7 +78,7 @@
             </div>
         </div>
 
-        <div class="contact">
+        <div class="${template.showContact ? 'show' : 'hide'}">
             <div>
                 <span>Vill du bli kontaktad?</span>
                 <form:checkbox id="shouldContactUser" path="shouldContactUser" label="Ja, tack"/><br/>
@@ -101,7 +103,7 @@
             </div>
         </div>
 
-        <div class="attachments">
+        <div class="${template.showAttachment ? 'show' : 'hide'}">
             <div>
                 <span>Bifoga en skärmdump, så vi kan se det du ser</span><br/>
 

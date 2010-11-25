@@ -27,7 +27,7 @@ html {
 
 body {
     height: 100%;
-	font: 62.5% Arial, Verdana, Helvetica, sans-serif;
+	font: 90% Arial, Verdana, Helvetica, sans-serif;
 	background:#fff;
 	padding: 10px;
 	margin: 0;
@@ -135,4 +135,36 @@ div.subselect {
 
 .msglabel {
     vertical-align: top;
+}
+
+.name {
+	font-weight: bold;
+	width: 150px;
+	padding: 5px;
+	margin-top: 3px;
+    float: left;
+}
+
+.value {
+	float: left;
+	padding: 5px;
+}
+
+.error {
+	float: left;
+	padding: 5px;
+    margin-top: 3px;
+}
+
+.errors {
+	color: #FF0000;
+	vertical-align: middle;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
 }

@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -14,7 +13,7 @@ import java.util.Date;
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @Entity
-@Table(name = "vgr_tycktill_form")
+@Table(name = "vgr_tycktill_form", uniqueConstraints = @UniqueConstraint(columnNames = "NAME"))
 public class FormTemplate extends AbstractEntity<FormTemplate, Long> {
 
     @Id
@@ -25,16 +24,15 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> {
     private Integer version;
 
     @NotEmpty(message = "{template.name}")
+    @Column(unique = true, nullable = false)
     private String name;
-    
+
     @Size(min = 5, max = 50, message = "{template.title}")
     private String title;
 
     @Column(length = 2048)
     @Size(max = 2048, message = "{template.description}")
     private String description;
-
-    private Boolean showHeathcareSubject;
 
     @NotEmpty(message = "{template.backend}")
     private String backend;
@@ -43,6 +41,24 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastChanged = new Date();
+
+
+    // optional parts
+    private Boolean showHeathcareSubject;
+
+    private Boolean showContent = Boolean.TRUE;
+
+    private Boolean showFunction = Boolean.TRUE;
+
+    private Boolean showContact = Boolean.TRUE;
+
+    private Boolean showAttachment = Boolean.TRUE;
+
+
+
+
+
+
 
     @Override
     public Long getId() {
@@ -87,6 +103,38 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> {
 
     public void setShowHeathcareSubject(Boolean showHeathcareSubject) {
         this.showHeathcareSubject = showHeathcareSubject;
+    }
+
+    public Boolean getShowContent() {
+        return showContent;
+    }
+
+    public void setShowContent(Boolean showContent) {
+        this.showContent = showContent;
+    }
+
+    public Boolean getShowFunction() {
+        return showFunction;
+    }
+
+    public void setShowFunction(Boolean showFunction) {
+        this.showFunction = showFunction;
+    }
+
+    public Boolean getShowContact() {
+        return showContact;
+    }
+
+    public void setShowContact(Boolean showContact) {
+        this.showContact = showContact;
+    }
+
+    public Boolean getShowAttachment() {
+        return showAttachment;
+    }
+
+    public void setShowAttachment(Boolean showAttachment) {
+        this.showAttachment = showAttachment;
     }
 
     public String getBackend() {

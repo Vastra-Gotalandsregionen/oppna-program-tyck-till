@@ -18,7 +18,11 @@
         <tr>
             <th>Name</th>
             <th>Title</th>
-            <th>Show Healthcare</th>
+            <th>Show Content</th>
+            <th>Show Function</th>
+            <th>Custom selection</th>
+            <th>Show Contact</th>
+            <th>Show Attachment</th>
             <th>Backend</th>
             <th></th>
         </tr>
@@ -27,7 +31,11 @@
             <tr>
                 <td>${formTemplate.name}</td>
                 <td>${formTemplate.title}</td>
+                <td>${formTemplate.showContent}</td>
+                <td>${formTemplate.showFunction}</td>
                 <td>${formTemplate.showHeathcareSubject}</td>
+                <td>${formTemplate.showContact}</td>
+                <td>${formTemplate.showAttachment}</td>
                 <td>${formTemplate.backend}</td>
                 <td><a href="TemplateEditor?templateId=${formTemplate.id}">Edit</a></td>
             </tr>

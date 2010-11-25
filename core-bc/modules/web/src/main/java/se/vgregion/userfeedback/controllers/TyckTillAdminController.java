@@ -1,12 +1,12 @@
 package se.vgregion.userfeedback.controllers;
 
-import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import se.vgregion.userfeedback.domain.FormTemplate;
 import se.vgregion.userfeedback.domain.FormTemplateRepository;
 
@@ -57,8 +57,8 @@ public class TyckTillAdminController {
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String addTemplate(@Valid @ModelAttribute("formTemplate") FormTemplate formTemplate,
-                              HttpRequest reqest,
                               BindingResult result,
+                              SessionStatus status,
                               ModelMap model) {
         if (result.hasErrors()) {
             return "KontaktaOssTemplateEdit";
@@ -71,6 +71,8 @@ public class TyckTillAdminController {
         } else {
             formTemplateRepository.merge(formTemplate);
         }
+
+        status.setComplete();
 
         return "redirect:TemplateList";
     }

@@ -23,5 +23,8 @@
 
   <bean id="formTemplateRepository" class="se.vgregion.userfeedback.persistence.jpa.JpaFormTemplateRepository" />
 
+  <bean id="attachmentRepository" class="se.vgregion.userfeedback.persistence.jpa.JpaAttachmentRepository" />
+
+  <bean id="userFeedbackRepository" class="se.vgregion.userfeedback.persistence.jpa.JpaUserFeedbackRepository" />
 
 </beans>

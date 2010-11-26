@@ -117,7 +117,8 @@
                         <li>Spara dokumentet på datorn.</li>
                         <li>Bifoga dokumentet.</li>
                     </ol>
-                    <input type="file" name="file" value="Ladda upp fil"/>
+                    <input type="file" name="file1" value="Ladda upp fil"/>
+                    <input type="file" name="file2" value="Ladda upp fil"/>
                 </div>
             </div>
         </div>

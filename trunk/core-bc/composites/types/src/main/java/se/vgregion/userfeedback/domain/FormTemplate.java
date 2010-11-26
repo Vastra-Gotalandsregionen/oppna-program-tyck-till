@@ -5,6 +5,7 @@ import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "vgr_tycktill_form", uniqueConstraints = @UniqueConstraint(columnNames = "NAME"))
-public class FormTemplate extends AbstractEntity<FormTemplate, Long> {
+public class FormTemplate extends AbstractEntity<FormTemplate, Long> implements Serializable {
+    private static final long serialVersionUID = 7819565362034276611L;
 
     @Id
     @GeneratedValue
@@ -55,11 +57,6 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> {
     private Boolean showAttachment = Boolean.TRUE;
 
 
-
-
-
-
-
     @Override
     public Long getId() {
         return formTemplateId;
@@ -71,14 +68,6 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getFormTemplateId() {
-        return formTemplateId;
-    }
-
-    public void setFormTemplateId(Long formTemplateId) {
-        this.formTemplateId = formTemplateId;
     }
 
     public String getTitle() {

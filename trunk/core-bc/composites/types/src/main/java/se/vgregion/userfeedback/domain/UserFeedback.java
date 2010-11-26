@@ -19,6 +19,9 @@
 
 package se.vgregion.userfeedback.domain;
 
+import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
@@ -28,15 +31,20 @@ import java.util.*;
  * @author Robert de Bésche
  * 
  */
-public class UserFeedback implements Serializable {
-
+@Entity
+public class UserFeedback extends AbstractEntity<UserFeedback, Long> implements Serializable {
     private static final long serialVersionUID = 8809380011250380574L;
+
+    @Id
+    @GeneratedValue
+    private Long userFeedbackId;
 
     private boolean shouldContactUser;
 
     private String breadcrumb;
 
     /* User contact options */
+    @Enumerated(EnumType.STRING)
     private UserContactOption contactOption;
     private String userEmail;
     private String userPhonenumber;
@@ -48,7 +56,7 @@ public class UserFeedback implements Serializable {
     private CaseSubject caseSubject;
 
     /* Helthcare issue subheading */
-
+    @Enumerated(EnumType.STRING)
     private HealthcareCategory healthcareCategory;
 
     /* Webpage function subheadings */
@@ -68,8 +76,18 @@ public class UserFeedback implements Serializable {
     /* Screendumps */
     private boolean attachScreenDump;
 
-    private Attachments attachments = new Attachments();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "USERFEEDBACK_ID")
+    private Set<Attachment> attachments = new HashSet<Attachment>();
 
+    @Override
+    public Long getId() {
+        return userFeedbackId;
+    }
+
+    public void setUserFeedbackId(Long userFeedbackId) {
+        this.userFeedbackId = userFeedbackId;
+    }
 
     /**
      * @author Arakun
@@ -304,11 +322,11 @@ public class UserFeedback implements Serializable {
         this.message = message;
     }
 
-    public Attachments getAttachments() {
+    public Collection<Attachment> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(Attachments attachments) {
+    public void setAttachments(Set<Attachment> attachments) {
         this.attachments = attachments;
     }
 

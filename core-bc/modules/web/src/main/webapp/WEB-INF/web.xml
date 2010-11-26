@@ -20,12 +20,13 @@
 
 -->
 
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
-         version="2.4">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+   version="2.5">
 
   <description>Tyck till</description>
+  <display-name>Tyck till</display-name>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
@@ -52,7 +53,7 @@ defined in the configuration files above.  These beans represent the services us
     </init-param>
   </filter-->
 
-  <filter>
+  <!--filter>
     <display-name>P3PFilter</display-name>
     <filter-name>P3PFilter</filter-name>
     <filter-class>se.vgregion.userfeedback.web.P3PFilter</filter-class>
@@ -61,7 +62,7 @@ defined in the configuration files above.  These beans represent the services us
   <filter-mapping>
     <filter-name>P3PFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping-->
 
 
   <!-- REST/JSX-RS/Jersey config -->
@@ -100,6 +101,6 @@ defined in the configuration files above.  These beans represent the services us
 
 
   <welcome-file-list>
-    <welcome-file>WEB-INF/index.html</welcome-file>
+    <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 </web-app>

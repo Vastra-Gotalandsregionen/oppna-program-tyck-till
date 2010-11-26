@@ -20,7 +20,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping(value = {"/", "/KontaktaOss"})
+@RequestMapping(value = {"/KontaktaOss"})
 @SessionAttributes("userFeedback")
 public class TyckTillController {
     private String mainHeading = "Kontakta oss";

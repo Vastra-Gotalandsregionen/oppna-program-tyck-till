@@ -2,18 +2,17 @@ package se.vgregion.userfeedback.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import se.vgregion.userfeedback.domain.FormTemplate;
-import se.vgregion.userfeedback.domain.FormTemplateRepository;
-import se.vgregion.userfeedback.domain.UserFeedback;
+import se.vgregion.userfeedback.domain.*;
 
 import javax.persistence.NoResultException;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
@@ -28,6 +27,12 @@ public class TyckTillController {
 
     @Autowired
     private FormTemplateRepository formTemplateRepository;
+
+    @Autowired
+    private AttachmentRepository attachmentRepository;
+
+    @Autowired
+    private UserFeedbackRepository userFeedbackRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public String setupForm(@RequestParam(value="formName", required = false) String formName,
@@ -72,6 +77,7 @@ public class TyckTillController {
         return template;
     }
 
+    @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String sendUserFeedback(@ModelAttribute("userFeedback") UserFeedback userFeedback,
                                    MultipartHttpServletRequest multipartRequest,
@@ -84,23 +90,28 @@ public class TyckTillController {
             processAttachment(multipartRequest.getFile(fileName), userFeedback);
         }
 
-        UserFeedback.CaseSubject caseSubject = userFeedback.getCaseSubject();
-        if (caseSubject != null) {
-            System.out.println("CaseSubject: " +caseSubject.getName());
-        }
+        System.out.println("attachmentSize: "+userFeedback.getAttachments().size());
 
-        System.out.println("Message: "+ userFeedback.getMessage());
-
+        // Log UserFeedback in db
+        userFeedbackRepository.persist(userFeedback);
+        
         return "Tacksida";
     }
 
     private void processAttachment(MultipartFile file, UserFeedback userFeedback) {
         if (file.isEmpty()) return;
 
-        Map<String, byte[]> attachmentMap = userFeedback.getAttachments().getFileMap();
+        Collection<Attachment> attachments = userFeedback.getAttachments();
         try {
-            attachmentMap.put(file.getOriginalFilename(), file.getBytes());
-            System.out.println("File: "+file.getOriginalFilename());
+            Attachment attachment = new Attachment();
+            attachment.setFilename(file.getOriginalFilename());
+            attachment.setFile(file.getBytes());
+
+            System.out.println(file.getOriginalFilename());
+
+//            attachmentRepository.persist(attachment);
+
+            attachments.add(attachment);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

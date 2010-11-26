@@ -34,14 +34,15 @@ Generation time : 2009-04-17 09:01:59 CEST
       <version>3.3</version>
     </dependency>
 
-    <dependency>
+    <!--dependency>
       <groupId>javax.persistence</groupId>
       <artifactId>persistence-api</artifactId>
-    </dependency>
+    </dependency-->
     
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
+      <version>3.6.0.Final</version>
     </dependency>
 
     <dependency>

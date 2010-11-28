@@ -29,6 +29,7 @@ import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -51,6 +52,7 @@ public class IncidentReportServiceImplTest {
     }
 
     @Test
+    @Ignore
     public void testCreateStoryException() throws IOException {
         File tempFile = File.createTempFile("incidentReportTest", "test");
         IncidentReport ir = new IncidentReport();
@@ -81,6 +83,7 @@ public class IncidentReportServiceImplTest {
     }
 
     @Test
+    @Ignore
     public void testReportIncident() throws Exception {
         File tempFile = File.createTempFile("incidentReportTest", "test");
 

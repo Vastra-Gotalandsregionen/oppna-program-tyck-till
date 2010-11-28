@@ -14,13 +14,13 @@ import java.util.Date;
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @Entity
-@Table(name = "vgr_tycktill_form", uniqueConstraints = @UniqueConstraint(columnNames = "NAME"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class FormTemplate extends AbstractEntity<FormTemplate, Long> implements Serializable {
     private static final long serialVersionUID = 7819565362034276611L;
 
     @Id
     @GeneratedValue
-    private Long formTemplateId;
+    private Long id;
 
     @Version
     private Integer version;
@@ -56,10 +56,12 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> implements 
 
     private Boolean showAttachment = Boolean.TRUE;
 
+    @OneToOne
+    private CustomCategory customCategory;
 
     @Override
     public Long getId() {
-        return formTemplateId;
+        return id;
     }
 
     public String getName() {

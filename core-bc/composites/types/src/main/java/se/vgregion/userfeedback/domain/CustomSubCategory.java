@@ -14,19 +14,15 @@ public class CustomSubCategory extends AbstractEntity<CustomSubCategory, Long> i
 
     @Id
     @GeneratedValue
-    @Column(name = "customsubcategory_id")
-    private Long customSubCategoryId;
+    private Long id;
 
     private String name;
 
     private String contact;
 
-    @ManyToOne
-    private CustomCategory customCategory;
-
     @Override
     public Long getId() {
-        return customSubCategoryId;
+        return id;
     }
 
     public String getName() {
@@ -43,13 +39,5 @@ public class CustomSubCategory extends AbstractEntity<CustomSubCategory, Long> i
 
     public void setContact(String contact) {
         this.contact = contact;
-    }
-
-    public CustomCategory getCustomCategory() {
-        return customCategory;
-    }
-
-    public void setCustomCategory(CustomCategory customCategory) {
-        this.customCategory = customCategory;
     }
 }

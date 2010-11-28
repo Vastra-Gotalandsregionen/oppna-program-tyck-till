@@ -15,18 +15,18 @@ public class CustomCategory extends AbstractEntity<CustomCategory, Long> impleme
 
     @Id
     @GeneratedValue
-    @Column(name = "customcategory_id")
-    private Long customCategoryId;
+    private Long id;
 
     private String name;
 
-    @OneToMany(mappedBy = "customCategory")
-    @OrderColumn(name = "sub_index")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "customcategory_id")
+    @OrderColumn(name = "index")
     private List<CustomSubCategory> customSubCategories;
 
     @Override
     public Long getId() {
-        return customCategoryId;
+        return id;
     }
 
     public String getName() {

@@ -37,7 +37,7 @@ public class UserFeedback extends AbstractEntity<UserFeedback, Long> implements 
 
     @Id
     @GeneratedValue
-    private Long userFeedbackId;
+    private Long id;
 
     private boolean shouldContactUser;
 
@@ -82,17 +82,9 @@ public class UserFeedback extends AbstractEntity<UserFeedback, Long> implements 
 
     @Override
     public Long getId() {
-        return userFeedbackId;
+        return id;
     }
 
-    public void setUserFeedbackId(Long userFeedbackId) {
-        this.userFeedbackId = userFeedbackId;
-    }
-
-    /**
-     * @author Arakun
-     * 
-     */
     public enum CaseSubject {
         webpageContent(CONTENT_RELATED),
         webpageFunction(FUNCTION_RELATED),
@@ -126,7 +118,7 @@ public class UserFeedback extends AbstractEntity<UserFeedback, Long> implements 
         /**
          * Get a map linking human friendly labels to the enum constant names.
          *
-         * @return  .
+         * @return  Map.
          */
         public static Map<String,String> getLabelMap()   {
             return labelMap;

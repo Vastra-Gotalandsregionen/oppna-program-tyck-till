@@ -14,17 +14,16 @@ public class Attachment extends AbstractEntity<Attachment, Long> implements se.v
 
     @Id
     @GeneratedValue
-    private Long attachmentId;
+    private Long id;
 
     private String filename;
 
-    @Basic(fetch = FetchType.LAZY)
     @Lob
     private byte[] file;
 
     @Override
     public Long getId() {
-        return attachmentId;
+        return id;
     }
 
     public String getFilename() {

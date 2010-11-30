@@ -90,6 +90,10 @@
             </span>
         </div>
         <div class="prop">
+            <span class="name">Show other:</span>
+            <span class="value"><form:checkbox path="showOther"/></span>
+        </div>
+        <div class="prop">
             <span class="name">Show contact:</span>
             <span class="value"><form:checkbox path="showContact"/></span>
         </div>

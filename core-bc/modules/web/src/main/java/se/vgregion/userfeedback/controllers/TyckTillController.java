@@ -119,6 +119,9 @@ public class TyckTillController {
     private String lookupCaseContact(UserFeedback userFeedback, Long formTemplateId) {
         FormTemplate template = formTemplateRepository.find(formTemplateId);
         CustomCategory customCategory = template.getCustomCategory();
+
+        System.out.println(customCategory.getName());
+
         // 0: Check if there exist a customCategory
         if (customCategory == null) {
             return "";

@@ -27,4 +27,6 @@
 
   <bean id="userFeedbackRepository" class="se.vgregion.userfeedback.persistence.jpa.JpaUserFeedbackRepository" />
 
+  <bean id="customSubCategoryRepository" class="se.vgregion.userfeedback.persistence.jpa.JpaCustomSubCategoryRepository" />
+  
 </beans>

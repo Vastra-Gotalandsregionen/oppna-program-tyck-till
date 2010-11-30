@@ -42,9 +42,10 @@
                     <form:checkboxes cssClass="checkbox" path="caseSubCategory" items="${template.contentCategory.subCategories}" delimiter="<br/>"/>
                 </div>
             </div>
-
             <div id="webpageFunctionCategory" class="${template.showFunction ? 'show' : 'hide'}">
-                <form:radiobutton id="functionCase" path="caseCategory" value="${template.functionCategory.category}"
+                <form:radiobutton id="functionCase"
+                                  path="caseCategory"
+                                  value="${template.functionCategory.category}"
                                   label="${template.functionCategory.category}"/><br/>
 
                 <div id="functionSubCase" class="subselect">
@@ -71,12 +72,16 @@
             </div>
         </div>
 
+        <div><br/></div>
+
         <div class="message">
             <div>
                 <span class="msglabel">Förklara ditt ärende med egna ord:</span><br/>
                 <form:textarea path="message"/>
             </div>
         </div>
+
+        <div><br/></div>
 
         <div class="${template.showContact ? 'show' : 'hide'}">
             <div>
@@ -103,6 +108,8 @@
             </div>
         </div>
 
+        <div><br/></div>
+        
         <div class="${template.showAttachment ? 'show' : 'hide'}">
             <div>
                 <span>Bifoga en skärmdump, så vi kan se det du ser</span><br/>

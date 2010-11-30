@@ -82,13 +82,15 @@ public class TyckTillAdminController {
             return "KontaktaOssTemplateEdit";
         }
 
-        for (Iterator<CustomSubCategory> it = formTemplate.getCustomCategory().getCustomSubCategories().iterator(); it.hasNext();) {
-            CustomSubCategory subCategory = it.next();
-            if (StringUtils.isBlank(subCategory.getName())) {
-                it.remove();
+        CustomCategory customCategory = formTemplate.getCustomCategory();
+        if (customCategory != null) {
+            for (Iterator<CustomSubCategory> it = customCategory.getCustomSubCategories().iterator(); it.hasNext();) {
+                CustomSubCategory subCategory = it.next();
+                if (StringUtils.isBlank(subCategory.getName())) {
+                    it.remove();
+                }
             }
         }
-
 
         formTemplate.setLastChanged(new Date());
         if (formTemplate.getId() == null) {

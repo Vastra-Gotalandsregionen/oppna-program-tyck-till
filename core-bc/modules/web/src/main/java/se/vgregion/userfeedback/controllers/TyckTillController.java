@@ -1,10 +1,13 @@
 package se.vgregion.userfeedback.controllers;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import se.vgregion.userfeedback.domain.*;
@@ -13,6 +16,8 @@ import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
@@ -34,10 +39,15 @@ public class TyckTillController {
     @Autowired
     private UserFeedbackRepository userFeedbackRepository;
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(CustomSubCategory.class, new CustomSubCategoryPropertyEditor());
+    }
+
     @RequestMapping(method = RequestMethod.GET)
-    public String setupForm(@RequestParam(value="formName", required = false) String formName,
-                          @RequestParam(value="breadcrumb", required = false) String breadcrumb,
-                          ModelMap model) {
+    public String setupForm(@RequestParam(value = "formName", required = false) String formName,
+                            @RequestParam(value = "breadcrumb", required = false) String breadcrumb,
+                            ModelMap model) {
 
 
         FormTemplate template = lookupFormTemplate(formName);
@@ -49,7 +59,7 @@ public class TyckTillController {
             userFeedback.setCaseCategory(null);
             model.addAttribute("userFeedback", userFeedback);
         } else {
-            userFeedback = (UserFeedback)model.get("userFeedback");
+            userFeedback = (UserFeedback) model.get("userFeedback");
         }
         userFeedback.setBreadcrumb(breadcrumb);
 
@@ -73,22 +83,61 @@ public class TyckTillController {
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String sendUserFeedback(@ModelAttribute("userFeedback") UserFeedback userFeedback,
+                                   @RequestParam("formTemplateId") Long formTemplateId,
                                    MultipartHttpServletRequest multipartRequest,
+                                   SessionStatus status,
                                    ModelMap model) {
         System.out.println("Sending...");
 
-        for (Iterator<String> filenameIterator = multipartRequest.getFileNames();filenameIterator.hasNext();) {
+        for (Iterator<String> filenameIterator = multipartRequest.getFileNames(); filenameIterator.hasNext();) {
             String fileName = filenameIterator.next();
 
             processAttachment(multipartRequest.getFile(fileName), userFeedback);
         }
 
-        System.out.println("attachmentSize: "+userFeedback.getAttachments().size());
+        System.out.println("attachmentSize: " + userFeedback.getAttachments().size());
+
+        for (Map.Entry<String, Object> entry : model.entrySet()) {
+            System.out.println("Entry: " + entry.getKey());
+        }
+
+        String caseContact = lookupCaseContact(userFeedback, formTemplateId);
+        userFeedback.setCaseContact(caseContact);
 
         // Log UserFeedback in db
-        userFeedbackRepository.persist(userFeedback);
-        
+        if (userFeedback.getId() == null) {
+            userFeedbackRepository.persist(userFeedback);
+        } else {
+            userFeedbackRepository.merge(userFeedback);
+        }
+
+        status.setComplete();
+
         return "Tacksida";
+    }
+
+    private String lookupCaseContact(UserFeedback userFeedback, Long formTemplateId) {
+        FormTemplate template = formTemplateRepository.find(formTemplateId);
+        CustomCategory customCategory = template.getCustomCategory();
+        // 1: check if customCategory
+        if (userFeedback.getCaseCategory().equals(customCategory.getName())) {
+            List<String> caseSubCategoryList = userFeedback.getCaseSubCategory();
+            // 2: check if single selection - else defaultContact
+            if (caseSubCategoryList.size() != 1) {
+                return customCategory.getDefaultContact();
+            }
+
+            String caseSubCategory = caseSubCategoryList.get(0);
+            // 3: check if customSubCategory has contact
+            for (CustomSubCategory subCategory : customCategory.getCustomSubCategories()) {
+                if (subCategory.getName().equals(caseSubCategory)) {
+                    if (!StringUtils.isBlank(subCategory.getContact())) {
+                        return subCategory.getContact();
+                    }
+                }
+            }
+        }
+        return customCategory.getDefaultContact();
     }
 
     private void processAttachment(MultipartFile file, UserFeedback userFeedback) {

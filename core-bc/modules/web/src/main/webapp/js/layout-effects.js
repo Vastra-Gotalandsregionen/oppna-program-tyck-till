@@ -54,22 +54,22 @@ function addEventsToCaseSubject() {
     jQuery('#contentCase').click(function() {
         jQuery('div#contentSubCase').show('fast');
         jQuery('div#functionSubCase').hide('fast');
-        jQuery('div#customCase').hide('fast');
+        jQuery('div#customSubCase').hide('fast');
     });
     jQuery('#functionCase').click(function() {
         jQuery('div#contentSubCase').hide('fast');
         jQuery('div#functionSubCase').show('fast');
-        jQuery('div#customCase').hide('fast');
+        jQuery('div#customSubCase').hide('fast');
     });
-    jQuery('#healthCase').click(function() {
+    jQuery('#customCase').click(function() {
         jQuery('div#contentSubCase').hide('fast');
         jQuery('div#functionSubCase').hide('fast');
-        jQuery('div#customCase').show('fast');
+        jQuery('div#customSubCase').show('fast');
     });
     jQuery('#otherCase').click(function() {
         jQuery('div#contentSubCase').hide('fast');
         jQuery('div#functionSubCase').hide('fast');
-        jQuery('div#customCase').hide('fast');
+        jQuery('div#customSubCase').hide('fast');
     });
 }
 

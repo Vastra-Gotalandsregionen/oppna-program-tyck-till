@@ -23,6 +23,7 @@
     <div class="leadtext">${template.description}</div>
 
     <form:form commandName="userFeedback" enctype="multipart/form-data">
+        <input type="hidden" id="formTemplateId" name="formTemplateId" value="${template.id}" />
 
         <div class="breadcrumb">
             <form:hidden path="breadcrumb"/>
@@ -55,7 +56,11 @@
                                   label="${template.customCategory.name}"/><br/>
 
                 <div id="customSubCase" class="subselect">
-                    <form:radiobuttons path="caseSubCategory" items="${template.customCategory.customSubCategories}" delimiter="<br/>"/>
+                    <form:radiobuttons path="caseSubCategory"
+                                       items="${template.customCategory.customSubCategories}"
+                                       itemLabel="name"
+                                       itemValue="name"
+                                       delimiter="<br/>"/>
                 </div>
             </div>
 

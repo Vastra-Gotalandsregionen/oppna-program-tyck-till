@@ -26,7 +26,7 @@ import java.util.Map;
 public class FeedbackReport {
     public static final String NEWLINE = "\n";
     private String defaultErrorMessage;
-
+    /* e-postadress till applikationsansvarig */
     private String reportEmail;
 
     public enum UserContactMethod {
@@ -34,23 +34,24 @@ public class FeedbackReport {
     }
 
     public enum ReportMethod {
-        usd, email, pivotal, other
+        usd, email, pivotal
     }
 
     private List<ReportMethod> reportMethods;
     private Map<UserContactMethod, Object> userContactMethods;
-
     private List<Screenshot> screenShots = new ArrayList<Screenshot>();
     private FeedbackMessage message;
+    private PlatformData userPlatform;
 
     /**
      * Public constructor for the class.
      */
     public FeedbackReport(FeedbackMessage message, List<ReportMethod> reportMethods,
-            Map<UserContactMethod, Object> contactMethods) {
+            Map<UserContactMethod, Object> contactMethods, PlatformData platform) {
         this.message = message;
         this.reportMethods = reportMethods;
         this.userContactMethods = contactMethods;
+        this.userPlatform = platform;
     }
 
     /**
@@ -68,6 +69,10 @@ public class FeedbackReport {
      */
     public Map<UserContactMethod, Object> getUserContactMethod() {
         return userContactMethods;
+    }
+
+    public PlatformData getUserPlatform() {
+        return userPlatform;
     }
 
     public String getReportEmail() {
@@ -114,9 +119,6 @@ public class FeedbackReport {
         sb.append("Application name: " + message.getApplicationName() + NEWLINE);
         if (message.getUrl() != null && message.getUrl().length() > 0) {
             sb.append(message.getUrl() + " " + NEWLINE);
-        }
-        if (message.getNameSpace() != null && message.getNameSpace().length() > 0) {
-            sb.append("Portlet name: " + message.getNameSpace() + NEWLINE + NEWLINE);
         }
         String thrownErrorMessage = this.getDefaultErrorMessage();
         if (thrownErrorMessage != null && thrownErrorMessage.length() > 0) {
@@ -165,13 +167,12 @@ public class FeedbackReport {
         }
 
         sb.append(NEWLINE + "Uppgifter automatgenererade" + NEWLINE);
-        sb.append("- Användar ID: " + message.getUserId() + NEWLINE);
-        sb.append("- IP Adress: " + message.getIpAddress() + NEWLINE);
-        sb.append("- Browser: " + message.getBrowser() + NEWLINE);
-        sb.append("- OS: " + message.getOs() + NEWLINE);
-        sb.append("- Javascript: " + message.getJavaScript() + NEWLINE);
-        sb.append("- Referer: " + message.getReferer() + NEWLINE);
-        sb.append("- Timestamp: " + message.getTimeStamp() + NEWLINE);
+        sb.append("- Användar ID: " + userPlatform.getUserId() + NEWLINE);
+        sb.append("- IP Adress: " + userPlatform.getIpAddress() + NEWLINE);
+        sb.append("- Browser: " + userPlatform.getBrowser() + NEWLINE);
+        sb.append("- OS: " + userPlatform.getOperatingSystem() + NEWLINE);
+        sb.append("- Referer: " + userPlatform.getReferer() + NEWLINE);
+        sb.append("- Timestamp: " + userPlatform.getTimeStamp() + NEWLINE);
 
         sb.append(NEWLINE + "Valt rapporteringsätt för applikationen: ");
         for (UserContactMethod method : userContactMethods.keySet()) {

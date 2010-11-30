@@ -46,9 +46,10 @@ see if this is configurable in Orbeon -->
     xml:lang="sv" lang="sv">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-            
+
+    <link rel="stylesheet" type="text/css" href="../style/style.css"/>            
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css"/>
-    <link rel="stylesheet" type="text/css" href="../style/style.css"/>
+
     <script type="text/javascript">
       var closePopup= function()
         {

@@ -18,25 +18,23 @@
  */
 @CHARSET "UTF-8";
 
-div.ui-dialog-titlebard {
-  /* display: none; */
+div#Inner710 { color: red; }
+
+div.ui-dialog-titlebar {
+  /* display: none; */ }
+span#ui-dialog-title-modalDiv {
+  display:none;
+}
   
   /* Overlays */
-.ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }/* Accordion
-
-
-/* required comment for clearfix to work in Opera \*/
-.ui-helper-clearfix { display: inline-block; }
-* html .ui-helper-clearfix { height:1%; }
-/* end clearfix */
- 
+.ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
   
 /* Icons
 ----------------------------------*/
 /* states and images */
 .ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
-.ui-icon { width: 16px; height: 16px; background-image: url(style/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
-.ui-widget-content .ui-icon {background-image: url(style/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
+.ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
+.ui-widget-content .ui-icon {background-image: url(images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
 .ui-icon-closethick { background-position: -96px -128px; }
 .ui-icon-grip-diagonal-se { background-position: -80px -224px; }
 
@@ -46,7 +44,7 @@ div.ui-dialog-titlebard {
 .ui-widget { font-family: Verdana,Arial,sans-serif/*{ffDefault}*/; font-size: 1.1em/*{fsDefault}*/; }
 .ui-widget-content { border: 1px solid #aaaaaa/*{borderColorContent}*/; background: #ffffff/*{bgColorContent}*/ url(style/images/ui-bg_glass_75_ffffff_1x400.png)/*{bgImgUrlContent}*/ 0/*{bgContentXPos}*/ 0/*{bgContentYPos}*/ repeat-x/*{bgContentRepeat}*/; color: #222222/*{fcContent}*/; }
 .ui-widget-content a { color: #222222/*{fcContent}*/; }
-.ui-widget-header { border: 1px solid #aaaaaa/*{borderColorHeader}*/; background: #cccccc/*{bgColorHeader}*/ url(style/images/ui-bg_highlight-soft_75_cccccc_1x100.png)/*{bgImgUrlHeader}*/ 0/*{bgHeaderXPos}*/ 50%/*{bgHeaderYPos}*/ repeat-x/*{bgHeaderRepeat}*/; color: #222222/*{fcHeader}*/; font-weight: bold; }
+.ui-widget-header { /* border: 1px solid #aaaaaa; background: #cccccc: url(style/images/ui-bg_highlight-soft_75_cccccc_1x100.png)*/ 0/*{bgHeaderXPos}*/ 50%/*{bgHeaderYPos}*/ repeat-x/*{bgHeaderRepeat}*/; color: #222222/*{fcHeader}*/; font-weight: bold; }
 .ui-widget-header a { color: #222222/*{fcHeader}*/; }
 
 

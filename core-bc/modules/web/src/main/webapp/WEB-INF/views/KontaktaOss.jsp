@@ -5,6 +5,7 @@
     <title>TyckTill</title>
 
     <style type="text/css">
+        <%@ include file="/style/modalStyle.css"%>
         <%@ include file="/style/style.css"%>
     </style>
 

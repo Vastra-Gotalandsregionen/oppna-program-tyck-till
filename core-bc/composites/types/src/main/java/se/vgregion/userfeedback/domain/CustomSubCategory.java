@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @Entity
-public class CustomSubCategory extends AbstractEntity<CustomSubCategory, Long> implements Serializable {
+public class CustomSubCategory extends AbstractEntity<Long> implements Serializable {
     private static final long serialVersionUID = 2904913321117627566L;
 
     @Id

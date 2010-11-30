@@ -1,5 +1,6 @@
 package se.vgregion.userfeedback.controllers;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,12 +8,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import se.vgregion.userfeedback.domain.CustomCategory;
+import se.vgregion.userfeedback.domain.CustomSubCategory;
 import se.vgregion.userfeedback.domain.FormTemplate;
 import se.vgregion.userfeedback.domain.FormTemplateRepository;
 
 import javax.validation.Valid;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
@@ -36,7 +38,7 @@ public class TyckTillAdminController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/KontaktaOss/TemplateEditor")
-    public String viewTemplates(@RequestParam(value="templateId", required = false) Long templateId,
+    public String viewTemplates(@RequestParam(value = "templateId", required = false) Long templateId,
                                 ModelMap model) {
         FormTemplate template;
         if (templateId == null) {
@@ -50,6 +52,22 @@ public class TyckTillAdminController {
         }
         model.addAttribute("formTemplate", template);
 
+        CustomCategory customCategory = template.getCustomCategory();
+        if (customCategory == null) {
+            customCategory = new CustomCategory();
+            template.setCustomCategory(customCategory);
+        }
+
+        List<CustomSubCategory> subCategories = customCategory.getCustomSubCategories();
+        if (subCategories == null) {
+            subCategories = new ArrayList<CustomSubCategory>();
+            customCategory.setCustomSubCategories(subCategories);
+        }
+        for (int i = 0; i < 3; i++) {
+            subCategories.add(new CustomSubCategory());
+        }
+        model.addAttribute("subCategories", subCategories);
+
         return "KontaktaOssTemplateEdit";
     }
 
@@ -62,6 +80,13 @@ public class TyckTillAdminController {
                               ModelMap model) {
         if (result.hasErrors()) {
             return "KontaktaOssTemplateEdit";
+        }
+
+        for (Iterator<CustomSubCategory> it = formTemplate.getCustomCategory().getCustomSubCategories().iterator(); it.hasNext();) {
+            CustomSubCategory subCategory = it.next();
+            if (StringUtils.isBlank(subCategory.getName())) {
+                it.remove();
+            }
         }
 
 

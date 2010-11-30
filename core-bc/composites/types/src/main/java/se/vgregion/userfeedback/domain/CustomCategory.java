@@ -4,13 +4,14 @@ import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @Entity
-public class CustomCategory extends AbstractEntity<CustomCategory, Long> implements Serializable {
+public class CustomCategory extends AbstractEntity<Long> implements Serializable {
     private static final long serialVersionUID = 2103137794928299880L;
 
     @Id
@@ -19,10 +20,12 @@ public class CustomCategory extends AbstractEntity<CustomCategory, Long> impleme
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private String defaultContact;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "customcategory_id")
     @OrderColumn(name = "index")
-    private List<CustomSubCategory> customSubCategories;
+    private List<CustomSubCategory> customSubCategories = new ArrayList<CustomSubCategory>();
 
     @Override
     public Long getId() {
@@ -35,6 +38,14 @@ public class CustomCategory extends AbstractEntity<CustomCategory, Long> impleme
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDefaultContact() {
+        return defaultContact;
+    }
+
+    public void setDefaultContact(String defaultContact) {
+        this.defaultContact = defaultContact;
     }
 
     public List<CustomSubCategory> getCustomSubCategories() {

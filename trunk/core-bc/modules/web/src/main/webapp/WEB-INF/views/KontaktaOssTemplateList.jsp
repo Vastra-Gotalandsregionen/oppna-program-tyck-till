@@ -33,7 +33,7 @@
                 <td>${formTemplate.title}</td>
                 <td>${formTemplate.showContent}</td>
                 <td>${formTemplate.showFunction}</td>
-                <td>${formTemplate.showHeathcareSubject}</td>
+                <td>${formTemplate.showCustom}</td>
                 <td>${formTemplate.showContact}</td>
                 <td>${formTemplate.showAttachment}</td>
                 <td>${formTemplate.backend}</td>

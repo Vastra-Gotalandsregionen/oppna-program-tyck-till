@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: david
@@ -50,8 +51,43 @@
             <span class="value"><form:checkbox path="showFunction"/></span>
         </div>
         <div class="prop">
-            <span class="name">Show healthcare:</span>
-            <span class="value"><form:checkbox path="showHeathcareSubject"/></span>
+            <span class="name">Show custom:</span>
+            <span class="value"><form:checkbox path="showCustom"/></span>
+
+            <span>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Category name</th>
+                        <th>Default contact</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><form:input path="customCategory.name"/></td>
+                        <td><form:input path="customCategory.defaultContact"/></td>
+                    </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>SubCategory</th>
+                        <th>Contact</th>
+                    </tr>
+                    <c:forEach items="${subCategories}" var="subCategory" varStatus="loop" >
+                        <tr>
+                            <td>${subCategory.id}</td>
+                            <td>
+                                <input id="customCategory.customSubCategories[${loop.index}].name"
+                                       name="customCategory.customSubCategories[${loop.index}].name"
+                                       type="text" value="${subCategory.name}"/>
+                            </td>
+                            <td>
+                                <input id="customCategory.customSubCategories[${loop.index}].contact"
+                                       name="customCategory.customSubCategories[${loop.index}].contact"
+                                       type="text" value="${subCategory.contact}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </span>
         </div>
         <div class="prop">
             <span class="name">Show contact:</span>
@@ -60,6 +96,13 @@
         <div class="prop">
             <span class="name">Show attachment:</span>
             <span class="value"><form:checkbox path="showAttachment"/></span>
+        </div>
+    </div>
+
+    <div>
+        <div>Custom category</div>
+
+        <div class="prop">
         </div>
     </div>
 

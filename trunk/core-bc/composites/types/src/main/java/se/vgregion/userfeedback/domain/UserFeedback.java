@@ -32,7 +32,7 @@ import java.util.*;
  * 
  */
 @Entity
-public class UserFeedback extends AbstractEntity<UserFeedback, Long> implements Serializable {
+public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     private static final long serialVersionUID = 8809380011250380574L;
 
     @Id
@@ -50,25 +50,10 @@ public class UserFeedback extends AbstractEntity<UserFeedback, Long> implements 
     private String userPhonenumber;
     private String userName;
 
-    /*
-     * Deal with case subject and sub-headings.
-     */
-    private CaseSubject caseSubject;
-
-    /* Helthcare issue subheading */
-    @Enumerated(EnumType.STRING)
-    private HealthcareCategory healthcareCategory;
-
-    /* Webpage function subheadings */
-    private boolean pageDoesNotExist;
-    private boolean gotErrorMessage;
-    private boolean pageDoesNotLoad;
-    private boolean doesNotUnderstandFunction;
-
-    /* Webpage content subheadings */
-    private boolean missingContent;
-    private boolean wrongContent;
-    private boolean cannotFindInformation;
+    private String caseCategory;
+    @ElementCollection
+    private List<String> caseSubCategory;
+    private String caseContact;
 
     /* Message */
     private String message;
@@ -84,105 +69,6 @@ public class UserFeedback extends AbstractEntity<UserFeedback, Long> implements 
     public Long getId() {
         return id;
     }
-
-    public enum CaseSubject {
-        webpageContent(CONTENT_RELATED),
-        webpageFunction(FUNCTION_RELATED),
-        healthcare(HEALTHCARE_RELATED),
-        other(OTHER_RELATED);
-
-        private String label;
-
-        CaseSubject(String label) {
-            this.label = label;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        public String getName() {
-            return name();
-        }
-
-        /* Helper functions to map between enum names and labels */
-        private static Map<String,String> labelMap;
-
-        static  {
-            labelMap = new HashMap<String,String>();
-            for(CaseSubject c : CaseSubject.values())  {
-                labelMap.put(c.name(), c.label);
-            }
-        }
-
-        /**
-         * Get a map linking human friendly labels to the enum constant names.
-         *
-         * @return  Map.
-         */
-        public static Map<String,String> getLabelMap()   {
-            return labelMap;
-        }
-    }
-
-    /* Human friendly names for enum constants */
-    private static final String CONTENT_RELATED = "Webbplatsens innehåll";
-    private static final String FUNCTION_RELATED = "Webbplatsens funktion";
-    private static final String HEALTHCARE_RELATED = "Vården";
-    private static final String OTHER_RELATED = "Övrigt";
-
-    /**
-     * Sub-categories for the 'healthCareRelated' option of {@code CaseSubject}
-     * 
-     * @author Arakun
-     * 
-     */
-    public enum HealthcareCategory {
-        fees(HEALTHCARE_FEES), healthcareAbroad(HEALTHCARE_ABROAD), careAssurances(HEALTHCARE_ASSURANCES), waitingTime(
-                HEALTHCARE_WAITING_TIMES), freedomOfChoice(HEALTHCARE_FREEDOM_OF_CHOICE), otherHealthcareIssues(HEALTHCARE_OTHER);
-
-        private String label;
-
-        private HealthcareCategory(String label) {
-            this.label = label;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        /* Helper functions to map between enum names and labels */
-        private static Map<HealthcareCategory,String> labelMap;
-
-        static  {
-            labelMap = new TreeMap<HealthcareCategory, String>(new Comparator<HealthcareCategory> (){
-                @Override
-                public int compare(HealthcareCategory h1, HealthcareCategory h2) {
-                    return h1.ordinal() - h2.ordinal();
-                }
-            });
-            for(HealthcareCategory c : HealthcareCategory.values())  {
-                labelMap.put(c, c.label);
-            }
-        }
-
-        /**
-         * Get a map linking human friendly labels to the enum constant names.
-         *
-         * @return  .
-         */
-        public static Map<HealthcareCategory, String> getLabelMap()   {
-            return labelMap;
-        }
-    }
-
-    /* Human friendly names for enum constants */
-    private static final String HEALTHCARE_FEES = "Avgifter";
-    private static final String HEALTHCARE_ABROAD = "Utomlandsvård";
-    private static final String HEALTHCARE_ASSURANCES = "Vårdgarantier";
-    private static final String HEALTHCARE_WAITING_TIMES = "Väntetider";
-    private static final String HEALTHCARE_FREEDOM_OF_CHOICE = "Valfrihet i vården";
-    private static final String HEALTHCARE_OTHER = "Övriga vårdfrågor";
 
     /**
      * List of ways user can be contacted.
@@ -226,14 +112,6 @@ public class UserFeedback extends AbstractEntity<UserFeedback, Long> implements 
     }
 
 
-    public CaseSubject getCaseSubject() {
-        return caseSubject;
-    }
-
-    public void setCaseSubject(CaseSubject caseSubject) {
-        this.caseSubject = caseSubject;
-    }
-
     public boolean isAttachScreenDump() {
         return attachScreenDump;
     }
@@ -242,68 +120,28 @@ public class UserFeedback extends AbstractEntity<UserFeedback, Long> implements 
         this.attachScreenDump = attachScreenDump;
     }
 
-    public HealthcareCategory getHealthcareCategory() {
-        return healthcareCategory;
+    public String getCaseCategory() {
+        return caseCategory;
     }
 
-    public void setHealthcareCategory(HealthcareCategory healthcareCategory) {
-        this.healthcareCategory = healthcareCategory;
+    public void setCaseCategory(String caseCategory) {
+        this.caseCategory = caseCategory;
     }
 
-    public boolean isPageDoesNotExist() {
-        return pageDoesNotExist;
+    public List<String> getCaseSubCategory() {
+        return caseSubCategory;
     }
 
-    public void setPageDoesNotExist(boolean pageDoesNotExist) {
-        this.pageDoesNotExist = pageDoesNotExist;
+    public void setCaseSubCategory(List<String> caseSubCategory) {
+        this.caseSubCategory = caseSubCategory;
     }
 
-    public boolean isGotErrorMessage() {
-        return gotErrorMessage;
+    public String getCaseContact() {
+        return caseContact;
     }
 
-    public void setGotErrorMessage(boolean gotErrorMessage) {
-        this.gotErrorMessage = gotErrorMessage;
-    }
-
-    public boolean isPageDoesNotLoad() {
-        return pageDoesNotLoad;
-    }
-
-    public void setPageDoesNotLoad(boolean pageDoesNotLoad) {
-        this.pageDoesNotLoad = pageDoesNotLoad;
-    }
-
-    public boolean isDoesNotUnderstandFunction() {
-        return doesNotUnderstandFunction;
-    }
-
-    public void setDoesNotUnderstandFunction(boolean doesNotUnderstandFunction) {
-        this.doesNotUnderstandFunction = doesNotUnderstandFunction;
-    }
-
-    public boolean isMissingContent() {
-        return missingContent;
-    }
-
-    public void setMissingContent(boolean missingContent) {
-        this.missingContent = missingContent;
-    }
-
-    public boolean isWrongContent() {
-        return wrongContent;
-    }
-
-    public void setWrongContent(boolean wrongContent) {
-        this.wrongContent = wrongContent;
-    }
-
-    public boolean isCannotFindInformation() {
-        return cannotFindInformation;
-    }
-
-    public void setCannotFindInformation(boolean cannotFindInformation) {
-        this.cannotFindInformation = cannotFindInformation;
+    public void setCaseContact(String caseContact) {
+        this.caseContact = caseContact;
     }
 
     public String getMessage() {

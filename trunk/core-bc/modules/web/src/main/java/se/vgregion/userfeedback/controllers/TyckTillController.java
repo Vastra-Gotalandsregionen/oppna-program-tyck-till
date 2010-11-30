@@ -46,19 +46,12 @@ public class TyckTillController {
         UserFeedback userFeedback;
         if (!model.containsKey("userFeedback")) {
             userFeedback = new UserFeedback();
-            userFeedback.setCaseSubject(null);
+            userFeedback.setCaseCategory(null);
             model.addAttribute("userFeedback", userFeedback);
         } else {
             userFeedback = (UserFeedback)model.get("userFeedback");
         }
         userFeedback.setBreadcrumb(breadcrumb);
-
-        model.addAttribute("subject_content", UserFeedback.CaseSubject.webpageContent);
-        model.addAttribute("subject_function", UserFeedback.CaseSubject.webpageFunction);
-        model.addAttribute("subject_healthcare", UserFeedback.CaseSubject.healthcare);
-        model.addAttribute("subject_other", UserFeedback.CaseSubject.other);
-
-        model.addAttribute("healthcareCategories", UserFeedback.HealthcareCategory.getLabelMap());
 
         model.addAttribute("contactOptions", UserFeedback.UserContactOption.getLabelMap());
 

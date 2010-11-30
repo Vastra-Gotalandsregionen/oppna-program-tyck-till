@@ -14,8 +14,8 @@ import java.util.Date;
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
-public class FormTemplate extends AbstractEntity<FormTemplate, Long> implements Serializable {
+@Table
+public class FormTemplate extends AbstractEntity<Long> implements Serializable {
     private static final long serialVersionUID = 7819565362034276611L;
 
     @Id
@@ -46,18 +46,32 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> implements 
 
 
     // optional parts
-    private Boolean showHeathcareSubject;
+    private Boolean showCustom;
 
     private Boolean showContent = Boolean.TRUE;
 
     private Boolean showFunction = Boolean.TRUE;
 
+    private Boolean showOther = Boolean.TRUE;
+
     private Boolean showContact = Boolean.TRUE;
 
     private Boolean showAttachment = Boolean.TRUE;
 
-    @OneToOne
-    private CustomCategory customCategory;
+    @OneToOne(cascade = CascadeType.ALL)
+    private CustomCategory customCategory = new CustomCategory();
+
+    @Transient
+    private StaticCategory contentCategory = new StaticCategory("Webbplatsens innehåll",
+            "Saknar innehåll", "Fel innehåll", "Hittar inte information" );
+
+    @Transient
+    private StaticCategory functionCategory = new StaticCategory("Webbplatsens funktion",
+            "Sidan finns inte", "Felmeddelande", "Sidan laddas inte", "Förstår inte funktionen");
+
+    @Transient
+    private StaticCategory otherCategory = new StaticCategory("Övrigt");
+
 
     @Override
     public Long getId() {
@@ -88,12 +102,12 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> implements 
         this.description = description;
     }
 
-    public Boolean getShowHeathcareSubject() {
-        return showHeathcareSubject;
+    public Boolean getShowCustom() {
+        return showCustom;
     }
 
-    public void setShowHeathcareSubject(Boolean showHeathcareSubject) {
-        this.showHeathcareSubject = showHeathcareSubject;
+    public void setShowCustom(Boolean showCustom) {
+        this.showCustom = showCustom;
     }
 
     public Boolean getShowContent() {
@@ -110,6 +124,14 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> implements 
 
     public void setShowFunction(Boolean showFunction) {
         this.showFunction = showFunction;
+    }
+
+    public Boolean getShowOther() {
+        return showOther;
+    }
+
+    public void setShowOther(Boolean showOther) {
+        this.showOther = showOther;
     }
 
     public Boolean getShowContact() {
@@ -158,5 +180,25 @@ public class FormTemplate extends AbstractEntity<FormTemplate, Long> implements 
 
     public void setLastChanged(Date lastChanged) {
         this.lastChanged = lastChanged;
+    }
+
+    public CustomCategory getCustomCategory() {
+        return customCategory;
+    }
+
+    public void setCustomCategory(CustomCategory customCategory) {
+        this.customCategory = customCategory;
+    }
+
+    public StaticCategory getContentCategory() {
+        return contentCategory;
+    }
+
+    public StaticCategory getFunctionCategory() {
+        return functionCategory;
+    }
+
+    public StaticCategory getOtherCategory() {
+        return otherCategory;
     }
 }

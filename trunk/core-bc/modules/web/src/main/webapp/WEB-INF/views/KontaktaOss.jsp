@@ -33,41 +33,35 @@
 
             <div id="webpageContentCategory" class="${template.showContent ? 'show' : 'hide'}">
 
-                <form:radiobutton id="contentCase" path="caseSubject" value="${subject_content.name}"
-                                  label="${subject_content.label}"/><br/>
+                <form:radiobutton id="contentCase" path="caseCategory" value="${template.contentCategory.category}"
+                                  label="${template.contentCategory.category}"/><br/>
 
                 <div id="contentSubCase" class="subselect">
-                    <form:checkbox cssClass="checkbox" path="missingContent" label="Saknar innehåll"/><br/>
-                    <form:checkbox cssClass="checkbox" path="wrongContent" label="Fel innehåll"/><br/>
-                    <form:checkbox cssClass="checkbox" path="cannotFindInformation"
-                                   label="Hittar inte information"/><br/>
+                    <form:checkboxes cssClass="checkbox" path="caseSubCategory" items="${template.contentCategory.subCategories}" delimiter="<br/>"/>
                 </div>
             </div>
 
             <div id="webpageFunctionCategory" class="${template.showFunction ? 'show' : 'hide'}">
-                <form:radiobutton id="functionCase" path="caseSubject" value="${subject_function.name}"
-                                  label="${subject_function.label}"/><br/>
+                <form:radiobutton id="functionCase" path="caseCategory" value="${template.functionCategory.category}"
+                                  label="${template.functionCategory.category}"/><br/>
 
                 <div id="functionSubCase" class="subselect">
-                    <form:checkbox path="pageDoesNotExist" label="Sidan finns inte"/><br/>
-                    <form:checkbox path="gotErrorMessage" label="Felmeddelande"/><br/>
-                    <form:checkbox path="pageDoesNotLoad" label="Sidan laddas inte"/><br/>
-                    <form:checkbox path="doesNotUnderstandFunction" label="Förstår inte funktionen"/><br/>
+                    <form:checkboxes cssClass="checkbox" path="caseSubCategory" items="${template.functionCategory.subCategories}" delimiter="<br/>"/>
                 </div>
             </div>
 
-            <div id="healthcareCategory" class="${template.showHeathcareSubject ? 'show' : 'hide'}">
-                <form:radiobutton id="healthCase" path="caseSubject" value="${subject_healthcare.name}"
-                                  label="${subject_healthcare.label}"/><br/>
+            <div id="customCategory" class="${template.showCustom ? 'show' : 'hide'}">
+                <form:radiobutton id="customCase" path="caseCategory" value="${template.customCategory.name}"
+                                  label="${template.customCategory.name}"/><br/>
 
-                <div id="healthSubCase" class="subselect">
-                    <form:radiobuttons path="healthcareCategory" items="${healthcareCategories}" delimiter="<br/>"/>
+                <div id="customSubCase" class="subselect">
+                    <form:radiobuttons path="caseSubCategory" items="${template.customCategory.customSubCategories}" delimiter="<br/>"/>
                 </div>
             </div>
 
-            <div id="otherCategory">
-                <form:radiobutton id="otherCase" path="caseSubject" value="${subject_other.name}"
-                                  label="${subject_other.label}"/>
+            <div id="otherCategory" class="${template.showOther ? 'show' : 'hide'}">
+                <form:radiobutton id="otherCase" path="caseCategory" value="${template.otherCategory.category}"
+                                  label="${template.otherCategory.category}"/>
             </div>
         </div>
 

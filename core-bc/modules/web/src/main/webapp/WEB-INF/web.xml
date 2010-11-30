@@ -30,7 +30,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath*:/services-config.xml</param-value>
+    <param-value>classpath*:/application-config.xml</param-value>
   </context-param>
   <!-- Bootstraps the root Spring Web Application Context, responsible for deploying managed beans
 defined in the configuration files above.  These beans represent the services used by the application. -->

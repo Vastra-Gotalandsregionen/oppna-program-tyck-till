@@ -119,11 +119,15 @@ public class TyckTillController {
     private String lookupCaseContact(UserFeedback userFeedback, Long formTemplateId) {
         FormTemplate template = formTemplateRepository.find(formTemplateId);
         CustomCategory customCategory = template.getCustomCategory();
+        // 0: Check if there exist a customCategory
+        if (customCategory == null) {
+            return "";
+        }
         // 1: check if customCategory
-        if (userFeedback.getCaseCategory().equals(customCategory.getName())) {
+        if (customCategory.getName().equals(userFeedback.getCaseCategory())) {
             List<String> caseSubCategoryList = userFeedback.getCaseSubCategory();
             // 2: check if single selection - else defaultContact
-            if (caseSubCategoryList.size() != 1) {
+            if (caseSubCategoryList == null || caseSubCategoryList.size() != 1) {
                 return customCategory.getDefaultContact();
             }
 

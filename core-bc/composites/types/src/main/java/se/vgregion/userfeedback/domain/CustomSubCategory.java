@@ -1,8 +1,9 @@
 package se.vgregion.userfeedback.domain;
 
-import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
+import se.vgregion.dao.domain.patterns.entity.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.io.Serializable;
 
 /**

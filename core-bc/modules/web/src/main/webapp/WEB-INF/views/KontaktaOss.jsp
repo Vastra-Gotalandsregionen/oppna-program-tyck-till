@@ -35,26 +35,36 @@
 
             <div id="webpageContentCategory" class="${template.showContent ? 'show' : 'hide'}">
 
-                <form:radiobutton id="contentCase" path="caseCategory" value="${template.contentCategory.category}"
-                                  label="${template.contentCategory.category}"/><br/>
+                <form:radiobutton id="contentCase"
+                                  path="staticCaseCategoryId"
+                                  value="${contentCategory.id}"
+                                  label="${contentCategory.category}"/><br/>
 
                 <div id="contentSubCase" class="subselect">
-                    <form:checkboxes cssClass="checkbox" path="caseSubCategory" items="${template.contentCategory.subCategories}" delimiter="<br/>"/>
+                    <form:checkboxes cssClass="checkbox"
+                                     path="caseSubCategory"
+                                     items="${contentCategory.subCategories}"
+                                     delimiter="<br/>"/>
                 </div>
             </div>
             <div id="webpageFunctionCategory" class="${template.showFunction ? 'show' : 'hide'}">
                 <form:radiobutton id="functionCase"
-                                  path="caseCategory"
-                                  value="${template.functionCategory.category}"
-                                  label="${template.functionCategory.category}"/><br/>
+                                  path="staticCaseCategoryId"
+                                  value="${functionCategory.id}"
+                                  label="${functionCategory.category}"/><br/>
 
                 <div id="functionSubCase" class="subselect">
-                    <form:checkboxes cssClass="checkbox" path="caseSubCategory" items="${template.functionCategory.subCategories}" delimiter="<br/>"/>
+                    <form:checkboxes cssClass="checkbox"
+                                     path="caseSubCategory"
+                                     items="${functionCategory.subCategories}"
+                                     delimiter="<br/>"/>
                 </div>
             </div>
 
             <div id="customCategory" class="${template.showCustom ? 'show' : 'hide'}">
-                <form:radiobutton id="customCase" path="caseCategory" value="${template.customCategory.name}"
+                <form:radiobutton id="customCase"
+                                  path="customCaseCategoryId"
+                                  value="${template.customCategory.name}"
                                   label="${template.customCategory.name}"/><br/>
 
                 <div id="customSubCase" class="subselect">
@@ -67,8 +77,10 @@
             </div>
 
             <div id="otherCategory" class="${template.showOther ? 'show' : 'hide'}">
-                <form:radiobutton id="otherCase" path="caseCategory" value="${template.otherCategory.category}"
-                                  label="${template.otherCategory.category}"/>
+                <form:radiobutton id="otherCase"
+                                  path="staticCaseCategoryId"
+                                  value="${otherCategory.id}"
+                                  label="${otherCategory.category}"/>
             </div>
         </div>
 

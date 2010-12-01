@@ -1,5 +1,7 @@
 package se.vgregion.userfeedback.domain;
 
+import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -9,16 +11,16 @@ import java.util.List;
  *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
-public class StaticCategory {
+public class StaticCategory extends AbstractEntity<Long> {
+
+    private Long id;
+
     private String category;
 
     private List<String> subCategories;
 
-//    public StaticCategory(String category) {
-//        this(category, null);
-//    }
-
-    public StaticCategory(String category, String... subCategories) {
+    public StaticCategory(Long id, String category, String... subCategories) {
+        this.id = id;
         this.category = category;
         if (subCategories == null) {
             this.subCategories = Collections.emptyList();
@@ -33,5 +35,10 @@ public class StaticCategory {
 
     public List<String> getSubCategories() {
         return subCategories;
+    }
+
+    @Override
+    public Long getId() {
+        return this.id;
     }
 }

@@ -19,11 +19,27 @@
 
 package se.vgregion.userfeedback.domain;
 
-import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
 /**
  * This class represents a feedback instance.
@@ -65,6 +81,9 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     @JoinColumn(name = "USERFEEDBACK_ID")
     private Set<Attachment> attachments = new HashSet<Attachment>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private PlatformData platformData;
+
     @Override
     public Long getId() {
         return id;
@@ -87,30 +106,29 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
         }
 
         /* Helper functions to map between enum names and labels */
-        private static Map<UserContactOption,String> labelMap;
+        private static Map<UserContactOption, String> labelMap;
 
-        static  {
-            labelMap = new TreeMap<UserContactOption, String>(new Comparator<UserContactOption>(){
+        static {
+            labelMap = new TreeMap<UserContactOption, String>(new Comparator<UserContactOption>() {
                 @Override
                 public int compare(UserContactOption c1, UserContactOption c2) {
                     return c1.ordinal() - c2.ordinal();
                 }
             });
-            for(UserContactOption c : UserContactOption.values())  {
+            for (UserContactOption c : UserContactOption.values()) {
                 labelMap.put(c, c.label);
             }
         }
 
         /**
          * Get a map linking human friendly labels to the enum constant names.
-         *
-         * @return  .
+         * 
+         * @return .
          */
-        public static Map<UserContactOption, String> getLabelMap()   {
+        public static Map<UserContactOption, String> getLabelMap() {
             return labelMap;
         }
     }
-
 
     public boolean isAttachScreenDump() {
         return attachScreenDump;
@@ -206,5 +224,13 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public PlatformData getPlatformData() {
+        return platformData;
+    }
+
+    public void setPlatformData(PlatformData platformData) {
+        this.platformData = platformData;
     }
 }

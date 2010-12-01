@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import se.vgregion.userfeedback.domain.PlatformData;
+
 public class FeedbackReport {
     public static final String NEWLINE = "\n";
     private String defaultErrorMessage;

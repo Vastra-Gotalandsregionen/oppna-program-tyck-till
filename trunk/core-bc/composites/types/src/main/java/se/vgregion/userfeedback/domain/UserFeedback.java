@@ -50,15 +50,10 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     private String userPhonenumber;
     private String userName;
 
-    @Transient
-    private Long staticCaseCategoryId;
-    @Transient
-    private Long customCaseCategoryId;
-
     private String caseCategory;
 
     @ElementCollection
-    private List<String> caseSubCategory;
+    private List<String> caseSubCategories;
     private String caseContact;
 
     /* Message */
@@ -73,6 +68,13 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     private PlatformData platformData;
+
+    @Transient
+    private Long staticCaseCategoryId;
+    @Transient
+    private Long customCaseCategoryId;
+    @Transient
+    private List<Long> caseSubCategoryIds;
 
     @Override
     public Long getId() {
@@ -128,22 +130,6 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
         this.attachScreenDump = attachScreenDump;
     }
 
-    public Long getStaticCaseCategoryId() {
-        return staticCaseCategoryId;
-    }
-
-    public void setStaticCaseCategoryId(Long staticCaseCategoryId) {
-        this.staticCaseCategoryId = staticCaseCategoryId;
-    }
-
-    public Long getCustomCaseCategoryId() {
-        return customCaseCategoryId;
-    }
-
-    public void setCustomCaseCategoryId(Long customCaseCategoryId) {
-        this.customCaseCategoryId = customCaseCategoryId;
-    }
-
     public String getCaseCategory() {
         return caseCategory;
     }
@@ -152,12 +138,12 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
         this.caseCategory = caseCategory;
     }
 
-    public List<String> getCaseSubCategory() {
-        return caseSubCategory;
+    public List<String> getCaseSubCategories() {
+        return caseSubCategories;
     }
 
-    public void setCaseSubCategory(List<String> caseSubCategory) {
-        this.caseSubCategory = caseSubCategory;
+    public void setCaseSubCategories(List<String> caseSubCategories) {
+        this.caseSubCategories = caseSubCategories;
     }
 
     public String getCaseContact() {
@@ -238,5 +224,31 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
 
     public void setPlatformData(PlatformData platformData) {
         this.platformData = platformData;
+    }
+
+    // --------------------------------------------------------------
+
+    public Long getStaticCaseCategoryId() {
+        return staticCaseCategoryId;
+    }
+
+    public void setStaticCaseCategoryId(Long staticCaseCategoryId) {
+        this.staticCaseCategoryId = staticCaseCategoryId;
+    }
+
+    public Long getCustomCaseCategoryId() {
+        return customCaseCategoryId;
+    }
+
+    public void setCustomCaseCategoryId(Long customCaseCategoryId) {
+        this.customCaseCategoryId = customCaseCategoryId;
+    }
+
+    public List<Long> getCaseSubCategoryIds() {
+        return caseSubCategoryIds;
+    }
+
+    public void setCaseSubCategoryIds(List<Long> caseSubCategoryIds) {
+        this.caseSubCategoryIds = caseSubCategoryIds;
     }
 }

@@ -16,10 +16,7 @@ import se.vgregion.userfeedback.domain.*;
 
 import javax.persistence.NoResultException;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
@@ -139,7 +136,11 @@ public class TyckTillController {
         // Lookup CaseCategory
         String caseCategory = lookupCaseCategory(userFeedback, template);
         userFeedback.setCaseCategory(caseCategory);
+
         // TODO: Lookup CaseSubCategory
+        List<String> caseSubCategories = lookupCaseSubCategory(userFeedback, template);
+        userFeedback.setCaseSubCategories(caseSubCategories);
+
         // Lookup CaseContact
         String caseContact = lookupCaseContact(userFeedback, template);
         userFeedback.setCaseContact(caseContact);
@@ -161,7 +162,38 @@ public class TyckTillController {
             return template.getCustomCategory().getName();
         }
 
-        return staticCategoryRepository.find(userFeedback.getStaticCaseCategoryId()).getCategory();
+        return staticCategoryRepository.find(userFeedback.getStaticCaseCategoryId()).getName();
+    }
+
+    private List<String> lookupCaseSubCategory(UserFeedback userFeedback, FormTemplate template) {
+        List<String> subCategories = new ArrayList<String>();
+        if (userFeedback.getCaseSubCategoryIds() == null) {
+            return subCategories;
+        }
+
+        if (userFeedback.getCustomCaseCategoryId() != null) {
+            CustomCategory customCategory = template.getCustomCategory();
+            for (Long subCategoryId : userFeedback.getCaseSubCategoryIds()) {
+                for (CustomSubCategory subCategory : customCategory.getCustomSubCategories()) {
+                    if (subCategoryId.equals(subCategory.getId())) {
+                        subCategories.add(subCategory.getName());
+                    }
+                }
+            }
+
+            return subCategories;
+        }
+
+        StaticCategory category = staticCategoryRepository.find(userFeedback.getStaticCaseCategoryId());
+        for (Long subCategoryId : userFeedback.getCaseSubCategoryIds()) {
+            for (Map.Entry<Long,String> subCategoryEntry : category.getSubCategories().entrySet()) {
+                if (subCategoryId.equals(subCategoryEntry.getKey())) {
+                    subCategories.add(subCategoryEntry.getValue());
+                }
+            }
+        }
+
+        return subCategories;
     }
 
     private String lookupCaseContact(UserFeedback userFeedback, FormTemplate template) {
@@ -175,7 +207,7 @@ public class TyckTillController {
         }
         // 1: check if customCategory
         if (customCategory.getName().equals(userFeedback.getCaseCategory())) {
-            List<String> caseSubCategoryList = userFeedback.getCaseSubCategory();
+            List<String> caseSubCategoryList = userFeedback.getCaseSubCategories();
             // 2: check if single selection - else defaultContact
             if (caseSubCategoryList == null || caseSubCategoryList.size() != 1) {
                 return customCategory.getDefaultContact();

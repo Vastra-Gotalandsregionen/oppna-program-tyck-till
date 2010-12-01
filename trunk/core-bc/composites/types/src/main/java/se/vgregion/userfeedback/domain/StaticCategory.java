@@ -2,9 +2,9 @@ package se.vgregion.userfeedback.domain;
 
 import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * This action do that and that, if it has something special it is.
@@ -12,28 +12,32 @@ import java.util.List;
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 public class StaticCategory extends AbstractEntity<Long> {
-
     private Long id;
 
-    private String category;
+    private String name;
 
-    private List<String> subCategories;
+    private Map<Long, String> subCategories;
 
-    public StaticCategory(Long id, String category, String... subCategories) {
+    public StaticCategory(Long id, String name, String... subCategories) {
         this.id = id;
-        this.category = category;
+        this.name = name;
         if (subCategories == null) {
-            this.subCategories = Collections.emptyList();
+            this.subCategories = Collections.emptyMap();
         } else {
-            this.subCategories = Collections.unmodifiableList(Arrays.asList(subCategories));
+            Map<Long, String> temp = new TreeMap<Long, String>();
+            long i = 0;
+            for (String subCategory : subCategories) {
+                temp.put(i++, subCategory);
+            }
+            this.subCategories = Collections.unmodifiableMap(temp);
         }
     }
 
-    public String getCategory() {
-        return category;
+    public String getName() {
+        return name;
     }
 
-    public List<String> getSubCategories() {
+    public Map<Long, String> getSubCategories() {
         return subCategories;
     }
 

@@ -1,30 +1,46 @@
 package se.vgregion.userfeedback.controllers;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import se.vgregion.userfeedback.domain.*;
-
-import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.NoResultException;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import se.vgregion.userfeedback.FeedbackReport;
+import se.vgregion.userfeedback.ReportBuilder;
+import se.vgregion.userfeedback.domain.Attachment;
+import se.vgregion.userfeedback.domain.AttachmentRepository;
+import se.vgregion.userfeedback.domain.CustomCategory;
+import se.vgregion.userfeedback.domain.CustomSubCategory;
+import se.vgregion.userfeedback.domain.FormTemplate;
+import se.vgregion.userfeedback.domain.FormTemplateRepository;
+import se.vgregion.userfeedback.domain.UserFeedback;
+import se.vgregion.userfeedback.domain.UserFeedbackRepository;
+
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 
 @Controller
-@RequestMapping(value = {"/KontaktaOss"})
+@RequestMapping(value = { "/KontaktaOss" })
 @SessionAttributes("userFeedback")
 public class TyckTillController {
     private String mainHeading = "Kontakta oss";
@@ -45,10 +61,8 @@ public class TyckTillController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String setupForm(@RequestParam(value = "formName", required = false) String formName,
-                            @RequestParam(value = "breadcrumb", required = false) String breadcrumb,
-                            ModelMap model) {
-
+    public String setupForm(@RequestParam(value = "formName", required = false) String formName, @RequestParam(
+            value = "breadcrumb", required = false) String breadcrumb, ModelMap model) {
 
         FormTemplate template = lookupFormTemplate(formName);
         model.addAttribute("template", template);
@@ -83,11 +97,13 @@ public class TyckTillController {
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String sendUserFeedback(@ModelAttribute("userFeedback") UserFeedback userFeedback,
-                                   @RequestParam("formTemplateId") Long formTemplateId,
-                                   MultipartHttpServletRequest multipartRequest,
-                                   SessionStatus status,
-                                   ModelMap model) {
+            @RequestParam("formTemplateId") Long formTemplateId, MultipartHttpServletRequest multipartRequest,
+            SessionStatus status, ModelMap model) {
         System.out.println("Sending...");
+
+        ReportBuilder builder = new ReportBuilder();
+        FeedbackReport report = builder.buildFeedbackReport(userFeedback, multipartRequest);
+        System.out.println("User agent data captured: " + report);
 
         for (Iterator<String> filenameIterator = multipartRequest.getFileNames(); filenameIterator.hasNext();) {
             String fileName = filenameIterator.next();
@@ -148,7 +164,9 @@ public class TyckTillController {
     }
 
     private void processAttachment(MultipartFile file, UserFeedback userFeedback) {
-        if (file.isEmpty()) return;
+        if (file.isEmpty()) {
+            return;
+        }
 
         Collection<Attachment> attachments = userFeedback.getAttachments();
         try {
@@ -158,11 +176,11 @@ public class TyckTillController {
 
             System.out.println(file.getOriginalFilename());
 
-//            attachmentRepository.persist(attachment);
+            // attachmentRepository.persist(attachment);
 
             attachments.add(attachment);
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); // To change body of catch statement use File | Settings | File Templates.
         }
     }
 }

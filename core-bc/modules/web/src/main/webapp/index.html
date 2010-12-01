@@ -28,7 +28,26 @@
                         $("#modalIFrame").attr('src', url);
                         return false;
                     });
+            loadjscssfile("style/alternateStyle.css", "css") ;
         });
+        
+        function loadjscssfile(filename, filetype){
+        	 if (filetype=="js"){ //if filename is a external JavaScript file
+        	  var fileref=document.createElement('script')
+        	  fileref.setAttribute("type","text/javascript")
+        	  fileref.setAttribute("src", filename)
+        	 }
+        	 else if (filetype=="css"){ //if filename is an external CSS file
+        	  var fileref=document.createElement("link")
+        	  fileref.setAttribute("rel", "stylesheet")
+        	  fileref.setAttribute("type", "text/css")
+        	  fileref.setAttribute("href", filename)
+        	 }
+        	 if (typeof fileref!="undefined")
+        		  document.getElementsByTagName("head")[0].appendChild(fileref)
+         }
+
+
     </script>
 </head>
 <body>
@@ -36,7 +55,7 @@
 <div>
 Hej
     <a id="goToPage" href="index.html#">Kontakta oss!</a>
-    <div id="modalDiv"><iframe id="modalIFrame" width="100%" height="95%" marginWidth="0" marginHeight="0" frameBorder="0"
+    <div id="modalDiv"><iframe id="modalIFrame" width="100%" height="98%" marginWidth="0" marginHeight="0" frameBorder="0"
                 scrolling="no"></iframe></div>
     
     <div>

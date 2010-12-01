@@ -38,5 +38,6 @@
     <constructor-arg ref="pivotalTrackerProperties"/>
   </bean>
 
+  <bean id="platformDataService" class="se.vgregion.userfeedback.impl.PlatformDataServiceImpl" />
 
 </beans>

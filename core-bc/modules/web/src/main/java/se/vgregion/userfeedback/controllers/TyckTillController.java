@@ -120,30 +120,9 @@ public class TyckTillController {
 //        FeedbackReport report = builder.buildFeedbackReport(userFeedback, multipartRequest);
 //        logger.debug("User agent data captured: " + report);
 
-        for (Iterator<String> filenameIterator = multipartRequest.getFileNames(); filenameIterator.hasNext();) {
-            String fileName = filenameIterator.next();
+        processUserfeedback(userFeedback, formTemplateId, multipartRequest);
 
-            processAttachment(multipartRequest.getFile(fileName), userFeedback);
-        }
-
-        logger.debug("attachmentSize: " + userFeedback.getAttachments().size());
-
-        for (Map.Entry<String, Object> entry : model.entrySet()) {
-            System.out.println("Entry: " + entry.getKey());
-        }
-
-        FormTemplate template = formTemplateRepository.find(formTemplateId);
-        // Lookup CaseCategory
-        String caseCategory = lookupCaseCategory(userFeedback, template);
-        userFeedback.setCaseCategory(caseCategory);
-
-        // TODO: Lookup CaseSubCategory
-        List<String> caseSubCategories = lookupCaseSubCategory(userFeedback, template);
-        userFeedback.setCaseSubCategories(caseSubCategories);
-
-        // Lookup CaseContact
-        String caseContact = lookupCaseContact(userFeedback, template);
-        userFeedback.setCaseContact(caseContact);
+        log(userFeedback, model);
 
         // Log UserFeedback in db
         if (userFeedback.getId() == null) {
@@ -155,6 +134,28 @@ public class TyckTillController {
         status.setComplete();
 
         return "Tacksida";
+    }
+
+    private void processUserfeedback(UserFeedback userFeedback, Long formTemplateId, MultipartHttpServletRequest multipartRequest) {
+        // 1: Lookup Attachments
+        for (Iterator<String> filenameIterator = multipartRequest.getFileNames(); filenameIterator.hasNext();) {
+            String fileName = filenameIterator.next();
+
+            processAttachment(multipartRequest.getFile(fileName), userFeedback);
+        }
+
+        FormTemplate template = formTemplateRepository.find(formTemplateId);
+        // 2: Lookup CaseCategory
+        String caseCategory = lookupCaseCategory(userFeedback, template);
+        userFeedback.setCaseCategory(caseCategory);
+
+        // 3: Lookup CaseSubCategory
+        List<String> caseSubCategories = lookupCaseSubCategory(userFeedback, template);
+        userFeedback.setCaseSubCategories(caseSubCategories);
+
+        // 4: Lookup CaseContact
+        String caseContact = lookupCaseContact(userFeedback, template);
+        userFeedback.setCaseContact(caseContact);
     }
 
     private String lookupCaseCategory(UserFeedback userFeedback, FormTemplate template) {
@@ -243,6 +244,16 @@ public class TyckTillController {
             attachments.add(attachment);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    private void log(UserFeedback userFeedback, ModelMap model) {
+        if (!logger.isDebugEnabled()) return;
+
+        logger.debug("attachmentSize: " + userFeedback.getAttachments().size());
+
+        for (Map.Entry<String, Object> entry : model.entrySet()) {
+            logger.debug("Entry: " + entry.getKey());
         }
     }
 }

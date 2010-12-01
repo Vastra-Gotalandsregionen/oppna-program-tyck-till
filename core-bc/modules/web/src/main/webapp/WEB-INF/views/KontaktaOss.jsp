@@ -38,11 +38,11 @@
                 <form:radiobutton id="contentCase"
                                   path="staticCaseCategoryId"
                                   value="${contentCategory.id}"
-                                  label="${contentCategory.category}"/><br/>
+                                  label="${contentCategory.name}"/><br/>
 
                 <div id="contentSubCase" class="subselect">
                     <form:checkboxes cssClass="checkbox"
-                                     path="caseSubCategory"
+                                     path="caseSubCategoryIds"
                                      items="${contentCategory.subCategories}"
                                      delimiter="<br/>"/>
                 </div>
@@ -51,11 +51,11 @@
                 <form:radiobutton id="functionCase"
                                   path="staticCaseCategoryId"
                                   value="${functionCategory.id}"
-                                  label="${functionCategory.category}"/><br/>
+                                  label="${functionCategory.name}"/><br/>
 
                 <div id="functionSubCase" class="subselect">
                     <form:checkboxes cssClass="checkbox"
-                                     path="caseSubCategory"
+                                     path="caseSubCategoryIds"
                                      items="${functionCategory.subCategories}"
                                      delimiter="<br/>"/>
                 </div>
@@ -64,14 +64,14 @@
             <div id="customCategory" class="${template.showCustom ? 'show' : 'hide'}">
                 <form:radiobutton id="customCase"
                                   path="customCaseCategoryId"
-                                  value="${template.customCategory.name}"
+                                  value="${template.customCategory.id}"
                                   label="${template.customCategory.name}"/><br/>
 
                 <div id="customSubCase" class="subselect">
-                    <form:radiobuttons path="caseSubCategory"
+                    <form:radiobuttons path="caseSubCategoryIds"
                                        items="${template.customCategory.customSubCategories}"
+                                       itemValue="id"
                                        itemLabel="name"
-                                       itemValue="name"
                                        delimiter="<br/>"/>
                 </div>
             </div>
@@ -80,7 +80,14 @@
                 <form:radiobutton id="otherCase"
                                   path="staticCaseCategoryId"
                                   value="${otherCategory.id}"
-                                  label="${otherCategory.category}"/>
+                                  label="${otherCategory.name}"/>
+
+                <div id="otherSubCase" class="subselect">
+                    <form:checkboxes cssClass="checkbox"
+                                     path="caseSubCategoryIds"
+                                     items="${otherCategory.subCategories}"
+                                     delimiter="<br/>"/>
+                </div>
             </div>
         </div>
 

@@ -19,27 +19,11 @@
 
 package se.vgregion.userfeedback.domain;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
 import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * This class represents a feedback instance.
@@ -66,7 +50,13 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     private String userPhonenumber;
     private String userName;
 
+    @Transient
+    private Long staticCaseCategoryId;
+    @Transient
+    private Long customCaseCategoryId;
+
     private String caseCategory;
+
     @ElementCollection
     private List<String> caseSubCategory;
     private String caseContact;
@@ -136,6 +126,22 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
 
     public void setAttachScreenDump(boolean attachScreenDump) {
         this.attachScreenDump = attachScreenDump;
+    }
+
+    public Long getStaticCaseCategoryId() {
+        return staticCaseCategoryId;
+    }
+
+    public void setStaticCaseCategoryId(Long staticCaseCategoryId) {
+        this.staticCaseCategoryId = staticCaseCategoryId;
+    }
+
+    public Long getCustomCaseCategoryId() {
+        return customCaseCategoryId;
+    }
+
+    public void setCustomCaseCategoryId(Long customCaseCategoryId) {
+        this.customCaseCategoryId = customCaseCategoryId;
     }
 
     public String getCaseCategory() {

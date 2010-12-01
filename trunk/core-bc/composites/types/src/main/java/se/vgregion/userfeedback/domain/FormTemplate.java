@@ -61,18 +61,6 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private CustomCategory customCategory = new CustomCategory();
 
-    @Transient
-    private StaticCategory contentCategory = new StaticCategory("Webbplatsens innehåll",
-            "Saknar innehåll", "Fel innehåll", "Hittar inte information" );
-
-    @Transient
-    private StaticCategory functionCategory = new StaticCategory("Webbplatsens funktion",
-            "Sidan finns inte", "Felmeddelande", "Sidan laddas inte", "Förstår inte funktionen");
-
-    @Transient
-    private StaticCategory otherCategory = new StaticCategory("Övrigt");
-
-
     @Override
     public Long getId() {
         return id;
@@ -188,17 +176,5 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
 
     public void setCustomCategory(CustomCategory customCategory) {
         this.customCategory = customCategory;
-    }
-
-    public StaticCategory getContentCategory() {
-        return contentCategory;
-    }
-
-    public StaticCategory getFunctionCategory() {
-        return functionCategory;
-    }
-
-    public StaticCategory getOtherCategory() {
-        return otherCategory;
     }
 }

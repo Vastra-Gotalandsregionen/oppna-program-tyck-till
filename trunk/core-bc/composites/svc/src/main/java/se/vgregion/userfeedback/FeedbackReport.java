@@ -156,6 +156,7 @@ public class FeedbackReport {
                     throw new RuntimeException("Unrecognized use contact option");
             }
         }
+        sb.append(NEWLINE);
 
         if (this.getScreenShots() != null) {
             List<se.vgregion.userfeedback.Screenshot> files = this.getScreenShots();

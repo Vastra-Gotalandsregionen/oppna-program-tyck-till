@@ -1,5 +1,7 @@
 package se.vgregion.userfeedback;
 
+import java.util.Date;
+
 /**
  * This class carries data about the user platform. It would typically be populated with information from the
  * user's HTTP request headers.
@@ -12,7 +14,7 @@ public class PlatformData {
     private String userId;
     private String browser;
     private String operatingSystem;
-    private String timeStamp;
+    private Date timeStamp;
     private String ipAddress;
     private String referer;
 
@@ -40,11 +42,11 @@ public class PlatformData {
         this.operatingSystem = operatingSystem;
     }
 
-    public String getTimeStamp() {
+    public Date getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
+    public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
     }
 

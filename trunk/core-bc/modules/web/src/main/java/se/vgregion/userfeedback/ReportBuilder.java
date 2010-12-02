@@ -2,16 +2,14 @@ package se.vgregion.userfeedback;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.vgregion.userfeedback.FeedbackReport.ReportMethod;
-import se.vgregion.userfeedback.FeedbackReport.UserContactMethod;
 import se.vgregion.userfeedback.domain.PlatformData;
+import se.vgregion.userfeedback.domain.UserContact;
 import se.vgregion.userfeedback.domain.UserFeedback;
 
 /**
@@ -35,7 +33,7 @@ public class ReportBuilder {
 
     private FeedbackMessage message = null;
     private PlatformData userPlatform = null;
-    private Map<UserContactMethod, Object> userContactOptions = null;
+    private List<UserContact> userContactOptions = null;
     private List<ReportMethod> reportMethods = null;
 
     /**
@@ -74,21 +72,12 @@ public class ReportBuilder {
      */
     private void setUserContactMethods(UserFeedback feedbackForm) {
 
-        Map<UserContactMethod, Object> contactMethods = new TreeMap<FeedbackReport.UserContactMethod, Object>();
+        List<UserContact> contactOptions = new ArrayList<UserContact>();
+        UserContact contact = feedbackForm.getUserContact();
 
         // Change this to a loop if several contact options should be chosen
-        UserFeedback.UserContactOption option = feedbackForm.getContactOption();
-        switch (option) {
-            case email:
-                contactMethods.put(UserContactMethod.byEmail, feedbackForm.getUserEmail());
-                break;
-            case telephone:
-                contactMethods.put(UserContactMethod.byPhone, feedbackForm.getUserPhonenumber());
-                break;
-            default:
-                break;
-        }
-        this.userContactOptions = contactMethods;
+        contactOptions.add(contact);
+        this.userContactOptions = contactOptions;
     }
 
     private void setReportMethods(UserFeedback feedbackForm) {

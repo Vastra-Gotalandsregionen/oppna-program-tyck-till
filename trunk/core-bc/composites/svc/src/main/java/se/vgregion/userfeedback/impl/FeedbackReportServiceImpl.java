@@ -40,6 +40,7 @@ import se.vgregion.usdservice.USDService;
 import se.vgregion.userfeedback.FeedbackReport;
 import se.vgregion.userfeedback.FeedbackReportService;
 import se.vgregion.userfeedback.IncidentReport;
+import se.vgregion.userfeedback.domain.UserContact;
 import se.vgregion.util.EMailClient;
 
 /**
@@ -131,7 +132,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
                 files.add(new File(s.getPath()));
                 filenames.add(s.getFileName());
             }
-            usdService.createRequest(parameters, report.getMessage().getUserId(), files, filenames);
+            usdService.createRequest(parameters, report.getUserPlatform().getUserId(), files, filenames);
         } catch (Exception e) {
             LOGGER.error("USD service could not be reached, trying email instead.", e);
             try {
@@ -262,12 +263,8 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         p.setProperty("urgency", "urg:1100");
         p.setProperty("z_location", "loc:67F817D782E87B45A8298FC5512B6A9C");
         p.setProperty("z_organization", "org:5527E3F8D19F49409036F162493C7DD0");
-        if (report.getUserContactMethod().containsKey(FeedbackReport.UserContactMethod.byPhone)) {
-            p.setProperty("z_telefon_nr", report.getUserContactMethod().get(
-                    FeedbackReport.UserContactMethod.byPhone).toString());
-        } else {
-            p.setProperty("z_telefon_nr", "N/A");
-        }
+        p.setProperty("z_telefon_nr", lookupPhonenumber(report));
+
         StringBuffer descBuf = new StringBuffer();
         descBuf.append(report.toString() + "\n");
         p.setProperty("description", descBuf.toString());
@@ -280,5 +277,16 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
             result = applicationName;
         }
         return result;
+    }
+
+    private String lookupPhonenumber(FeedbackReport report) {
+        // Fetch user phone number
+        String userPhonenumber = "N/A";
+        for (UserContact contact : report.getUserContactMethod()) {
+            if (contact.getContactOption() == UserContact.UserContactOption.telephone) {
+                userPhonenumber = contact.getContactMethod();
+            }
+        }
+        return userPhonenumber;
     }
 }

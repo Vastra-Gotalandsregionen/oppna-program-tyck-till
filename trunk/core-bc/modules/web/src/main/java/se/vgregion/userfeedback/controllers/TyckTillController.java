@@ -159,11 +159,11 @@ public class TyckTillController {
     }
 
     private String lookupCaseCategory(UserFeedback userFeedback, FormTemplate template) {
-        if (userFeedback.getCustomCaseCategoryId() != null) {
+        if (userFeedback.getCaseCategoryId() > 0) {
             return template.getCustomCategory().getName();
         }
 
-        return staticCategoryRepository.find(userFeedback.getStaticCaseCategoryId()).getName();
+        return staticCategoryRepository.find(userFeedback.getCaseCategoryId()).getName();
     }
 
     private List<String> lookupCaseSubCategory(UserFeedback userFeedback, FormTemplate template) {
@@ -172,7 +172,7 @@ public class TyckTillController {
             return subCategories;
         }
 
-        if (userFeedback.getCustomCaseCategoryId() != null) {
+        if (userFeedback.getCaseCategoryId() > 0) {
             CustomCategory customCategory = template.getCustomCategory();
             for (Long subCategoryId : userFeedback.getCaseSubCategoryIds()) {
                 for (CustomSubCategory subCategory : customCategory.getCustomSubCategories()) {
@@ -185,7 +185,7 @@ public class TyckTillController {
             return subCategories;
         }
 
-        StaticCategory category = staticCategoryRepository.find(userFeedback.getStaticCaseCategoryId());
+        StaticCategory category = staticCategoryRepository.find(userFeedback.getCaseCategoryId());
         for (Long subCategoryId : userFeedback.getCaseSubCategoryIds()) {
             for (Map.Entry<Long,String> subCategoryEntry : category.getSubCategories().entrySet()) {
                 if (subCategoryId.equals(subCategoryEntry.getKey())) {

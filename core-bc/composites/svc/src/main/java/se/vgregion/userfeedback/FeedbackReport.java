@@ -21,9 +21,9 @@ package se.vgregion.userfeedback;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import se.vgregion.userfeedback.domain.PlatformData;
+import se.vgregion.userfeedback.domain.UserContact;
 
 public class FeedbackReport {
     public static final String NEWLINE = "\n";
@@ -40,7 +40,7 @@ public class FeedbackReport {
     }
 
     private List<ReportMethod> reportMethods;
-    private Map<UserContactMethod, Object> userContactMethods;
+    private List<UserContact> userContactMethods;
     private List<Screenshot> screenShots = new ArrayList<Screenshot>();
     private FeedbackMessage message;
     private PlatformData userPlatform;
@@ -49,7 +49,7 @@ public class FeedbackReport {
      * Public constructor for the class.
      */
     public FeedbackReport(FeedbackMessage message, List<ReportMethod> reportMethods,
-            Map<UserContactMethod, Object> contactMethods, PlatformData platform) {
+            List<UserContact> contactMethods, PlatformData platform) {
         this.message = message;
         this.reportMethods = reportMethods;
         this.userContactMethods = contactMethods;
@@ -69,7 +69,7 @@ public class FeedbackReport {
      * 
      * @return
      */
-    public Map<UserContactMethod, Object> getUserContactMethod() {
+    public List<UserContact> getUserContactMethod() {
         return userContactMethods;
     }
 
@@ -142,17 +142,14 @@ public class FeedbackReport {
         }
 
         sb.append("- Användaren vill ha feedback via: ");
-        for (Map.Entry<UserContactMethod, Object> entry : userContactMethods.entrySet()) {
-            sb.append(entry.getKey());
-            switch (entry.getKey()) {
-                case byEmail:
-                    sb.append("- Användaren email: " + entry.getValue() + NEWLINE);
+        for (UserContact method : userContactMethods) {
+            sb.append(method.getContactOption().getLabel());
+            switch (method.getContactOption()) {
+                case email:
+                    sb.append("- Användaren email: " + method.getContactMethod() + NEWLINE);
                     break;
-                case byPhone:
-                    sb.append("- Användaren telefon: " + entry.getValue() + NEWLINE);
-                    break;
-                case bySMS:
-                    sb.append("- Användaren SMS: " + entry.getValue() + NEWLINE);
+                case telephone:
+                    sb.append("- Användaren telefon: " + method.getContactMethod() + NEWLINE);
                     break;
                 default:
                     throw new RuntimeException("Unrecognized use contact option");
@@ -177,10 +174,6 @@ public class FeedbackReport {
         sb.append("- Referer: " + userPlatform.getReferer() + NEWLINE);
         sb.append("- Timestamp: " + userPlatform.getTimeStamp() + NEWLINE);
 
-        sb.append(NEWLINE + "Valt rapporteringsätt för applikationen: ");
-        for (UserContactMethod method : userContactMethods.keySet()) {
-            sb.append(method + ", ");
-        }
         sb.append(NEWLINE);
         sb.append("Email till applikationsansvarig: " + this.getReportEmail() + NEWLINE);
         return sb.toString();

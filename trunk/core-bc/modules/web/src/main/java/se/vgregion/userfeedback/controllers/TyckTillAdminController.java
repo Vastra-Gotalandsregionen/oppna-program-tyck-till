@@ -8,10 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import se.vgregion.userfeedback.domain.CustomCategory;
-import se.vgregion.userfeedback.domain.CustomSubCategory;
-import se.vgregion.userfeedback.domain.FormTemplate;
-import se.vgregion.userfeedback.domain.FormTemplateRepository;
+import se.vgregion.userfeedback.domain.*;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -26,6 +23,9 @@ public class TyckTillAdminController {
 
     @Autowired
     private FormTemplateRepository formTemplateRepository;
+
+    @Autowired
+    private StaticCategoryRepository staticCategoryRepository;
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/KontaktaOss/TemplateList")
@@ -52,6 +52,7 @@ public class TyckTillAdminController {
         }
         model.addAttribute("formTemplate", template);
 
+        // expose CustomSubCategories
         CustomCategory customCategory = template.getCustomCategory();
         if (customCategory == null) {
             customCategory = new CustomCategory();
@@ -63,10 +64,16 @@ public class TyckTillAdminController {
             subCategories = new ArrayList<CustomSubCategory>();
             customCategory.setCustomSubCategories(subCategories);
         }
-        for (int i = 0; i < 3; i++) {
-            subCategories.add(new CustomSubCategory());
-        }
-        model.addAttribute("subCategories", subCategories);
+        model.addAttribute("customSubCategories", subCategories);
+
+        // expose StaticCategories
+        StaticCategory contentCategory = staticCategoryRepository.find(StaticCategoryRepository.STATIC_CONTENT_CATEGORY);
+        StaticCategory functionCategory = staticCategoryRepository.find(StaticCategoryRepository.STATIC_FUNCTION_CATEGORY);
+        StaticCategory otherCategory = staticCategoryRepository.find(StaticCategoryRepository.STATIC_OTHER_CATEGORY);
+        model.addAttribute("contentCategory", contentCategory);
+        model.addAttribute("functionCategory", functionCategory);
+        model.addAttribute("otherCategory", otherCategory);
+
 
         return "KontaktaOssTemplateEdit";
     }

@@ -24,7 +24,7 @@
     <div class="leadtext">${template.description}</div>
 
     <form:form commandName="userFeedback" enctype="multipart/form-data">
-        <input type="hidden" id="formTemplateId" name="formTemplateId" value="${template.id}" />
+        <input type="hidden" id="formTemplateId" name="formTemplateId" value="${template.id}"/>
 
         <div class="breadcrumb">
             <form:hidden path="breadcrumb"/>
@@ -105,30 +105,27 @@
         <div class="${template.showContact ? 'show' : 'hide'}">
             <div>
                 <span></span>
-                <form:checkbox id="shouldContactUser" path="shouldContactUser" label="Jag vill ha svar"/><br/>
+                <form:checkbox id="shouldContactUser" path="userContact.shouldContactUser"
+                               label="Jag vill ha svar"/><br/>
 
                 <div id="contactInfo" class="subselect">
                     <div class="${(template.showContactByEmail && template.showContactByPhone) ? 'show' : 'hide'}">
                         <form:radiobuttons id="contactOption"
-                                           path="contactOption"
+                                           path="userContact.contactOption"
                                            items="${contactOptions}"
-                                           cssClass="contactOptionClass" />
+                                           cssClass="contactOptionClass"/>
                     </div>
 
                     <div>
                         <span style="float:left">
                             <span>Ditt namn</span>
-                            <form:input path="userName" />
+                            <form:input path="userContact.userName"/>
                         </span>
 
-                        <span style="float: left;" class="${(template.showContactByEmail && !template.showContactByPhone) ? 'show' : 'contact-mail'}">
-                            <span>Din e-postadress</span>
-                            <form:input path="userEmail" />
-                        </span>
-
-                        <span style="float: left;" class="${(!template.showContactByEmail && template.showContactByPhone) ? 'show' : 'contact-phone'}">
-                            <span>Ditt telefonnummer</span>
-                            <form:input path="userPhonenumber" />
+                        <span style="float: left;">
+                            <span style="float: left; padding-top: 3px;" class="${(template.showContactByEmail && !template.showContactByPhone) ? 'show' : 'contact-mail'}">Din e-postadress</span>
+                            <span style="float: left; padding-top: 3px;" class="${(!template.showContactByEmail && template.showContactByPhone) ? 'show' : 'contact-phone'}">Ditt telefonnummer</span>
+                            <span style="float: left;" class="${(!template.showContactByEmail || !template.showContactByPhone) ? 'show' : 'contact-method-input'}"><form:input path="userContact.contactMethod"/></span>
                         </span>
                     </div>
                 </div>
@@ -136,7 +133,7 @@
         </div>
 
         <div><br/></div>
-        
+
         <div class="${template.showAttachment ? 'show' : 'hide'}">
             <div>
                 <span>Bifoga en skärmdump, så vi kan se det du ser</span><br/>

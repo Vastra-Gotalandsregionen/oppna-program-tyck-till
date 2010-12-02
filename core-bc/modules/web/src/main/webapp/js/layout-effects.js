@@ -45,6 +45,7 @@ function initForm() {
     jQuery('.subselect').hide();
     jQuery('.contact-mail').hide();
     jQuery('.contact-phone').hide();
+    jQuery('.contact-method-input').hide();
     jQuery('#attachmentDetail').hide();
 
 }
@@ -90,20 +91,22 @@ function hideShowContactUserOptions(value) {
 
 function addEventToContactOption() {
     // Actions
-    jQuery("input[name='contactOption']").change(function() {
+    jQuery("input[name='userContact.contactOption']").change(function() {
         switch (this.value) {
             case 'email':
                 jQuery('.contact-mail').show();
+                jQuery('.contact-method-input').show();
                 jQuery('.contact-phone').hide();
                 break;
             case 'telephone':
                 jQuery('.contact-mail').hide();
+                jQuery('.contact-method-input').show();
                 jQuery('.contact-phone').show();
                 break;
             default:
                 jQuery('.contact-mail').hide('fast');
                 jQuery('.contact-phone').hide('fast');
-
+                jQuery('.contact-method-input').hide('fast');
         }
     });
 }

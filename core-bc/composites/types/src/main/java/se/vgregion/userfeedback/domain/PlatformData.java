@@ -1,14 +1,11 @@
 package se.vgregion.userfeedback.domain;
 
-import java.util.Date;
+import se.vgregion.dao.domain.patterns.valueobject.AbstractValueObject;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
+import java.util.Date;
 
 /**
  * This class carries data about the user platform. It would typically be populated with information from the
@@ -17,12 +14,9 @@ import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
  * @author Arakun
  * 
  */
-@Entity
-public class PlatformData extends AbstractEntity<Long> {
+@Embeddable
+public class PlatformData extends AbstractValueObject<PlatformData> {
 
-    @Id
-    @GeneratedValue
-    private Long id;
     private String userId;
     private String browser;
     private String operatingSystem;
@@ -32,11 +26,6 @@ public class PlatformData extends AbstractEntity<Long> {
     private String forwardedIpAddress;
 
     private String referer;
-
-    @Override
-    public Long getId() {
-        return this.id;
-    }
 
     public String getUserId() {
         return userId;

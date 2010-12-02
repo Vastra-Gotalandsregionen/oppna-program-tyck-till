@@ -39,21 +39,17 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     @GeneratedValue
     private Long id;
 
-    private boolean shouldContactUser;
-
     private String breadcrumb;
 
     /* User contact options */
-    @Enumerated(EnumType.STRING)
-    private UserContactOption contactOption;
-    private String userEmail;
-    private String userPhonenumber;
-    private String userName;
+    @Embedded
+    private UserContact userContact;
 
     private String caseCategory;
 
     @ElementCollection
     private List<String> caseSubCategories;
+
     private String caseContact;
 
     /* Message */
@@ -66,7 +62,7 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     @JoinColumn(name = "USERFEEDBACK_ID")
     private Set<Attachment> attachments = new HashSet<Attachment>();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @Embedded
     private PlatformData platformData;
 
     @Transient
@@ -79,46 +75,6 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
         return id;
     }
 
-    /**
-     * List of ways user can be contacted.
-     */
-    public enum UserContactOption {
-        email("e-post"), telephone("Telefon");
-
-        private String label;
-
-        private UserContactOption(String label) {
-            this.label = label;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        /* Helper functions to map between enum names and labels */
-        private static Map<UserContactOption, String> labelMap;
-
-        static {
-            labelMap = new TreeMap<UserContactOption, String>(new Comparator<UserContactOption>() {
-                @Override
-                public int compare(UserContactOption c1, UserContactOption c2) {
-                    return c1.ordinal() - c2.ordinal();
-                }
-            });
-            for (UserContactOption c : UserContactOption.values()) {
-                labelMap.put(c, c.label);
-            }
-        }
-
-        /**
-         * Get a map linking human friendly labels to the enum constant names.
-         * 
-         * @return .
-         */
-        public static Map<UserContactOption, String> getLabelMap() {
-            return labelMap;
-        }
-    }
 
     public boolean isAttachScreenDump() {
         return attachScreenDump;
@@ -168,14 +124,6 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
         this.attachments = attachments;
     }
 
-    public boolean isShouldContactUser() {
-        return shouldContactUser;
-    }
-
-    public void setShouldContactUser(boolean shouldContactUser) {
-        this.shouldContactUser = shouldContactUser;
-    }
-
     public String getBreadcrumb() {
         return breadcrumb;
     }
@@ -184,36 +132,12 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
         this.breadcrumb = breadcrumb;
     }
 
-    public UserContactOption getContactOption() {
-        return contactOption;
+    public UserContact getUserContact() {
+        return userContact;
     }
 
-    public void setContactOption(UserContactOption contactOption) {
-        this.contactOption = contactOption;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getUserPhonenumber() {
-        return userPhonenumber;
-    }
-
-    public void setUserPhonenumber(String userPhonenumber) {
-        this.userPhonenumber = userPhonenumber;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserContact(UserContact userContact) {
+        this.userContact = userContact;
     }
 
     public PlatformData getPlatformData() {

@@ -80,7 +80,7 @@ public class TyckTillController {
         }
         userFeedback.setBreadcrumb(breadcrumb);
 
-        model.addAttribute("contactOptions", UserFeedback.UserContactOption.getLabelMap());
+        model.addAttribute("contactOptions", UserContact.UserContactOption.getLabelMap());
 
         return "KontaktaOss";
 
@@ -159,6 +159,10 @@ public class TyckTillController {
     }
 
     private String lookupCaseCategory(UserFeedback userFeedback, FormTemplate template) {
+        if (userFeedback.getCaseCategoryId() == null) {
+            return "";
+        }
+
         if (userFeedback.getCaseCategoryId() > 0) {
             return template.getCustomCategory().getName();
         }

@@ -31,10 +31,6 @@ public class FeedbackReport {
     /* e-postadress till applikationsansvarig */
     private String reportEmail;
 
-    public enum UserContactMethod {
-        bySMS, byPhone, byEmail
-    }
-
     public enum ReportMethod {
         usd, email, pivotal
     }

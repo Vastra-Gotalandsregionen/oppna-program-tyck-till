@@ -1,6 +1,7 @@
 package se.vgregion.userfeedback.impl;
 
 import java.util.Date;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,7 @@ public class PlatformDataServiceImpl implements PlatformDataService {
 
     private static final String USER_AGENT_HEADER = "User-Agent";
     private static final String REFERER_HEADER = "Referer";
+    public static final String HEADER_X_FORWARDED_FOR = "x-forwarded-for";
 
     /**
      * Map header data in an HTTP request to a corresponding {@code PlatformData} object.
@@ -25,6 +27,7 @@ public class PlatformDataServiceImpl implements PlatformDataService {
         PlatformData platform = new PlatformData();
         String userAgent = request.getHeader(USER_AGENT_HEADER);
         String referer = request.getHeader(REFERER_HEADER);
+        String forwardedIpAddress = getRemoteIpAddress(request);
         Date timeStamp = new Date(); // Capture current time, not User's time.
 
         platform.setBrowser(UserAgentUtils.getBrowser(userAgent));
@@ -32,8 +35,32 @@ public class PlatformDataServiceImpl implements PlatformDataService {
         platform.setTimeStamp(timeStamp);
         platform.setReferer(referer);
         platform.setIpAddress(request.getRemoteAddr());
+        platform.setForwardedIpAddress(forwardedIpAddress);
         platform.setUserId(request.getRemoteUser());
 
         return platform;
+    }
+
+    /**
+     * Fix for Siteminder. Retrieves the original ip address of the user request if it has been stored in a
+     * {@code HEADER_X_FORWARDED_FOR} header.
+     * 
+     * @param request
+     *            .
+     * @return
+     */
+    private static String getRemoteIpAddress(HttpServletRequest request) {
+        StringBuilder ipAddress = new StringBuilder();
+
+        @SuppressWarnings("unchecked")
+        Enumeration<String> forwardedForEnum = request.getHeaders(HEADER_X_FORWARDED_FOR);
+        while (forwardedForEnum.hasMoreElements()) {
+            ipAddress.append(forwardedForEnum.nextElement()).append(" ");
+        }
+        if (ipAddress.length() == 0) {
+            ipAddress.append(request.getRemoteAddr()).append(" [Default]");
+        }
+
+        return ipAddress.toString().trim();
     }
 }

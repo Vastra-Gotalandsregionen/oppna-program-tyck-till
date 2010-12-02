@@ -1,5 +1,14 @@
 package se.vgregion.userfeedback.controllers;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.NoResultException;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,22 +17,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import se.vgregion.userfeedback.domain.*;
 
-import javax.persistence.NoResultException;
-import java.io.IOException;
-import java.util.*;
+import se.vgregion.userfeedback.FeedbackReport;
+import se.vgregion.userfeedback.FeedbackReportService;
+import se.vgregion.userfeedback.ReportBuilder;
+import se.vgregion.userfeedback.domain.Attachment;
+import se.vgregion.userfeedback.domain.AttachmentRepository;
+import se.vgregion.userfeedback.domain.CustomCategory;
+import se.vgregion.userfeedback.domain.CustomSubCategory;
+import se.vgregion.userfeedback.domain.FormTemplate;
+import se.vgregion.userfeedback.domain.FormTemplateRepository;
+import se.vgregion.userfeedback.domain.StaticCategory;
+import se.vgregion.userfeedback.domain.StaticCategoryRepository;
+import se.vgregion.userfeedback.domain.UserContact;
+import se.vgregion.userfeedback.domain.UserFeedback;
+import se.vgregion.userfeedback.domain.UserFeedbackRepository;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 
 @Controller
-@RequestMapping(value = {"/KontaktaOss"})
+@RequestMapping(value = { "/KontaktaOss" })
 @SessionAttributes("userFeedback")
 public class TyckTillController {
     private static final Logger logger = LoggerFactory.getLogger(TyckTillController.class);
@@ -40,35 +64,39 @@ public class TyckTillController {
     @Autowired
     private StaticCategoryRepository staticCategoryRepository;
 
+    @Autowired
+    private FeedbackReportService reportService;
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(CustomSubCategory.class, new CustomSubCategoryPropertyEditor());
     }
 
     /**
-     * Used to render the userFeedback form.
-     * Basic initialization before render-view.
-     *
-     * @param formName   - FormTemplate name. The request parameter "formName" decide how the form is rendered.
-     *                   It is an inparameter to give the client this choise.
-     * @param breadcrumb - client specific inparameter declaring from where the contact were initiated.
-     * @param model      - the normal Spring ModelMap.
+     * Used to render the userFeedback form. Basic initialization before render-view.
+     * 
+     * @param formName
+     *            - FormTemplate name. The request parameter "formName" decide how the form is rendered. It is an
+     *            inparameter to give the client this choise.
+     * @param breadcrumb
+     *            - client specific inparameter declaring from where the contact were initiated.
+     * @param model
+     *            - the normal Spring ModelMap.
      * @return - view to be rendered.
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String setupForm(@RequestParam(value = "formName", required = false) String formName,
-                            @RequestParam(value = "breadcrumb", required = false) String breadcrumb,
-                            ModelMap model) {
+    public String setupForm(@RequestParam(value = "formName", required = false) String formName, @RequestParam(
+            value = "breadcrumb", required = false) String breadcrumb, ModelMap model) {
 
         FormTemplate template = lookupFormTemplate(formName);
         model.addAttribute("template", template);
 
-        model.addAttribute("contentCategory",
-                staticCategoryRepository.find(StaticCategoryRepository.STATIC_CONTENT_CATEGORY));
-        model.addAttribute("functionCategory",
-                staticCategoryRepository.find(StaticCategoryRepository.STATIC_FUNCTION_CATEGORY));
-        model.addAttribute("otherCategory",
-                staticCategoryRepository.find(StaticCategoryRepository.STATIC_OTHER_CATEGORY));
+        model.addAttribute("contentCategory", staticCategoryRepository
+                .find(StaticCategoryRepository.STATIC_CONTENT_CATEGORY));
+        model.addAttribute("functionCategory", staticCategoryRepository
+                .find(StaticCategoryRepository.STATIC_FUNCTION_CATEGORY));
+        model.addAttribute("otherCategory", staticCategoryRepository
+                .find(StaticCategoryRepository.STATIC_OTHER_CATEGORY));
 
         UserFeedback userFeedback;
         if (!model.containsKey("userFeedback")) {
@@ -99,26 +127,31 @@ public class TyckTillController {
 
     /**
      * Action method to send Userfeedback.
-     *
-     * @param userFeedback     - form backing bean.
-     * @param formTemplateId   - FormTemplate used to render form, used for extracting CustomCategory configuration.
-     * @param multipartRequest - the http-request used for attachment upload and PlatformData extraction.
-     * @param status           - controls Session state.
-     * @param model            - the normal Spring ModelMap.
+     * 
+     * @param userFeedback
+     *            - form backing bean.
+     * @param formTemplateId
+     *            - FormTemplate used to render form, used for extracting CustomCategory configuration.
+     * @param multipartRequest
+     *            - the http-request used for attachment upload and PlatformData extraction.
+     * @param status
+     *            - controls Session state.
+     * @param model
+     *            - the normal Spring ModelMap.
      * @return - view to render.
      */
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String sendUserFeedback(@ModelAttribute("userFeedback") UserFeedback userFeedback,
-                                   @RequestParam("formTemplateId") Long formTemplateId,
-                                   MultipartHttpServletRequest multipartRequest,
-                                   SessionStatus status,
-                                   ModelMap model) {
+            @RequestParam("formTemplateId") Long formTemplateId, MultipartHttpServletRequest multipartRequest,
+            SessionStatus status, ModelMap model) {
         logger.info("Sending...");
 
-//        ReportBuilder builder = new ReportBuilder();
-//        FeedbackReport report = builder.buildFeedbackReport(userFeedback, multipartRequest);
-//        logger.debug("User agent data captured: " + report);
+        ReportBuilder builder = new ReportBuilder();
+        FeedbackReport report = builder.buildFeedbackReport(userFeedback, multipartRequest);
+        reportService.reportFeedback(report);
+
+        // logger.debug("User agent data captured: " + report);
 
         processUserfeedback(userFeedback, formTemplateId, multipartRequest);
 
@@ -136,7 +169,8 @@ public class TyckTillController {
         return "Tacksida";
     }
 
-    private void processUserfeedback(UserFeedback userFeedback, Long formTemplateId, MultipartHttpServletRequest multipartRequest) {
+    private void processUserfeedback(UserFeedback userFeedback, Long formTemplateId,
+            MultipartHttpServletRequest multipartRequest) {
         // 1: Lookup Attachments
         for (Iterator<String> filenameIterator = multipartRequest.getFileNames(); filenameIterator.hasNext();) {
             String fileName = filenameIterator.next();
@@ -191,7 +225,7 @@ public class TyckTillController {
 
         StaticCategory category = staticCategoryRepository.find(userFeedback.getCaseCategoryId());
         for (Long subCategoryId : userFeedback.getCaseSubCategoryIds()) {
-            for (Map.Entry<Long,String> subCategoryEntry : category.getSubCategories().entrySet()) {
+            for (Map.Entry<Long, String> subCategoryEntry : category.getSubCategories().entrySet()) {
                 if (subCategoryId.equals(subCategoryEntry.getKey())) {
                     subCategories.add(subCategoryEntry.getValue());
                 }
@@ -247,12 +281,14 @@ public class TyckTillController {
 
             attachments.add(attachment);
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); // To change body of catch statement use File | Settings | File Templates.
         }
     }
 
     private void log(UserFeedback userFeedback, ModelMap model) {
-        if (!logger.isDebugEnabled()) return;
+        if (!logger.isDebugEnabled()) {
+            return;
+        }
 
         logger.debug("attachmentSize: " + userFeedback.getAttachments().size());
 

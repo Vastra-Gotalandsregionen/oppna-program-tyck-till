@@ -11,117 +11,206 @@
 <head>
     <title>TyckTill - Administration</title>
 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#modalDiv").dialog({
+                modal: true,
+                autoOpen: false,
+                height: 600,
+                width: 600,
+                draggable: true,
+                resizeable: true,
+                title: 'Tyck till'
+            });
+            loadjscssfile("style/alternateStyle.css", "css") ;
+        });
+
+        function loadjscssfile(filename, filetype){
+        	 if (filetype=="js"){ //if filename is a external JavaScript file
+        	  var fileref=document.createElement('script')
+        	  fileref.setAttribute("type","text/javascript")
+        	  fileref.setAttribute("src", filename)
+        	 }
+        	 else if (filetype=="css"){ //if filename is an external CSS file
+        	  var fileref=document.createElement("link")
+        	  fileref.setAttribute("rel", "stylesheet")
+        	  fileref.setAttribute("type", "text/css")
+        	  fileref.setAttribute("href", filename)
+        	 }
+        	 if (typeof fileref!="undefined")
+        		  document.getElementsByTagName("head")[0].appendChild(fileref)
+        }
+
+        function openDialog(url) {
+            $("#modalDiv").dialog("open");
+            $("#modalIFrame").attr('src', url);
+            return false;
+        }
+
+
+    </script>
+
     <style type="text/css">
         <%@ include file="/style/style.css"%>
     </style>
+    <link rel="stylesheet" type="text/css" href="../../style/modalStyle.css" title="MyStyle">
 
 </head>
 <body>
-<h1>${formTemplate.id == null ? 'Add new template' : 'Edit template'}</h1>
+<h1>${formTemplate.id == null ? 'Skapa nytt kontakt formulär' : 'Ändra kontakt formulär'}</h1>
+
+<div id="modalDiv">
+    <iframe id="modalIFrame"
+            width="100%"
+            height="98%"
+            marginWidth="0"
+            marginHeight="0"
+            frameBorder="0"
+            scrolling="no">
+    </iframe>
+</div>
 
 <form:form commandName="formTemplate">
     <form:hidden path="id"/>
     <div class="prop">
-        <span class="name">Name:</span>
+        <span class="name">Formulärets namn</span>
         <span class="value"><form:input path="name" size="50"/></span>
         <span class="error"><form:errors path="name" htmlEscape="false" cssClass="errors"/></span>
     </div>
 
     <div class="prop">
-        <span class="name">Title:</span>
+        <span class="name">Titel</span>
         <span class="value"><form:input path="title" size="50"/></span>
         <span class="error"><form:errors path="title" htmlEscape="false" cssClass="errorBox"/></span>
     </div>
 
     <div class="prop">
-        <span class="name">Description:</span>
+        <span class="name">Inledning</span>
         <span class="value"><form:textarea htmlEscape="false" path="description" cols="50" rows="10"/></span>
         <span class="error"><form:errors path="description" htmlEscape="false"/></span>
     </div>
 
     <div>
-        <div>Optional parts of the form</div>
+        <span class="name">Konfigurera vilka delar av formuläret som skall visas</span>
 
+        <span class="value">
         <div class="prop">
-            <span class="name">Show content:</span>
-            <span class="value"><form:checkbox path="showContent"/></span>
-        </div>
-        <div class="prop">
-            <span class="name">Show function:</span>
-            <span class="value"><form:checkbox path="showFunction"/></span>
-        </div>
-        <div class="prop">
-            <span class="name">Show custom:</span>
-            <span class="value"><form:checkbox path="showCustom"/></span>
+            <span class="value"><form:checkbox path="showContent" label="Visa innehålls kategorin"/></span><br/>
 
-            <span>
-                <table>
-                    <tr>
-                        <th></th>
-                        <th>Category name</th>
-                        <th>Default contact</th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><form:input path="customCategory.name"/></td>
-                        <td><form:input path="customCategory.defaultContact"/></td>
-                    </tr>
-                    <tr>
-                        <th>Id</th>
-                        <th>SubCategory</th>
-                        <th>Contact</th>
-                    </tr>
-                    <c:forEach items="${subCategories}" var="subCategory" varStatus="loop" >
-                        <tr>
-                            <td>${subCategory.id}</td>
-                            <td>
-                                <input id="customCategory.customSubCategories[${loop.index}].name"
-                                       name="customCategory.customSubCategories[${loop.index}].name"
-                                       type="text" value="${subCategory.name}"/>
-                            </td>
-                            <td>
-                                <input id="customCategory.customSubCategories[${loop.index}].contact"
-                                       name="customCategory.customSubCategories[${loop.index}].contact"
-                                       type="text" value="${subCategory.contact}"/>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </span>
+            <ul>
+                <li><span class="category">${contentCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
+                <c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">
+                    <li><span class="subCategory">-- ${subCategory.value}</span></li>
+                </c:forEach>
+            </ul>
         </div>
         <div class="prop">
-            <span class="name">Show other:</span>
-            <span class="value"><form:checkbox path="showOther"/></span>
+            <span class="value"><form:checkbox path="showFunction" label="Visa funktions kategorin"/></span><br/>
+
+            <ul>
+                <li><span class="category">${functionCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
+                <c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">
+                    <li><span class="subCategory">-- ${subCategory.value}</span></li>
+                </c:forEach>
+            </ul>
         </div>
         <div class="prop">
-            <span class="name">Show contact:</span>
+            <span class="value"><form:checkbox path="showCustom" label="Visa en egen kategori"/></span>
+            <span class="value"><a href="#" onclick="javascript: openDialog('http://localhost:8080/tycktill/KontaktaOss');">Ändra</a></span><br/>
+
+            <ul>
+                <li><span class="category">${formTemplate.customCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
+                <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory"
+                           varStatus="loop">
+                    <li><span class="subCategory">-- ${subCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
+                </c:forEach>
+            </ul>
+        </div>
+        <div class="prop">
+            <span class="value"><form:checkbox path="showOther" label="Visa övrigt kategorin"/></span><br/>
+
+            <ul>
+                <li><span class="category">${otherCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
+                <c:forEach items="${otherCategory.subCategories}" var="subCategory" varStatus="loop">
+                    <li><span class="subCategory">-- ${subCategory.value}</span></li>
+                </c:forEach>
+            </ul>
+        </div>
+        <div class="prop">
             <span class="value">
-                <form:checkbox path="showContact" />
-                <form:checkbox path="showContactByEmail" label="By e-mail"/>
-                <form:checkbox path="showContactByPhone" label="By phone"/>
+                <form:checkbox path="showContact" label="Visa användar kontakt"/><br/>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Vilka alternativ skall användaren ges</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form:checkbox path="showContactByEmail"
+                                                                                     label="Kontakt via e-post"/><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form:checkbox path="showContactByPhone"
+                                                                                     label="Kontakt via telefon"/>
             </span>
         </div>
         <div class="prop">
-            <span class="name">Show attachment:</span>
-            <span class="value"><form:checkbox path="showAttachment"/></span>
+            <span class="value"><form:checkbox path="showAttachment"
+                                               label="Skall användaren ges möjligheten att ladda upp filer (tex. en skärmdump)"/></span>
         </div>
+        </span>
     </div>
 
     <div class="prop">
-        <span class="name">Backend:</span>
+        <span class="name">Backend</span>
         <span class="value">
-        <form:select path="backend">
-            <form:option value=""/>
-            <form:option value="USD"/>
-            <form:option value="Pivotaltracker"/>
-        </form:select>
+            <span class="name">USD</span>
+            <span class="value"><form:input path="defaultBackend.usd"/> (Ange projekt id)</span><br/>
+
+            <span class="name">PivotalTracker</span>
+            <span class="value"><form:input path="defaultBackend.pivotal"/> (Ange projekt id)</span><br/>
+
+            <span class="name">Grupp brevlåda</span>
+            <span class="value"><form:input path="defaultBackend.mbox"/> (Ange mail adress)</span>
         </span>
-        <span class="error"><form:errors path="backend" htmlEscape="false"/></span>
+        <span class="error"><form:errors path="defaultBackend" htmlEscape="false"/></span>
     </div>
 
     <div>
         <input type="submit"/>
     </div>
+
+    <hr/>
+
+    <br/>
+    <table>
+        <tr>
+            <th></th>
+            <th>Category name</th>
+            <th>Default contact</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td><form:input path="customCategory.name"/></td>
+            <td><form:input path="customCategory.defaultContact"/></td>
+        </tr>
+        <tr>
+            <th>Id</th>
+            <th>SubCategory</th>
+            <th>Contact</th>
+        </tr>
+        <c:forEach items="${customSubCategories}" var="subCategory" varStatus="loop">
+            <tr>
+                <td>${subCategory.id}</td>
+                <td>
+                    <input id="customCategory.customSubCategories[${loop.index}].name"
+                           name="customCategory.customSubCategories[${loop.index}].name"
+                           type="text" value="${subCategory.name}"/>
+                </td>
+                <td>
+                    <input id="customCategory.customSubCategories[${loop.index}].contact"
+                           name="customCategory.customSubCategories[${loop.index}].contact"
+                           type="text" value="${subCategory.contact}"/>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+
 </form:form>
 </body>
 </html>

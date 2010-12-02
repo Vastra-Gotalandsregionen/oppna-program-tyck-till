@@ -36,9 +36,6 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
     @Size(max = 2048, message = "{template.description}")
     private String description;
 
-    @NotEmpty(message = "{template.backend}")
-    private String backend;
-
     private String lastChangedBy;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -64,6 +61,42 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     private CustomCategory customCategory = new CustomCategory();
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="usd", column=@Column(name = "default_usd")),
+            @AttributeOverride(name="pivotal", column=@Column(name = "default_pivotal")),
+            @AttributeOverride(name="mbox", column=@Column(name = "default_mbox"))
+
+    })
+    private Backend defaultBackend;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="usd", column=@Column(name = "content_usd")),
+            @AttributeOverride(name="pivotal", column=@Column(name = "content_pivotal")),
+            @AttributeOverride(name="mbox", column=@Column(name = "content_mbox"))
+
+    })
+    private Backend contentBackend;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="usd", column=@Column(name = "function_usd")),
+            @AttributeOverride(name="pivotal", column=@Column(name = "function_pivotal")),
+            @AttributeOverride(name="mbox", column=@Column(name = "function_mbox"))
+
+    })
+    private Backend functionBackend;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="usd", column=@Column(name = "other_usd")),
+            @AttributeOverride(name="pivotal", column=@Column(name = "other_pivotal")),
+            @AttributeOverride(name="mbox", column=@Column(name = "other_mbox"))
+
+    })
+    private Backend otherBackend;
 
     @Override
     public Long getId() {
@@ -158,14 +191,6 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
         this.showAttachment = showAttachment;
     }
 
-    public String getBackend() {
-        return backend;
-    }
-
-    public void setBackend(String backend) {
-        this.backend = backend;
-    }
-
     public Integer getVersion() {
         return version;
     }
@@ -196,5 +221,37 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
 
     public void setCustomCategory(CustomCategory customCategory) {
         this.customCategory = customCategory;
+    }
+
+    public Backend getDefaultBackend() {
+        return defaultBackend;
+    }
+
+    public void setDefaultBackend(Backend defaultBackend) {
+        this.defaultBackend = defaultBackend;
+    }
+
+    public Backend getContentBackend() {
+        return contentBackend;
+    }
+
+    public void setContentBackend(Backend contentBackend) {
+        this.contentBackend = contentBackend;
+    }
+
+    public Backend getFunctionBackend() {
+        return functionBackend;
+    }
+
+    public void setFunctionBackend(Backend functionBackend) {
+        this.functionBackend = functionBackend;
+    }
+
+    public Backend getOtherBackend() {
+        return otherBackend;
+    }
+
+    public void setOtherBackend(Backend otherBackend) {
+        this.otherBackend = otherBackend;
     }
 }

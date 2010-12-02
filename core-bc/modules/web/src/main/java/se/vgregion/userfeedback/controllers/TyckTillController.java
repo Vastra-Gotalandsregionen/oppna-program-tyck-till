@@ -1,14 +1,5 @@
 package se.vgregion.userfeedback.controllers;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.NoResultException;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,30 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import se.vgregion.userfeedback.domain.*;
 
-import se.vgregion.userfeedback.FeedbackReport;
-import se.vgregion.userfeedback.FeedbackReportService;
-import se.vgregion.userfeedback.ReportBuilder;
-import se.vgregion.userfeedback.domain.Attachment;
-import se.vgregion.userfeedback.domain.AttachmentRepository;
-import se.vgregion.userfeedback.domain.CustomCategory;
-import se.vgregion.userfeedback.domain.CustomSubCategory;
-import se.vgregion.userfeedback.domain.FormTemplate;
-import se.vgregion.userfeedback.domain.FormTemplateRepository;
-import se.vgregion.userfeedback.domain.StaticCategory;
-import se.vgregion.userfeedback.domain.StaticCategoryRepository;
-import se.vgregion.userfeedback.domain.UserContact;
-import se.vgregion.userfeedback.domain.UserFeedback;
-import se.vgregion.userfeedback.domain.UserFeedbackRepository;
+import javax.persistence.NoResultException;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
@@ -64,8 +40,8 @@ public class TyckTillController {
     @Autowired
     private StaticCategoryRepository staticCategoryRepository;
 
-    @Autowired
-    private FeedbackReportService reportService;
+//    @Autowired
+//    private FeedbackReportService reportService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -147,9 +123,9 @@ public class TyckTillController {
             SessionStatus status, ModelMap model) {
         logger.info("Sending...");
 
-        ReportBuilder builder = new ReportBuilder();
-        FeedbackReport report = builder.buildFeedbackReport(userFeedback, multipartRequest);
-        reportService.reportFeedback(report);
+//        ReportBuilder builder = new ReportBuilder();
+//        FeedbackReport report = builder.buildFeedbackReport(userFeedback, multipartRequest);
+//        reportService.reportFeedback(report);
 
         // logger.debug("User agent data captured: " + report);
 

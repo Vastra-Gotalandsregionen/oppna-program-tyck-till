@@ -21,6 +21,9 @@ public class CustomSubCategory extends AbstractEntity<Long> implements Serializa
 
     private String contact;
 
+    @Embedded
+    private Backend subCategoryBackend;
+
     @Override
     public Long getId() {
         return id;

@@ -27,6 +27,9 @@ public class CustomCategory extends AbstractEntity<Integer> implements Serializa
     @OrderColumn(name = "index")
     private List<CustomSubCategory> customSubCategories = new ArrayList<CustomSubCategory>();
 
+    @Embedded
+    private Backend categoryBackend;
+
     @Override
     public Integer getId() {
         return id;
@@ -54,5 +57,13 @@ public class CustomCategory extends AbstractEntity<Integer> implements Serializa
 
     public void setCustomSubCategories(List<CustomSubCategory> customSubCategories) {
         this.customSubCategories = customSubCategories;
+    }
+
+    public Backend getCategoryBackend() {
+        return categoryBackend;
+    }
+
+    public void setCategoryBackend(Backend categoryBackend) {
+        this.categoryBackend = categoryBackend;
     }
 }

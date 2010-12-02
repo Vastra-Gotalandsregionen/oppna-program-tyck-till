@@ -29,6 +29,8 @@ public class PlatformData extends AbstractEntity<Long> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeStamp;
     private String ipAddress;
+    private String forwardedIpAddress;
+
     private String referer;
 
     @Override
@@ -82,5 +84,13 @@ public class PlatformData extends AbstractEntity<Long> {
 
     public void setReferer(String referer) {
         this.referer = referer;
+    }
+
+    public String getForwardedIpAddress() {
+        return forwardedIpAddress;
+    }
+
+    public void setForwardedIpAddress(String forwardedIpAddress) {
+        this.forwardedIpAddress = forwardedIpAddress;
     }
 }

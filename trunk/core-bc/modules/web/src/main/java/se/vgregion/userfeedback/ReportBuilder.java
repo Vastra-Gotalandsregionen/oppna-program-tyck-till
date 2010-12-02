@@ -38,17 +38,6 @@ public class ReportBuilder {
     private Map<UserContactMethod, Object> userContactOptions = null;
     private List<ReportMethod> reportMethods = null;
 
-    private FeedbackReport buildFeedbackReport(UserFeedback feedbackForm) {
-        // setUserPlatform();
-        setReportMethods();
-        setUserContactMethods();
-        setUserMessage();
-
-        FeedbackReport report = new FeedbackReport(this.message, this.reportMethods, this.userContactOptions,
-                this.userPlatform);
-        return null;
-    }
-
     /**
      * Create a {@code FeedbackReport} from a {@code UserFeedback} instance and an {@code HttpServletrequest}.
      * 
@@ -59,8 +48,8 @@ public class ReportBuilder {
     public FeedbackReport buildFeedbackReport(UserFeedback feedbackForm, HttpServletRequest request) {
 
         setUserPlatform(platformDataService.mapUserPlatform(request));
-        setReportMethods();
-        setUserContactMethods();
+        setReportMethods(feedbackForm);
+        setUserContactMethods(feedbackForm);
         setUserMessage();
 
         FeedbackReport report = new FeedbackReport(this.message, this.reportMethods, this.userContactOptions,
@@ -72,21 +61,39 @@ public class ReportBuilder {
         FeedbackMessage message = new FeedbackMessage();
         message.setDescription("Hello reporting system!");
         this.message = message;
-
     }
 
     private void setUserPlatform(PlatformData platform) {
         this.userPlatform = platform;
     }
 
-    private void setUserContactMethods() {
+    /**
+     * Inspect form data and determine which method(s) should be used to contact the customer.
+     * 
+     * @param feedbackForm
+     */
+    private void setUserContactMethods(UserFeedback feedbackForm) {
+
         Map<UserContactMethod, Object> contactMethods = new TreeMap<FeedbackReport.UserContactMethod, Object>();
 
+        // Change this to a loop if several contact options should be chosen
+        UserFeedback.UserContactOption option = feedbackForm.getContactOption();
+        switch (option) {
+            case email:
+                contactMethods.put(UserContactMethod.byEmail, feedbackForm.getUserEmail());
+                break;
+            case telephone:
+                contactMethods.put(UserContactMethod.byPhone, feedbackForm.getUserPhonenumber());
+                break;
+            default:
+                break;
+        }
         this.userContactOptions = contactMethods;
     }
 
-    private void setReportMethods() {
+    private void setReportMethods(UserFeedback feedbackForm) {
         List<ReportMethod> reportMethods = new ArrayList<FeedbackReport.ReportMethod>();
+
         this.reportMethods = reportMethods;
     }
 }

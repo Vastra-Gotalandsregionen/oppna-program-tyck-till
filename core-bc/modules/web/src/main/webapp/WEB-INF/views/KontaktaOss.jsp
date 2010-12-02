@@ -36,7 +36,7 @@
             <div id="webpageContentCategory" class="${template.showContent ? 'show' : 'hide'}">
 
                 <form:radiobutton id="contentCase"
-                                  path="staticCaseCategoryId"
+                                  path="caseCategoryId"
                                   value="${contentCategory.id}"
                                   label="${contentCategory.name}"/><br/>
 
@@ -49,7 +49,7 @@
             </div>
             <div id="webpageFunctionCategory" class="${template.showFunction ? 'show' : 'hide'}">
                 <form:radiobutton id="functionCase"
-                                  path="staticCaseCategoryId"
+                                  path="caseCategoryId"
                                   value="${functionCategory.id}"
                                   label="${functionCategory.name}"/><br/>
 
@@ -63,7 +63,7 @@
 
             <div id="customCategory" class="${template.showCustom ? 'show' : 'hide'}">
                 <form:radiobutton id="customCase"
-                                  path="customCaseCategoryId"
+                                  path="caseCategoryId"
                                   value="${template.customCategory.id}"
                                   label="${template.customCategory.name}"/><br/>
 
@@ -78,7 +78,7 @@
 
             <div id="otherCategory" class="${template.showOther ? 'show' : 'hide'}">
                 <form:radiobutton id="otherCase"
-                                  path="staticCaseCategoryId"
+                                  path="caseCategoryId"
                                   value="${otherCategory.id}"
                                   label="${otherCategory.name}"/>
 

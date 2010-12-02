@@ -70,9 +70,7 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     private PlatformData platformData;
 
     @Transient
-    private Long staticCaseCategoryId;
-    @Transient
-    private Long customCaseCategoryId;
+    private Long caseCategoryId;
     @Transient
     private List<Long> caseSubCategoryIds;
 
@@ -228,20 +226,12 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
 
     // --------------------------------------------------------------
 
-    public Long getStaticCaseCategoryId() {
-        return staticCaseCategoryId;
+    public Long getCaseCategoryId() {
+        return caseCategoryId;
     }
 
-    public void setStaticCaseCategoryId(Long staticCaseCategoryId) {
-        this.staticCaseCategoryId = staticCaseCategoryId;
-    }
-
-    public Long getCustomCaseCategoryId() {
-        return customCaseCategoryId;
-    }
-
-    public void setCustomCaseCategoryId(Long customCaseCategoryId) {
-        this.customCaseCategoryId = customCaseCategoryId;
+    public void setCaseCategoryId(Long staticCaseCategoryId) {
+        this.caseCategoryId = staticCaseCategoryId;
     }
 
     public List<Long> getCaseSubCategoryIds() {

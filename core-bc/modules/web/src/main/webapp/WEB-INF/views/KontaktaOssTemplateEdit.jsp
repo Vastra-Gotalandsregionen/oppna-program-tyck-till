@@ -95,18 +95,15 @@
         </div>
         <div class="prop">
             <span class="name">Show contact:</span>
-            <span class="value"><form:checkbox path="showContact"/></span>
+            <span class="value">
+                <form:checkbox path="showContact" />
+                <form:checkbox path="showContactByEmail" label="By e-mail"/>
+                <form:checkbox path="showContactByPhone" label="By phone"/>
+            </span>
         </div>
         <div class="prop">
             <span class="name">Show attachment:</span>
             <span class="value"><form:checkbox path="showAttachment"/></span>
-        </div>
-    </div>
-
-    <div>
-        <div>Custom category</div>
-
-        <div class="prop">
         </div>
     </div>
 

@@ -96,7 +96,7 @@
         <div class="message">
             <div>
                 <span class="msglabel">Förklara ditt ärende med egna ord:</span><br/>
-                <form:textarea path="message"/>
+                <form:textarea path="message" cols="60" rows="7"/>
             </div>
         </div>
 
@@ -104,23 +104,31 @@
 
         <div class="${template.showContact ? 'show' : 'hide'}">
             <div>
-                <span>Vill du bli kontaktad?</span>
-                <form:checkbox id="shouldContactUser" path="shouldContactUser" label="Ja, tack"/><br/>
+                <span></span>
+                <form:checkbox id="shouldContactUser" path="shouldContactUser" label="Jag vill ha svar"/><br/>
 
                 <div id="contactInfo" class="subselect">
-                    <div>
-                        <form:radiobuttons id="contactOption" path="contactOption" items="${contactOptions}"
-                                           cssClass="contactOptionClass" delimiter="<br/>"/>
+                    <div class="${(template.showContactByEmail && template.showContactByPhone) ? 'show' : 'hide'}">
+                        <form:radiobuttons id="contactOption"
+                                           path="contactOption"
+                                           items="${contactOptions}"
+                                           cssClass="contactOptionClass" />
                     </div>
 
                     <div>
-                        <span style="float:left"><span>Ditt namn</span> <form:input path="userName"/></span>
+                        <span style="float:left">
+                            <span>Ditt namn</span>
+                            <form:input path="userName" />
+                        </span>
 
-                        <span style="float: left;" class="contact-mail"><span>Din e-postadress</span> <form:input
-                                path="userEmail"/></span>
+                        <span style="float: left;" class="${(template.showContactByEmail && !template.showContactByPhone) ? 'show' : 'contact-mail'}">
+                            <span>Din e-postadress</span>
+                            <form:input path="userEmail" />
+                        </span>
 
-                        <span style="float: left;" class="contact-phone"><span>Ditt telefonnummer</span><form:input
-                                path="userPhonenumber"/>
+                        <span style="float: left;" class="${(!template.showContactByEmail && template.showContactByPhone) ? 'show' : 'contact-phone'}">
+                            <span>Ditt telefonnummer</span>
+                            <form:input path="userPhonenumber" />
                         </span>
                     </div>
                 </div>

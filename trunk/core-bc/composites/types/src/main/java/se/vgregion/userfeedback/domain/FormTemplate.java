@@ -56,6 +56,10 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
 
     private Boolean showContact = Boolean.TRUE;
 
+    private Boolean showContactByEmail = Boolean.TRUE;
+
+    private Boolean showContactByPhone = Boolean.TRUE;
+
     private Boolean showAttachment = Boolean.TRUE;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -128,6 +132,22 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
 
     public void setShowContact(Boolean showContact) {
         this.showContact = showContact;
+    }
+
+    public Boolean getShowContactByEmail() {
+        return showContactByEmail;
+    }
+
+    public void setShowContactByEmail(Boolean showContactByEmail) {
+        this.showContactByEmail = showContactByEmail;
+    }
+
+    public Boolean getShowContactByPhone() {
+        return showContactByPhone;
+    }
+
+    public void setShowContactByPhone(Boolean showContactByPhone) {
+        this.showContactByPhone = showContactByPhone;
     }
 
     public Boolean getShowAttachment() {

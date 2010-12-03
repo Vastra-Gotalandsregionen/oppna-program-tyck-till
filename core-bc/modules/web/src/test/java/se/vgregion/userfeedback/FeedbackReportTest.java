@@ -7,6 +7,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class FeedbackReportTest extends TestCase {
     private FeedbackReportService reportService;
 
     @Test
-    // @Ignore
+    @Ignore
     public void testReportestReportToPivotaltIncident() throws Exception {
         File tempFile = File.createTempFile("incidentReportTest", "test");
         String appName = "Tyck_till_test_portlet";

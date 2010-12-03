@@ -7,6 +7,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,14 +31,16 @@ public class FeedbackReportTest extends TestCase {
     @Autowired
     private FeedbackReportService reportService;
 
-    @Test
-    @Ignore
-    public void testReportestReportToPivotaltIncident() throws Exception {
-        File tempFile = File.createTempFile("incidentReportTest", "test");
-        String appName = "Tyck_till_test_portlet";
+    FeedbackMessage message;
+    PlatformData platform;
+    List<ReportMethod> reportMethods;
+    List<UserContact> contactMethods;
+    Screenshot screenShot;
 
+    @Before
+    public void setupFeedback() throws Exception {
         // Add dummy platform data
-        PlatformData platform = new PlatformData();
+        platform = new PlatformData();
         platform.setBrowser("Lynx");
         platform.setIpAddress("327.0.0.1");
         platform.setOperatingSystem("MS-DOS 5.0");
@@ -45,23 +48,53 @@ public class FeedbackReportTest extends TestCase {
         platform.setUserId("woodyw");
 
         // Add dummy message data
-        FeedbackMessage message = new FeedbackMessage();
+        message = new FeedbackMessage();
         message.setDescription("Det här är ett test av messagedescription-fältet.");
         message.setReportType("Webbplatsens innehåll - Påskägg");
+        message.setTrackerCategory("Tyck_till_test_portlet");
 
-        List<ReportMethod> reportMethods = new ArrayList<FeedbackReport.ReportMethod>();
-        reportMethods.add(ReportMethod.pivotal);
+        reportMethods = new ArrayList<FeedbackReport.ReportMethod>();
 
-        List<UserContact> contactMethods = new ArrayList<UserContact>();
+        contactMethods = new ArrayList<UserContact>();
         UserContact contact = new UserContact();
         contact.setContactOption(UserContactOption.email);
         contact.setUserName("Hacke Hackspett");
         contact.setContactMethod("woddyw@warnerbros.com");
         contactMethods.add(contact);
 
-        FeedbackReport report = new FeedbackReport(message, reportMethods, contactMethods, platform);
-        reportService.reportFeedback(report);
-        System.out.println("Reported feedback " + report.toString());
+        File file = new File("/chairman-meow-little-red.jpg");
+        screenShot = new Screenshot();
+        screenShot.setPath(file.getCanonicalPath());
+        screenShot.setFileName(file.getName());
     }
 
+    @Test
+    @Ignore
+    public void testReportToPivotal() throws Exception {
+        reportMethods.add(ReportMethod.pivotal);
+        message.setTrackerCategory("Tyck_till_test_portlet");
+        FeedbackReport report = new FeedbackReport(message, reportMethods, contactMethods, platform);
+        report.addScreenShot(screenShot);
+        reportService.reportFeedback(report);
+    }
+
+    @Test
+    @Ignore
+    public void testReportToUSD() throws Exception {
+        reportMethods.add(ReportMethod.usd);
+        message.setTrackerCategory("Tyck_till_test_portlet");
+        FeedbackReport report = new FeedbackReport(message, reportMethods, contactMethods, platform);
+        report.addScreenShot(screenShot);
+        reportService.reportFeedback(report);
+    }
+
+    @Test
+    // @Ignore
+    public void testReportToEmail() throws Exception {
+        reportMethods.add(ReportMethod.email);
+        FeedbackReport report = new FeedbackReport(message, reportMethods, contactMethods, platform);
+        report.addScreenShot(screenShot);
+        report.setReportEmail("test_account@nowhere.com");
+        reportService.reportFeedback(report);
+    }
 }

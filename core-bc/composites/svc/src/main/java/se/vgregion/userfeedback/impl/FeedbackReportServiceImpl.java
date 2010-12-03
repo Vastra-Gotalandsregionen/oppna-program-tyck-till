@@ -212,18 +212,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
             try {
                 pivotalTrackerClient.addAttachmentToStory(story.getProjectId(), story);
             } catch (Exception ex) {
-                LOGGER.warn("Pivotal tracker attachments not working", ex);
-                // attachments that cannot be sent to Pivotal Tracker must be
-                // emailed...
-                if (report.getReportEmail() != null && report.getReportEmail().length() > 0) {
-                    try {
-                        report.getMessage().setHyperlink("User story: <a href='" + url + "'>" + url + "</a></b>");
-
-                        sendReportByEmail(report, "Bifogade filer som skall till pivotal tracker.");
-                    } catch (MessagingException e) {
-                        LOGGER.warn("attachments sending failed ", e);
-                    }
-                }
+                LOGGER.error("Pivotal tracker attachments not working", ex);
             }
         }
     }
@@ -254,8 +243,8 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         p.setProperty("affected_resource", "nr:BF5880E3AF1C8542B2546B93922C25A7");
         p.setProperty("category", "pcat:400023");
         // map to group using application name?
-        String appName = report.getMessage().getTrackerCategory().trim().replaceAll(" ", "_");
-        String groupHandle = usdService.getUSDGroupHandleForApplicationName(appName);
+        String trackerCategory = report.getMessage().getTrackerCategory().trim().replaceAll(" ", "_");
+        String groupHandle = usdService.getUSDGroupHandleForApplicationName(trackerCategory);
         p.setProperty("group", groupHandle);
         p.setProperty("impact", "imp:1603");
         p.setProperty("priority", "pri:500");

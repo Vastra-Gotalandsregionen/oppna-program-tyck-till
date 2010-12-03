@@ -93,9 +93,9 @@
                 <td align="center">${formTemplate.showOther}</td>
                 <td align="center">${formTemplate.showContact}</td>
                 <td align="center">${formTemplate.showAttachment}</td>
-                <th><a href="TemplateEditor?templateId=${formTemplate.id}">Edit</a></th>
+                <th><a href="TemplateEdit?templateId=${formTemplate.id}">Edit</a></th>
                 <th><a href="#"
-                       onclick="javascript: openDialog('http://localhost:8080/tycktill/KontaktaOss?formName=${formTemplate.name}');">View</a>
+                       onclick="javascript: openDialog('/tycktill/KontaktaOss?formName=${formTemplate.name}');">View</a>
                 </th>
             </tr>
         </c:forEach>

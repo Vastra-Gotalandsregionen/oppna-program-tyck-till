@@ -20,15 +20,13 @@ public class CustomCategory extends AbstractEntity<Integer> implements Serializa
 
     private String name;
 
-    private String defaultContact;
+    @Embedded
+    private Backend backend;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "customcategory_id")
     @OrderColumn(name = "index")
     private List<CustomSubCategory> customSubCategories = new ArrayList<CustomSubCategory>();
-
-    @Embedded
-    private Backend categoryBackend;
 
     @Override
     public Integer getId() {
@@ -43,14 +41,6 @@ public class CustomCategory extends AbstractEntity<Integer> implements Serializa
         this.name = name;
     }
 
-    public String getDefaultContact() {
-        return defaultContact;
-    }
-
-    public void setDefaultContact(String defaultContact) {
-        this.defaultContact = defaultContact;
-    }
-
     public List<CustomSubCategory> getCustomSubCategories() {
         return customSubCategories;
     }
@@ -59,11 +49,11 @@ public class CustomCategory extends AbstractEntity<Integer> implements Serializa
         this.customSubCategories = customSubCategories;
     }
 
-    public Backend getCategoryBackend() {
-        return categoryBackend;
+    public Backend getBackend() {
+        return backend;
     }
 
-    public void setCategoryBackend(Backend categoryBackend) {
-        this.categoryBackend = categoryBackend;
+    public void setBackend(Backend backend) {
+        this.backend = backend;
     }
 }

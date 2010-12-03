@@ -1,10 +1,9 @@
 package se.vgregion.userfeedback;
 
-
 public class FeedbackMessage {
 
     private String reportType = "";
-    private String trackerId;
+    private String trackerCategory;
     private String description;
     private String url;
     private String hyperlink;
@@ -24,16 +23,15 @@ public class FeedbackMessage {
      * @return
      */
     public String getTrackerCategory() {
-        // return trackerId;
-        return "Tyck_till_test_portlet"; // TODO: Change back.
+        return trackerCategory;
     }
 
     /**
      * 
      * @param applicationName
      */
-    public void setTrackerCategory(String applicationName) {
-        this.trackerId = trackerId;
+    public void setTrackerCategory(String trackerCategory) {
+        this.trackerCategory = trackerCategory;
     }
 
     public String getDescription() {

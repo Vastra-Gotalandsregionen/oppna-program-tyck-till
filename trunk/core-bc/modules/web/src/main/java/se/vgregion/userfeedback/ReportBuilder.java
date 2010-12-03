@@ -89,7 +89,7 @@ public class ReportBuilder {
 
     private void setReportMethods(UserFeedback feedbackForm) {
         List<ReportMethod> reportMethods = new ArrayList<FeedbackReport.ReportMethod>();
-
+        // TODO: fix this mapping.
         this.reportMethods = reportMethods;
     }
 }

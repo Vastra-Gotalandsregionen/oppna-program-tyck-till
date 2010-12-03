@@ -150,6 +150,11 @@ div.subselect {
 	padding: 5px;
 }
 
+.subCategory {
+    width: 170px;
+	float: left;
+}
+
 .error {
 	float: left;
 	padding: 5px;

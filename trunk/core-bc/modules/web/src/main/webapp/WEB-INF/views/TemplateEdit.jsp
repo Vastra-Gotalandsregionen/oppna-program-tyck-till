@@ -93,49 +93,67 @@
 
         <span class="value">
         <div class="prop">
-            <span class="value"><form:checkbox path="showContent" label="Visa innehålls kategorin"/></span><br/>
-
-            <ul>
-                <li><span class="category">${contentCategory.name}</span><span class="action"><a
-                        href="">Backend</a></span></li>
-                <c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">
-                    <li><span class="subCategory">-- ${subCategory.value}</span></li>
-                </c:forEach>
-            </ul>
-        </div>
-        <div class="prop">
-            <span class="value"><form:checkbox path="showFunction" label="Visa funktions kategorin"/></span><br/>
-
-            <ul>
-                <li><span class="category">${functionCategory.name}</span><span class="action"><a
-                        href="">Backend</a></span></li>
-                <c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">
-                    <li><span class="subCategory">-- ${subCategory.value}</span></li>
-                </c:forEach>
-            </ul>
-        </div>
-        <div class="prop">
-            <span class="value"><form:checkbox path="showCustom" label="Visa en egen kategori"/></span>
-            <span class="value"><input type="button" value="Ändra"
-                                       onclick="openDialog('/tycktill/KontaktaOss/CustomCategoryEdit')"/></span>
+            <span class="value">
+                <form:checkbox path="showContent" label="Visa innehålls kategorin"/>
+                <input type="button" value="Backend"/>
+            </span>
             <br/><br/>
 
-            <span class="name">${formTemplate.customCategory.name}</span><br/>
+            <span class="name" style="text-align:right;">${contentCategory.name}</span>
             <span class="value">
-            <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory" varStatus="loop">
-                <span>-- ${subCategory.name}</span><br/>
+            <c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">
+                <span class="subCategory">-- ${subCategory.value}</span>
+                <br/>
             </c:forEach>
+            </span>
         </div>
         <div class="prop">
-            <span class="value"><form:checkbox path="showOther" label="Visa övrigt kategorin"/></span><br/>
+            <span class="value">
+                <form:checkbox path="showFunction" label="Visa funktions kategorin"/>
+                <input type="button" value="Backend"/>
+            </span>
+            <br/><br/>
 
-            <ul>
-                <li><span class="category">${otherCategory.name}</span><span class="action"><a
-                        href="">Backend</a></span></li>
+            <span class="name" style="text-align:right;">${functionCategory.name}</span>
+            <span class="value">
+            <c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">
+                <span class="subCategory">-- ${subCategory.value}</span>
+                <br/>
+            </c:forEach>
+            </span>
+        </div>
+        <div class="prop">
+            <span class="value">
+                <form:checkbox path="showCustom" label="Visa en egen kategori"/>
+                <input type="button" value="Ändra" onclick="openDialog('/tycktill/KontaktaOss/CustomCategoryEdit')"/>
+            </span>
+            <br/><br/>
+
+            <span class="name" style="text-align:right;">${formTemplate.customCategory.name}</span>
+            <span class="value">
+            <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory" varStatus="loop">
+                <span class="subCategory">-- ${subCategory.name}</span>
+                <span class="subCategory">${subCategory.backend.usd}</span>
+                <span class="subCategory">${subCategory.backend.pivotal}</span>
+                <span class="subCategory">${subCategory.backend.mbox}</span>
+                <br/>
+            </c:forEach>
+            </span>
+        </div>
+        <div class="prop">
+            <span class="value">
+                <form:checkbox path="showOther" label="Visa övrigt kategorin"/>
+                <input type="button" value="Backend"/>
+            </span>
+            <br/><br/>
+
+            <span class="name" style="text-align:right;">${otherCategory.name}</span><br/>
+            <span class="value">
                 <c:forEach items="${otherCategory.subCategories}" var="subCategory" varStatus="loop">
-                    <li><span class="subCategory">-- ${subCategory.value}</span></li>
+                    <span class="subCategory">-- ${subCategory.value}</span>
+                    <br/>
                 </c:forEach>
-            </ul>
+            </span>
         </div>
         <div class="prop">
             <span class="value">
@@ -171,11 +189,13 @@
     </div>
 
     <div>
-        <input type="submit"/>
+        <input type="submit" value="Uppdatera"/>
     </div>
 
-    <hr/>
-
+        <br/>
+        <br/>
+        <br/>
+        
 </form:form>
 </body>
 </html>

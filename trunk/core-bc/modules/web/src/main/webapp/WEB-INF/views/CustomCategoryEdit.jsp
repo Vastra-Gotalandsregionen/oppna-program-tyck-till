@@ -25,7 +25,7 @@ Place your content here
         <tr>
             <td></td>
             <td><form:input path="customCategory.name"/></td>
-            <td><form:input path="customCategory.defaultContact"/></td>
+            <td><form:input path="customCategory.backend.usd"/></td>
         </tr>
         </thead>
         <tbody>
@@ -45,19 +45,19 @@ Place your content here
                            type="text" value="${subCategory.name}"/>
                 </td>
                 <td>
-                    <input id="customCategory.customSubCategories[${loop.index}].subCategoryBackend.usd"
-                           name="customCategory.customSubCategories[${loop.index}].subCategoryBackend.usd"
-                           type="text" value="${subCategory.subCategoryBackend.usd}"/>
+                    <input id="customCategory.customSubCategories[${loop.index}].backend.usd"
+                           name="customCategory.customSubCategories[${loop.index}].backend.usd"
+                           type="text" value="${subCategory.backend.usd}"/>
                 </td>
                 <td>
-                    <input id="customCategory.customSubCategories[${loop.index}].subCategoryBackend.pivotal"
-                           name="customCategory.customSubCategories[${loop.index}].subCategoryBackend.pivotal"
-                           type="text" value="${subCategory.subCategoryBackend.pivotal}"/>
+                    <input id="customCategory.customSubCategories[${loop.index}].backend.pivotal"
+                           name="customCategory.customSubCategories[${loop.index}].backend.pivotal"
+                           type="text" value="${subCategory.backend.pivotal}"/>
                 </td>
                 <td>
-                    <input id="customCategory.customSubCategories[${loop.index}].subCategoryBackend.mbox"
-                           name="customCategory.customSubCategories[${loop.index}].subCategoryBackend.mbox"
-                           type="text" value="${subCategory.subCategoryBackend.mbox}"/>
+                    <input id="customCategory.customSubCategories[${loop.index}].backend.mbox"
+                           name="customCategory.customSubCategories[${loop.index}].backend.mbox"
+                           type="text" value="${subCategory.backend.mbox}"/>
                 </td>
             </tr>
         </c:forEach>

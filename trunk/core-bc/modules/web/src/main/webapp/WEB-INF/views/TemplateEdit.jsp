@@ -120,9 +120,10 @@
                                        onclick="openDialog('/tycktill/KontaktaOss/CustomCategoryEdit')"/></span>
             <br/><br/>
 
-            <span class="value">${formTemplate.customCategory.name}</span><span class="value"><a href="">Backend</a></span><br/>
+            <span class="name">${formTemplate.customCategory.name}</span><br/>
+            <span class="value">
             <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory" varStatus="loop">
-                <span class="value">-- ${subCategory.name}</span><span class="value"><a href="">Backend</a></span><br/>
+                <span>-- ${subCategory.name}</span><br/>
             </c:forEach>
         </div>
         <div class="prop">
@@ -174,40 +175,6 @@
     </div>
 
     <hr/>
-
-    <br/>
-    <table>
-        <tr>
-            <th></th>
-            <th>Category name</th>
-            <th>Default contact</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td><form:input path="customCategory.name"/></td>
-            <td><form:input path="customCategory.defaultContact"/></td>
-        </tr>
-        <tr>
-            <th>Id</th>
-            <th>SubCategory</th>
-            <th>Contact</th>
-        </tr>
-        <c:forEach items="${customSubCategories}" var="subCategory" varStatus="loop">
-            <tr>
-                <td>${subCategory.id}</td>
-                <td>
-                    <input id="customCategory.customSubCategories[${loop.index}].name"
-                           name="customCategory.customSubCategories[${loop.index}].name"
-                           type="text" value="${subCategory.name}"/>
-                </td>
-                <td>
-                    <input id="customCategory.customSubCategories[${loop.index}].subCategoryBackend.mbox"
-                           name="customCategory.customSubCategories[${loop.index}].subCategoryBackend.mbox"
-                           type="text" value="${subCategory.subCategoryBackend.mbox}"/>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
 
 </form:form>
 </body>

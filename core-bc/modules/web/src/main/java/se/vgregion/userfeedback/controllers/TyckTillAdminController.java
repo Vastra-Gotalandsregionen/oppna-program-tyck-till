@@ -126,7 +126,7 @@ public class TyckTillAdminController {
 
         for (int i = 0; i < 5; i++) {
             CustomSubCategory customSubCategory = new CustomSubCategory();
-            customSubCategory.setSubCategoryBackend(new Backend());
+            customSubCategory.setBackend(new Backend());
 
             subCategories.add(customSubCategory);
         }

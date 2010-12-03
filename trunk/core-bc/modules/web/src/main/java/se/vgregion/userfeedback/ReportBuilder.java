@@ -48,16 +48,23 @@ public class ReportBuilder {
         setUserPlatform(platformDataService.mapUserPlatform(request));
         setReportMethods(feedbackForm);
         setUserContactMethods(feedbackForm);
-        setUserMessage();
+        setUserMessage(feedbackForm);
 
         FeedbackReport report = new FeedbackReport(this.message, this.reportMethods, this.userContactOptions,
                 this.userPlatform);
         return report;
     }
 
-    private void setUserMessage() {
+    private void setUserMessage(UserFeedback feedbackForm) {
         FeedbackMessage message = new FeedbackMessage();
-        message.setDescription("Hello reporting system!");
+        message.setDescription(feedbackForm.getMessage());
+        StringBuilder sb = new StringBuilder();
+        sb.append(feedbackForm.getCaseCategory());
+        List<String> subCats = feedbackForm.getCaseSubCategories();
+        for (String subCat : subCats) {
+            sb.append(" - " + subCat);
+        }
+        message.setReportType(sb.toString());
         this.message = message;
     }
 

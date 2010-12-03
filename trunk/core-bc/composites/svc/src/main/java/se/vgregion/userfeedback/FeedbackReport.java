@@ -114,7 +114,7 @@ public class FeedbackReport {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("Application name: " + message.getApplicationName() + NEWLINE);
+        sb.append("Application name: " + message.getTrackerCategory() + NEWLINE);
         if (message.getUrl() != null && message.getUrl().length() > 0) {
             sb.append(message.getUrl() + " " + NEWLINE);
         }
@@ -125,24 +125,16 @@ public class FeedbackReport {
             sb.append("Felrapporten har triggats av användare" + NEWLINE);
         }
         sb.append(NEWLINE + "Uppgifter inmatade av användaren" + NEWLINE);
-        sb.append("- Förklara felet med egna ord: " + message.getDescription() + NEWLINE);
-        sb.append(NEWLINE);
+        sb.append("- Förklara felet med egna ord: " + NEWLINE + message.getDescription());
+        sb.append(NEWLINE + NEWLINE);
         sb.append("- Typ av feedback: " + message.getReportType() + NEWLINE);
-        if (message.getErrorTypes() != null) {
-            List<String> errTypes = message.getErrorTypes();
-            sb.append("- Typ av fel: ");
-            for (String type : errTypes) {
-                sb.append(type + ",");
-            }
-            sb.append(NEWLINE);
-        }
 
         sb.append("- Användaren vill ha feedback via: ");
         for (UserContact method : userContactMethods) {
             sb.append(method.getContactOption().getLabel());
             switch (method.getContactOption()) {
                 case email:
-                    sb.append("- Användaren email: " + method.getContactMethod() + NEWLINE);
+                    sb.append("- Användaren epost: " + method.getContactMethod() + NEWLINE);
                     break;
                 case telephone:
                     sb.append("- Användaren telefon: " + method.getContactMethod() + NEWLINE);

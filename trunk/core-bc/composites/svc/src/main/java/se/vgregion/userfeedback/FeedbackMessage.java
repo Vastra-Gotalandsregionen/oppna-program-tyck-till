@@ -1,13 +1,10 @@
 package se.vgregion.userfeedback;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class FeedbackMessage {
 
     private String reportType = "";
-    private List<String> errorTypes = new ArrayList<String>();
-    private String applicationName;
+    private String trackerId;
     private String description;
     private String url;
     private String hyperlink;
@@ -20,26 +17,23 @@ public class FeedbackMessage {
         this.reportType = reportType;
     }
 
-    public List<String> getErrorTypes() {
-        return errorTypes;
+    /**
+     * Returns the tracker id. This is used to determine which category to log the report to on the project
+     * tracker.
+     * 
+     * @return
+     */
+    public String getTrackerCategory() {
+        // return trackerId;
+        return "Tyck_till_test_portlet"; // TODO: Change back.
     }
 
     /**
-     * If the incident report was created because of a java error, these are added via this method.
      * 
-     * @param errorType
-     *            The java error that was thrown
+     * @param applicationName
      */
-    public void setErrorTypes(List<String> errorTypes) {
-        this.errorTypes = errorTypes;
-    }
-
-    public String getApplicationName() {
-        return applicationName;
-    }
-
-    public void setApplicationName(String applicationName) {
-        this.applicationName = applicationName;
+    public void setTrackerCategory(String applicationName) {
+        this.trackerId = trackerId;
     }
 
     public String getDescription() {

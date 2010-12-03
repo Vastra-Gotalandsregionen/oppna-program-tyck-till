@@ -188,7 +188,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     }
 
     private void createUserStory(FeedbackReport report) {
-        String applicationName = report.getMessage().getApplicationName().replaceAll(" ", "_");
+        String applicationName = report.getMessage().getTrackerCategory().replaceAll(" ", "_");
         String projectId = lookupProjectId(applicationName);
         PTStory story = new PTStory();
         story.setName(applicationName + ": IncidentReportService message");
@@ -236,13 +236,13 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
             String[] reportEmailArray = { reportEmail };
             body += report.toString().replaceAll(IncidentReport.NEWLINE, "</br>");
             try {
-                new EMailClient().postMail(reportEmailArray, report.getMessage().getApplicationName() + ":"
+                new EMailClient().postMail(reportEmailArray, report.getMessage().getTrackerCategory() + ":"
                         + subject, "" + body, FEEDBACK_REPORT_SERVICE_NOREPLY, report.getScreenShots());
             } catch (Throwable e1) {
                 LOGGER.error("Email submission failed:", e1);
                 String[] emailTo = { FEEDBACK_REPORT_SERVICE_ADMIN_EMAIL };
 
-                new EMailClient().postMail(emailTo, report.getMessage().getApplicationName() + ":"
+                new EMailClient().postMail(emailTo, report.getMessage().getTrackerCategory() + ":"
                         + FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT, "" + e1.getMessage() + "\n" + body,
                         FEEDBACK_REPORT_SERVICE_NOREPLY, report.getScreenShots());
             }
@@ -254,7 +254,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         p.setProperty("affected_resource", "nr:BF5880E3AF1C8542B2546B93922C25A7");
         p.setProperty("category", "pcat:400023");
         // map to group using application name?
-        String appName = report.getMessage().getApplicationName().trim().replaceAll(" ", "_");
+        String appName = report.getMessage().getTrackerCategory().trim().replaceAll(" ", "_");
         String groupHandle = usdService.getUSDGroupHandleForApplicationName(appName);
         p.setProperty("group", groupHandle);
         p.setProperty("impact", "imp:1603");

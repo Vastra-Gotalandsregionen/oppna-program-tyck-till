@@ -1,6 +1,5 @@
 package se.vgregion.userfeedback.controllers;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,8 +163,8 @@ public class TyckTillController {
         userFeedback.setCaseSubCategories(caseSubCategories);
 
         // 4: Lookup CaseContact
-        String caseContact = lookupCaseContact(userFeedback, template);
-        userFeedback.setCaseContact(caseContact);
+//        String caseContact = lookupCaseContact(userFeedback, template);
+//        userFeedback.setCaseContact(caseContact);
     }
 
     private String lookupCaseCategory(UserFeedback userFeedback, FormTemplate template) {
@@ -211,36 +210,36 @@ public class TyckTillController {
         return subCategories;
     }
 
-    private String lookupCaseContact(UserFeedback userFeedback, FormTemplate template) {
-        CustomCategory customCategory = template.getCustomCategory();
-
-        logger.debug(customCategory.getName());
-
-        // 0: Check if there exist a customCategory
-        if (customCategory == null) {
-            return "";
-        }
-        // 1: check if customCategory
-        if (customCategory.getName().equals(userFeedback.getCaseCategory())) {
-            List<String> caseSubCategoryList = userFeedback.getCaseSubCategories();
-            // 2: check if single selection - else defaultContact
-            if (caseSubCategoryList == null || caseSubCategoryList.size() != 1) {
-                return customCategory.getDefaultContact();
-            }
-
-            String caseSubCategory = caseSubCategoryList.get(0);
-            // 3: check if customSubCategory has contact
-            for (CustomSubCategory subCategory : customCategory.getCustomSubCategories()) {
-                if (subCategory.getName().equals(caseSubCategory)) {
-                    if (!StringUtils.isBlank(subCategory.getContact())) {
-                        return subCategory.getContact();
-                    }
-                }
-            }
-        }
-
-        return customCategory.getDefaultContact();
-    }
+//    private String lookupCaseContact(UserFeedback userFeedback, FormTemplate template) {
+//        CustomCategory customCategory = template.getCustomCategory();
+//
+//        logger.debug(customCategory.getName());
+//
+//        // 0: Check if there exist a customCategory
+//        if (customCategory == null) {
+//            return "";
+//        }
+//        // 1: check if customCategory
+//        if (customCategory.getName().equals(userFeedback.getCaseCategory())) {
+//            List<String> caseSubCategoryList = userFeedback.getCaseSubCategories();
+//            // 2: check if single selection - else defaultContact
+//            if (caseSubCategoryList == null || caseSubCategoryList.size() != 1) {
+//                return customCategory.getDefaultContact();
+//            }
+//
+//            String caseSubCategory = caseSubCategoryList.get(0);
+//            // 3: check if customSubCategory has contact
+//            for (CustomSubCategory subCategory : customCategory.getCustomSubCategories()) {
+//                if (subCategory.getName().equals(caseSubCategory)) {
+//                    if (!StringUtils.isBlank(subCategory.getContact())) {
+//                        return subCategory.getContact();
+//                    }
+//                }
+//            }
+//        }
+//
+//        return customCategory.getDefaultContact();
+//    }
 
     private void processAttachment(MultipartFile file, UserFeedback userFeedback) {
         if (file.isEmpty()) {

@@ -19,10 +19,8 @@ public class CustomSubCategory extends AbstractEntity<Long> implements Serializa
 
     private String name;
 
-    private String contact;
-
     @Embedded
-    private Backend subCategoryBackend;
+    private Backend backend;
 
     @Override
     public Long getId() {
@@ -37,11 +35,11 @@ public class CustomSubCategory extends AbstractEntity<Long> implements Serializa
         this.name = name;
     }
 
-    public String getContact() {
-        return contact;
+    public Backend getBackend() {
+        return backend;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setBackend(Backend backend) {
+        this.backend = backend;
     }
 }

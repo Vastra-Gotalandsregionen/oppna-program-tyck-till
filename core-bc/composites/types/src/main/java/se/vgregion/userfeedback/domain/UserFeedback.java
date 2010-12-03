@@ -65,6 +65,9 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     @Embedded
     private PlatformData platformData;
 
+    @Embedded
+    private Backend caseBackend;
+
     @Transient
     private Long caseCategoryId;
     @Transient
@@ -106,6 +109,14 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
 
     public void setCaseContact(String caseContact) {
         this.caseContact = caseContact;
+    }
+
+    public Backend getCaseBackend() {
+        return caseBackend;
+    }
+
+    public void setCaseBackend(Backend caseBackend) {
+        this.caseBackend = caseBackend;
     }
 
     public String getMessage() {

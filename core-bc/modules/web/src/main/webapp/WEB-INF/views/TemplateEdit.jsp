@@ -24,28 +24,29 @@
                 resizeable: true,
                 title: 'Tyck till'
             });
-            loadjscssfile("style/alternateStyle.css", "css") ;
+            loadjscssfile("style/alternateStyle.css", "css");
         });
 
-        function loadjscssfile(filename, filetype){
-        	 if (filetype=="js"){ //if filename is a external JavaScript file
-        	  var fileref=document.createElement('script')
-        	  fileref.setAttribute("type","text/javascript")
-        	  fileref.setAttribute("src", filename)
-        	 }
-        	 else if (filetype=="css"){ //if filename is an external CSS file
-        	  var fileref=document.createElement("link")
-        	  fileref.setAttribute("rel", "stylesheet")
-        	  fileref.setAttribute("type", "text/css")
-        	  fileref.setAttribute("href", filename)
-        	 }
-        	 if (typeof fileref!="undefined")
-        		  document.getElementsByTagName("head")[0].appendChild(fileref)
+        function loadjscssfile(filename, filetype) {
+            if (filetype == "js") { //if filename is a external JavaScript file
+                var fileref = document.createElement('script')
+                fileref.setAttribute("type", "text/javascript")
+                fileref.setAttribute("src", filename)
+            }
+            else if (filetype == "css") { //if filename is an external CSS file
+                var fileref = document.createElement("link")
+                fileref.setAttribute("rel", "stylesheet")
+                fileref.setAttribute("type", "text/css")
+                fileref.setAttribute("href", filename)
+            }
+            if (typeof fileref != "undefined")
+                document.getElementsByTagName("head")[0].appendChild(fileref)
         }
 
         function openDialog(url) {
+            var form = $("#formTemplate");
             $("#modalDiv").dialog("open");
-            $("#modalIFrame").attr('src', url);
+            $("#modalIFrame").load(url, form.serialize());
             return false;
         }
 
@@ -62,14 +63,9 @@
 <h1>${formTemplate.id == null ? 'Skapa nytt kontakt formulär' : 'Ändra kontakt formulär'}</h1>
 
 <div id="modalDiv">
-    <iframe id="modalIFrame"
-            width="100%"
-            height="98%"
-            marginWidth="0"
-            marginHeight="0"
-            frameBorder="0"
-            scrolling="no">
-    </iframe>
+    <div id="modalIFrame">
+
+    </div>
 </div>
 
 <form:form commandName="formTemplate">
@@ -100,7 +96,8 @@
             <span class="value"><form:checkbox path="showContent" label="Visa innehålls kategorin"/></span><br/>
 
             <ul>
-                <li><span class="category">${contentCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
+                <li><span class="category">${contentCategory.name}</span><span class="action"><a
+                        href="">Backend</a></span></li>
                 <c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">
                     <li><span class="subCategory">-- ${subCategory.value}</span></li>
                 </c:forEach>
@@ -110,7 +107,8 @@
             <span class="value"><form:checkbox path="showFunction" label="Visa funktions kategorin"/></span><br/>
 
             <ul>
-                <li><span class="category">${functionCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
+                <li><span class="category">${functionCategory.name}</span><span class="action"><a
+                        href="">Backend</a></span></li>
                 <c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">
                     <li><span class="subCategory">-- ${subCategory.value}</span></li>
                 </c:forEach>
@@ -118,21 +116,21 @@
         </div>
         <div class="prop">
             <span class="value"><form:checkbox path="showCustom" label="Visa en egen kategori"/></span>
-            <span class="value"><a href="#" onclick="javascript: openDialog('http://localhost:8080/tycktill/KontaktaOss');">Ändra</a></span><br/>
+            <span class="value"><input type="button" value="Ändra"
+                                       onclick="openDialog('/tycktill/KontaktaOss/CustomCategoryEdit')"/></span>
+            <br/><br/>
 
-            <ul>
-                <li><span class="category">${formTemplate.customCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
-                <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory"
-                           varStatus="loop">
-                    <li><span class="subCategory">-- ${subCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
-                </c:forEach>
-            </ul>
+            <span class="value">${formTemplate.customCategory.name}</span><span class="value"><a href="">Backend</a></span><br/>
+            <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory" varStatus="loop">
+                <span class="value">-- ${subCategory.name}</span><span class="value"><a href="">Backend</a></span><br/>
+            </c:forEach>
         </div>
         <div class="prop">
             <span class="value"><form:checkbox path="showOther" label="Visa övrigt kategorin"/></span><br/>
 
             <ul>
-                <li><span class="category">${otherCategory.name}</span><span class="action"><a href="">Backend</a></span></li>
+                <li><span class="category">${otherCategory.name}</span><span class="action"><a
+                        href="">Backend</a></span></li>
                 <c:forEach items="${otherCategory.subCategories}" var="subCategory" varStatus="loop">
                     <li><span class="subCategory">-- ${subCategory.value}</span></li>
                 </c:forEach>
@@ -203,9 +201,9 @@
                            type="text" value="${subCategory.name}"/>
                 </td>
                 <td>
-                    <input id="customCategory.customSubCategories[${loop.index}].contact"
-                           name="customCategory.customSubCategories[${loop.index}].contact"
-                           type="text" value="${subCategory.contact}"/>
+                    <input id="customCategory.customSubCategories[${loop.index}].subCategoryBackend.mbox"
+                           name="customCategory.customSubCategories[${loop.index}].subCategoryBackend.mbox"
+                           type="text" value="${subCategory.subCategoryBackend.mbox}"/>
                 </td>
             </tr>
         </c:forEach>

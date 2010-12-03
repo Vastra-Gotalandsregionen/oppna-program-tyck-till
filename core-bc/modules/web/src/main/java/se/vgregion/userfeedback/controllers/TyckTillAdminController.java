@@ -18,7 +18,7 @@ import java.util.*;
  */
 
 @Controller
-@SessionAttributes("formTemplate")
+@SessionAttributes({"formTemplate", "customCategory"})
 public class TyckTillAdminController {
 
     @Autowired
@@ -34,10 +34,10 @@ public class TyckTillAdminController {
         Collection<FormTemplate> templates = formTemplateRepository.findAll();
         model.addAttribute("templateList", templates);
 
-        return "KontaktaOssTemplateList";
+        return "TemplateList";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/KontaktaOss/TemplateEditor")
+    @RequestMapping(method = RequestMethod.GET, value = "/KontaktaOss/TemplateEdit")
     public String viewTemplates(@RequestParam(value = "templateId", required = false) Long templateId,
                                 ModelMap model) {
         FormTemplate template;
@@ -58,6 +58,7 @@ public class TyckTillAdminController {
             customCategory = new CustomCategory();
             template.setCustomCategory(customCategory);
         }
+        model.addAttribute("customCategory", customCategory);
 
         List<CustomSubCategory> subCategories = customCategory.getCustomSubCategories();
         if (subCategories == null) {
@@ -75,7 +76,7 @@ public class TyckTillAdminController {
         model.addAttribute("otherCategory", otherCategory);
 
 
-        return "KontaktaOssTemplateEdit";
+        return "TemplateEdit";
     }
 
 
@@ -86,7 +87,7 @@ public class TyckTillAdminController {
                               SessionStatus status,
                               ModelMap model) {
         if (result.hasErrors()) {
-            return "KontaktaOssTemplateEdit";
+            return "TemplateEdit";
         }
 
         CustomCategory customCategory = formTemplate.getCustomCategory();
@@ -110,4 +111,45 @@ public class TyckTillAdminController {
 
         return "redirect:TemplateList";
     }
+
+    /**
+     * Edit CustomCategory without persis.
+     * FormTemplate has to be handled to allow preserving data not stored yet.
+     *
+     * @param formTemplate - main backing bean.
+     * @return - view with edit form.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/KontaktaOss/CustomCategoryEdit")
+    public String editCustomCategory(@ModelAttribute("formTemplate") FormTemplate formTemplate) {
+
+        List<CustomSubCategory> subCategories = formTemplate.getCustomCategory().getCustomSubCategories();
+
+        for (int i = 0; i < 5; i++) {
+            CustomSubCategory customSubCategory = new CustomSubCategory();
+            customSubCategory.setSubCategoryBackend(new Backend());
+
+            subCategories.add(customSubCategory);
+        }
+
+        return "CustomCategoryEdit";
+    }
+
+    /**
+     * Redirect back to TemplateEdit to continue working with the formTemplate.
+     *
+     * @param formTemplate - the main backing bean.
+     * @return - view for FormTemplate edit.
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/KontaktaOss/CustomCategoryUpdate")
+    public String updateCustomCategory(@ModelAttribute("formTemplate") FormTemplate formTemplate) {
+        for (Iterator<CustomSubCategory> it = formTemplate.getCustomCategory().getCustomSubCategories().iterator(); it.hasNext();) {
+            CustomSubCategory subCategory = it.next();
+            if (StringUtils.isBlank(subCategory.getName())) {
+                it.remove();
+            }
+        }
+
+        return "redirect:TemplateEdit";
+    }
+
 }

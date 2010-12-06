@@ -23,8 +23,8 @@ package se.vgregion.userfeedback;
  * This represents a screenshot used for describing the incident.
  */
 public class Screenshot {
-    String path;
-    String fileName;
+    private String path;
+    private String fileName;
 
     public String getPath() {
         return path;

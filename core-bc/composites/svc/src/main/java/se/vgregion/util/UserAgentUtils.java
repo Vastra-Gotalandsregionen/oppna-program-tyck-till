@@ -38,6 +38,15 @@ public class UserAgentUtils {
 
     private static final String WIN_MARKER = "Win";
     private static final String WIN_NT_MARKER = "WinNT";
+    private static final String WIN_95_MARKER = "Win95";
+    private static final String WIN_98_MARKER = "Win98";
+    private static final String WIN_31_MARKER = "Win31";
+    private static final String LINUX_MARKER = "Linux";
+    private static final String MS_IEXPLORER_MARKER = "MSIE";
+
+    private UserAgentUtils() {
+        throw new UnsupportedOperationException("Cannot instantiate utility class.");
+    }
 
     private static String getFirstVersionNumber(String userAgent, int position, int numDigits) {
         String ver = getVersionNumber(userAgent, position);
@@ -72,7 +81,7 @@ public class UserAgentUtils {
                     }
                     status = 1;
                 case 1: // <SPAN class="codecomment"> Version number in progress</span>
-                    if (c == ';' || c == '/' || c == ')' || c == '(' || c == '[') {
+                    if (";/)([".indexOf(c) > -1) {
                         return res.toString().trim();
                     }
                     if (c == ' ') {
@@ -161,7 +170,7 @@ public class UserAgentUtils {
         int pos;
         if (userAgent.indexOf("Windows-NT") > -1) {
             pos = userAgent.indexOf("Windows-NT");
-            res = getArray(WIN_MARKER, "WinNT", WIN_MARKER + getVersionNumber(userAgent, pos + OFFSET_EIGHT));
+            res = getArray(WIN_MARKER, WIN_NT_MARKER, WIN_MARKER + getVersionNumber(userAgent, pos + OFFSET_EIGHT));
         } else if (userAgent.indexOf("Windows NT") > -1) {
             // <SPAN class="codecomment"> The different versions of Windows NT are decoded in the verbosity level
             // 2</span>
@@ -186,7 +195,7 @@ public class UserAgentUtils {
                 res = getArray(WIN_MARKER, "WinNT4", WIN_MARKER + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
             } else if (userAgent.indexOf("Windows NT)") > -1) {
                 pos = userAgent.indexOf("Windows NT)");
-                res = getArray(WIN_MARKER, "WinNT", "WinNT");
+                res = getArray(WIN_MARKER, WIN_NT_MARKER, WIN_NT_MARKER);
             } else if (userAgent.indexOf("Windows NT;") > -1) {
                 pos = userAgent.indexOf("Windows NT;");
                 res = getArray(WIN_MARKER, WIN_NT_MARKER, WIN_NT_MARKER);
@@ -197,11 +206,11 @@ public class UserAgentUtils {
             if (userAgent.indexOf("Windows") > -1) {
                 if (userAgent.indexOf("Windows 98") > -1) {
                     pos = userAgent.indexOf("Windows 98");
-                    res = getArray(WIN_MARKER, "Win98", WIN_MARKER
+                    res = getArray(WIN_MARKER, WIN_98_MARKER, WIN_MARKER
                             + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 } else if (userAgent.indexOf("Windows_98") > -1) {
                     pos = userAgent.indexOf("Windows_98");
-                    res = getArray(WIN_MARKER, "Win98", WIN_MARKER
+                    res = getArray(WIN_MARKER, WIN_98_MARKER, WIN_MARKER
                             + getVersionNumber(userAgent, pos + OFFSET_EIGHT));
                 } else if (userAgent.indexOf("Windows 2000") > -1) {
                     pos = userAgent.indexOf("Windows 2000");
@@ -209,7 +218,7 @@ public class UserAgentUtils {
                             + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 } else if (userAgent.indexOf("Windows 95") > -1) {
                     pos = userAgent.indexOf("Windows 95");
-                    res = getArray(WIN_MARKER, "Win95", WIN_MARKER
+                    res = getArray(WIN_MARKER, WIN_95_MARKER, WIN_MARKER
                             + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 } else if (userAgent.indexOf("Windows 9x") > -1) {
                     pos = userAgent.indexOf("Windows 9x");
@@ -221,7 +230,7 @@ public class UserAgentUtils {
                             + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 } else if (userAgent.indexOf("Windows 3.1") > -1) {
                     pos = userAgent.indexOf("Windows 3.1");
-                    res = getArray(WIN_MARKER, "Win31", WIN_MARKER
+                    res = getArray(WIN_MARKER, WIN_31_MARKER, WIN_MARKER
                             + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 }
                 // <SPAN class="codecomment"> If no version was found, rely on the following code to detect
@@ -230,17 +239,17 @@ public class UserAgentUtils {
                 // <SPAN class="codecomment"> Ex: Mozilla/5.0 (Windows; U; Win98; en-US; rv:1.5)</span>
             }
             if (res == null) {
-                if (userAgent.indexOf("Win98") > -1) {
-                    pos = userAgent.indexOf("Win98");
-                    res = getArray(WIN_MARKER, "Win98", WIN_MARKER
+                if (userAgent.indexOf(WIN_98_MARKER) > -1) {
+                    pos = userAgent.indexOf(WIN_98_MARKER);
+                    res = getArray(WIN_MARKER, WIN_98_MARKER, WIN_MARKER
                             + getVersionNumber(userAgent, pos + OFFSET_THREE));
-                } else if (userAgent.indexOf("Win31") > -1) {
-                    pos = userAgent.indexOf("Win31");
-                    res = getArray(WIN_MARKER, "Win31", WIN_MARKER
+                } else if (userAgent.indexOf(WIN_31_MARKER) > -1) {
+                    pos = userAgent.indexOf(WIN_31_MARKER);
+                    res = getArray(WIN_MARKER, WIN_31_MARKER, WIN_MARKER
                             + getVersionNumber(userAgent, pos + OFFSET_THREE));
-                } else if (userAgent.indexOf("Win95") > -1) {
-                    pos = userAgent.indexOf("Win95");
-                    res = getArray(WIN_MARKER, "Win95", WIN_MARKER
+                } else if (userAgent.indexOf(WIN_95_MARKER) > -1) {
+                    pos = userAgent.indexOf(WIN_95_MARKER);
+                    res = getArray(WIN_MARKER, WIN_95_MARKER, WIN_MARKER
                             + getVersionNumber(userAgent, pos + OFFSET_THREE));
                 } else if (userAgent.indexOf("Win 9x") > -1) {
                     pos = userAgent.indexOf("Win 9x");
@@ -250,7 +259,7 @@ public class UserAgentUtils {
                     pos = userAgent.indexOf("WinNT4.0");
                     res = getArray(WIN_MARKER, "WinNT4", WIN_MARKER
                             + getVersionNumber(userAgent, pos + OFFSET_THREE));
-                } else if (userAgent.indexOf() > -1) {
+                } else if (userAgent.indexOf(WIN_NT_MARKER) > -1) {
                     pos = userAgent.indexOf(WIN_NT_MARKER);
                     res = getArray(WIN_MARKER, WIN_NT_MARKER, WIN_MARKER
                             + getVersionNumber(userAgent, pos + OFFSET_THREE));
@@ -296,25 +305,25 @@ public class UserAgentUtils {
         } else if (userAgent.indexOf("OpenBSD") > -1) {
             pos = userAgent.indexOf("OpenBSD");
             res = getArray("*BSD", "*BSD OpenBSD", "OpenBSD " + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
-        } else if (userAgent.indexOf("Linux") > -1) {
-            pos = userAgent.indexOf("Linux");
+        } else if (userAgent.indexOf(LINUX_MARKER) > -1) {
+            pos = userAgent.indexOf(LINUX_MARKER);
             String detail = "Linux " + getVersionNumber(userAgent, pos + OFFSET_FIVE);
-            String med = "Linux";
+            String med = LINUX_MARKER;
             if (userAgent.indexOf("Ubuntu/") > -1) {
                 pos = userAgent.indexOf("Ubuntu/");
                 detail = "Ubuntu " + getVersionNumber(userAgent, pos + OFFSET_SEVEN);
                 med += " Ubuntu";
             }
-            res = getArray("Linux", med, detail);
+            res = getArray(LINUX_MARKER, med, detail);
         } else if (userAgent.indexOf("CentOS") > -1) {
             pos = userAgent.indexOf("CentOS");
-            res = getArray("Linux", "Linux CentOS", "CentOS");
+            res = getArray(LINUX_MARKER, "Linux CentOS", "CentOS");
         } else if (userAgent.indexOf("NetBSD") > -1) {
             pos = userAgent.indexOf("NetBSD");
             res = getArray("*BSD", "*BSD NetBSD", "NetBSD " + getVersionNumber(userAgent, pos + OFFSET_SIX));
         } else if (userAgent.indexOf("Unix") > -1) {
             pos = userAgent.indexOf("Unix");
-            res = getArray("Linux", "Linux", "Linux " + getVersionNumber(userAgent, pos + OFFSET_FOUR));
+            res = getArray(LINUX_MARKER, LINUX_MARKER, "Linux " + getVersionNumber(userAgent, pos + OFFSET_FOUR));
         } else if (userAgent.indexOf("SunOS") > -1) {
             pos = userAgent.indexOf("SunOS");
             res = getArray("Unix", "SunOS", "SunOS" + getVersionNumber(userAgent, pos + OFFSET_FIVE));
@@ -375,31 +384,39 @@ public class UserAgentUtils {
             pos = userAgent.indexOf("Opera");
             res = getArray("Opera", "Opera" + getFirstVersionNumber(userAgent, pos + OFFSET_FIVE, OFFSET_ONE),
                     "Opera" + getVersionNumber(userAgent, pos + OFFSET_FIVE));
-        } else if (userAgent.indexOf("MSIE") > -1) {
+        } else if (userAgent.indexOf(MS_IEXPLORER_MARKER) > -1) {
             if (userAgent.indexOf("MSIE 6.0") > -1) {
                 pos = userAgent.indexOf("MSIE 6.0");
-                res = getArray("MSIE", "MSIE6", "MSIE" + getVersionNumber(userAgent, pos + OFFSET_FOUR));
+                res = getArray(MS_IEXPLORER_MARKER, "MSIE6", MS_IEXPLORER_MARKER
+                        + getVersionNumber(userAgent, pos + OFFSET_FOUR));
             } else if (userAgent.indexOf("MSIE 5.0") > -1) {
                 pos = userAgent.indexOf("MSIE 5.0");
-                res = getArray("MSIE", "MSIE5", "MSIE" + getVersionNumber(userAgent, pos + OFFSET_FOUR));
+                res = getArray(MS_IEXPLORER_MARKER, "MSIE5", MS_IEXPLORER_MARKER
+                        + getVersionNumber(userAgent, pos + OFFSET_FOUR));
             } else if (userAgent.indexOf("MSIE 5.5") > -1) {
                 pos = userAgent.indexOf("MSIE 5.5");
-                res = getArray("MSIE", "MSIE5.5", "MSIE" + getVersionNumber(userAgent, pos + OFFSET_FOUR));
+                res = getArray(MS_IEXPLORER_MARKER, "MSIE5.5", MS_IEXPLORER_MARKER
+                        + getVersionNumber(userAgent, pos + OFFSET_FOUR));
             } else if (userAgent.indexOf("MSIE 5.") > -1) {
                 pos = userAgent.indexOf("MSIE 5.");
-                res = getArray("MSIE", "MSIE5.x", "MSIE" + getVersionNumber(userAgent, pos + OFFSET_FOUR));
+                res = getArray(MS_IEXPLORER_MARKER, "MSIE5.x", MS_IEXPLORER_MARKER
+                        + getVersionNumber(userAgent, pos + OFFSET_FOUR));
             } else if (userAgent.indexOf("MSIE 4") > -1) {
                 pos = userAgent.indexOf("MSIE 4");
-                res = getArray("MSIE", "MSIE4", "MSIE" + getVersionNumber(userAgent, pos + OFFSET_FOUR));
+                res = getArray(MS_IEXPLORER_MARKER, "MSIE4", MS_IEXPLORER_MARKER
+                        + getVersionNumber(userAgent, pos + OFFSET_FOUR));
             } else if (userAgent.indexOf("MSIE 7") > -1) {
                 pos = userAgent.indexOf("MSIE 7");
-                res = getArray("MSIE", "MSIE7", "MSIE" + getVersionNumber(userAgent, pos + OFFSET_FOUR));
+                res = getArray(MS_IEXPLORER_MARKER, "MSIE7", MS_IEXPLORER_MARKER
+                        + getVersionNumber(userAgent, pos + OFFSET_FOUR));
             } else if (userAgent.indexOf("MSIE 8") > -1) {
                 pos = userAgent.indexOf("MSIE 8");
-                res = getArray("MSIE", "MSIE8", "MSIE" + getVersionNumber(userAgent, pos + OFFSET_FOUR));
+                res = getArray(MS_IEXPLORER_MARKER, "MSIE8", MS_IEXPLORER_MARKER
+                        + getVersionNumber(userAgent, pos + OFFSET_FOUR));
             } else {
-                res = getArray("MSIE", "<B>MSIE?</B>", "<B>MSIE?"
-                        + getVersionNumber(userAgent, userAgent.indexOf("MSIE") + OFFSET_FOUR) + "</B>");
+                res = getArray(MS_IEXPLORER_MARKER, "<B>MSIE?</B>", "<B>MSIE?"
+                        + getVersionNumber(userAgent, userAgent.indexOf(MS_IEXPLORER_MARKER) + OFFSET_FOUR)
+                        + "</B>");
             }
         } else if (userAgent.indexOf("Gecko/") > -1) {
             pos = userAgent.indexOf("Gecko/");

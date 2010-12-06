@@ -28,8 +28,6 @@ import se.vgregion.userfeedback.domain.UserContact;
 public class FeedbackReport {
     public static final String NEWLINE = "\n";
     private String defaultErrorMessage;
-    /* e-postadress till applikationsansvarig */
-    private String reportEmail;
 
     public enum ReportMethod {
         usd, email, pivotal
@@ -71,14 +69,6 @@ public class FeedbackReport {
 
     public PlatformData getUserPlatform() {
         return userPlatform;
-    }
-
-    public String getReportEmail() {
-        return reportEmail;
-    }
-
-    public void setReportEmail(String reportEmail) {
-        this.reportEmail = reportEmail;
     }
 
     public boolean isSendScreenShot() {
@@ -149,7 +139,8 @@ public class FeedbackReport {
             List<se.vgregion.userfeedback.Screenshot> files = this.getScreenShots();
             sb.append("- Bifogade skärmdumpar: ");
             for (se.vgregion.userfeedback.Screenshot file : files) {
-                sb.append(file.getFileName() + ", ");
+                sb.append(file.getFileName());
+                sb.append(", ");
             }
             sb.append(NEWLINE);
         }
@@ -163,7 +154,7 @@ public class FeedbackReport {
         sb.append("- Timestamp: " + userPlatform.getTimeStamp() + NEWLINE);
 
         sb.append(NEWLINE);
-        sb.append("Email till applikationsansvarig: " + this.getReportEmail() + NEWLINE);
+        sb.append("Email till applikationsansvarig: " + this.getMessage().getReportEmail() + NEWLINE);
         return sb.toString();
     }
 }

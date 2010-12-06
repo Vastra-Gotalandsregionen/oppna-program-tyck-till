@@ -218,7 +218,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     }
 
     private void sendReportByEmail(FeedbackReport report, String subject) throws MessagingException {
-        String reportEmail = report.getReportEmail();
+        String reportEmail = report.getMessage().getReportEmail();
 
         if (reportEmail != null && !"".equals(reportEmail)) {
             String body = "";
@@ -227,7 +227,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
             try {
                 new EMailClient().postMail(reportEmailArray, report.getMessage().getTrackerCategory() + ":"
                         + subject, "" + body, FEEDBACK_REPORT_SERVICE_NOREPLY, report.getScreenShots());
-            } catch (Throwable e1) {
+            } catch (MessagingException e1) {
                 LOGGER.error("Email submission failed:", e1);
                 String[] emailTo = { FEEDBACK_REPORT_SERVICE_ADMIN_EMAIL };
 
@@ -254,8 +254,8 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         p.setProperty("z_organization", "org:5527E3F8D19F49409036F162493C7DD0");
         p.setProperty("z_telefon_nr", lookupPhonenumber(report));
 
-        StringBuffer descBuf = new StringBuffer();
-        descBuf.append(report.toString() + "\n");
+        StringBuffer descBuf = new StringBuffer(report.toString());
+        descBuf.append("\n");
         p.setProperty("description", descBuf.toString());
         return p;
     }

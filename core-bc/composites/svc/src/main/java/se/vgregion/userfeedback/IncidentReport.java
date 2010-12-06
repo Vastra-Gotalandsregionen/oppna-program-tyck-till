@@ -280,7 +280,8 @@ public class IncidentReport {
             List<String> errTypes = this.getErrorTypes();
             sb.append("- Typ av fel: ");
             for (String type : errTypes) {
-                sb.append(type + ",");
+                sb.append(type);
+                sb.append(",");
             }
             sb.append(NEWLINE);
         }
@@ -310,7 +311,8 @@ public class IncidentReport {
             List<se.vgregion.userfeedback.Screenshot> files = this.getScreenShots();
             sb.append("- Bifogade skärmdumpar: ");
             for (se.vgregion.userfeedback.Screenshot file : files) {
-                sb.append(file.getFileName() + ", ");
+                sb.append(file.getFileName());
+                sb.append(", ");
             }
             sb.append(NEWLINE);
         }

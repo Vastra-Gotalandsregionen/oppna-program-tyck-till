@@ -36,6 +36,9 @@ public class UserAgentUtils {
     private static final int OFFSET_EIGHT = 8;
     private static final int OFFSET_NINE = 9;
 
+    private static final String WIN_MARKER = "Win";
+    private static final String WIN_NT_MARKER = "WinNT";
+
     private static String getFirstVersionNumber(String userAgent, int position, int numDigits) {
         String ver = getVersionNumber(userAgent, position);
         if (ver == null) {
@@ -158,61 +161,68 @@ public class UserAgentUtils {
         int pos;
         if (userAgent.indexOf("Windows-NT") > -1) {
             pos = userAgent.indexOf("Windows-NT");
-            res = getArray("Win", "WinNT", "Win" + getVersionNumber(userAgent, pos + OFFSET_EIGHT));
+            res = getArray(WIN_MARKER, "WinNT", WIN_MARKER + getVersionNumber(userAgent, pos + OFFSET_EIGHT));
         } else if (userAgent.indexOf("Windows NT") > -1) {
             // <SPAN class="codecomment"> The different versions of Windows NT are decoded in the verbosity level
             // 2</span>
             // <SPAN class="codecomment"> ie: Windows NT 5.1 = Windows XP</span>
             if (userAgent.indexOf("Windows NT 5.1") > -1) {
                 pos = userAgent.indexOf("Windows NT 5.1");
-                res = getArray("Win", "WinXP", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                res = getArray(WIN_MARKER, "WinXP", WIN_MARKER + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
             } else if (userAgent.indexOf("Windows NT 6.0") > -1) {
                 pos = userAgent.indexOf("Windows NT 6.0");
-                res = getArray("Win", "Vista", "Vista" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                res = getArray(WIN_MARKER, "Vista", "Vista" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
             } else if (userAgent.indexOf("Windows NT 6.1") > -1) {
                 pos = userAgent.indexOf("Windows NT 6.1");
-                res = getArray("Win", "Seven", "Seven " + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                res = getArray(WIN_MARKER, "Seven", "Seven " + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
             } else if (userAgent.indexOf("Windows NT 5.0") > -1) {
                 pos = userAgent.indexOf("Windows NT 5.0");
-                res = getArray("Win", "Win2000", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                res = getArray(WIN_MARKER, "Win2000", WIN_MARKER + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
             } else if (userAgent.indexOf("Windows NT 5.2") > -1) {
                 pos = userAgent.indexOf("Windows NT 5.2");
-                res = getArray("Win", "Win2003", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                res = getArray(WIN_MARKER, "Win2003", WIN_MARKER + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
             } else if (userAgent.indexOf("Windows NT 4.0") > -1) {
                 pos = userAgent.indexOf("Windows NT 4.0");
-                res = getArray("Win", "WinNT4", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                res = getArray(WIN_MARKER, "WinNT4", WIN_MARKER + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
             } else if (userAgent.indexOf("Windows NT)") > -1) {
                 pos = userAgent.indexOf("Windows NT)");
-                res = getArray("Win", "WinNT", "WinNT");
+                res = getArray(WIN_MARKER, "WinNT", "WinNT");
             } else if (userAgent.indexOf("Windows NT;") > -1) {
                 pos = userAgent.indexOf("Windows NT;");
-                res = getArray("Win", "WinNT", "WinNT");
+                res = getArray(WIN_MARKER, WIN_NT_MARKER, WIN_NT_MARKER);
             } else {
-                res = getArray("Win", "<B>WinNT?</B>", "<B>WinNT?</B>");
+                res = getArray(WIN_MARKER, "<B>WinNT?</B>", "<B>WinNT?</B>");
             }
-        } else if (userAgent.indexOf("Win") > -1) {
+        } else if (userAgent.indexOf(WIN_MARKER) > -1) {
             if (userAgent.indexOf("Windows") > -1) {
                 if (userAgent.indexOf("Windows 98") > -1) {
                     pos = userAgent.indexOf("Windows 98");
-                    res = getArray("Win", "Win98", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                    res = getArray(WIN_MARKER, "Win98", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 } else if (userAgent.indexOf("Windows_98") > -1) {
                     pos = userAgent.indexOf("Windows_98");
-                    res = getArray("Win", "Win98", "Win" + getVersionNumber(userAgent, pos + OFFSET_EIGHT));
+                    res = getArray(WIN_MARKER, "Win98", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_EIGHT));
                 } else if (userAgent.indexOf("Windows 2000") > -1) {
                     pos = userAgent.indexOf("Windows 2000");
-                    res = getArray("Win", "Win2000", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                    res = getArray(WIN_MARKER, "Win2000", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 } else if (userAgent.indexOf("Windows 95") > -1) {
                     pos = userAgent.indexOf("Windows 95");
-                    res = getArray("Win", "Win95", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                    res = getArray(WIN_MARKER, "Win95", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 } else if (userAgent.indexOf("Windows 9x") > -1) {
                     pos = userAgent.indexOf("Windows 9x");
-                    res = getArray("Win", "Win9x", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                    res = getArray(WIN_MARKER, "Win9x", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 } else if (userAgent.indexOf("Windows ME") > -1) {
                     pos = userAgent.indexOf("Windows ME");
-                    res = getArray("Win", "WinME", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                    res = getArray(WIN_MARKER, "WinME", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 } else if (userAgent.indexOf("Windows 3.1") > -1) {
                     pos = userAgent.indexOf("Windows 3.1");
-                    res = getArray("Win", "Win31", "Win" + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
+                    res = getArray(WIN_MARKER, "Win31", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_SEVEN));
                 }
                 // <SPAN class="codecomment"> If no version was found, rely on the following code to detect
                 // "WinXX"</span>
@@ -222,40 +232,46 @@ public class UserAgentUtils {
             if (res == null) {
                 if (userAgent.indexOf("Win98") > -1) {
                     pos = userAgent.indexOf("Win98");
-                    res = getArray("Win", "Win98", "Win" + getVersionNumber(userAgent, pos + OFFSET_THREE));
+                    res = getArray(WIN_MARKER, "Win98", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_THREE));
                 } else if (userAgent.indexOf("Win31") > -1) {
                     pos = userAgent.indexOf("Win31");
-                    res = getArray("Win", "Win31", "Win" + getVersionNumber(userAgent, pos + OFFSET_THREE));
+                    res = getArray(WIN_MARKER, "Win31", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_THREE));
                 } else if (userAgent.indexOf("Win95") > -1) {
                     pos = userAgent.indexOf("Win95");
-                    res = getArray("Win", "Win95", "Win" + getVersionNumber(userAgent, pos + OFFSET_THREE));
+                    res = getArray(WIN_MARKER, "Win95", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_THREE));
                 } else if (userAgent.indexOf("Win 9x") > -1) {
                     pos = userAgent.indexOf("Win 9x");
-                    res = getArray("Win", "Win9x", "Win" + getVersionNumber(userAgent, pos + OFFSET_THREE));
+                    res = getArray(WIN_MARKER, "Win9x", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_THREE));
                 } else if (userAgent.indexOf("WinNT4.0") > -1) {
                     pos = userAgent.indexOf("WinNT4.0");
-                    res = getArray("Win", "WinNT4", "Win" + getVersionNumber(userAgent, pos + OFFSET_THREE));
-                } else if (userAgent.indexOf("WinNT") > -1) {
-                    pos = userAgent.indexOf("WinNT");
-                    res = getArray("Win", "WinNT", "Win" + getVersionNumber(userAgent, pos + OFFSET_THREE));
+                    res = getArray(WIN_MARKER, "WinNT4", WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_THREE));
+                } else if (userAgent.indexOf() > -1) {
+                    pos = userAgent.indexOf(WIN_NT_MARKER);
+                    res = getArray(WIN_MARKER, WIN_NT_MARKER, WIN_MARKER
+                            + getVersionNumber(userAgent, pos + OFFSET_THREE));
                 }
             }
             if (res == null) {
                 if (userAgent.indexOf("Windows") > -1) {
                     pos = userAgent.indexOf("Windows");
-                    res = getArray("Win", "<B>Win?</B>", "<B>Win?"
+                    res = getArray(WIN_MARKER, "<B>Win?</B>", "<B>Win?"
                             + getVersionNumber(userAgent, pos + OFFSET_SEVEN) + "</B>");
                 } else if (userAgent.indexOf("Win") > -1) {
                     pos = userAgent.indexOf("Win");
-                    res = getArray("Win", "<B>Win?</B>", "<B>Win?"
+                    res = getArray(WIN_MARKER, "<B>Win?</B>", "<B>Win?"
                             + getVersionNumber(userAgent, pos + OFFSET_THREE) + "</B>");
                 } else {
                     // <SPAN class="codecomment"> Should not happen at this point</span>
-                    res = getArray("Win", "<B>Win?</B>", "<B>Win?</B>");
+                    res = getArray(WIN_MARKER, "<B>Win?</B>", "<B>Win?</B>");
                 }
             }
         } else if (userAgent.indexOf("Mac OS X") > -1) {
-            pos=userAgent.indexOf("Mac OS X");
+            pos = userAgent.indexOf("Mac OS X");
             if (userAgent.indexOf("iPhone") > -1) {
                 pos = userAgent.indexOf("iPhone OS");
                 res = getArray("Mac", "MacOSX-iPhone", "MacOS-iPhone "

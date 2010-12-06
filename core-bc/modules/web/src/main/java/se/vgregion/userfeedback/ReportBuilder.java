@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.vgregion.userfeedback.FeedbackReport.ReportMethod;
+import se.vgregion.userfeedback.domain.Backend;
 import se.vgregion.userfeedback.domain.PlatformData;
 import se.vgregion.userfeedback.domain.UserContact;
 import se.vgregion.userfeedback.domain.UserFeedback;
@@ -45,10 +46,10 @@ public class ReportBuilder {
      */
     public FeedbackReport buildFeedbackReport(UserFeedback feedbackForm, HttpServletRequest request) {
 
+        setUserMessage(feedbackForm);
         setUserPlatform(platformDataService.mapUserPlatform(request));
         setReportMethods(feedbackForm);
         setUserContactMethods(feedbackForm);
-        setUserMessage(feedbackForm);
 
         FeedbackReport report = new FeedbackReport(this.message, this.reportMethods, this.userContactOptions,
                 this.userPlatform);
@@ -87,9 +88,28 @@ public class ReportBuilder {
         this.userContactOptions = contactOptions;
     }
 
+    /**
+     * Inspect form object and determine which report method(s) should be used.
+     * 
+     * @param feedbackForm
+     */
     private void setReportMethods(UserFeedback feedbackForm) {
         List<ReportMethod> reportMethods = new ArrayList<FeedbackReport.ReportMethod>();
-        // TODO: fix this mapping.
+        Backend backend = feedbackForm.getCaseBackend();
+
+        assert (message != null) : "setMessage() should be called before serReportMethods()";
+        if (backend.getPivotal() != null) {
+            reportMethods.add(FeedbackReport.ReportMethod.pivotal);
+            message.setTrackerCategory(backend.getPivotal());
+        }
+        if (backend.getUsd() != null) {
+            reportMethods.add(FeedbackReport.ReportMethod.usd);
+            message.setTrackerCategory(backend.getUsd());
+        }
+        if (backend.getMbox() != null) {
+            reportMethods.add(FeedbackReport.ReportMethod.email);
+            message.setReportEmail(backend.getMbox());
+        }
         this.reportMethods = reportMethods;
     }
 }

@@ -89,12 +89,12 @@ public class FeedbackReportTest extends TestCase {
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void testReportToEmail() throws Exception {
         reportMethods.add(ReportMethod.email);
         FeedbackReport report = new FeedbackReport(message, reportMethods, contactMethods, platform);
         report.addScreenShot(screenShot);
-        report.setReportEmail("test_account@nowhere.com");
+        report.getMessage().setReportEmail("test_account@nowhere.com");
         reportService.reportFeedback(report);
     }
 }

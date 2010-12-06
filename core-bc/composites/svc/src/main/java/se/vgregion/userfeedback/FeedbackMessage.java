@@ -7,6 +7,15 @@ public class FeedbackMessage {
     private String description;
     private String url;
     private String hyperlink;
+    private String reportEmail;
+
+    public String getReportEmail() {
+        return reportEmail;
+    }
+
+    public void setReportEmail(String reportEmail) {
+        this.reportEmail = reportEmail;
+    }
 
     public String getReportType() {
         return reportType;

@@ -1,33 +1,17 @@
 package se.vgregion.userfeedback.controllers;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import se.vgregion.userfeedback.domain.*;
 
-import se.vgregion.userfeedback.domain.Backend;
-import se.vgregion.userfeedback.domain.CustomCategory;
-import se.vgregion.userfeedback.domain.CustomSubCategory;
-import se.vgregion.userfeedback.domain.FormTemplate;
-import se.vgregion.userfeedback.domain.FormTemplateRepository;
-import se.vgregion.userfeedback.domain.StaticCategory;
-import se.vgregion.userfeedback.domain.StaticCategoryRepository;
+import javax.validation.Valid;
+import java.util.*;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
@@ -137,8 +121,12 @@ public class TyckTillAdminController {
     public String editCustomCategory(@ModelAttribute("formTemplate") FormTemplate formTemplate) {
 
         List<CustomSubCategory> subCategories = formTemplate.getCustomCategory().getCustomSubCategories();
+        int emptyCnt = 0;
+        for (CustomSubCategory subCategory : subCategories) {
+            if (StringUtils.isBlank(subCategory.getName())) emptyCnt++;
+        }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = emptyCnt; i < 3; i++) {
             CustomSubCategory customSubCategory = new CustomSubCategory();
             customSubCategory.setBackend(new Backend());
 

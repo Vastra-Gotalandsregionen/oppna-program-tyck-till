@@ -11,27 +11,35 @@
 <head><title>Simple jsp page</title></head>
 <body>
 
-Place your content here
+<h3>Konfigurera en egen kategori</h3>
 
-<form:form commandName="formTemplate" action="/tycktill/KontaktaOss/CustomCategoryUpdate">
+<form:form commandName="formTemplate" action="CustomCategoryUpdate">
     <form:hidden path="id"/>
-    <table>
+    <table cellpadding="6" rules="groups" frame="box">
         <thead>
         <tr>
             <th></th>
-            <th>Category name</th>
-            <th>Default contact</th>
+            <th>Kategori</th>
+            <th>&nbsp;</th>
+            <th>Bas USD</th>
+            <th>Bas Pivotal</th>
+            <th>Bas Mailbox</th>
         </tr>
         <tr>
             <td></td>
             <td><form:input path="customCategory.name"/></td>
+            <td></td>
             <td><form:input path="customCategory.backend.usd"/></td>
+            <td><form:input path="customCategory.backend.pivotal"/></td>
+            <td><form:input path="customCategory.backend.mbox"/></td>
         </tr>
         </thead>
+
         <tbody>
         <tr>
             <th>Id</th>
-            <th>SubCategory</th>
+            <th>Under kategori</th>
+            <th>&nbsp;</th>
             <th>Usd</th>
             <th>Pivotal</th>
             <th>Mailbox</th>
@@ -44,6 +52,7 @@ Place your content here
                            name="customCategory.customSubCategories[${loop.index}].name"
                            type="text" value="${subCategory.name}"/>
                 </td>
+                <td></td>
                 <td>
                     <input id="customCategory.customSubCategories[${loop.index}].backend.usd"
                            name="customCategory.customSubCategories[${loop.index}].backend.usd"
@@ -62,14 +71,15 @@ Place your content here
             </tr>
         </c:forEach>
         </tbody>
+        
         <tfoot>
-            <tr>
-                <td colspan="5"><input type="submit"/></td>
-            </tr>
+        <tr>
+            <td colspan="6"><input type="submit" value="Fortsätt"/></td>
+        </tr>
         </tfoot>
     </table>
 
-    
+
 </form:form>
 
 

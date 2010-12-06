@@ -4,20 +4,21 @@
 <head>
     <title>TyckTill - Administration</title>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="../resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("#modalDiv").dialog({
                 modal: true,
                 autoOpen: false,
-                height: 600,
-                width: 600,
+                height: 670,
+                width: 610,
                 draggable: true,
                 resizeable: true,
                 title: 'Tyck till'
             });
-            loadjscssfile("style/alternateStyle.css", "css");
+            loadjscssfile("../resources/style/alternateStyle.css", "css");
         });
 
         function loadjscssfile(filename, filetype) {
@@ -41,28 +42,25 @@
             $("#modalIFrame").attr('src', url);
             return false;
         }
-
-
     </script>
 
     <style type="text/css">
-        <%@ include file="/style/style.css"%>
+        @import "../resources/style/modalStyle.css";
+        @import "../resources/style/style.css";
     </style>
-    <link rel="stylesheet" type="text/css" href="../../style/modalStyle.css" title="MyStyle">
+
 </head>
 <body>
-
 <div id="modalDiv">
-    <iframe id="modalIFrame"
-            width="100%"
-            height="98%"
-            marginWidth="0"
-            marginHeight="0"
-            frameBorder="0"
-            scrolling="no">
-    </iframe>
-</div>
-
+        <iframe id="modalIFrame"
+                width="550"
+                height="600"
+                marginWidth="0"
+                marginHeight="30"
+                frameBorder="0"
+                scrolling="auto">
+        </iframe>
+    </div>
 <div>
     <h1>Form template list</h1>
 
@@ -95,7 +93,7 @@
                 <td align="center">${formTemplate.showAttachment}</td>
                 <th><a href="TemplateEdit?templateId=${formTemplate.id}">Edit</a></th>
                 <th><a href="#"
-                       onclick="javascript: openDialog('/tycktill/KontaktaOss?formName=${formTemplate.name}');">View</a>
+                       onclick="javascript: openDialog('../KontaktaOss?formName=${formTemplate.name}');">View</a>
                 </th>
             </tr>
         </c:forEach>
@@ -103,7 +101,7 @@
         <tfoot>
         <tr>
             <th align="right" colspan="10">
-                <a href="TemplateEditor">Add</a>
+                <a href="TemplateEdit">Add</a>
             </th>
         </tr>
         </tfoot>

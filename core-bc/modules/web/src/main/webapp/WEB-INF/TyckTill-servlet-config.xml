@@ -26,6 +26,8 @@
 
   <mvc:annotation-driven />
 
+  <mvc:resources mapping="/resources/**" location="classpath:/resources/" />
+
   <!--
         if you would not have used component scanning you would have had
         to wire up the controller yourself:

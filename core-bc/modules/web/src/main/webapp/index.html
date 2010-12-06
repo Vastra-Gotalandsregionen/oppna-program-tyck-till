@@ -3,13 +3,9 @@
 <html>
 <head>
     <title>Hej</title>
-    <link rel="stylesheet" type="text/css" href="style/modalStyle.css" title="MyStyle">
-    <!--
-    <link rel="stylesheet" type="text/css"
-          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
-    -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="tycktill/resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("#modalDiv").dialog({
@@ -28,7 +24,7 @@
                         $("#modalIFrame").attr('src', url);
                         return false;
                     });
-            loadjscssfile("style/alternateStyle.css", "css") ;
+            loadjscssfile("tycktill/resources/style/alternateStyle.css", "css") ;
         });
         
         function loadjscssfile(filename, filetype){
@@ -46,9 +42,12 @@
         	 if (typeof fileref!="undefined")
         		  document.getElementsByTagName("head")[0].appendChild(fileref)
          }
-
-
     </script>
+
+    <style type="text/css">
+        @import "resources/style/modalStyle.css";
+        @import "resources/style/style.css";
+    </style>
 </head>
 <body>
 
@@ -58,11 +57,11 @@ Hej
     <div id="modalDiv">
         <iframe id="modalIFrame"
                 width="100%"
-                height="98%"
+                height="100%"
                 marginWidth="0"
                 marginHeight="0"
                 frameBorder="0"
-                scrolling="no">
+                scrolling="auto">
         </iframe>
     </div>
     

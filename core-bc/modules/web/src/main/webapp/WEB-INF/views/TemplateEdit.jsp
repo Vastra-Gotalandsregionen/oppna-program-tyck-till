@@ -11,20 +11,21 @@
 <head>
     <title>TyckTill - Administration</title>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="../resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("#modalDiv").dialog({
                 modal: true,
                 autoOpen: false,
-                height: 600,
-                width: 600,
+                height: 500,
+                width: 800,
                 draggable: true,
                 resizeable: true,
                 title: 'Tyck till'
             });
-            loadjscssfile("style/alternateStyle.css", "css");
+            loadjscssfile("../resources/style/alternateStyle.css", "css");
         });
 
         function loadjscssfile(filename, filetype) {
@@ -54,9 +55,9 @@
     </script>
 
     <style type="text/css">
-        <%@ include file="/style/style.css"%>
+        @import "../resources/style/modalStyle.css";
+        @import "../resources/style/style.css";
     </style>
-    <link rel="stylesheet" type="text/css" href="../../style/modalStyle.css" title="MyStyle">
 
 </head>
 <body>
@@ -64,7 +65,6 @@
 
 <div id="modalDiv">
     <div id="modalIFrame">
-
     </div>
 </div>
 
@@ -125,7 +125,7 @@
         <div class="prop">
             <span class="value">
                 <form:checkbox path="showCustom" label="Visa en egen kategori"/>
-                <input type="button" value="Ändra" onclick="openDialog('/tycktill/KontaktaOss/CustomCategoryEdit')"/>
+                <input type="button" value="Ändra" onclick="openDialog('CustomCategoryEdit')"/>
             </span>
             <br/><br/>
 
@@ -192,10 +192,10 @@
         <input type="submit" value="Uppdatera"/>
     </div>
 
-        <br/>
-        <br/>
-        <br/>
-        
+    <br/>
+    <br/>
+    <br/>
+
 </form:form>
 </body>
 </html>

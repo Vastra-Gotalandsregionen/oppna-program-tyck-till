@@ -19,25 +19,27 @@
 
 package se.vgregion.userfeedback.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import se.vgregion.incidentreport.pivotaltracker.PTStory;
-import se.vgregion.incidentreport.pivotaltracker.PivotalTrackerService;
-import se.vgregion.usdservice.USDService;
-import se.vgregion.userfeedback.IncidentReport;
-import se.vgregion.userfeedback.IncidentReportService;
-import se.vgregion.util.EMailClient;
-
-import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
+import javax.mail.MessagingException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import se.vgregion.incidentreport.pivotaltracker.PTStory;
+import se.vgregion.incidentreport.pivotaltracker.PivotalTrackerService;
+import se.vgregion.usdservice.USDService;
+import se.vgregion.userfeedback.IncidentReport;
+import se.vgregion.userfeedback.IncidentReportService;
+import se.vgregion.util.EMailClient;
 
 /**
  * Implementation of the incident report service.
@@ -89,6 +91,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int reportIncident(IncidentReport ir) {
         int result = 0;
         try {
@@ -114,8 +117,8 @@ public class IncidentReportServiceImpl implements IncidentReportService {
                     createUserStory(ir);
                 } catch (Exception e) {
                     LOGGER.error("Pivotal tracker could not be reached, trying email instead.", e);
-                    sendReportByEmail(ir,
-                            INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + "PivotalTracker-" + e.getMessage());
+                    sendReportByEmail(ir, INCIDENT_REPORT_ERROR_EMAIL_SUBJECT + ":" + "PivotalTracker-"
+                            + e.getMessage());
                 }
             } else {
                 sendReportByEmail(ir, INCIDENT_REPORT_EMAIL_SUBJECT);
@@ -197,7 +200,7 @@ public class IncidentReportServiceImpl implements IncidentReportService {
             try {
                 new EMailClient().postMail(reportEmailArray, ir.getApplicationName() + ":" + subject, "" + body,
                         INCIDENT_REPORT_SERVICE_NOREPLY, ir.getScreenShots());
-            } catch (Throwable e1) {
+            } catch (MessagingException e1) {
                 LOGGER.error("Email submission failed:", e1);
                 String[] emailTo = { INCIDENT_REPORT_SERVICE_ADMIN_EMAIL };
 
@@ -227,8 +230,8 @@ public class IncidentReportServiceImpl implements IncidentReportService {
         } else {
             p.setProperty("z_telefon_nr", "N/A");
         }
-        StringBuffer descBuf = new StringBuffer();
-        descBuf.append(ir.toString() + "\n");
+        StringBuffer descBuf = new StringBuffer(ir.toString());
+        descBuf.append("\n");
         p.setProperty("description", descBuf.toString());
         return p;
     }

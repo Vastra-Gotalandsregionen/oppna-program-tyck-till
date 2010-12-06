@@ -33,6 +33,4 @@
     <!-- Scans for @Repository, @Service and @Component -->
     <context:component-scan base-package="se.vgregion.userfeedback"/>
     
-    
-
 </beans>

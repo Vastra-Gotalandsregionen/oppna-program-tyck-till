@@ -1,5 +1,14 @@
 package se.vgregion.userfeedback.controllers;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.NoResultException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,15 +16,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import se.vgregion.userfeedback.domain.*;
 
-import javax.persistence.NoResultException;
-import java.io.IOException;
-import java.util.*;
+import se.vgregion.userfeedback.FeedbackReport;
+import se.vgregion.userfeedback.FeedbackReportService;
+import se.vgregion.userfeedback.ReportBuilder;
+import se.vgregion.userfeedback.domain.Attachment;
+import se.vgregion.userfeedback.domain.AttachmentRepository;
+import se.vgregion.userfeedback.domain.CustomCategory;
+import se.vgregion.userfeedback.domain.CustomSubCategory;
+import se.vgregion.userfeedback.domain.FormTemplate;
+import se.vgregion.userfeedback.domain.FormTemplateRepository;
+import se.vgregion.userfeedback.domain.StaticCategory;
+import se.vgregion.userfeedback.domain.StaticCategoryRepository;
+import se.vgregion.userfeedback.domain.UserContact;
+import se.vgregion.userfeedback.domain.UserFeedback;
+import se.vgregion.userfeedback.domain.UserFeedbackRepository;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
@@ -39,8 +63,14 @@ public class TyckTillController {
     @Autowired
     private StaticCategoryRepository staticCategoryRepository;
 
-//    @Autowired
-//    private FeedbackReportService reportService;
+    @Autowired
+    private ReportBuilder reportBuilder;
+
+    @Autowired
+    private FeedbackReportService reportService;
+
+    // @Autowired
+    // private FeedbackReportService reportService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -122,9 +152,8 @@ public class TyckTillController {
             SessionStatus status, ModelMap model) {
         logger.info("Sending...");
 
-//        ReportBuilder builder = new ReportBuilder();
-//        FeedbackReport report = builder.buildFeedbackReport(userFeedback, multipartRequest);
-//        reportService.reportFeedback(report);
+        FeedbackReport report = reportBuilder.buildFeedbackReport(userFeedback, multipartRequest);
+        reportService.reportFeedback(report);
 
         // logger.debug("User agent data captured: " + report);
 
@@ -163,8 +192,8 @@ public class TyckTillController {
         userFeedback.setCaseSubCategories(caseSubCategories);
 
         // 4: Lookup CaseContact
-//        String caseContact = lookupCaseContact(userFeedback, template);
-//        userFeedback.setCaseContact(caseContact);
+        // String caseContact = lookupCaseContact(userFeedback, template);
+        // userFeedback.setCaseContact(caseContact);
     }
 
     private String lookupCaseCategory(UserFeedback userFeedback, FormTemplate template) {
@@ -210,36 +239,36 @@ public class TyckTillController {
         return subCategories;
     }
 
-//    private String lookupCaseContact(UserFeedback userFeedback, FormTemplate template) {
-//        CustomCategory customCategory = template.getCustomCategory();
-//
-//        logger.debug(customCategory.getName());
-//
-//        // 0: Check if there exist a customCategory
-//        if (customCategory == null) {
-//            return "";
-//        }
-//        // 1: check if customCategory
-//        if (customCategory.getName().equals(userFeedback.getCaseCategory())) {
-//            List<String> caseSubCategoryList = userFeedback.getCaseSubCategories();
-//            // 2: check if single selection - else defaultContact
-//            if (caseSubCategoryList == null || caseSubCategoryList.size() != 1) {
-//                return customCategory.getDefaultContact();
-//            }
-//
-//            String caseSubCategory = caseSubCategoryList.get(0);
-//            // 3: check if customSubCategory has contact
-//            for (CustomSubCategory subCategory : customCategory.getCustomSubCategories()) {
-//                if (subCategory.getName().equals(caseSubCategory)) {
-//                    if (!StringUtils.isBlank(subCategory.getContact())) {
-//                        return subCategory.getContact();
-//                    }
-//                }
-//            }
-//        }
-//
-//        return customCategory.getDefaultContact();
-//    }
+    // private String lookupCaseContact(UserFeedback userFeedback, FormTemplate template) {
+    // CustomCategory customCategory = template.getCustomCategory();
+    //
+    // logger.debug(customCategory.getName());
+    //
+    // // 0: Check if there exist a customCategory
+    // if (customCategory == null) {
+    // return "";
+    // }
+    // // 1: check if customCategory
+    // if (customCategory.getName().equals(userFeedback.getCaseCategory())) {
+    // List<String> caseSubCategoryList = userFeedback.getCaseSubCategories();
+    // // 2: check if single selection - else defaultContact
+    // if (caseSubCategoryList == null || caseSubCategoryList.size() != 1) {
+    // return customCategory.getDefaultContact();
+    // }
+    //
+    // String caseSubCategory = caseSubCategoryList.get(0);
+    // // 3: check if customSubCategory has contact
+    // for (CustomSubCategory subCategory : customCategory.getCustomSubCategories()) {
+    // if (subCategory.getName().equals(caseSubCategory)) {
+    // if (!StringUtils.isBlank(subCategory.getContact())) {
+    // return subCategory.getContact();
+    // }
+    // }
+    // }
+    // }
+    //
+    // return customCategory.getDefaultContact();
+    // }
 
     private void processAttachment(MultipartFile file, UserFeedback userFeedback) {
         if (file.isEmpty()) {

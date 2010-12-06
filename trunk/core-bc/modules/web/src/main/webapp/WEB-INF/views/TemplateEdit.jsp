@@ -95,7 +95,7 @@
         <div class="prop">
             <span class="value">
                 <form:checkbox path="showContent" label="Visa innehålls kategorin"/>
-                <input type="button" value="Backend"/>
+                <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
             </span>
             <br/><br/>
 
@@ -110,7 +110,7 @@
         <div class="prop">
             <span class="value">
                 <form:checkbox path="showFunction" label="Visa funktions kategorin"/>
-                <input type="button" value="Backend"/>
+                <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
             </span>
             <br/><br/>
 
@@ -143,7 +143,7 @@
         <div class="prop">
             <span class="value">
                 <form:checkbox path="showOther" label="Visa övrigt kategorin"/>
-                <input type="button" value="Backend"/>
+                <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
             </span>
             <br/><br/>
 

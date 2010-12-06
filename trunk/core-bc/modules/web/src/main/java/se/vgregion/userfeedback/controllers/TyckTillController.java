@@ -285,7 +285,7 @@ public class TyckTillController {
 
             attachments.add(attachment);
         } catch (IOException e) {
-            e.printStackTrace(); // To change body of catch statement use File | Settings | File Templates.
+            logger.error(e.toString()); // To change body of catch statement use File | Settings | File Templates.
         }
     }
 

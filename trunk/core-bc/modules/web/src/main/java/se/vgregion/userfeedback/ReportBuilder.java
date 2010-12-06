@@ -22,7 +22,7 @@ import se.vgregion.userfeedback.domain.UserFeedback;
 public class ReportBuilder {
 
     @Autowired
-    PlatformDataService platformDataService;
+    private PlatformDataService platformDataService;
 
     public PlatformDataService getPlatformDataService() {
         return platformDataService;
@@ -57,16 +57,16 @@ public class ReportBuilder {
     }
 
     private void setUserMessage(UserFeedback feedbackForm) {
-        FeedbackMessage message = new FeedbackMessage();
-        message.setDescription(feedbackForm.getMessage());
+        FeedbackMessage newMessage = new FeedbackMessage();
+        newMessage.setDescription(feedbackForm.getMessage());
         StringBuilder sb = new StringBuilder();
         sb.append(feedbackForm.getCaseCategory());
         List<String> subCats = feedbackForm.getCaseSubCategories();
         for (String subCat : subCats) {
             sb.append(" - " + subCat);
         }
-        message.setReportType(sb.toString());
-        this.message = message;
+        newMessage.setReportType(sb.toString());
+        this.message = newMessage;
     }
 
     private void setUserPlatform(PlatformData platform) {
@@ -94,22 +94,22 @@ public class ReportBuilder {
      * @param feedbackForm
      */
     private void setReportMethods(UserFeedback feedbackForm) {
-        List<ReportMethod> reportMethods = new ArrayList<FeedbackReport.ReportMethod>();
+        List<ReportMethod> methods = new ArrayList<FeedbackReport.ReportMethod>();
         Backend backend = feedbackForm.getCaseBackend();
 
         assert (message != null) : "setMessage() should be called before serReportMethods()";
         if (backend.getPivotal() != null) {
-            reportMethods.add(FeedbackReport.ReportMethod.pivotal);
+            methods.add(FeedbackReport.ReportMethod.pivotal);
             message.setTrackerCategory(backend.getPivotal());
         }
         if (backend.getUsd() != null) {
-            reportMethods.add(FeedbackReport.ReportMethod.usd);
+            methods.add(FeedbackReport.ReportMethod.usd);
             message.setTrackerCategory(backend.getUsd());
         }
         if (backend.getMbox() != null) {
-            reportMethods.add(FeedbackReport.ReportMethod.email);
+            methods.add(FeedbackReport.ReportMethod.email);
             message.setReportEmail(backend.getMbox());
         }
-        this.reportMethods = reportMethods;
+        this.reportMethods = methods;
     }
 }

@@ -242,7 +242,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         Properties p = new Properties();
         p.setProperty("affected_resource", "nr:BF5880E3AF1C8542B2546B93922C25A7");
         p.setProperty("category", "pcat:400023");
-        // map to group using application name?
+        // map tracker category to USD group.
         String trackerCategory = report.getMessage().getTrackerCategory().trim().replaceAll(" ", "_");
         String groupHandle = usdService.getUSDGroupHandleForApplicationName(trackerCategory);
         p.setProperty("group", groupHandle);

@@ -79,7 +79,7 @@ public class FeedbackReportTest extends TestCase {
     }
 
     @Test
-    @Ignore
+    // @Ignore
     public void testReportToUSD() throws Exception {
         reportMethods.add(ReportMethod.usd);
         message.setTrackerCategory("Tyck_till_test_portlet");

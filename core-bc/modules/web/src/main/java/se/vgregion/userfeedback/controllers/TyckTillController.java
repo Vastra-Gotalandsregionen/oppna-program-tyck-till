@@ -1,14 +1,5 @@
 package se.vgregion.userfeedback.controllers;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.NoResultException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,37 +7,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import se.vgregion.userfeedback.FeedbackReport;
 import se.vgregion.userfeedback.FeedbackReportService;
+import se.vgregion.userfeedback.PlatformDataService;
 import se.vgregion.userfeedback.ReportBuilder;
-import se.vgregion.userfeedback.domain.Attachment;
-import se.vgregion.userfeedback.domain.AttachmentRepository;
-import se.vgregion.userfeedback.domain.CustomCategory;
-import se.vgregion.userfeedback.domain.CustomSubCategory;
-import se.vgregion.userfeedback.domain.FormTemplate;
-import se.vgregion.userfeedback.domain.FormTemplateRepository;
-import se.vgregion.userfeedback.domain.StaticCategory;
-import se.vgregion.userfeedback.domain.StaticCategoryRepository;
-import se.vgregion.userfeedback.domain.UserContact;
-import se.vgregion.userfeedback.domain.UserFeedback;
-import se.vgregion.userfeedback.domain.UserFeedbackRepository;
+import se.vgregion.userfeedback.domain.*;
+
+import javax.persistence.NoResultException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 
 @Controller
-@RequestMapping(value = { "/KontaktaOss" })
+@RequestMapping(value = {"/KontaktaOss"})
 @SessionAttributes("userFeedback")
 public class TyckTillController {
     private static final Logger logger = LoggerFactory.getLogger(TyckTillController.class);
@@ -69,6 +50,10 @@ public class TyckTillController {
     @Autowired
     private FeedbackReportService reportService;
 
+    @Autowired
+    private PlatformDataService platformDataService;
+
+
     // @Autowired
     // private FeedbackReportService reportService;
 
@@ -79,19 +64,16 @@ public class TyckTillController {
 
     /**
      * Used to render the userFeedback form. Basic initialization before render-view.
-     * 
-     * @param formName
-     *            - FormTemplate name. The request parameter "formName" decide how the form is rendered. It is an
-     *            inparameter to give the client this choise.
-     * @param breadcrumb
-     *            - client specific inparameter declaring from where the contact were initiated.
-     * @param model
-     *            - the normal Spring ModelMap.
+     *
+     * @param formName   - FormTemplate name. The request parameter "formName" decide how the form is rendered. It is an
+     *                   inparameter to give the client this choise.
+     * @param breadcrumb - client specific inparameter declaring from where the contact were initiated.
+     * @param model      - the normal Spring ModelMap.
      * @return - view to be rendered.
      */
     @RequestMapping(method = RequestMethod.GET)
     public String setupForm(@RequestParam(value = "formName", required = false) String formName, @RequestParam(
-            value = "breadcrumb", required = false) String breadcrumb, ModelMap model) {
+            value = "breadcrumb", required = false) String breadcrumb, HttpServletRequest request, ModelMap model) {
 
         FormTemplate template = lookupFormTemplate(formName);
         model.addAttribute("template", template);
@@ -113,6 +95,8 @@ public class TyckTillController {
         }
         userFeedback.setBreadcrumb(breadcrumb);
 
+        userFeedback.setPlatformData(platformDataService.mapUserPlatform(request));
+
         model.addAttribute("contactOptions", UserContact.UserContactOption.getLabelMap());
 
         return "KontaktaOss";
@@ -132,32 +116,27 @@ public class TyckTillController {
 
     /**
      * Action method to send Userfeedback.
-     * 
-     * @param userFeedback
-     *            - form backing bean.
-     * @param formTemplateId
-     *            - FormTemplate used to render form, used for extracting CustomCategory configuration.
-     * @param multipartRequest
-     *            - the http-request used for attachment upload and PlatformData extraction.
-     * @param status
-     *            - controls Session state.
-     * @param model
-     *            - the normal Spring ModelMap.
+     *
+     * @param userFeedback     - form backing bean.
+     * @param formTemplateId   - FormTemplate used to render form, used for extracting CustomCategory configuration.
+     * @param multipartRequest - the http-request used for attachment upload and PlatformData extraction.
+     * @param status           - controls Session state.
+     * @param model            - the normal Spring ModelMap.
      * @return - view to render.
      */
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String sendUserFeedback(@ModelAttribute("userFeedback") UserFeedback userFeedback,
-            @RequestParam("formTemplateId") Long formTemplateId, MultipartHttpServletRequest multipartRequest,
-            SessionStatus status, ModelMap model) {
+                                   @RequestParam("formTemplateId") Long formTemplateId, MultipartHttpServletRequest multipartRequest,
+                                   SessionStatus status, ModelMap model) {
         logger.info("Sending...");
-
-        FeedbackReport report = reportBuilder.buildFeedbackReport(userFeedback, multipartRequest);
-        reportService.reportFeedback(report);
 
         // logger.debug("User agent data captured: " + report);
 
         processUserfeedback(userFeedback, formTemplateId, multipartRequest);
+
+        FeedbackReport report = reportBuilder.buildFeedbackReport(userFeedback, multipartRequest);
+        reportService.reportFeedback(report);
 
         log(userFeedback, model);
 
@@ -174,7 +153,7 @@ public class TyckTillController {
     }
 
     private void processUserfeedback(UserFeedback userFeedback, Long formTemplateId,
-            MultipartHttpServletRequest multipartRequest) {
+                                     MultipartHttpServletRequest multipartRequest) {
         // 1: Lookup Attachments
         for (Iterator<String> filenameIterator = multipartRequest.getFileNames(); filenameIterator.hasNext();) {
             String fileName = filenameIterator.next();
@@ -192,8 +171,8 @@ public class TyckTillController {
         userFeedback.setCaseSubCategories(caseSubCategories);
 
         // 4: Lookup CaseContact
-        // String caseContact = lookupCaseContact(userFeedback, template);
-        // userFeedback.setCaseContact(caseContact);
+        Backend backend = lookupCaseBackend(userFeedback, template);
+        userFeedback.setCaseBackend(backend);
     }
 
     private String lookupCaseCategory(UserFeedback userFeedback, FormTemplate template) {
@@ -239,36 +218,78 @@ public class TyckTillController {
         return subCategories;
     }
 
-    // private String lookupCaseContact(UserFeedback userFeedback, FormTemplate template) {
-    // CustomCategory customCategory = template.getCustomCategory();
-    //
-    // logger.debug(customCategory.getName());
-    //
-    // // 0: Check if there exist a customCategory
-    // if (customCategory == null) {
-    // return "";
-    // }
-    // // 1: check if customCategory
-    // if (customCategory.getName().equals(userFeedback.getCaseCategory())) {
-    // List<String> caseSubCategoryList = userFeedback.getCaseSubCategories();
-    // // 2: check if single selection - else defaultContact
-    // if (caseSubCategoryList == null || caseSubCategoryList.size() != 1) {
-    // return customCategory.getDefaultContact();
-    // }
-    //
-    // String caseSubCategory = caseSubCategoryList.get(0);
-    // // 3: check if customSubCategory has contact
-    // for (CustomSubCategory subCategory : customCategory.getCustomSubCategories()) {
-    // if (subCategory.getName().equals(caseSubCategory)) {
-    // if (!StringUtils.isBlank(subCategory.getContact())) {
-    // return subCategory.getContact();
-    // }
-    // }
-    // }
-    // }
-    //
-    // return customCategory.getDefaultContact();
-    // }
+
+    private Backend lookupCaseBackend(UserFeedback userFeedback, FormTemplate template) {
+        Backend backend = null;
+
+        // No category selected
+        if (userFeedback.getCaseCategoryId() == null) {
+            return getFormTemplateBackend(template);
+        }
+
+        // CustomCategory selected
+        if (userFeedback.getCaseCategoryId() > 0) {
+            CustomCategory category = template.getCustomCategory();
+
+            // No subCategory or subcategory not unique
+            List<Long> subCategoryIds = userFeedback.getCaseSubCategoryIds();
+            if (subCategoryIds.size() == 0 || subCategoryIds.size() > 1) {
+                return getCustomCategoryBackend(category, template);
+            }
+
+            CustomSubCategory subCategory = null;
+            Long subCategoryId = subCategoryIds.get(0);
+            for (CustomSubCategory sub : category.getCustomSubCategories()) {
+                if (subCategoryId.equals(sub.getId())) {
+                    subCategory = sub;
+                }
+            }
+            if (subCategory == null || subCategory.getBackend().isBlank()) {
+                return getCustomCategoryBackend(category, template);
+            }
+
+            return subCategory.getBackend();
+        }
+
+        // Static Category selected
+        // Content
+        if (userFeedback.getCaseCategoryId().equals(StaticCategoryRepository.STATIC_CONTENT_CATEGORY)) {
+            if (template.getContentBackend() == null || template.getContentBackend().isBlank()) {
+                return getFormTemplateBackend(template);
+            }
+            return template.getContentBackend();
+        }
+        // Function
+        if (userFeedback.getCaseCategoryId().equals(StaticCategoryRepository.STATIC_FUNCTION_CATEGORY)) {
+            if (template.getFunctionBackend() == null || template.getFunctionBackend().isBlank()) {
+                return getFormTemplateBackend(template);
+            }
+            return template.getFunctionBackend();
+        }
+        // Other
+        if (userFeedback.getCaseCategoryId().equals(StaticCategoryRepository.STATIC_OTHER_CATEGORY)) {
+            if (template.getOtherBackend() == null || template.getOtherBackend().isBlank()) {
+                return getFormTemplateBackend(template);
+            }
+            return template.getOtherBackend();
+        }
+
+        return new Backend();
+    }
+
+    private Backend getFormTemplateBackend(FormTemplate template) {
+        if (template.getDefaultBackend() == null) {
+            return new Backend();
+        }
+        return template.getDefaultBackend();
+    }
+
+    private Backend getCustomCategoryBackend(CustomCategory category, FormTemplate template) {
+        if (category.getBackend() == null || category.getBackend().isBlank()) {
+            return getFormTemplateBackend(template);
+        }
+        return category.getBackend();
+    }
 
     private void processAttachment(MultipartFile file, UserFeedback userFeedback) {
         if (file.isEmpty()) {

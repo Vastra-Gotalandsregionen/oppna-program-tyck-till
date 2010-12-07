@@ -42,7 +42,5 @@
   
   <bean id="feedbackReportService" class="se.vgregion.userfeedback.impl.FeedbackReportServiceImpl" />
 
-  <bean id="feebbackReportService" class="se.vgregion.userfeedback.impl.FeedbackReportServiceImpl" />
-
   <bean id="reportBuilder" class="se.vgregion.userfeedback.ReportBuilder" />
 </beans>

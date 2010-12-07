@@ -19,29 +19,26 @@
 
 package se.vgregion.userfeedback.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import se.vgregion.incidentreport.pivotaltracker.PTStory;
+import se.vgregion.incidentreport.pivotaltracker.PivotalTrackerService;
+import se.vgregion.usdservice.USDService;
+import se.vgregion.userfeedback.FeedbackReport;
+import se.vgregion.userfeedback.FeedbackReportService;
+import se.vgregion.userfeedback.domain.UserContact;
+import se.vgregion.util.EMailClient;
+
+import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-
-import javax.mail.MessagingException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import se.vgregion.incidentreport.pivotaltracker.PTStory;
-import se.vgregion.incidentreport.pivotaltracker.PivotalTrackerService;
-import se.vgregion.usdservice.USDService;
-import se.vgregion.userfeedback.FeedbackReport;
-import se.vgregion.userfeedback.FeedbackReportService;
-import se.vgregion.userfeedback.IncidentReport;
-import se.vgregion.userfeedback.domain.UserContact;
-import se.vgregion.util.EMailClient;
 
 /**
  * Implementation of the incident report service.
@@ -223,7 +220,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         if (reportEmail != null && !"".equals(reportEmail)) {
             String body = "";
             String[] reportEmailArray = { reportEmail };
-            body += report.toString().replaceAll(IncidentReport.NEWLINE, "</br>");
+            body += report.toString().replaceAll("\n", "</br>");
             try {
                 new EMailClient().postMail(reportEmailArray, report.getMessage().getTrackerCategory() + ":"
                         + subject, "" + body, FEEDBACK_REPORT_SERVICE_NOREPLY, report.getScreenShots());

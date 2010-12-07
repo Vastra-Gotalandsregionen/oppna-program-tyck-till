@@ -4,21 +4,21 @@
 <head>
     <title>TyckTill - Administration</title>
 
-    <script type="text/javascript" src="../resources/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="../resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
             $("#modalDiv").dialog({
                 modal: true,
                 autoOpen: false,
-                height: 670,
+                height: 600,
                 width: 610,
                 draggable: true,
                 resizeable: true,
                 title: 'Tyck till'
             });
-            loadjscssfile("../resources/style/alternateStyle.css", "css");
+            loadjscssfile("${deployPath}/tycktill/resources/style/alternateStyle.css", "css");
         });
 
         function loadjscssfile(filename, filetype) {
@@ -37,30 +37,26 @@
                 document.getElementsByTagName("head")[0].appendChild(fileref)
         }
 
-        function openDialog(url) {
+        function openDialog(url, args) {
             $("#modalDiv").dialog("open");
-            $("#modalIFrame").attr('src', url);
+            $("#modalDialog").load(url, args);
             return false;
         }
     </script>
 
     <style type="text/css">
-        @import "../resources/style/modalStyle.css";
-        @import "../resources/style/style.css";
+        @import "${deployPath}/tycktill/resources/style/modalStyle.css";
+        @import "${deployPath}/tycktill/resources/style/style.css";
     </style>
 
 </head>
 <body>
+
 <div id="modalDiv">
-        <iframe id="modalIFrame"
-                width="550"
-                height="600"
-                marginWidth="0"
-                marginHeight="30"
-                frameBorder="0"
-                scrolling="auto">
-        </iframe>
+    <div id="modalDialog">
     </div>
+</div>
+
 <div>
     <h3>Tillgängliga kontakt formulär</h3>
 
@@ -93,7 +89,7 @@
                 <td align="center">${formTemplate.showAttachment}</td>
                 <th><a href="TemplateEdit?templateId=${formTemplate.id}">Edit</a></th>
                 <th><a href="#"
-                       onclick="javascript: openDialog('../KontaktaOss?formName=${formTemplate.name}');">View</a>
+                       onclick="openDialog('KontaktaOss', 'formName=${formTemplate.name}');">View</a>
                 </th>
             </tr>
         </c:forEach>

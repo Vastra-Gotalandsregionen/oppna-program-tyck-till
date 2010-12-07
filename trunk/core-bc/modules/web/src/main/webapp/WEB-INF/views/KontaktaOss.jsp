@@ -4,13 +4,11 @@
 <head>
     <title>TyckTill</title>
 
-    <script type="text/javascript" src="resources/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="resources/js/jquery-ui-1.8.6.custom.min.js"></script>
-    <script type="text/javascript" src="resources/js/layout-effects.js"></script>
+    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/layout-effects.js"></script>
 
     <style type="text/css">
-        @import "resources/style/modalStyle.css";
-        @import "resources/style/style.css";
+        @import "${deployPath}/tycktill/resources/style/modalStyle.css";
+        @import "${deployPath}/tycktill/resources/style/style.css";
     </style>
 </head>
 <body>

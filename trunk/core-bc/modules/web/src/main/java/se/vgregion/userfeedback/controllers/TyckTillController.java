@@ -1,46 +1,25 @@
 package se.vgregion.userfeedback.controllers;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.NoResultException;
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import se.vgregion.userfeedback.FeedbackReportService;
 import se.vgregion.userfeedback.PlatformDataService;
-import se.vgregion.userfeedback.domain.Attachment;
-import se.vgregion.userfeedback.domain.AttachmentRepository;
-import se.vgregion.userfeedback.domain.Backend;
-import se.vgregion.userfeedback.domain.CustomCategory;
-import se.vgregion.userfeedback.domain.CustomSubCategory;
-import se.vgregion.userfeedback.domain.FormTemplate;
-import se.vgregion.userfeedback.domain.FormTemplateRepository;
-import se.vgregion.userfeedback.domain.StaticCategory;
-import se.vgregion.userfeedback.domain.StaticCategoryRepository;
-import se.vgregion.userfeedback.domain.UserContact;
-import se.vgregion.userfeedback.domain.UserFeedback;
-import se.vgregion.userfeedback.domain.UserFeedbackRepository;
+import se.vgregion.userfeedback.domain.*;
+
+import javax.persistence.NoResultException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
@@ -69,6 +48,13 @@ public class TyckTillController {
 
     @Autowired
     private PlatformDataService platformDataService;
+
+    @Value("${deploy.path}")
+    private String deployPath;
+
+
+    // @Autowired
+    // private FeedbackReportService reportService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -115,6 +101,8 @@ public class TyckTillController {
 
         model.addAttribute("contactOptions", UserContact.UserContactOption.getLabelMap());
 
+        model.addAttribute("deployPath", deployPath);
+
         return "KontaktaOss";
 
     }
@@ -148,8 +136,8 @@ public class TyckTillController {
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String sendUserFeedback(@ModelAttribute("userFeedback") UserFeedback userFeedback,
-            @RequestParam("formTemplateId") Long formTemplateId, MultipartHttpServletRequest multipartRequest,
-            SessionStatus status, ModelMap model) {
+                                   @RequestParam("formTemplateId") Long formTemplateId, MultipartHttpServletRequest multipartRequest,
+                                   SessionStatus status, ModelMap model) {
         logger.info("Sending...");
 
         // logger.debug("User agent data captured: " + report);
@@ -168,11 +156,13 @@ public class TyckTillController {
 
         status.setComplete();
 
-        return "Tacksida";
+        model.addAttribute("deployPath", deployPath);
+
+        return "redirect:"+userFeedback.getPlatformData().getReferer();
     }
 
     private void processUserfeedback(UserFeedback userFeedback, Long formTemplateId,
-            MultipartHttpServletRequest multipartRequest) {
+                                     MultipartHttpServletRequest multipartRequest) {
         // 1: Lookup Attachments
         for (Iterator<String> filenameIterator = multipartRequest.getFileNames(); filenameIterator.hasNext();) {
             String fileName = filenameIterator.next();
@@ -324,7 +314,7 @@ public class TyckTillController {
 
             attachments.add(attachment);
         } catch (IOException e) {
-            logger.error(e.toString()); // To change body of catch statement use File | Settings | File Templates.
+            logger.error(e.toString());
         }
     }
 

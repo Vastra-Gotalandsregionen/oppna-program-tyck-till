@@ -1,43 +1,9 @@
 jQuery(document).ready(function() {
-    jQuery.fn.extend(
-    {
-        optionDisable:function() {
-            var ths = jQuery(this);
-            if (ths.attr('tagName').toLowerCase() == 'option') {
-                ths.before(jQuery('<optgroup>&nbsp;</optgroup>').css({color:'#ccc',height:ths.height()}).attr({id:ths.attr('value'),label:ths.text()})).remove();
-            }
-            return ths;
-        },
-        optionEnable:function() {
-            var ths = jQuery(this);
-            var tag = ths.attr('tagName').toLowerCase();
-            if (tag == 'option') {
-                ths.removeAttr('disabled');
-            }
-            else if (tag == 'optgroup') {
-                ths.before($('<option />').attr({value:ths.attr('id')}).text(ths.attr('label'))).remove();
-            }
-            return ths;
-        }
-    });
-
     initForm();
     addEventsToCaseSubject();
     addEventsShouldContactUser();
     addEventToContactOption();
     addEventToAttachments();
-    //  addEventsToContractCard();
-    //  addEventsToDeliveryOption();
-    //  addEventsToTicketBookingType();
-    //  addEventsToHotelBookingOptions();
-    //  addEventsToHotelChoice();
-    //
-    //  jQuery(document).copyValue({fromSelector: '#outboundFrom', toSelector:'#inboundTo'});
-    //  jQuery(document).copyValue({fromSelector: '#outboundTo', toSelector:'#inboundFrom'});
-    //  jQuery(document).copyValue({fromSelector: '#outboundDate', toSelector:'#hotelArrivalDate'});
-    //  jQuery(document).copyValue({fromSelector: '#inboundDate', toSelector:'#hotelDepatureDate'});
-
-
 });
 
 function initForm() {

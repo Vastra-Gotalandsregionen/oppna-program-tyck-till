@@ -1,9 +1,12 @@
 package se.vgregion.userfeedback;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -16,10 +19,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.vgregion.userfeedback.FeedbackReport.ReportMethod;
+import se.vgregion.userfeedback.domain.Backend;
 import se.vgregion.userfeedback.domain.PlatformData;
 import se.vgregion.userfeedback.domain.UserContact;
 import se.vgregion.userfeedback.domain.UserContact.UserContactOption;
+import se.vgregion.userfeedback.domain.UserFeedback;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/services-config.xml")
@@ -31,71 +35,66 @@ public class FeedbackIntegrationTest extends TestCase {
     @Autowired
     private FeedbackReportService reportService;
 
-    FeedbackMessage message;
-    PlatformData platform;
-    List<ReportMethod> reportMethods;
-    List<UserContact> contactMethods;
-    Screenshot screenShot;
+    UserFeedback feedback;
 
     @Before
     public void setupFeedback() throws Exception {
+        feedback = new UserFeedback();
+
         // Add dummy platform data
-        platform = new PlatformData();
+        PlatformData platform = new PlatformData();
         platform.setBrowser("Lynx");
         platform.setIpAddress("327.0.0.1");
         platform.setOperatingSystem("MS-DOS 5.0");
         platform.setTimeStamp(new Date());
         platform.setUserId("woodyw");
 
-        // Add dummy message data
-        message = new FeedbackMessage();
-        message.setDescription("Det här är ett test av messagedescription-fältet.");
-        message.setReportType("Webbplatsens innehåll - Påskägg");
-        message.setTrackerCategory("Tyck_till_test_portlet");
-
-        reportMethods = new ArrayList<FeedbackReport.ReportMethod>();
-
-        contactMethods = new ArrayList<UserContact>();
-        UserContact contact = new UserContact();
-        contact.setContactOption(UserContactOption.email);
-        contact.setUserName("Hacke Hackspett");
-        contact.setContactMethod("woddyw@warnerbros.com");
-        contactMethods.add(contact);
-
+        // Add attachment
         File file = new File("/chairman-meow-little-red.jpg");
-        screenShot = new Screenshot();
-        screenShot.setPath(file.getCanonicalPath());
-        screenShot.setFileName(file.getName());
+        se.vgregion.userfeedback.domain.Attachment attachment = new se.vgregion.userfeedback.domain.Attachment();
+        attachment.setFile(getBytesFromFile(file));
+        attachment.setFilename(file.getName());
+        Set<se.vgregion.userfeedback.domain.Attachment> attachments = new HashSet<se.vgregion.userfeedback.domain.Attachment>();
+        attachments.add(attachment);
+
+        // Set user contact info
+        UserContact userContact = new UserContact();
+        userContact.setUserName("Hacke Hackspett");
+        userContact.setContactMethod("woodyw@nowhere.com");
+        userContact.setShouldContactUser(true);
+        userContact.setContactOption(UserContactOption.email);
+
+        feedback.setPlatformData(platform);
+        feedback.setUserContact(userContact);
+        feedback.setMessage("Test message.");
+        feedback.setAttachments(attachments);
     }
 
     @Test
     @Ignore
     public void testReportToPivotal() throws Exception {
-        reportMethods.add(ReportMethod.pivotal);
-        message.setTrackerCategory("Tyck_till_test_portlet");
-        FeedbackReport report = new FeedbackReport(message, reportMethods, contactMethods, platform);
-        report.addScreenShot(screenShot);
-        // reportService.reportFeedback(report);
+        Backend caseBackend = new Backend();
+        caseBackend.setPivotal("35420");
+        feedback.setCaseBackend(caseBackend);
+        reportService.reportFeedback(feedback);
     }
 
     @Test
     @Ignore
     public void testReportToUSD() throws Exception {
-        reportMethods.add(ReportMethod.usd);
-        message.setTrackerCategory("Tyck_till_test_portlet");
-        FeedbackReport report = new FeedbackReport(message, reportMethods, contactMethods, platform);
-        report.addScreenShot(screenShot);
+        Backend caseBackend = new Backend();
+        caseBackend.setUsd("35420");
+        feedback.setCaseBackend(caseBackend);
         // reportService.reportFeedback(report);
     }
 
     @Test
-    @Ignore
+    // @Ignore
     public void testReportToEmail() throws Exception {
-        reportMethods.add(ReportMethod.email);
-        FeedbackReport report = new FeedbackReport(message, reportMethods, contactMethods, platform);
-        report.addScreenShot(screenShot);
-        report.getMessage().setReportEmail("test_account@nowhere.com");
-        // reportService.reportFeedback(report);
+        Backend caseBackend = new Backend();
+        caseBackend.setMbox("arakun@gmail.com");
+        feedback.setCaseBackend(caseBackend);
+        reportService.reportFeedback(feedback);
     }
 
     // private String incidentReport1 =
@@ -191,4 +190,32 @@ public class FeedbackIntegrationTest extends TestCase {
     //
     // }
 
+    // Returns the contents of the file in a byte array.
+    public static byte[] getBytesFromFile(File file) throws IOException {
+        InputStream is = new FileInputStream(file);
+        // Get the size of the file
+        long length = file.length();
+        // You cannot create an array using a long type.
+        // It needs to be an int type.
+        // Before converting to an int type, check
+        // to ensure that file is not larger than Integer.MAX_VALUE.
+        if (length > Integer.MAX_VALUE) {
+            // File is too large
+        }
+        // Create the byte array to hold the data
+        byte[] bytes = new byte[(int) length];
+        // Read in the bytes
+        int offset = 0;
+        int numRead = 0;
+        while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+            offset += numRead;
+        }
+        // Ensure all the bytes have been read in
+        if (offset < bytes.length) {
+            throw new IOException("Could not completely read file " + file.getName());
+        }
+        // Close the input stream and return bytes
+        is.close();
+        return bytes;
+    }
 }

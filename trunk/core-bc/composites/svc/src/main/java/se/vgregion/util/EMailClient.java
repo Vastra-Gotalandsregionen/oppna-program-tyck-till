@@ -20,6 +20,7 @@
 package se.vgregion.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -35,6 +36,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 import se.vgregion.userfeedback.Screenshot;
 
@@ -250,9 +252,17 @@ public class EMailClient {
 
             // Part two is attachment
             for (Attachment attachment : attachments) {
-                messageBodyPart = new MimeBodyPart(attachment.getData());
-                messageBodyPart.setDescription(attachment.getFilename());
-                multipart.addBodyPart(messageBodyPart);
+
+                MimeBodyPart attachmentPart = new MimeBodyPart();
+                DataSource source;
+                try {
+                    source = new ByteArrayDataSource(attachment.getData(), "application/octet-stream");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                attachmentPart.setDataHandler(new DataHandler(source));
+                attachmentPart.setFileName(attachment.getFilename());
+                multipart.addBodyPart(attachmentPart);
             }
             // Put parts in message
             msg.setContent(multipart);

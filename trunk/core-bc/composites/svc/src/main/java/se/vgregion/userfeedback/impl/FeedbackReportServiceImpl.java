@@ -109,7 +109,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
             if (backend.getUsd() != null) {
                 registerInUsd(report);
             }
-            if (backend.getClass() != null) {
+            if (backend.getMbox() != null) {
                 reportByEmail(report);
             }
 
@@ -168,6 +168,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         try {
             createUserStory(report);
         } catch (Exception e) {
+            System.out.println("---->> TAG (Could not reach Pivotal)"); // TODO: Remove
             LOGGER.error("Pivotal tracker could not be reached, trying email instead.", e);
             try {
                 sendReportByEmail(report, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT + ":" + "PivotalTracker-"
@@ -181,8 +182,13 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
 
     private int reportByEmail(UserFeedback report) {
         try {
+            System.out.println("Report by email");
             sendReportByEmail(report, FEEDBACK_REPORT_EMAIL_SUBJECT);
+
+            System.out.println("Successfully reported by email");
         } catch (MessagingException me) {
+
+            System.out.println("Failed report by email" + me.toString());
             return -1;
         }
         return 0;
@@ -238,13 +244,19 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     // }
 
     private void createUserStory(UserFeedback report) {
+        System.out.println("---->> TAG (createUserStory(1))"); // TODO: Remove
         String projectId = report.getCaseBackend().getPivotal();
         PTStory story = new PTStory();
         story.setName(projectId + ": FeedbackReportService message");
+        System.out.println("---->> TAG (createUserStory(2))"); // TODO: Remove
         story.setType("bug");
         story.setProjectId(projectId);
         story.setDescription(report.toString());
+
+        System.out.println("---->> TAG (createUserStory(3))"); // TODO: Remove
         String url = pivotalTrackerClient.createuserStory(story);
+
+        System.out.println("---->> TAG (createUserStory(4))" + url); // TODO: Remove
 
         List<se.vgregion.util.Attachment> attachments = mapAttachments(report);
         story.setAttachments(attachments);

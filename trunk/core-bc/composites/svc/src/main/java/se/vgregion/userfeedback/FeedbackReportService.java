@@ -19,6 +19,8 @@
 
 package se.vgregion.userfeedback;
 
+import se.vgregion.userfeedback.domain.UserFeedback;
+
 /**
  * Contract for the incident report service.
  */
@@ -31,5 +33,5 @@ public interface FeedbackReportService {
      *            Incident report which should be reported.
      * @return An integer indicating status of the reporting action. 0 = success, -1 = failure.
      */
-    int reportFeedback(FeedbackReport report);
+    int reportFeedback(UserFeedback report);
 }

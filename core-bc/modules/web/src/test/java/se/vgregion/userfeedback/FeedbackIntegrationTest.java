@@ -1,15 +1,6 @@
 package se.vgregion.userfeedback;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import junit.framework.TestCase;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,12 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import se.vgregion.userfeedback.domain.Backend;
 import se.vgregion.userfeedback.domain.PlatformData;
 import se.vgregion.userfeedback.domain.UserContact;
 import se.vgregion.userfeedback.domain.UserContact.UserContactOption;
 import se.vgregion.userfeedback.domain.UserFeedback;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/services-config.xml")
@@ -89,7 +87,7 @@ public class FeedbackIntegrationTest extends TestCase {
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void testReportToEmail() throws Exception {
         Backend caseBackend = new Backend();
         caseBackend.setMbox("arakun@gmail.com");

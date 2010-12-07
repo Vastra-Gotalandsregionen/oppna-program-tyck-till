@@ -11,8 +11,8 @@
 <head>
     <title>TyckTill - Administration</title>
 
-    <script type="text/javascript" src="../resources/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="../resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -25,7 +25,7 @@
                 resizeable: true,
                 title: 'Tyck till'
             });
-            loadjscssfile("../resources/style/alternateStyle.css", "css");
+            loadjscssfile("${deployPath}/tycktill/resources/style/alternateStyle.css", "css");
         });
 
         function loadjscssfile(filename, filetype) {
@@ -47,16 +47,14 @@
         function openDialog(url) {
             var form = $("#formTemplate");
             $("#modalDiv").dialog("open");
-            $("#modalIFrame").load(url, form.serialize());
+            $("#modalDialog").load(url, form.serialize());
             return false;
         }
-
-
     </script>
 
     <style type="text/css">
-        @import "../resources/style/modalStyle.css";
-        @import "../resources/style/style.css";
+        @import "${deployPath}/tycktill/resources/style/modalStyle.css";
+        @import "${deployPath}/tycktill/resources/style/style.css";
     </style>
 
 </head>
@@ -64,7 +62,7 @@
 <h1>${formTemplate.id == null ? 'Skapa nytt kontakt formulär' : 'Ändra kontakt formulär'}</h1>
 
 <div id="modalDiv">
-    <div id="modalIFrame">
+    <div id="modalDialog">
     </div>
 </div>
 

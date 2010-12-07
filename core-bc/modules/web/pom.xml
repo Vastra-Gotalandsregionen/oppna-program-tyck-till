@@ -15,6 +15,24 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
+
+
+    <resources>
+      <resource>
+        <directory>src/main/resources/resources/style</directory>
+        <filtering>true</filtering>
+        <targetPath>resources/style/</targetPath>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>src/main/webapp/WEB-INF/views</directory>
+        <filtering>true</filtering>
+        <targetPath>../WEB-INF/views/</targetPath>
+      </resource>
+    </resources>
+    
     <plugins>
       <plugin>
         <!-- Configure eclipse plug-in to generate a context root that does not have the version number on it -->
@@ -127,4 +145,36 @@
       <version>4.1.0.Final</version>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <!-- Filtering need to be different for different profiles -->
+    <profile>
+      <id>default</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <filters>
+          <filter>src/main/resources/filter.properties</filter>
+        </filters>
+      </build>
+    </profile>
+    <profile>
+      <id>test</id>
+      <build>
+        <filters>
+          <filter>src/main/resources/test/filter.properties</filter>
+        </filters>
+      </build>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <build>
+        <filters>
+          <filter>src/main/resources/prod/filter.properties</filter>
+        </filters>
+      </build>
+    </profile>
+
+  </profiles>
 </project>

@@ -18,8 +18,6 @@
  */
 
 @CHARSET "UTF-8";
-@namespace xf url("http://www.w3.org/2002/xforms");
-
 
 html {
 	height: 100%;
@@ -37,7 +35,7 @@ body {
 #custom-doc {
 	margin:auto;text-align:left; /* leave unchanged */
 	width:60em;/* non-IE */
-	*width:58.50em;/* IE */
+	width:58.50em;/* IE */
 	min-width:600px;/* optional but recommended */
 }
 
@@ -74,7 +72,7 @@ input{
 	border: 0.1em solid gray;
 	padding: 0.2em;
 	font-family:Arial,Helvetica,Geneva,sans-serif;
-	color:grey;
+	color:gray;
 }
 
 .xforms-select1-appearance-full span {

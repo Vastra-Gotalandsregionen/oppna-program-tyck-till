@@ -19,26 +19,32 @@
 
 package se.vgregion.userfeedback.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+
+import javax.mail.MessagingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 import se.vgregion.incidentreport.pivotaltracker.PTStory;
 import se.vgregion.incidentreport.pivotaltracker.PivotalTrackerService;
 import se.vgregion.usdservice.USDService;
-import se.vgregion.userfeedback.FeedbackReport;
 import se.vgregion.userfeedback.FeedbackReportService;
+import se.vgregion.userfeedback.domain.Attachment;
+import se.vgregion.userfeedback.domain.Backend;
 import se.vgregion.userfeedback.domain.UserContact;
+import se.vgregion.userfeedback.domain.UserFeedback;
 import se.vgregion.util.EMailClient;
-
-import javax.mail.MessagingException;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * Implementation of the incident report service.
@@ -91,27 +97,22 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
      * {@inheritDoc}
      */
     @Override
-    public int reportFeedback(FeedbackReport report) {
+    public int reportFeedback(UserFeedback report) {
         int result = 0;
+
+        Backend backend = report.getCaseBackend();
         try {
-            cleanupTemporaryFiles();
-            List<FeedbackReport.ReportMethod> methods = report.getReportMethods();
-            for (FeedbackReport.ReportMethod method : methods) {
-                switch (method) {
-                    case email:
-                        result = reportByEmail(report);
-                        break;
-                    case pivotal:
-                        result = registerInPivotal(report);
-                        break;
-                    case usd:
-                        result = registerInUsd(report);
-                        break;
-                    default:
-                        result = -1;
-                        throw new RuntimeException("Unrecognized report method " + method);
-                }
+
+            if (backend.getPivotal() != null) {
+                registerInPivotal(report);
             }
+            if (backend.getUsd() != null) {
+                registerInUsd(report);
+            }
+            if (backend.getClass() != null) {
+                reportByEmail(report);
+            }
+
         } catch (Exception e) {
             LOGGER.error("Incident report could not be sent:", e);
             result = -1;
@@ -119,29 +120,51 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         return result;
     }
 
-    private int registerInUsd(FeedbackReport report) {
-        try {
-            Properties parameters = mapToRequestParameters(report);
-            List<se.vgregion.userfeedback.Screenshot> ss = report.getScreenShots();
-            List<File> files = new ArrayList<File>();
-            List<String> filenames = new ArrayList<String>();
-            for (se.vgregion.userfeedback.Screenshot s : ss) {
-                files.add(new File(s.getPath()));
-                filenames.add(s.getFileName());
-            }
-            usdService.createRequest(parameters, report.getUserPlatform().getUserId(), files, filenames);
-        } catch (Exception e) {
-            LOGGER.error("USD service could not be reached, trying email instead.", e);
-            try {
-                sendReportByEmail(report, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT + ":" + "USD-" + e.getMessage());
-            } catch (MessagingException me) {
-                return -1;
-            }
-        }
+    // private int registerInUsd(FeedbackReport report) {
+    // try {
+    // Properties parameters = mapToRequestParameters(report);
+    // List<se.vgregion.userfeedback.Screenshot> ss = report.getScreenShots();
+    // List<File> files = new ArrayList<File>();
+    // List<String> filenames = new ArrayList<String>();
+    // for (se.vgregion.userfeedback.Screenshot s : ss) {
+    // files.add(new File(s.getPath()));
+    // filenames.add(s.getFileName());
+    // }
+    // usdService.createRequest(parameters, report.getUserPlatform().getUserId(), files, filenames);
+    // } catch (Exception e) {
+    // LOGGER.error("USD service could not be reached, trying email instead.", e);
+    // try {
+    // sendReportByEmail(report, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT + ":" + "USD-" + e.getMessage());
+    // } catch (MessagingException me) {
+    // return -1;
+    // }
+    // }
+    // return 0;
+    // }
+
+    private int registerInUsd(UserFeedback report) {
+        // try {
+        // Properties parameters = mapToRequestParameters(report);
+        // List<se.vgregion.userfeedback.Screenshot> ss = report.getScreenShots();
+        // List<File> files = new ArrayList<File>();
+        // List<String> filenames = new ArrayList<String>();
+        // for (se.vgregion.userfeedback.Screenshot s : ss) {
+        // files.add(new File(s.getPath()));
+        // filenames.add(s.getFileName());
+        // }
+        // usdService.createRequest(parameters, report.getUserPlatform().getUserId(), files, filenames);
+        // } catch (Exception e) {
+        // LOGGER.error("USD service could not be reached, trying email instead.", e);
+        // try {
+        // sendReportByEmail(report, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT + ":" + "USD-" + e.getMessage());
+        // } catch (MessagingException me) {
+        // return -1;
+        // }
+        // }
         return 0;
     }
 
-    private int registerInPivotal(FeedbackReport report) {
+    private int registerInPivotal(UserFeedback report) {
         try {
             createUserStory(report);
         } catch (Exception e) {
@@ -156,7 +179,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         return 0;
     }
 
-    private int reportByEmail(FeedbackReport report) {
+    private int reportByEmail(UserFeedback report) {
         try {
             sendReportByEmail(report, FEEDBACK_REPORT_EMAIL_SUBJECT);
         } catch (MessagingException me) {
@@ -184,27 +207,48 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         }
     }
 
-    private void createUserStory(FeedbackReport report) {
-        String applicationName = report.getMessage().getTrackerCategory().replaceAll(" ", "_");
-        String projectId = lookupProjectId(applicationName);
+    // private void createUserStory(FeedbackReport report) {
+    // String applicationName = report.getMessage().getTrackerCategory().replaceAll(" ", "_");
+    // String projectId = lookupProjectId(applicationName);
+    // PTStory story = new PTStory();
+    // story.setName(applicationName + ": IncidentReportService message");
+    // story.setType("bug");
+    // story.setProjectId(projectId);
+    // story.setDescription(report.toString());
+    // String url = pivotalTrackerClient.createuserStory(story);
+    //
+    // List<se.vgregion.userfeedback.Screenshot> attachments = report.getScreenShots();
+    // List<File> atts = new ArrayList<File>();
+    // for (int i = 0; i < attachments.size(); i++) {
+    // atts.add(new File(attachments.get(i).getPath()));
+    // }
+    // story.setAttachments(atts);
+    // List<String> attNames = new ArrayList<String>();
+    // for (int i = 0; i < attachments.size(); i++) {
+    // attNames.add(attachments.get(i).getFileName());
+    // }
+    // story.setAttachmentNames(attNames);
+    // if (url != null && attachments != null && attachments.size() > 0) {
+    // try {
+    // pivotalTrackerClient.addAttachmentToStory(story.getProjectId(), story);
+    // } catch (Exception ex) {
+    // LOGGER.error("Pivotal tracker attachments not working", ex);
+    // }
+    // }
+    // }
+
+    private void createUserStory(UserFeedback report) {
+        String projectId = report.getCaseBackend().getPivotal();
         PTStory story = new PTStory();
-        story.setName(applicationName + ": IncidentReportService message");
+        story.setName(projectId + ": FeedbackReportService message");
         story.setType("bug");
         story.setProjectId(projectId);
         story.setDescription(report.toString());
         String url = pivotalTrackerClient.createuserStory(story);
 
-        List<se.vgregion.userfeedback.Screenshot> attachments = report.getScreenShots();
-        List<File> atts = new ArrayList<File>();
-        for (int i = 0; i < attachments.size(); i++) {
-            atts.add(new File(attachments.get(i).getPath()));
-        }
-        story.setAttachments(atts);
-        List<String> attNames = new ArrayList<String>();
-        for (int i = 0; i < attachments.size(); i++) {
-            attNames.add(attachments.get(i).getFileName());
-        }
-        story.setAttachmentNames(attNames);
+        List<se.vgregion.util.Attachment> attachments = mapAttachments(report);
+        story.setAttachments(attachments);
+
         if (url != null && attachments != null && attachments.size() > 0) {
             try {
                 pivotalTrackerClient.addAttachmentToStory(story.getProjectId(), story);
@@ -214,34 +258,68 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         }
     }
 
-    private void sendReportByEmail(FeedbackReport report, String subject) throws MessagingException {
-        String reportEmail = report.getMessage().getReportEmail();
+    private List<se.vgregion.util.Attachment> mapAttachments(UserFeedback report) {
+        Collection<Attachment> byteAttachments = report.getAttachments();
+        List<se.vgregion.util.Attachment> attachments = new ArrayList<se.vgregion.util.Attachment>();
+        for (Attachment byteAttachment : byteAttachments) {
+            se.vgregion.util.Attachment attachment = new se.vgregion.util.Attachment();
+            attachment.setFilename(byteAttachment.getFilename());
+            attachment.setData(new ByteArrayInputStream(byteAttachment.getFile()));
+            attachments.add(attachment);
+        }
+        return attachments;
+    }
+
+    private void sendReportByEmail(UserFeedback report, String subject) throws MessagingException {
+        String reportEmail = report.getCaseBackend().getMbox();
 
         if (reportEmail != null && !"".equals(reportEmail)) {
             String body = "";
             String[] reportEmailArray = { reportEmail };
             body += report.toString().replaceAll("\n", "</br>");
+
             try {
-                new EMailClient().postMail(reportEmailArray, report.getMessage().getTrackerCategory() + ":"
-                        + subject, "" + body, FEEDBACK_REPORT_SERVICE_NOREPLY, report.getScreenShots());
+                new EMailClient().postMailWithAttachments(reportEmailArray, subject, "" + body,
+                        FEEDBACK_REPORT_SERVICE_NOREPLY, mapAttachments(report));
             } catch (MessagingException e1) {
                 LOGGER.error("Email submission failed:", e1);
                 String[] emailTo = { FEEDBACK_REPORT_SERVICE_ADMIN_EMAIL };
 
-                new EMailClient().postMail(emailTo, report.getMessage().getTrackerCategory() + ":"
-                        + FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT, "" + e1.getMessage() + "\n" + body,
-                        FEEDBACK_REPORT_SERVICE_NOREPLY, report.getScreenShots());
+                new EMailClient().postMailWithAttachments(emailTo, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT, ""
+                        + e1.getMessage() + "\n" + body, FEEDBACK_REPORT_SERVICE_NOREPLY, mapAttachments(report));
             }
         }
     }
 
-    private Properties mapToRequestParameters(FeedbackReport report) {
+    // private void sendReportByEmail(FeedbackReport report, String subject) throws MessagingException {
+    // String reportEmail = report.getMessage().getReportEmail();
+    //
+    // if (reportEmail != null && !"".equals(reportEmail)) {
+    // String body = "";
+    // String[] reportEmailArray = { reportEmail };
+    // body += report.toString().replaceAll(IncidentReport.NEWLINE, "</br>");
+    // try {
+    // new EMailClient().postMail(reportEmailArray, report.getMessage().getTrackerCategory() + ":"
+    // + subject, "" + body, FEEDBACK_REPORT_SERVICE_NOREPLY, report.getScreenShots());
+    // } catch (MessagingException e1) {
+    // LOGGER.error("Email submission failed:", e1);
+    // String[] emailTo = { FEEDBACK_REPORT_SERVICE_ADMIN_EMAIL };
+    //
+    // new EMailClient().postMail(emailTo, report.getMessage().getTrackerCategory() + ":"
+    // + FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT, "" + e1.getMessage() + "\n" + body,
+    // FEEDBACK_REPORT_SERVICE_NOREPLY, report.getScreenShots());
+    // }
+    // }
+    // }
+
+    private Properties mapToRequestParameters(UserFeedback report) {
         Properties p = new Properties();
         p.setProperty("affected_resource", "nr:BF5880E3AF1C8542B2546B93922C25A7");
         p.setProperty("category", "pcat:400023");
         // map tracker category to USD group.
-        String trackerCategory = report.getMessage().getTrackerCategory().trim().replaceAll(" ", "_");
+        String trackerCategory = report.getCaseBackend().getUsd();
         String groupHandle = usdService.getUSDGroupHandleForApplicationName(trackerCategory);
+        System.out.println("--- >> Grouphandle: " + groupHandle); // TODO: Remove
         p.setProperty("group", groupHandle);
         p.setProperty("impact", "imp:1603");
         p.setProperty("priority", "pri:500");
@@ -265,13 +343,12 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         return result;
     }
 
-    private String lookupPhonenumber(FeedbackReport report) {
+    private String lookupPhonenumber(UserFeedback report) {
         // Fetch user phone number
         String userPhonenumber = "N/A";
-        for (UserContact contact : report.getUserContactMethod()) {
-            if (contact.getContactOption() == UserContact.UserContactOption.telephone) {
-                userPhonenumber = contact.getContactMethod();
-            }
+        UserContact contact = report.getUserContact();
+        if (contact.getContactOption() == UserContact.UserContactOption.telephone) {
+            userPhonenumber = contact.getContactMethod();
         }
         return userPhonenumber;
     }

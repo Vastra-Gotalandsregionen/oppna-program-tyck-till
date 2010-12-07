@@ -62,7 +62,7 @@
         </iframe>
     </div>
 <div>
-    <h1>Form template list</h1>
+    <h3>Tillgängliga kontakt formulär</h3>
 
     <table cellpadding="6" rules="groups" frame="box">
         <thead>

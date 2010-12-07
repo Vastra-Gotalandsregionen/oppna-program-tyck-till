@@ -69,7 +69,7 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
             @AttributeOverride(name="mbox", column=@Column(name = "default_mbox"))
 
     })
-    private Backend defaultBackend;
+    private Backend defaultBackend = new Backend();
 
     @Embedded
     @AttributeOverrides({
@@ -78,7 +78,7 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
             @AttributeOverride(name="mbox", column=@Column(name = "content_mbox"))
 
     })
-    private Backend contentBackend;
+    private Backend contentBackend = new Backend();
 
     @Embedded
     @AttributeOverrides({
@@ -87,7 +87,7 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
             @AttributeOverride(name="mbox", column=@Column(name = "function_mbox"))
 
     })
-    private Backend functionBackend;
+    private Backend functionBackend = new Backend();
 
     @Embedded
     @AttributeOverrides({
@@ -96,7 +96,7 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
             @AttributeOverride(name="mbox", column=@Column(name = "other_mbox"))
 
     })
-    private Backend otherBackend;
+    private Backend otherBackend = new Backend();
 
     @Override
     public Long getId() {

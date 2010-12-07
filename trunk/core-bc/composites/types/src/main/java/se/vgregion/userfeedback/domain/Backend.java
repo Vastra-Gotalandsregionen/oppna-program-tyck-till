@@ -1,8 +1,10 @@
 package se.vgregion.userfeedback.domain;
 
+import org.apache.commons.lang.StringUtils;
 import se.vgregion.dao.domain.patterns.valueobject.AbstractValueObject;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 /**
@@ -40,5 +42,10 @@ public class Backend extends AbstractValueObject<Backend> implements Serializabl
 
     public void setMbox(String mbox) {
         this.mbox = mbox;
+    }
+
+    @Transient
+    public boolean isBlank() {
+        return (StringUtils.isBlank(usd) && StringUtils.isBlank(pivotal) && StringUtils.isBlank(mbox));
     }
 }

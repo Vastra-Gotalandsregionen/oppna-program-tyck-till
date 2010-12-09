@@ -42,6 +42,7 @@
             $("#modalDialog").load(url, args);
             return false;
         }
+
     </script>
 
     <style type="text/css">

@@ -22,6 +22,8 @@ package se.vgregion.userfeedback.domain;
 import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -44,19 +46,25 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
 
     private String breadcrumb;
 
-    /* User contact options */
-    @Embedded
-    private UserContact userContact;
 
     private String caseCategory;
 
     @ElementCollection
     private List<String> caseSubCategories;
 
-    private String caseContact;
+    @Column(length = 255)
+    @Size(max = 10, message = "{validation.feedback.caseTitle}")
+    private String caseTitle;
 
     /* Message */
-    private String message;
+    @Column(length = 2048)
+    @Size(max = 2048, message = "{validation.feedback.message}")
+    private String caseMessage;
+
+    /* User contact options */
+    @Valid
+    @Embedded
+    private UserContact userContact;
 
     /* Screendumps */
     private boolean attachScreenDump;
@@ -69,19 +77,11 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     private PlatformData platformData;
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "usd", column = @Column(name = "usd")),
-            @AttributeOverride(name = "pivotal", column = @Column(name = "pivotal")),
-            @AttributeOverride(name = "mbox", column = @Column(name = "mbox")),
-            @AttributeOverride(name = "activeUsd", column = @Column(name = "active_usd")),
-            @AttributeOverride(name = "activePivotal", column = @Column(name = "active_pivotal")),
-            @AttributeOverride(name = "activeMbox", column = @Column(name = "active_mbox")),
-            @AttributeOverride(name = "activeBackend", column = @Column(name = "active_backend"))
-    })
     private Backend caseBackend;
 
     @Transient
     private Long caseCategoryId;
+
     @Transient
     private List<Long> caseSubCategoryIds;
     /**
@@ -119,14 +119,6 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
         this.caseSubCategories = caseSubCategories;
     }
 
-    public String getCaseContact() {
-        return caseContact;
-    }
-
-    public void setCaseContact(String caseContact) {
-        this.caseContact = caseContact;
-    }
-
     public Backend getCaseBackend() {
         return caseBackend;
     }
@@ -135,12 +127,20 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
         this.caseBackend = caseBackend;
     }
 
-    public String getMessage() {
-        return message;
+    public String getCaseTitle() {
+        return caseTitle;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setCaseTitle(String caseTitle) {
+        this.caseTitle = caseTitle;
+    }
+
+    public String getCaseMessage() {
+        return caseMessage;
+    }
+
+    public void setCaseMessage(String caseMessage) {
+        this.caseMessage = caseMessage;
     }
 
     public Collection<Attachment> getAttachments() {
@@ -193,6 +193,8 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
         this.caseSubCategoryIds = caseSubCategoryIds;
     }
 
+    // --------------------------------------------------------------
+
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
@@ -200,7 +202,7 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
             sb.append(hyperLink + " " + "\n");
         }
         sb.append("\n" + "Uppgifter inmatade av användaren" + "\n");
-        sb.append("- Förklara felet med egna ord: " + "\n" + getMessage());
+        sb.append("- Förklara felet med egna ord: " + "\n" + getCaseMessage());
         sb.append("\n\n");
         sb.append("- Typ av feedback: " + getCaseCategory() + "\n");
 

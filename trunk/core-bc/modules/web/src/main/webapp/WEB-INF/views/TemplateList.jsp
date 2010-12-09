@@ -97,7 +97,7 @@
         <tfoot>
         <tr>
             <th align="right" colspan="10">
-                <a href="TemplateEdit">Add</a>
+                <a href="TemplateAdd">Add</a>
             </th>
         </tr>
         </tfoot>

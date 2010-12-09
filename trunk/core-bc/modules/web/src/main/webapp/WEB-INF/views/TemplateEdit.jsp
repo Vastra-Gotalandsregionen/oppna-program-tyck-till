@@ -177,14 +177,28 @@
     <div class="prop">
         <span class="name">Mottagare</span>
         <span class="value">
-            <span class="name">USD</span>
-            <span class="value"><form:input path="defaultBackend.usd"/> (Ange projekt id)</span><br/>
-
-            <span class="name">PivotalTracker</span>
-            <span class="value"><form:input path="defaultBackend.pivotal"/> (Ange projekt id)</span><br/>
-
-            <span class="name">Grupp brevlåda</span>
-            <span class="value"><form:input path="defaultBackend.mbox"/> (Ange mail adress)</span>
+            <table>
+                <tr>
+                    <td>
+                        <span class="backendUsd" title="USD">
+                                <form:checkbox path="defaultBackend.activeUsd" cssClass="backendInput"/>
+                                <form:input path="defaultBackend.usd"/>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="backendPivotal" title="Pivotal">
+                                <form:checkbox path="defaultBackend.activePivotal" cssClass="backendInput"/>
+                                <form:input path="defaultBackend.pivotal"/>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="backendMbox" title="E-post">
+                                <form:checkbox path="defaultBackend.activeMbox" cssClass="backendInput"/>
+                                <form:input path="defaultBackend.mbox"/>
+                        </span>
+                    </td>
+                </tr>
+            </table>
         </span>
         <span class="error"><form:errors path="defaultBackend" htmlEscape="false"/></span>
     </div>

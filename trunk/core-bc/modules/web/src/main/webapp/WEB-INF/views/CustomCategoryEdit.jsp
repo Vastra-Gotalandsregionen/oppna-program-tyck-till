@@ -59,20 +59,20 @@
             </td>
             <td>
                 <span class="defaultBackend backendUsd" title="USD">
-                        <form:checkbox path="customCategory.backend.activeUsd" cssClass="backendInput"/>
-                        <form:input path="customCategory.backend.usd"/>
+                    <form:checkbox path="customCategory.backend.activeUsd" cssClass="backendInput"/>
+                    <form:input path="customCategory.backend.usd"/>
                 </span>
             </td>
             <td>
                 <span class="defaultBackend backendPivotal" title="Pivotal">
-                        <form:checkbox path="customCategory.backend.activePivotal" cssClass="backendInput"/>
-                        <form:input path="customCategory.backend.pivotal"/>
+                    <form:checkbox path="customCategory.backend.activePivotal" cssClass="backendInput"/>
+                    <form:input path="customCategory.backend.pivotal"/>
                 </span>
             </td>
             <td>
                 <span class="defaultBackend backendMbox" title="E-post">
-                        <form:checkbox path="customCategory.backend.activeMbox" cssClass="backendInput"/>
-                        <form:input path="customCategory.backend.mbox"/>
+                    <form:checkbox path="customCategory.backend.activeMbox" cssClass="backendInput"/>
+                    <form:input path="customCategory.backend.mbox"/>
                 </span>
             </td>
         </tr>

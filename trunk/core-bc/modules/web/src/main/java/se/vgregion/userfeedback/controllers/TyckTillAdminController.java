@@ -41,8 +41,44 @@ public class TyckTillAdminController {
         return "TemplateList";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/TemplateAdd")
+    public String addTemplates(@RequestParam(value = "templateId", required = false) Long templateId,
+            ModelMap model) {
+        FormTemplate template = new FormTemplate();
+        model.addAttribute("formTemplate", template);
+
+        // expose CustomSubCategories
+        CustomCategory customCategory = template.getCustomCategory();
+        if (customCategory == null) {
+            customCategory = new CustomCategory();
+            template.setCustomCategory(customCategory);
+        }
+        model.addAttribute("customCategory", customCategory);
+
+        List<CustomSubCategory> subCategories = customCategory.getCustomSubCategories();
+        if (subCategories == null) {
+            subCategories = new ArrayList<CustomSubCategory>();
+            customCategory.setCustomSubCategories(subCategories);
+        }
+        model.addAttribute("customSubCategories", subCategories);
+
+        // expose StaticCategories
+        StaticCategory contentCategory = staticCategoryRepository
+                .find(StaticCategoryRepository.STATIC_CONTENT_CATEGORY);
+        StaticCategory functionCategory = staticCategoryRepository
+                .find(StaticCategoryRepository.STATIC_FUNCTION_CATEGORY);
+        StaticCategory otherCategory = staticCategoryRepository
+                .find(StaticCategoryRepository.STATIC_OTHER_CATEGORY);
+        model.addAttribute("contentCategory", contentCategory);
+        model.addAttribute("functionCategory", functionCategory);
+        model.addAttribute("otherCategory", otherCategory);
+
+        model.addAttribute("deployPath", deployPath);
+        return "TemplateEdit";
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/TemplateEdit")
-    public String viewTemplates(@RequestParam(value = "templateId", required = false) Long templateId,
+    public String editTemplates(@RequestParam(value = "templateId", required = false) Long templateId,
             ModelMap model) {
         FormTemplate template;
         if (templateId == null) {

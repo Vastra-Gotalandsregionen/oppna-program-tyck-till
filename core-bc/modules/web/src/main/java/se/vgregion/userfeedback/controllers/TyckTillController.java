@@ -74,8 +74,9 @@ public class TyckTillController {
      * @return - view to be rendered.
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String setupForm(@RequestParam(value = "formName", required = false) String formName, @RequestParam(
-            value = "breadcrumb", required = false) String breadcrumb, HttpServletRequest request, ModelMap model) {
+    public String setupForm(@RequestParam(value = "formName", required = false) String formName,
+                            @RequestParam(value = "breadcrumb", required = false) String breadcrumb,
+                            HttpServletRequest request, ModelMap model) {
 
         FormTemplate template = lookupFormTemplate(formName);
         model.addAttribute("template", template);
@@ -136,7 +137,8 @@ public class TyckTillController {
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String sendUserFeedback(@ModelAttribute("userFeedback") UserFeedback userFeedback,
-                                   @RequestParam("formTemplateId") Long formTemplateId, MultipartHttpServletRequest multipartRequest,
+                                   @RequestParam("formTemplateId") Long formTemplateId,
+                                   MultipartHttpServletRequest multipartRequest,
                                    SessionStatus status, ModelMap model) {
         logger.info("Sending...");
 
@@ -252,7 +254,7 @@ public class TyckTillController {
                     subCategory = sub;
                 }
             }
-            if (subCategory == null || subCategory.getBackend().isBlank()) {
+            if (subCategory == null || !subCategory.getBackend().isActiveBackend()) {
                 return getCustomCategoryBackend(category, template);
             }
 
@@ -293,7 +295,7 @@ public class TyckTillController {
     }
 
     private Backend getCustomCategoryBackend(CustomCategory category, FormTemplate template) {
-        if (category.getBackend() == null || category.getBackend().isBlank()) {
+        if (category.getBackend() == null || !category.getBackend().isActiveBackend()) {
             return getFormTemplateBackend(template);
         }
         return category.getBackend();

@@ -25,6 +25,12 @@ public class Backend extends AbstractValueObject<Backend> implements Serializabl
     private boolean activePivotal;
     private boolean activeMbox;
 
+    public Backend() {}
+
+    public Backend(boolean active) {
+        activeBackend = active;
+    }
+
     public String getUsd() {
         return usd;
     }

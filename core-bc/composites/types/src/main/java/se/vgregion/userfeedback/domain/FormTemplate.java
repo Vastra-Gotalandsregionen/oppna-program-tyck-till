@@ -72,7 +72,7 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
             @AttributeOverride(name = "activeMbox", column = @Column(name = "default_active_mbox")),
             @AttributeOverride(name = "activeBackend", column = @Column(name = "default_active_backend"))
     })
-    private Backend defaultBackend = new Backend();
+    private Backend defaultBackend = new Backend(true);
 
     @Embedded
     @AttributeOverrides({

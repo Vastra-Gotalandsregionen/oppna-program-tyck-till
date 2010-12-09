@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
@@ -20,7 +21,7 @@
                 modal: true,
                 autoOpen: false,
                 height: 500,
-                width: 800,
+                width: 810,
                 draggable: true,
                 resizeable: true,
                 title: 'Tyck till'
@@ -59,6 +60,8 @@
 
 </head>
 <body>
+<spring:url value="/resources/js/jquery-1.4.2.min.js" />
+
 <h1>${formTemplate.id == null ? 'Skapa nytt kontakt formulär' : 'Ändra kontakt formulär'}</h1>
 
 <div id="modalDiv">
@@ -172,7 +175,7 @@
     </div>
 
     <div class="prop">
-        <span class="name">Backend</span>
+        <span class="name">Mottagare</span>
         <span class="value">
             <span class="name">USD</span>
             <span class="value"><form:input path="defaultBackend.usd"/> (Ange projekt id)</span><br/>

@@ -176,3 +176,32 @@ div.subselect {
     padding-left: 10px;
 }
 
+.defaultBackend {
+    min-width: 175px;
+}
+
+.backendUsd {
+    background-image: url(${deploy.path}/tycktill/resources/style/images/usd.png);
+    background-position: 0 50%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}
+
+.backendPivotal {
+    background-image: url(${deploy.path}/tycktill/resources/style/images/pivotal.png);
+    background-position: 0 50%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}
+
+.backendMbox {
+    background-image: url(${deploy.path}/tycktill/resources/style/images/mbox.png);
+    background-position: 0 50%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}
+
+.backendInput {
+    margin-left: 20px;
+}
+

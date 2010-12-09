@@ -5,6 +5,21 @@
     <title>TyckTill</title>
 
     <script type="text/javascript" src="${deployPath}/tycktill/resources/js/layout-effects.js"></script>
+    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery.form.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#userFeedback").ajaxForm();
+        });
+
+        function submitUserFeedback() {
+            var form = $("#userFeedback");
+            $.post('KontaktaOss', form.serialize(), function() {
+                alert('submitted');
+            });
+            return false;
+        }
+    </script>
 
     <style type="text/css">
         @import "${deployPath}/tycktill/resources/style/modalStyle.css";
@@ -14,14 +29,18 @@
 <body>
 
 
-<div>
+<div id="userfeedback_form">
     <p class="${userFeedback.breadcrumb != null ? 'show' : 'hide'}">${userFeedback.breadcrumb}</p>
+
 
     <h1>${template.title}</h1>
 
     <div class="leadtext">${template.description}</div>
 
     <form:form commandName="userFeedback" enctype="multipart/form-data">
+        <%--<form:errors path="caseTitle"/>--%>
+
+
         <input type="hidden" id="formTemplateId" name="formTemplateId" value="${template.id}"/>
 
         <div class="breadcrumb">
@@ -93,8 +112,17 @@
 
         <div class="message">
             <div>
+                <span class="msglabel">Ärende titel:</span><br/>
+                <form:input path="caseTitle" size="60"/>
+                <span class="error">*<form:errors path="caseTitle" htmlEscape="false" cssClass="errorBox"/></span>
+            </div>
+        </div>
+
+        <div class="message">
+            <div>
                 <span class="msglabel">Förklara ditt ärende med egna ord:</span><br/>
-                <form:textarea path="message" cols="60" rows="7"/>
+                <form:textarea path="caseMessage" cols="60" rows="7"/>
+                <span class="error"><form:errors path="caseMessage" htmlEscape="false" cssClass="errorBox"/></span>
             </div>
         </div>
 
@@ -117,13 +145,15 @@
                     <div>
                         <span style="float:left">
                             <span>Ditt namn</span>
-                            <form:input path="userContact.userName"/>
+                            <form:input path="userContact.userName"/> *
+                            <span class="error"><form:errors path="userContact.userName" htmlEscape="false" cssClass="errorBox"/></span>
                         </span>
 
                         <span style="float: left;">
                             <span style="float: left; padding-top: 3px;" class="${(template.showContactByEmail && !template.showContactByPhone) ? 'show' : 'contact-mail'}">Din e-postadress</span>
                             <span style="float: left; padding-top: 3px;" class="${(!template.showContactByEmail && template.showContactByPhone) ? 'show' : 'contact-phone'}">Ditt telefonnummer</span>
-                            <span style="float: left;" class="${(!template.showContactByEmail || !template.showContactByPhone) ? 'show' : 'contact-method-input'}"><form:input path="userContact.contactMethod"/></span>
+                            <span style="float: left;" class="${(!template.showContactByEmail || !template.showContactByPhone) ? 'show' : 'contact-method-input'}"><form:input path="userContact.contactMethod"/> *</span>
+                            <span class="error"><form:errors path="userContact.contactMethod" htmlEscape="false" cssClass="errorBox"/></span>
                         </span>
                     </div>
                 </div>
@@ -154,7 +184,7 @@
 
         <hr/>
 
-        <input value="Skicka" type="submit">
+        <input value="Skicka" type="submit">  <input type="button" value="AjaxSubmit" onclick="submitUserFeedback();" />
     </form:form>
 
 </div>

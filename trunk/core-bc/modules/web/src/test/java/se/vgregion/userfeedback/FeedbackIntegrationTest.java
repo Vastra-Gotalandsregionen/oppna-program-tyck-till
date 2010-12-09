@@ -64,7 +64,7 @@ public class FeedbackIntegrationTest extends TestCase {
 
         feedback.setPlatformData(platform);
         feedback.setUserContact(userContact);
-        feedback.setMessage("Test message.");
+        feedback.setCaseMessage("Test message.");
         feedback.setAttachments(attachments);
     }
 

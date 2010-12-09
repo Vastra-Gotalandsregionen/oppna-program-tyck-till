@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -18,6 +20,7 @@ import se.vgregion.userfeedback.domain.*;
 
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
 
@@ -27,7 +30,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping(value = { "/KontaktaOss" })
-@SessionAttributes("userFeedback")
+@SessionAttributes({"userFeedback", "template","contactOptions", "contentCategory", "functionCategory", "otherCategory", "deployPath"})
 public class TyckTillController {
     private static final Logger logger = LoggerFactory.getLogger(TyckTillController.class);
 
@@ -136,11 +139,19 @@ public class TyckTillController {
      */
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
-    public String sendUserFeedback(@ModelAttribute("userFeedback") UserFeedback userFeedback,
+    public String sendUserFeedback(@Valid @ModelAttribute("userFeedback") UserFeedback userFeedback,
+                                   BindingResult result,
                                    @RequestParam("formTemplateId") Long formTemplateId,
                                    MultipartHttpServletRequest multipartRequest,
                                    SessionStatus status, ModelMap model) {
         logger.info("Sending...");
+
+        if (result.hasErrors()) {
+            for (ObjectError err : result.getAllErrors()) {
+                System.out.println(err.toString());
+            }
+            return "KontaktaOss";
+        }
 
         // logger.debug("User agent data captured: " + report);
 
@@ -160,7 +171,7 @@ public class TyckTillController {
 
         model.addAttribute("deployPath", deployPath);
 
-        return "redirect:"+userFeedback.getPlatformData().getReferer();
+        return "Tacksida";
     }
 
     private void processUserfeedback(UserFeedback userFeedback, Long formTemplateId,

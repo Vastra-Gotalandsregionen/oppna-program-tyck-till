@@ -1,6 +1,7 @@
 package se.vgregion.userfeedback.domain;
 
 import se.vgregion.dao.domain.patterns.valueobject.AbstractValueObject;
+import se.vgregion.userfeedback.validation.CheckUserContact;
 
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
@@ -15,6 +16,7 @@ import java.util.TreeMap;
  *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
+@CheckUserContact
 @Embeddable
 public class UserContact extends AbstractValueObject<UserContact> implements Serializable {
 

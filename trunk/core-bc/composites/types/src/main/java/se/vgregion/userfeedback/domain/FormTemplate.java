@@ -29,7 +29,7 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @Size(min = 5, max = 50, message = "{template.title}")
+    @Size(max = 50, message = "{template.title}")
     private String title;
 
     @Column(length = 2048)

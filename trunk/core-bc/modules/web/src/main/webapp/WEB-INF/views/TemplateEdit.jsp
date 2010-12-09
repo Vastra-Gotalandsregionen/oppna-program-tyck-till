@@ -60,7 +60,7 @@
 
 </head>
 <body>
-<spring:url value="/resources/js/jquery-1.4.2.min.js" />
+<!--spring:url value="resources/js/jquery-1.4.2.min.js" /-->
 
 <h1>${formTemplate.id == null ? 'Skapa nytt kontakt formulär' : 'Ändra kontakt formulär'}</h1>
 

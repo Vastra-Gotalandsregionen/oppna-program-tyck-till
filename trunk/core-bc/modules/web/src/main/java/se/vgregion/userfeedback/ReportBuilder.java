@@ -58,7 +58,7 @@ public class ReportBuilder {
 
     private void setUserMessage(UserFeedback feedbackForm) {
         FeedbackMessage newMessage = new FeedbackMessage();
-        newMessage.setDescription(feedbackForm.getMessage());
+        newMessage.setDescription(feedbackForm.getCaseMessage());
         StringBuilder sb = new StringBuilder();
         sb.append(feedbackForm.getCaseCategory());
         List<String> subCats = feedbackForm.getCaseSubCategories();

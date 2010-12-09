@@ -28,6 +28,9 @@
 
   <mvc:resources mapping="/resources/**" location="classpath:/resources/" />
 
+  <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+
   <!--
         if you would not have used component scanning you would have had
         to wire up the controller yourself:

@@ -20,6 +20,15 @@ public class CustomSubCategory extends AbstractEntity<Long> implements Serializa
     private String name;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "usd", column = @Column(name = "usd")),
+            @AttributeOverride(name = "pivotal", column = @Column(name = "pivotal")),
+            @AttributeOverride(name = "mbox", column = @Column(name = "mbox")),
+            @AttributeOverride(name = "activeUsd", column = @Column(name = "active_usd")),
+            @AttributeOverride(name = "activePivotal", column = @Column(name = "active_pivotal")),
+            @AttributeOverride(name = "activeMbox", column = @Column(name = "active_mbox")),
+            @AttributeOverride(name = "activeBackend", column = @Column(name = "active_backend"))
+    })
     private Backend backend;
 
     @Override

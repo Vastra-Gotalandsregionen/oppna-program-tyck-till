@@ -64,37 +64,49 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="usd", column=@Column(name = "default_usd")),
-            @AttributeOverride(name="pivotal", column=@Column(name = "default_pivotal")),
-            @AttributeOverride(name="mbox", column=@Column(name = "default_mbox"))
-
+            @AttributeOverride(name = "usd", column = @Column(name = "default_usd")),
+            @AttributeOverride(name = "pivotal", column = @Column(name = "default_pivotal")),
+            @AttributeOverride(name = "mbox", column = @Column(name = "default_mbox")),
+            @AttributeOverride(name = "activeUsd", column = @Column(name = "default_active_usd")),
+            @AttributeOverride(name = "activePivotal", column = @Column(name = "default_active_pivotal")),
+            @AttributeOverride(name = "activeMbox", column = @Column(name = "default_active_mbox")),
+            @AttributeOverride(name = "activeBackend", column = @Column(name = "default_active_backend"))
     })
     private Backend defaultBackend = new Backend();
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="usd", column=@Column(name = "content_usd")),
-            @AttributeOverride(name="pivotal", column=@Column(name = "content_pivotal")),
-            @AttributeOverride(name="mbox", column=@Column(name = "content_mbox"))
-
+            @AttributeOverride(name = "usd", column = @Column(name = "content_usd")),
+            @AttributeOverride(name = "pivotal", column = @Column(name = "content_pivotal")),
+            @AttributeOverride(name = "mbox", column = @Column(name = "content_mbox")),
+            @AttributeOverride(name = "activeUsd", column = @Column(name = "content_active_usd")),
+            @AttributeOverride(name = "activePivotal", column = @Column(name = "content_active_pivotal")),
+            @AttributeOverride(name = "activeMbox", column = @Column(name = "content_active_mbox")),
+            @AttributeOverride(name = "activeBackend", column = @Column(name = "content_active_backend"))
     })
     private Backend contentBackend = new Backend();
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="usd", column=@Column(name = "function_usd")),
-            @AttributeOverride(name="pivotal", column=@Column(name = "function_pivotal")),
-            @AttributeOverride(name="mbox", column=@Column(name = "function_mbox"))
-
+            @AttributeOverride(name = "usd", column = @Column(name = "function_usd")),
+            @AttributeOverride(name = "pivotal", column = @Column(name = "function_pivotal")),
+            @AttributeOverride(name = "mbox", column = @Column(name = "function_mbox")),
+            @AttributeOverride(name = "activeUsd", column = @Column(name = "function_active_usd")),
+            @AttributeOverride(name = "activePivotal", column = @Column(name = "function_active_pivotal")),
+            @AttributeOverride(name = "activeMbox", column = @Column(name = "function_active_mbox")),
+            @AttributeOverride(name = "activeBackend", column = @Column(name = "function_active_backend"))
     })
     private Backend functionBackend = new Backend();
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="usd", column=@Column(name = "other_usd")),
-            @AttributeOverride(name="pivotal", column=@Column(name = "other_pivotal")),
-            @AttributeOverride(name="mbox", column=@Column(name = "other_mbox"))
-
+            @AttributeOverride(name = "usd", column = @Column(name = "other_usd")),
+            @AttributeOverride(name = "pivotal", column = @Column(name = "other_pivotal")),
+            @AttributeOverride(name = "mbox", column = @Column(name = "other_mbox")),
+            @AttributeOverride(name = "activeUsd", column = @Column(name = "other_active_usd")),
+            @AttributeOverride(name = "activePivotal", column = @Column(name = "other_active_pivotal")),
+            @AttributeOverride(name = "activeMbox", column = @Column(name = "other_active_mbox")),
+            @AttributeOverride(name = "activeBackend", column = @Column(name = "other_active_backend"))
     })
     private Backend otherBackend = new Backend();
 

@@ -22,6 +22,7 @@ package se.vgregion.userfeedback.impl;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -29,7 +30,11 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
+import javax.persistence.Transient;
 
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +59,10 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
 
     private static final int SECONDS_PER_MINUTE = 60;
     private static final int MILLISECONDS_PER_SECOND = 1000;
+
+    @Autowired
+    @Transient
+    private static VelocityEngine velocityEngine;
 
     /**
      * Time in minutes when a file is considered old in the temp file directory, and hence is removed.
@@ -145,10 +154,16 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     private int registerInUsd(UserFeedback report) {
         try {
             Properties parameters = mapToRequestParameters(report);
+
             Collection<se.vgregion.util.Attachment> attachments = mapAttachments(report);
 
+            System.out.println("-->>(1) Creating request"); // TODO: Remove.
             usdService.createRequest(parameters, report.getPlatformData().getUserId(), attachments);
+
+            System.out.println("-->>(2a) Request sent"); // TODO: Remove.
         } catch (Exception e) {
+
+            System.out.println("-->>(2b) Request failed" + e.toString()); // TODO: Remove.
             LOGGER.error("USD service could not be reached, trying email instead.", e);
             try {
                 sendReportByEmail(report, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT + ":" + "USD-" + e.getMessage());
@@ -208,13 +223,57 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         }
     }
 
+    /**
+     * Make a new Velocity context and populate it from a {@code UserFeedback} instance.
+     * 
+     * @param report
+     *            .
+     * @return .
+     */
+    private static VelocityContext makeVelocityContext(UserFeedback report) {
+        VelocityContext context = new VelocityContext();
+        context.put("userfeedback", report);
+        return context;
+    }
+
+    /**
+     * Retrieve a template, merge it with the {@code UserFeedback} data and return the result as a String.
+     * 
+     * @param template
+     *            Name of the Velocity template.
+     * @param report
+     *            .
+     * @return .
+     */
+    private static String makeReport(String template, UserFeedback report) {
+        StringWriter writer = new StringWriter();
+        try {
+            Template t = velocityEngine.getTemplate(template);
+            VelocityContext context = makeVelocityContext(report);
+            t.merge(context, writer);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return writer.toString();
+    }
+
+    private static final String EMAIL_TEMPLATE = "velocity/tycktill-email-report.vm";
+    private static final String PIVOTAL_TEMPLATE = "velocity/tycktill-pivotal-report.vm";
+
     private void createUserStory(UserFeedback report) {
         String projectId = report.getCaseBackend().getPivotal();
         PTStory story = new PTStory();
         story.setName(projectId + ": FeedbackReportService message");
         story.setType("bug");
         story.setProjectId(projectId);
-        story.setDescription(report.toString());
+
+        //
+        /* story.setDescription(report.toString()); */
+        //
+        String description = makeReport(PIVOTAL_TEMPLATE, report);
+        story.setDescription(description);
+        //
+
         String url = pivotalTrackerClient.createuserStory(story);
         report.setHyperLink(url);
         List<se.vgregion.util.Attachment> attachments = mapAttachments(report);
@@ -245,19 +304,19 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         String reportEmail = report.getCaseBackend().getMbox();
 
         if (reportEmail != null && !"".equals(reportEmail)) {
-            String body = "";
+            String description = makeReport(EMAIL_TEMPLATE, report);
             String[] reportEmailArray = { reportEmail };
-            body += report.toString().replaceAll("\n", "</br>");
 
             try {
-                new EMailClient().postMailWithAttachments(reportEmailArray, subject, "" + body,
+                new EMailClient().postMailWithAttachments(reportEmailArray, subject, description,
                         FEEDBACK_REPORT_SERVICE_NOREPLY, mapAttachments(report));
             } catch (MessagingException e1) {
                 LOGGER.error("Email submission failed:", e1);
                 String[] emailTo = { FEEDBACK_REPORT_SERVICE_ADMIN_EMAIL };
 
                 new EMailClient().postMailWithAttachments(emailTo, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT, ""
-                        + e1.getMessage() + "\n" + body, FEEDBACK_REPORT_SERVICE_NOREPLY, mapAttachments(report));
+                        + e1.getMessage() + "\n" + description, FEEDBACK_REPORT_SERVICE_NOREPLY,
+                        mapAttachments(report));
             }
         }
     }
@@ -266,10 +325,10 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         Properties p = new Properties();
         p.setProperty("affected_resource", "nr:BF5880E3AF1C8542B2546B93922C25A7");
         p.setProperty("category", "pcat:400023");
-        // map tracker category to USD group.
+        // // map tracker category to USD group.
         String trackerCategory = report.getCaseBackend().getUsd();
         String groupHandle = usdService.getUSDGroupHandleForApplicationName(trackerCategory);
-        System.out.println("--- >> Grouphandle: " + groupHandle); // TODO: Remove
+        // System.out.println("--- >> Grouphandle: " + groupHandle); // TODO: Remove
         p.setProperty("group", groupHandle);
         p.setProperty("impact", "imp:1603");
         p.setProperty("priority", "pri:500");
@@ -278,6 +337,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         p.setProperty("z_location", "loc:67F817D782E87B45A8298FC5512B6A9C");
         p.setProperty("z_organization", "org:5527E3F8D19F49409036F162493C7DD0");
         p.setProperty("z_telefon_nr", lookupPhonenumber(report));
+        p.setProperty("time_spent", "0");
 
         StringBuffer descBuf = new StringBuffer(report.toString());
         descBuf.append("\n");

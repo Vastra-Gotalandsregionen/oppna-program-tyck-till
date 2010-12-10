@@ -84,7 +84,7 @@
             <th>&nbsp;</th>
             <th colspan="4" align="left">Ändra mottagare</th>
         </tr>
-        <sp
+        <sp/>
         <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory" varStatus="loop">
             <tr>
                 <td>

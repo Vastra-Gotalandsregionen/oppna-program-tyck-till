@@ -62,7 +62,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
 
     @Autowired
     @Transient
-    private static VelocityEngine velocityEngine;
+    private VelocityEngine velocityEngine;
 
     /**
      * Time in minutes when a file is considered old in the temp file directory, and hence is removed.
@@ -129,38 +129,14 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         return result;
     }
 
-    // private int registerInUsd(FeedbackReport report) {
-    // try {
-    // Properties parameters = mapToRequestParameters(report);
-    // List<se.vgregion.userfeedback.Screenshot> ss = report.getScreenShots();
-    // List<File> files = new ArrayList<File>();
-    // List<String> filenames = new ArrayList<String>();
-    // for (se.vgregion.userfeedback.Screenshot s : ss) {
-    // files.add(new File(s.getPath()));
-    // filenames.add(s.getFileName());
-    // }
-    // usdService.createRequest(parameters, report.getUserPlatform().getUserId(), files, filenames);
-    // } catch (Exception e) {
-    // LOGGER.error("USD service could not be reached, trying email instead.", e);
-    // try {
-    // sendReportByEmail(report, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT + ":" + "USD-" + e.getMessage());
-    // } catch (MessagingException me) {
-    // return -1;
-    // }
-    // }
-    // return 0;
-    // }
-
     private int registerInUsd(UserFeedback report) {
         try {
             Properties parameters = mapToRequestParameters(report);
 
             Collection<se.vgregion.util.Attachment> attachments = mapAttachments(report);
 
-            System.out.println("-->>(1) Creating request"); // TODO: Remove.
             usdService.createRequest(parameters, report.getPlatformData().getUserId(), attachments);
 
-            System.out.println("-->>(2a) Request sent"); // TODO: Remove.
         } catch (Exception e) {
 
             System.out.println("-->>(2b) Request failed" + e.toString()); // TODO: Remove.
@@ -178,7 +154,6 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         try {
             createUserStory(report);
         } catch (Exception e) {
-            System.out.println("---->> TAG (Could not reach Pivotal)"); // TODO: Remove
             LOGGER.error("Pivotal tracker could not be reached, trying email instead.", e);
             try {
                 sendReportByEmail(report, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT + ":" + "PivotalTracker-"
@@ -192,7 +167,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
 
     private int reportByEmail(UserFeedback report) {
         try {
-            System.out.println("Report by email");
+            System.out.println("Report by email"); // TODO: Remove
             sendReportByEmail(report, FEEDBACK_REPORT_EMAIL_SUBJECT);
 
             System.out.println("Successfully reported by email");
@@ -245,11 +220,12 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
      *            .
      * @return .
      */
-    private static String makeReport(String template, UserFeedback report) {
+    private String makeReport(String template, UserFeedback report) {
         StringWriter writer = new StringWriter();
         try {
             Template t = velocityEngine.getTemplate(template);
             VelocityContext context = makeVelocityContext(report);
+
             t.merge(context, writer);
         } catch (Exception e) {
             throw new RuntimeException(e);

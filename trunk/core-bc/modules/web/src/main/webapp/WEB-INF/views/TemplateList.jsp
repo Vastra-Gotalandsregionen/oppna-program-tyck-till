@@ -8,41 +8,32 @@
     <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        var isShowInDialog = true;
+
+        jQuery(document).ready(function() {
             $("#modalDiv").dialog({
                 modal: true,
                 autoOpen: false,
                 height: 600,
                 width: 610,
+                position: 'center',
                 draggable: true,
                 resizeable: true,
-                title: 'Tyck till'
+                show: 'slide',
+                hide: {effect: 'fade', duration: 1500},
+                title: ''
             });
-            loadjscssfile("${deployPath}/tycktill/resources/style/alternateStyle.css", "css");
+
         });
 
-        function loadjscssfile(filename, filetype) {
-            if (filetype == "js") { //if filename is a external JavaScript file
-                var fileref = document.createElement('script')
-                fileref.setAttribute("type", "text/javascript")
-                fileref.setAttribute("src", filename)
-            }
-            else if (filetype == "css") { //if filename is an external CSS file
-                var fileref = document.createElement("link")
-                fileref.setAttribute("rel", "stylesheet")
-                fileref.setAttribute("type", "text/css")
-                fileref.setAttribute("href", filename)
-            }
-            if (typeof fileref != "undefined")
-                document.getElementsByTagName("head")[0].appendChild(fileref)
-        }
-
-        function openDialog(url, args) {
+        function openDialog(url, args, title) {
+            $("#modalDiv").dialog({title: title});
             $("#modalDiv").dialog("open");
-            $("#modalDialog").load(url, args);
+            $("#modalDialog").load(url, args, function() {
+                initForm();
+            });
             return false;
         }
-
     </script>
 
     <style type="text/css">
@@ -90,7 +81,7 @@
                 <td align="center">${formTemplate.showAttachment}</td>
                 <th><a href="TemplateEdit?templateId=${formTemplate.id}">Edit</a></th>
                 <th><a href="#"
-                       onclick="openDialog('KontaktaOss', 'formName=${formTemplate.name}');">View</a>
+                       onclick="openDialog('KontaktaOss', 'formName=${formTemplate.name}', '${formTemplate.title}');">View</a>
                 </th>
             </tr>
         </c:forEach>

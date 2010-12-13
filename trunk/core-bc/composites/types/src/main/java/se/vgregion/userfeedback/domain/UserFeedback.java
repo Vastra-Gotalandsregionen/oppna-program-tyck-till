@@ -52,8 +52,8 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     @ElementCollection
     private List<String> caseSubCategories;
 
-    @Column(length = 255)
-    @Size(max = 10, message = "{validation.feedback.caseTitle}")
+    @Column(length = 70)
+    @Size(max = 70, message = "{validation.feedback.caseTitle}")
     private String caseTitle;
 
     /* Message */

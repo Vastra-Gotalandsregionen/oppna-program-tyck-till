@@ -154,9 +154,9 @@ div.subselect {
 }
 
 .error {
-	float: left;
-	padding: 5px;
-    margin-top: 3px;
+	padding: 0px;
+    margin-top: 0px;
+    color: red;
 }
 
 .errors {

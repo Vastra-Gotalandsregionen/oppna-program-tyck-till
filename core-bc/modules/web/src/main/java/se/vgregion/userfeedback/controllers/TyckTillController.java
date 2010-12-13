@@ -12,6 +12,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import se.vgregion.userfeedback.FeedbackReportService;
@@ -29,8 +30,8 @@ import java.util.*;
  */
 
 @Controller
-@RequestMapping(value = { "/KontaktaOss" })
-@SessionAttributes({"userFeedback", "template","contactOptions", "contentCategory", "functionCategory", "otherCategory", "deployPath"})
+@RequestMapping(value = {"/KontaktaOss"})
+@SessionAttributes({"userFeedback", "template", "contactOptions", "contentCategory", "functionCategory", "otherCategory", "deployPath"})
 public class TyckTillController {
     private static final Logger logger = LoggerFactory.getLogger(TyckTillController.class);
 
@@ -55,6 +56,9 @@ public class TyckTillController {
     @Value("${deploy.path}")
     private String deployPath;
 
+    @Value("${tycktill.maxfileuploadsize}")
+    private Long maxFileUploadSize = 100000L; // default 100k
+
 
     // @Autowired
     // private FeedbackReportService reportService;
@@ -66,14 +70,11 @@ public class TyckTillController {
 
     /**
      * Used to render the userFeedback form. Basic initialization before render-view.
-     * 
-     * @param formName
-     *            - FormTemplate name. The request parameter "formName" decide how the form is rendered. It is an
-     *            inparameter to give the client this choise.
-     * @param breadcrumb
-     *            - client specific inparameter declaring from where the contact were initiated.
-     * @param model
-     *            - the normal Spring ModelMap.
+     *
+     * @param formName   - FormTemplate name. The request parameter "formName" decide how the form is rendered. It is an
+     *                   inparameter to give the client this choise.
+     * @param breadcrumb - client specific inparameter declaring from where the contact were initiated.
+     * @param model      - the normal Spring ModelMap.
      * @return - view to be rendered.
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -124,17 +125,12 @@ public class TyckTillController {
 
     /**
      * Action method to send Userfeedback.
-     * 
-     * @param userFeedback
-     *            - form backing bean.
-     * @param formTemplateId
-     *            - FormTemplate used to render form, used for extracting CustomCategory configuration.
-     * @param multipartRequest
-     *            - the http-request used for attachment upload and PlatformData extraction.
-     * @param status
-     *            - controls Session state.
-     * @param model
-     *            - the normal Spring ModelMap.
+     *
+     * @param userFeedback     - form backing bean.
+     * @param formTemplateId   - FormTemplate used to render form, used for extracting CustomCategory configuration.
+     * @param multipartRequest - the http-request used for attachment upload and PlatformData extraction.
+     * @param status           - controls Session state.
+     * @param model            - the normal Spring ModelMap.
      * @return - view to render.
      */
     @Transactional
@@ -146,39 +142,65 @@ public class TyckTillController {
                                    SessionStatus status, ModelMap model) {
         logger.info("Sending...");
 
-        if (result.hasErrors()) {
-            for (ObjectError err : result.getAllErrors()) {
-                System.out.println(err.toString());
+        try {
+            if (result.hasErrors()) {
+                logger.info("validation error");
+                for (ObjectError err : result.getAllErrors()) {
+                    System.out.println(err.toString());
+                }
+                return "KontaktaOss";
             }
+
+            // logger.debug("User agent data captured: " + report);
+
+            processUserfeedback(userFeedback, formTemplateId, multipartRequest);
+            reportService.reportFeedback(userFeedback);
+
+            log(userFeedback, model);
+
+            // Log UserFeedback in db
+            if (userFeedback.getId() == null) {
+                userFeedbackRepository.persist(userFeedback);
+            } else {
+                userFeedbackRepository.merge(userFeedback);
+            }
+
+            logger.info("Session complete");
+            status.setComplete();
+
+            model.addAttribute("deployPath", deployPath);
+
+            return "Tacksida";
+        } catch (MaxUploadSizeExceededException e) {
+            long maxFileSize = e.getMaxUploadSize()/1000L;
+            logger.info("file upload failed");
+            model.addAttribute("fileUploadError", "File är för stor. Den får max vara " + maxFileSize + " kb.");
+            return "KontaktaOss";
+        } catch (Exception e) {
+            logger.info("exception:" + e.getMessage());
             return "KontaktaOss";
         }
-
-        // logger.debug("User agent data captured: " + report);
-
-        processUserfeedback(userFeedback, formTemplateId, multipartRequest);
-        reportService.reportFeedback(userFeedback);
-
-        log(userFeedback, model);
-
-        // Log UserFeedback in db
-        if (userFeedback.getId() == null) {
-            userFeedbackRepository.persist(userFeedback);
-        } else {
-            userFeedbackRepository.merge(userFeedback);
-        }
-
-        status.setComplete();
-
-        model.addAttribute("deployPath", deployPath);
-
-        return "Tacksida";
     }
+//
+//    @ExceptionHandler({MaxUploadSizeExceededException.class})
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    public String handleUploadToBigFile(MaxUploadSizeExceededException ex,
+//                                        ModelMap model) {
+//        logger.info("exception thrown: "+ex.getMessage());
+//
+//        long maxFileSize = ex.getMaxUploadSize();
+//        logger.info("file upload failed");
+//        model.addAttribute("fileUploadError", "File är för stor. Den får max vara " + maxFileSize + " Mb.");
+//
+//        return "KontaktaOss";
+//    }
 
     private void processUserfeedback(UserFeedback userFeedback, Long formTemplateId,
                                      MultipartHttpServletRequest multipartRequest) {
         // 1: Lookup Attachments
         for (Iterator<String> filenameIterator = multipartRequest.getFileNames(); filenameIterator.hasNext();) {
             String fileName = filenameIterator.next();
+            logger.info("Attachment: " + fileName);
 
             processAttachment(multipartRequest.getFile(fileName), userFeedback);
         }
@@ -187,14 +209,17 @@ public class TyckTillController {
         // 2: Lookup CaseCategory
         String caseCategory = lookupCaseCategory(userFeedback, template);
         userFeedback.setCaseCategory(caseCategory);
+        logger.info("CaseCategory: " + caseCategory);
 
         // 3: Lookup CaseSubCategory
         List<String> caseSubCategories = lookupCaseSubCategory(userFeedback, template);
         userFeedback.setCaseSubCategories(caseSubCategories);
+        logger.info("CaseSubCategory: " + caseSubCategories);
 
         // 4: Lookup CaseContact
         Backend backend = lookupCaseBackend(userFeedback, template);
         userFeedback.setCaseBackend(backend);
+        logger.info("Backend: " + backend.isActiveBackend() + " " + backend.getMbox() + " " + backend.getPivotal() + " " + backend.getUsd());
     }
 
     private String lookupCaseCategory(UserFeedback userFeedback, FormTemplate template) {
@@ -315,6 +340,11 @@ public class TyckTillController {
     private void processAttachment(MultipartFile file, UserFeedback userFeedback) {
         if (file.isEmpty()) {
             return;
+        }
+
+        // file to large - Exception
+        if (file.getSize() > maxFileUploadSize) {
+            throw new MaxUploadSizeExceededException(maxFileUploadSize);
         }
 
         Collection<Attachment> attachments = userFeedback.getAttachments();

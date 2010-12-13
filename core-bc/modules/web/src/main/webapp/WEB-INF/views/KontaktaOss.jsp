@@ -9,15 +9,44 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#userFeedback").ajaxForm();
+            var options = {
+                target:         '#userfeedback_form',
+                beforeSubmit:   showRequest,
+                success:        showResponse
+            };
+
+            $("#userFeedback").ajaxForm(options);
         });
 
-        function submitUserFeedback() {
-            var form = $("#userFeedback");
-            $.post('KontaktaOss', form.serialize(), function() {
-                alert('submitted');
-            });
-            return false;
+        function showRequest(formData, jqForm, options) {
+            // formData is an array; here we use $.param to convert it to a string to display it
+            // but the form plugin does this for you automatically when it submits the data
+            var queryString = $.param(formData);
+
+            // jqForm is a jQuery object encapsulating the form element.  To access the
+            // DOM element for the form do this:
+            // var formElement = jqForm[0];
+
+//            alert('About to submit: \n\n' + queryString);
+
+            // here we could return false to prevent the form from being submitted;
+            // returning anything other than false will allow the form submit to continue
+            return true;
+        }
+        function showResponse(responseText, statusText, xhr, $form) {
+            // for normal html responses, the first argument to the success callback
+            // is the XMLHttpRequest object's responseText property
+
+            // if the ajaxForm method was passed an Options Object with the dataType
+            // property set to 'xml' then the first argument to the success callback
+            // is the XMLHttpRequest object's responseXML property
+
+            // if the ajaxForm method was passed an Options Object with the dataType
+            // property set to 'json' then the first argument to the success callback
+            // is the json data object returned by the server
+
+//            alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
+//                    '\n\nThe output div should have already been updated with the responseText.');
         }
     </script>
 
@@ -146,14 +175,20 @@
                         <span style="float:left">
                             <span>Ditt namn</span>
                             <form:input path="userContact.userName"/> *
-                            <span class="error"><form:errors path="userContact.userName" htmlEscape="false" cssClass="errorBox"/></span>
+                            <span class="error"><form:errors path="userContact.userName" htmlEscape="false"
+                                                             cssClass="errorBox"/></span>
                         </span>
 
                         <span style="float: left;">
-                            <span style="float: left; padding-top: 3px;" class="${(template.showContactByEmail && !template.showContactByPhone) ? 'show' : 'contact-mail'}">Din e-postadress</span>
-                            <span style="float: left; padding-top: 3px;" class="${(!template.showContactByEmail && template.showContactByPhone) ? 'show' : 'contact-phone'}">Ditt telefonnummer</span>
-                            <span style="float: left;" class="${(!template.showContactByEmail || !template.showContactByPhone) ? 'show' : 'contact-method-input'}"><form:input path="userContact.contactMethod"/> *</span>
-                            <span class="error"><form:errors path="userContact.contactMethod" htmlEscape="false" cssClass="errorBox"/></span>
+                            <span style="float: left; padding-top: 3px;"
+                                  class="${(template.showContactByEmail && !template.showContactByPhone) ? 'show' : 'contact-mail'}">Din e-postadress</span>
+                            <span style="float: left; padding-top: 3px;"
+                                  class="${(!template.showContactByEmail && template.showContactByPhone) ? 'show' : 'contact-phone'}">Ditt telefonnummer</span>
+                            <span style="float: left;"
+                                  class="${(!template.showContactByEmail || !template.showContactByPhone) ? 'show' : 'contact-method-input'}"><form:input
+                                    path="userContact.contactMethod"/> *</span>
+                            <span class="error"><form:errors path="userContact.contactMethod" htmlEscape="false"
+                                                             cssClass="errorBox"/></span>
                         </span>
                     </div>
                 </div>
@@ -167,6 +202,7 @@
                 <span>Bifoga en skärmdump, så vi kan se det du ser</span><br/>
 
                 <form:checkbox id="attachScreenDump" path="attachScreenDump" label="Jag vill bifoga en skärmdump"/>
+                <div>${fileUploadError != null ? fileUploadError : ''}</div>
                 <div id="attachmentDetail">
                     <ol>
                         <li>Aktivera sidan du vill bifoga bild på.</li>
@@ -184,7 +220,7 @@
 
         <hr/>
 
-        <input value="Skicka" type="submit">  <input type="button" value="AjaxSubmit" onclick="submitUserFeedback();" />
+        <input value="Skicka" type="submit"> <input type="button" value="AjaxSubmit" onclick="submitUserFeedback();"/>
     </form:form>
 
 </div>

@@ -40,7 +40,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import se.vgregion.incidentreport.pivotaltracker.PTStory;
 import se.vgregion.incidentreport.pivotaltracker.PivotalTrackerService;
 import se.vgregion.usdservice.USDService;
@@ -50,6 +49,18 @@ import se.vgregion.userfeedback.domain.Backend;
 import se.vgregion.userfeedback.domain.UserContact;
 import se.vgregion.userfeedback.domain.UserFeedback;
 import se.vgregion.util.EMailClient;
+
+import javax.mail.MessagingException;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+
+import javax.mail.MessagingException;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Implementation of the incident report service.
@@ -112,13 +123,13 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         Backend backend = report.getCaseBackend();
         try {
 
-            if (backend.getPivotal() != null) {
+            if (backend.isActivePivotal()) {
                 registerInPivotal(report);
             }
-            if (backend.getUsd() != null) {
+            if (backend.isActiveUsd()) {
                 registerInUsd(report);
             }
-            if (backend.getMbox() != null) {
+            if (backend.isActiveMbox()) {
                 reportByEmail(report);
             }
 

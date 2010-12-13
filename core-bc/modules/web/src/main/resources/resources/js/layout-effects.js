@@ -1,9 +1,5 @@
 jQuery(document).ready(function() {
     initForm();
-    addEventsToCaseSubject();
-    addEventsShouldContactUser();
-    addEventToContactOption();
-    addEventToAttachments();
 });
 
 function initForm() {
@@ -12,32 +8,71 @@ function initForm() {
     jQuery('.contact-mail').hide();
     jQuery('.contact-phone').hide();
     jQuery('.contact-method-input').hide();
-    jQuery('#attachmentDetail').hide();
 
+    if (jQuery('#contentCase').is(':checked')) {
+        showContentCase();
+    }
+    if (jQuery('#functionCase').is(':checked')) {
+        showFunctionCase();
+    }
+    if (jQuery('#customCase').is(':checked')) {
+        showCustomCase();
+    }
+    if (jQuery('#otherCase').is(':checked')) {
+        showOtherCase();
+    }
+
+    hideShowContactUserOptions(jQuery('#shouldContactUser').is(':checked'));
+    hideShowAttachmentDetail(jQuery('#attachScreenDump').is(':checked'));
+
+    addEventsToCaseSubject();
+    addEventsShouldContactUser();
+    addEventToContactOption();
+    addEventToAttachments();
+
+    if (isShowInDialog) {
+        showInDialogInit();
+    }
 }
 
 function addEventsToCaseSubject() {
     // Actions
     jQuery('#contentCase').click(function() {
-        jQuery('div#contentSubCase').show('fast');
-        jQuery('div#functionSubCase').hide('fast');
-        jQuery('div#customSubCase').hide('fast');
+        showContentCase()
     });
     jQuery('#functionCase').click(function() {
-        jQuery('div#contentSubCase').hide('fast');
-        jQuery('div#functionSubCase').show('fast');
-        jQuery('div#customSubCase').hide('fast');
+        showFunctionCase()
     });
     jQuery('#customCase').click(function() {
-        jQuery('div#contentSubCase').hide('fast');
-        jQuery('div#functionSubCase').hide('fast');
-        jQuery('div#customSubCase').show('fast');
+        showCustomCase();
     });
     jQuery('#otherCase').click(function() {
-        jQuery('div#contentSubCase').hide('fast');
-        jQuery('div#functionSubCase').hide('fast');
-        jQuery('div#customSubCase').hide('fast');
+        showOtherCase();
     });
+}
+
+function showContentCase() {
+    jQuery('div#contentSubCase').show('fast');
+    jQuery('div#functionSubCase').hide('fast');
+    jQuery('div#customSubCase').hide('fast');
+}
+
+function showFunctionCase() {
+    jQuery('div#contentSubCase').hide('fast');
+    jQuery('div#functionSubCase').show('fast');
+    jQuery('div#customSubCase').hide('fast');
+}
+
+function showCustomCase() {
+    jQuery('div#contentSubCase').hide('fast');
+    jQuery('div#functionSubCase').hide('fast');
+    jQuery('div#customSubCase').show('fast');
+}
+
+function showOtherCase() {
+    jQuery('div#contentSubCase').hide('fast');
+    jQuery('div#functionSubCase').hide('fast');
+    jQuery('div#customSubCase').hide('fast');
 }
 
 function addEventsShouldContactUser() {
@@ -90,4 +125,20 @@ function hideShowAttachmentDetail(value) {
     } else {
         jQuery('div#attachmentDetail').hide('fast');
     }
+}
+
+function loadjscssfile(filename, filetype) {
+    if (filetype == "js") { //if filename is a external JavaScript file
+        var fileref = document.createElement('script')
+        fileref.setAttribute("type", "text/javascript")
+        fileref.setAttribute("src", filename)
+    }
+    else if (filetype == "css") { //if filename is an external CSS file
+        var fileref = document.createElement("link")
+        fileref.setAttribute("rel", "stylesheet")
+        fileref.setAttribute("type", "text/css")
+        fileref.setAttribute("href", filename)
+    }
+    if (typeof fileref != "undefined")
+        document.getElementsByTagName("head")[0].appendChild(fileref)
 }

@@ -6,47 +6,26 @@
 
     <script type="text/javascript" src="${deployPath}/tycktill/resources/js/layout-effects.js"></script>
     <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery.form.js"></script>
+    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery.timer.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        function showInDialogInit() {
+            $('.title').hide();
+
             var options = {
                 target:         '#userfeedback_form',
-                beforeSubmit:   showRequest,
                 success:        showResponse
             };
-
             $("#userFeedback").ajaxForm(options);
-        });
-
-        function showRequest(formData, jqForm, options) {
-            // formData is an array; here we use $.param to convert it to a string to display it
-            // but the form plugin does this for you automatically when it submits the data
-            var queryString = $.param(formData);
-
-            // jqForm is a jQuery object encapsulating the form element.  To access the
-            // DOM element for the form do this:
-            // var formElement = jqForm[0];
-
-//            alert('About to submit: \n\n' + queryString);
-
-            // here we could return false to prevent the form from being submitted;
-            // returning anything other than false will allow the form submit to continue
-            return true;
         }
+
         function showResponse(responseText, statusText, xhr, $form) {
-            // for normal html responses, the first argument to the success callback
-            // is the XMLHttpRequest object's responseText property
-
-            // if the ajaxForm method was passed an Options Object with the dataType
-            // property set to 'xml' then the first argument to the success callback
-            // is the XMLHttpRequest object's responseXML property
-
-            // if the ajaxForm method was passed an Options Object with the dataType
-            // property set to 'json' then the first argument to the success callback
-            // is the json data object returned by the server
-
-//            alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
-//                    '\n\nThe output div should have already been updated with the responseText.');
+            var isTack = $('#userfeedback_form').find('title').text() == 'Tack';
+            if (isTack) {
+                $.timer(1500, function() {
+                    $("#modalDiv").dialog("close");
+                });
+            }
         }
     </script>
 
@@ -62,7 +41,7 @@
     <p class="${userFeedback.breadcrumb != null ? 'show' : 'hide'}">${userFeedback.breadcrumb}</p>
 
 
-    <h1>${template.title}</h1>
+    <span class="title">${template.title}</span>
 
     <div class="leadtext">${template.description}</div>
 
@@ -141,9 +120,9 @@
 
         <div class="message">
             <div>
-                <span class="msglabel">Ärende titel:</span><br/>
+                <span class="msglabel">Rubrik:</span><br/>
                 <form:input path="caseTitle" size="60"/>
-                <span class="error">*<form:errors path="caseTitle" htmlEscape="false" cssClass="errorBox"/></span>
+                <span class="error"><form:errors path="caseTitle" htmlEscape="false" cssClass="errorBox"/></span>
             </div>
         </div>
 
@@ -168,7 +147,7 @@
                         <form:radiobuttons id="contactOption"
                                            path="userContact.contactOption"
                                            items="${contactOptions}"
-                                           cssClass="contactOptionClass"/>
+                                           cssClass="contactOptionClass"/> *
                     </div>
 
                     <div>
@@ -202,7 +181,6 @@
                 <span>Bifoga en skärmdump, så vi kan se det du ser</span><br/>
 
                 <form:checkbox id="attachScreenDump" path="attachScreenDump" label="Jag vill bifoga en skärmdump"/>
-                <div>${fileUploadError != null ? fileUploadError : ''}</div>
                 <div id="attachmentDetail">
                     <ol>
                         <li>Aktivera sidan du vill bifoga bild på.</li>
@@ -212,15 +190,15 @@
                         <li>Spara dokumentet på datorn.</li>
                         <li>Bifoga dokumentet.</li>
                     </ol>
-                    <input type="file" name="file1" value="Ladda upp fil"/>
-                    <input type="file" name="file2" value="Ladda upp fil"/>
+                    <input type="file" name="file1" value="Ladda upp fil"/><br/>
+                    <span class="${fileUploadError != null ? 'error' : ''}">${fileUploadError != null ? fileUploadError : ''}</span>
                 </div>
             </div>
         </div>
 
         <hr/>
 
-        <input value="Skicka" type="submit"> <input type="button" value="AjaxSubmit" onclick="submitUserFeedback();"/>
+        <div style="text-align: center;"><input value="Skicka" type="submit"></div>
     </form:form>
 
 </div>

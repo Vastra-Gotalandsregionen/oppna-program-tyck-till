@@ -21,9 +21,8 @@
 div#Inner710 { color: red; }
 
 div.ui-dialog-titlebar {
-  /* display: none; */ }
+}
 span#ui-dialog-title-modalDiv {
-  /*display:none;*/
 }
   
   /* Overlays */
@@ -73,7 +72,7 @@ span#ui-dialog-title-modalDiv {
 .ui-widget-overlay {
     background: #aaaaaa/*{bgColorOverlay}*/ none/*{bgImgUrlOverlay}*/ 0/*{bgOverlayXPos}*/ 0/*{bgOverlayYPos}*/ repeat-x/*{bgOverlayRepeat}*/;
     opacity: .3;
-    filter:Alpha(Opacity=30)/*{opacityOverlay}*/; }
+    filter:Alpha(Opacity=40)/*{opacityOverlay}*/; }
 
 
 .ui-corner-all {
@@ -86,7 +85,7 @@ span#ui-dialog-title-modalDiv {
 
 .ui-dialog { position: relative; padding: .2em; width: 300px; }
 .ui-dialog .ui-dialog-titlebar { padding: 1.5em .3em .3em 1em; position: relative;  }
-.ui-dialog .ui-dialog-title { float: left; margin: .1em 0 .2em; } 
+.ui-dialog .ui-dialog-title { float: left; margin: -1.3em 0 .2em; } 
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
 .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
 .ui-dialog .ui-dialog-content { border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }

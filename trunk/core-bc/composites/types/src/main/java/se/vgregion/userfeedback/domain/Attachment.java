@@ -19,7 +19,6 @@ public class Attachment extends AbstractEntity<Long> implements Serializable {
 
     private String filename;
 
-    @Lob
     private byte[] file;
 
     @Override

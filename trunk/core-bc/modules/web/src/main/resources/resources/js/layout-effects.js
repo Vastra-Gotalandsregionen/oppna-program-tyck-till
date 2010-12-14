@@ -23,6 +23,7 @@ function initForm() {
     }
 
     hideShowContactUserOptions(jQuery('#shouldContactUser').is(':checked'));
+    hideShowContactMethod(jQuery("input[name='userContact.contactOption']:checked").val());
     hideShowAttachmentDetail(jQuery('#attachScreenDump').is(':checked'));
 
     addEventsToCaseSubject();
@@ -93,23 +94,27 @@ function hideShowContactUserOptions(value) {
 function addEventToContactOption() {
     // Actions
     jQuery("input[name='userContact.contactOption']").change(function() {
-        switch (this.value) {
-            case 'email':
-                jQuery('.contact-mail').show();
-                jQuery('.contact-method-input').show();
-                jQuery('.contact-phone').hide();
-                break;
-            case 'telephone':
-                jQuery('.contact-mail').hide();
-                jQuery('.contact-method-input').show();
-                jQuery('.contact-phone').show();
-                break;
-            default:
-                jQuery('.contact-mail').hide('fast');
-                jQuery('.contact-phone').hide('fast');
-                jQuery('.contact-method-input').hide('fast');
-        }
+        hideShowContactMethod(this.value);
     });
+}
+
+function hideShowContactMethod(value) {
+    switch (value) {
+        case 'email':
+            jQuery('.contact-mail').show();
+            jQuery('.contact-method-input').show();
+            jQuery('.contact-phone').hide();
+            break;
+        case 'telephone':
+            jQuery('.contact-mail').hide();
+            jQuery('.contact-method-input').show();
+            jQuery('.contact-phone').show();
+            break;
+        default:
+            jQuery('.contact-mail').hide('fast');
+            jQuery('.contact-phone').hide('fast');
+            jQuery('.contact-method-input').hide('fast');
+    }
 }
 
 function addEventToAttachments() {

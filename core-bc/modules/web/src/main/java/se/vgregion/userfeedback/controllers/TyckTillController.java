@@ -96,13 +96,23 @@ public class TyckTillController {
         if (!model.containsKey("userFeedback")) {
             userFeedback = new UserFeedback();
             userFeedback.setCaseCategory(null);
+
+            userFeedback.setBreadcrumb(breadcrumb);
+            userFeedback.setPlatformData(platformDataService.mapUserPlatform(request));
+
+            UserContact contact = new UserContact();
+            if (template.getShowContactByEmail()) {
+                contact.setContactOption(UserContact.UserContactOption.email);
+            } else if (template.getShowContactByPhone()) {
+                contact.setContactOption(UserContact.UserContactOption.telephone);
+            }
+            userFeedback.setUserContact(contact);
+
             model.addAttribute("userFeedback", userFeedback);
         } else {
             userFeedback = (UserFeedback) model.get("userFeedback");
         }
-        userFeedback.setBreadcrumb(breadcrumb);
 
-        userFeedback.setPlatformData(platformDataService.mapUserPlatform(request));
 
         model.addAttribute("contactOptions", UserContact.UserContactOption.getLabelMap());
 

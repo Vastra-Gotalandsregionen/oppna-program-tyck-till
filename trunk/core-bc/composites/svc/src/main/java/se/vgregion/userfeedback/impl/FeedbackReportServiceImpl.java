@@ -41,10 +41,11 @@ import se.vgregion.util.EMailClient;
 import javax.mail.MessagingException;
 import javax.persistence.Transient;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.StringWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * Implementation of the incident report service.
@@ -52,17 +53,19 @@ import java.util.*;
 @Service("feedbackReportService")
 public class FeedbackReportServiceImpl implements FeedbackReportService {
 
-    private static final int SECONDS_PER_MINUTE = 60;
-    private static final int MILLISECONDS_PER_SECOND = 1000;
-
     @Autowired
     @Transient
     private VelocityEngine velocityEngine;
 
     /**
-     * Time in minutes when a file is considered old in the temp file directory, and hence is removed.
+     * Template for E-mail message.
      */
-    private static final int TEMP_FILES_OLDMINUTES = 15;
+    private static final String EMAIL_TEMPLATE = "velocity/tycktill-email-report.vm";
+
+    /**
+     * Template for Pivotal tracker message.
+     */
+    private static final String PIVOTAL_TEMPLATE = "velocity/tycktill-pivotal-report.vm";
 
     @Autowired
     @Qualifier("pivotalTrackerMappings")
@@ -76,7 +79,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     /**
      * Email reply address.
      */
-    private static final String FEEDBACK_REPORT_SERVICE_NOREPLY = "FeedbackReportService-noreply@vgregion.se";
+    private static final String FEEDBACK_REPORT_SERVICE_NOREPLY = "tycktill-noreply@vgregion.se";
 
     /**
      * Email subject when something is not working as expected in Tyck till
@@ -86,7 +89,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     /**
      * Email subject
      */
-    private static final String FEEDBACK_REPORT_EMAIL_SUBJECT = "FeedbackReportService message";
+    private static final String FEEDBACK_REPORT_EMAIL_SUBJECT = "TyckTill message";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FeedbackReportServiceImpl.class);
 
@@ -110,9 +113,9 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
             if (backend.isActivePivotal()) {
                 registerInPivotal(report);
             }
-            if (backend.isActiveUsd()) {
-                registerInUsd(report);
-            }
+//            if (backend.isActiveUsd()) {
+//                registerInUsd(report);
+//            }
             if (backend.isActiveMbox()) {
                 reportByEmail(report);
             }
@@ -171,25 +174,6 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         return 0;
     }
 
-    private void cleanupTemporaryFiles() {
-        // System.out.println("Deleting temp files..");
-        Date now = new Date();
-        try {
-            File f = File.createTempFile("cleanup", "tmp");
-            File tempDir = f.getParentFile();
-            File[] tempfiles = tempDir.listFiles();
-            for (int i = 0; i < tempfiles.length; i++) {
-                // Remove files older than
-                if (tempfiles[i].lastModified() + TEMP_FILES_OLDMINUTES * SECONDS_PER_MINUTE
-                        * MILLISECONDS_PER_SECOND < now.getTime()) {
-                    tempfiles[i].delete();
-                }
-            }
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-    }
-
     /**
      * Make a new Velocity context and populate it from a {@code UserFeedback} instance.
      * 
@@ -216,7 +200,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     private String makeReport(String template, UserFeedback report) {
         StringWriter writer = new StringWriter();
         try {
-            Template t = velocityEngine.getTemplate(template);
+            Template t = velocityEngine.getTemplate(template, "UTF-8");
             VelocityContext context = makeVelocityContext(report);
 
             t.merge(context, writer);
@@ -226,22 +210,15 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         return writer.toString();
     }
 
-    private static final String EMAIL_TEMPLATE = "velocity/tycktill-email-report.vm";
-    private static final String PIVOTAL_TEMPLATE = "velocity/tycktill-pivotal-report.vm";
-
     private void createUserStory(UserFeedback report) {
         String projectId = report.getCaseBackend().getPivotal();
         PTStory story = new PTStory();
-        story.setName(projectId + ": FeedbackReportService message");
-        story.setType("bug");
+        story.setName(projectId + ": TyckTill message");
+        story.setType("chore");
         story.setProjectId(projectId);
 
-        //
-        /* story.setDescription(report.toString()); */
-        //
         String description = makeReport(PIVOTAL_TEMPLATE, report);
         story.setDescription(description);
-        //
 
         String url = pivotalTrackerClient.createuserStory(story);
         report.setHyperLink(url);

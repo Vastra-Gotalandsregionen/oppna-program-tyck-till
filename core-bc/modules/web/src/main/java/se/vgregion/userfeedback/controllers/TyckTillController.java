@@ -53,8 +53,8 @@ public class TyckTillController {
     @Autowired
     private PlatformDataService platformDataService;
 
-    @Value("${deploy.path}")
-    private String deployPath;
+//    @Value("${deploy.path}")
+//    private String deployPath;
 
     @Value("${tycktill.maxfileuploadsize}")
     private Long maxFileUploadSize = 100000L; // default 100k
@@ -116,7 +116,7 @@ public class TyckTillController {
 
         model.addAttribute("contactOptions", UserContact.UserContactOption.getLabelMap());
 
-        model.addAttribute("deployPath", deployPath);
+//        model.addAttribute("deployPath", deployPath);
 
         return "KontaktaOss";
 
@@ -178,7 +178,7 @@ public class TyckTillController {
             logger.info("Session complete");
             status.setComplete();
 
-            model.addAttribute("deployPath", deployPath);
+//            model.addAttribute("deployPath", deployPath);
 
             return "Tacksida";
         } catch (MaxUploadSizeExceededException e) {

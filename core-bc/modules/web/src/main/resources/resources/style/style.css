@@ -181,21 +181,21 @@ div.subselect {
 }
 
 .backendUsd {
-    background-image: url(${deploy.path}/tycktill/resources/style/images/usd.png);
+    background-image: url(../../resources/style/images/usd.png);
     background-position: 0 50%;
     background-origin: content;
     background-repeat: no-repeat;
 }
 
 .backendPivotal {
-    background-image: url(${deploy.path}/tycktill/resources/style/images/pivotal.png);
+    background-image: url(../../resources/style/images/pivotal.png);
     background-position: 0 50%;
     background-origin: content;
     background-repeat: no-repeat;
 }
 
 .backendMbox {
-    background-image: url(${deploy.path}/tycktill/resources/style/images/mbox.png);
+    background-image: url(../../resources/style/images/mbox.png);
     background-position: 0 50%;
     background-origin: content;
     background-repeat: no-repeat;
@@ -205,3 +205,16 @@ div.subselect {
     margin-left: 20px;
 }
 
+.checked {
+    background-image: url(../../resources/style/images/checked.png);
+    background-position: 50% 35%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}
+
+.unchecked {
+    background-image: url(../../resources/style/images/checkbox.png);
+    background-position: 50% 35%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}

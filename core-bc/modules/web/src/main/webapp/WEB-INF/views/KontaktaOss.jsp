@@ -4,9 +4,12 @@
 <head>
     <title>TyckTill</title>
 
-    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/layout-effects.js"></script>
-    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery.form.js"></script>
-    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery.timer.js"></script>
+    <script type="text/javascript" src="resources/js/layout-effects.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.form.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.timer.js"></script>
+    <script type="text/javascript" src="tycktill/resources/js/layout-effects.js"></script>
+    <script type="text/javascript" src="tycktill/resources/js/jquery.form.js"></script>
+    <script type="text/javascript" src="tycktill/resources/js/jquery.timer.js"></script>
 
     <script type="text/javascript">
         function showInDialogInit() {
@@ -30,8 +33,8 @@
     </script>
 
     <style type="text/css">
-        @import "${deployPath}/tycktill/resources/style/modalStyle.css";
-        @import "${deployPath}/tycktill/resources/style/style.css";
+        @import "resources/style/modalStyle.css";
+        @import "resources/style/style.css";
     </style>
 </head>
 <body>

@@ -2,7 +2,6 @@ package se.vgregion.userfeedback.controllers;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -28,8 +27,8 @@ public class TyckTillAdminController {
     @Autowired
     private StaticCategoryRepository staticCategoryRepository;
 
-    @Value("${deploy.path}")
-    private String deployPath;
+//    @Value("${deploy.path}")
+//    private String deployPath;
 
     @RequestMapping(method = RequestMethod.GET, value = "/TemplateList")
     public String listView(ModelMap model) {
@@ -37,7 +36,7 @@ public class TyckTillAdminController {
         Collection<FormTemplate> templates = formTemplateRepository.findAll();
         model.addAttribute("templateList", templates);
 
-        model.addAttribute("deployPath", deployPath);
+//        model.addAttribute("deployPath", deployPath);
         return "TemplateList";
     }
 
@@ -73,7 +72,7 @@ public class TyckTillAdminController {
         model.addAttribute("functionCategory", functionCategory);
         model.addAttribute("otherCategory", otherCategory);
 
-        model.addAttribute("deployPath", deployPath);
+//        model.addAttribute("deployPath", deployPath);
         return "TemplateEdit";
     }
 
@@ -118,7 +117,7 @@ public class TyckTillAdminController {
         model.addAttribute("functionCategory", functionCategory);
         model.addAttribute("otherCategory", otherCategory);
 
-        model.addAttribute("deployPath", deployPath);
+//        model.addAttribute("deployPath", deployPath);
         return "TemplateEdit";
     }
 
@@ -126,7 +125,7 @@ public class TyckTillAdminController {
     @RequestMapping(method = RequestMethod.POST)
     public String addTemplate(@Valid @ModelAttribute("formTemplate") FormTemplate formTemplate,
             BindingResult result, SessionStatus status, ModelMap model) {
-        model.addAttribute("deployPath", deployPath);
+//        model.addAttribute("deployPath", deployPath);
         if (result.hasErrors()) {
             return "TemplateEdit";
         }
@@ -163,7 +162,7 @@ public class TyckTillAdminController {
     @RequestMapping(method = RequestMethod.GET, value = "/CustomCategoryEdit")
     public String editCustomCategory(@ModelAttribute("formTemplate") FormTemplate formTemplate,
                                      ModelMap model) {
-        model.addAttribute("deployPath", deployPath);
+//        model.addAttribute("deployPath", deployPath);
 
         List<CustomSubCategory> subCategories = formTemplate.getCustomCategory().getCustomSubCategories();
         int emptyCnt = 0;
@@ -191,7 +190,7 @@ public class TyckTillAdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/CustomCategoryUpdate")
     public String updateCustomCategory(@ModelAttribute("formTemplate") FormTemplate formTemplate,
                                        ModelMap model) {
-        model.addAttribute("deployPath", deployPath);
+//        model.addAttribute("deployPath", deployPath);
         for (Iterator<CustomSubCategory> it = formTemplate.getCustomCategory().getCustomSubCategories().iterator(); it
                 .hasNext();) {
             CustomSubCategory subCategory = it.next();

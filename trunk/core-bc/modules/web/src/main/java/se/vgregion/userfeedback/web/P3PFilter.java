@@ -19,15 +19,9 @@
 
 package se.vgregion.userfeedback.web;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Servlet Filter implementation class P3PFilter.
@@ -38,14 +32,14 @@ public class P3PFilter implements Filter {
      * Default constructor.
      */
     public P3PFilter() {
-        // TODO Auto-generated constructor stub
+        // Auto-generated constructor stub
     }
 
     /**
      * @see Filter#destroy()
      */
     public void destroy() {
-        // TODO Auto-generated method stub
+        // Auto-generated method stub
     }
 
     /**
@@ -64,6 +58,6 @@ public class P3PFilter implements Filter {
      * {@inheritDoc}
      */
     public void init(FilterConfig fConfig) throws ServletException {
-        // TODO Auto-generated method stub
+        // Auto-generated method stub
     }
 }

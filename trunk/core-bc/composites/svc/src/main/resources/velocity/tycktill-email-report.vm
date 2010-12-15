@@ -1,1 +1,83 @@
-Hello world!
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<html>
+<body>
+<table cellpadding="5">
+    <tr>
+        <td colspan="2"><b>Uppgifter inmatade av anv&auml;ndaren</b></td>
+    </tr>
+    <tr>
+        <td><b>Kategori</b></td>
+        <td>${feedback.caseCategory}</td>
+    </tr>
+    #if($feedback.caseSubCategories.size() > 0)
+        <tr>
+            <td valign="top"><b>Underkategori</b></td>
+            <td>
+                #foreach($sub in $feedback.caseSubCategories)
+                    $sub<br />
+                #end
+            </td>
+        </tr>
+    #end
+
+    <tr>
+        <td><b>Rubrik</b></td>
+        <td>${feedback.caseTitle}</td>
+    </tr>
+    <tr>
+        <td valign="top"><b>F&ouml;rklara felet med egna ord:</b></td>
+        <td>$feedback.caseMessage.replaceAll("\n", "<br />")</td>
+    </tr>
+
+    #if(${feedback.userContact.shouldContactUser})
+        <tr>
+            <td colspan="2"><b>Kontakta anv&auml;ndaren via:</b></td>
+        </tr>
+        <tr>
+            <td><b>Namn</b></td>
+            <td>${feedback.userContact.userName}</td>
+        </tr>
+        <tr>
+            <td><b>${feedback.userContact.contactOption.label}</b></td>
+            <td>${feedback.userContact.contactMethod}</td>
+        </tr>
+    #end
+
+    <tr>
+        <td colspan="2"><b>Automatgenererade uppgifter</b></td>
+    </tr>
+    <tr>
+        <td><b>Anv&auml;ndar id</b></td>
+        #if($feedback.platformData.userId)
+            <td>${feedback.platformData.userId}</td>
+        #else
+            <td>Inget anv&auml;ndar id tillg&auml;ngligt</td>
+        #end
+    </tr>
+    <tr>
+        <td><b>IP</b></td>
+        <td>${feedback.platformData.ipAddress}</td>
+    </tr>
+    <tr>
+        <td><b>Forwarded IP</b></td>
+        <td>${feedback.platformData.forwardedIpAddress}</td>
+    </tr>
+    <tr>
+        <td><b>Webbl&auml;sare</b></td>
+        <td>${feedback.platformData.browser}</td>
+    </tr>
+    <tr>
+        <td><b>OS</b></td>
+        <td>${feedback.platformData.operatingSystem}</td>
+    </tr>
+    <tr>
+        <td><b>Referer</b></td>
+        <td>${feedback.platformData.referer}</td>
+    </tr>
+    <tr>
+        <td><b>Timestamp</b></td>
+        <td>$date.format('long', $feedback.platformData.timeStamp)</td>
+    </tr>
+</table>
+</body>
+</html>

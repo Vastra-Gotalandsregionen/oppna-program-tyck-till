@@ -8,6 +8,8 @@
     <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
 
     <script type="text/javascript">
+        var isShowInDialog = true;
+        
         $(document).ready(function() {
             $("#modalDiv").dialog({
                 modal: true,
@@ -16,35 +18,27 @@
                 width: 600,
                 draggable: true,
                 resizeable: true,
+                show: 'slide',
+                hide: {effect: 'fade', duration: 1500},
                 title: 'Tyck till'
             });
             $('#goToPage').click(
                     function() {
                         url = 'http://antonio.vgregion.se:8980/tyck-till/tycktill/KontaktaOss';
-                        $("#modalDiv").dialog("open");
-                        $("#dialogContent").load(url);
-//                        $("#modalIFrame").attr('src', url);
+                        openDialog(url, 'formName=default', 'Kontakta Oss');
                         return false;
                     });
-            loadjscssfile("http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/style/alternateStyle.css", "css") ;
         });
-        
-        function loadjscssfile(filename, filetype){
-        	 if (filetype=="js"){ //if filename is a external JavaScript file
-        	  var fileref=document.createElement('script');
-        	  fileref.setAttribute("type","text/javascript");
-        	  fileref.setAttribute("src", filename);
-        	 }
-        	 else if (filetype=="css"){ //if filename is an external CSS file
-        	  var fileref=document.createElement("link");
-        	  fileref.setAttribute("rel", "stylesheet");
-        	  fileref.setAttribute("type", "text/css");
-        	  fileref.setAttribute("href", filename);
-        	 }
-        	 if (typeof fileref!="undefined") {
-                 document.getElementsByTagName("head")[0].appendChild(fileref);
-             }
-         }
+
+
+        function openDialog(url, args, title) {
+            $("#modalDiv").dialog({title: title});
+            $("#modalDiv").dialog("open");
+            $("#modalDialog").load(url, args, function() {
+                initForm();
+            });
+            return false;
+        }
     </script>
 
     <style type="text/css">
@@ -56,10 +50,9 @@
 
 <div>
 Hej
-    <a id="goToPage" href="index.html#">Kontakta oss!</a>
+    <a id="goToPage" href="http://antonio.vgregion.se:8980/tyck-till/tycktill/KontaktaOss?formnName=default">Kontakta oss!</a>
     <div id="modalDiv">
-        <div id="dialogContent">
-
+        <div id="modalDialog">
         </div>
     </div>
     

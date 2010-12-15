@@ -39,9 +39,9 @@ span#ui-dialog-title-modalDiv {
 .ui-icon {
     width: 16px;
     height: 16px;
-    background-image: url(${deploy.path}/tycktill/resources/style/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
+    background-image: url(../../resources/style/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
 .ui-widget-content .ui-icon {
-    background-image: url(${deploy.path}/tycktill/resources/style/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
+    background-image: url(../../resources/style/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
 .ui-icon-closethick {
     background-position: -96px -128px; }
 .ui-icon-grip-diagonal-se {
@@ -55,13 +55,13 @@ span#ui-dialog-title-modalDiv {
     font-size: 1.1em/*{fsDefault}*/; }
 .ui-widget-content {
     border: 1px solid #aaaaaa/*{borderColorContent}*/;
-    background: #ffffff/*{bgColorContent}*/ url(${deploy.path}/tycktill/resources/style/images/ui-bg_glass_75_ffffff_1x400.png)/*{bgImgUrlContent}*/ 0/*{bgContentXPos}*/ 0/*{bgContentYPos}*/ repeat-x/*{bgContentRepeat}*/;
+    background: #ffffff/*{bgColorContent}*/ url(../../resources/style/images/ui-bg_glass_75_ffffff_1x400.png)/*{bgImgUrlContent}*/ 0/*{bgContentXPos}*/ 0/*{bgContentYPos}*/ repeat-x/*{bgContentRepeat}*/;
     color: #222222/*{fcContent}*/; }
 .ui-widget-content a {
     color: #222222/*{fcContent}*/; }
 .ui-widget-header {
     border: 1px solid #aaaaaa;
-    background: #cccccc url(${deploy.path}/tycktill/resources/style/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 0/*{bgHeaderXPos}*/ 50%/*{bgHeaderYPos}*/ repeat-x/*{bgHeaderRepeat}*/;
+    background: #cccccc url(../../resources/style/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 0/*{bgHeaderXPos}*/ 50%/*{bgHeaderYPos}*/ repeat-x/*{bgHeaderRepeat}*/;
     color: #222222/*{fcHeader}*/;
     font-weight: bold; }
 .ui-widget-header a {

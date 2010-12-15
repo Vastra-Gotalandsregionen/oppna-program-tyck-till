@@ -4,8 +4,8 @@
 <head>
     <title>TyckTill - Administration</title>
 
-    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery-ui-1.8.6.custom.min.js"></script>
 
     <script type="text/javascript">
         var isShowInDialog = true;
@@ -23,7 +23,6 @@
                 hide: {effect: 'fade', duration: 1500},
                 title: ''
             });
-
         });
 
         function openDialog(url, args, title) {
@@ -37,8 +36,8 @@
     </script>
 
     <style type="text/css">
-        @import "${deployPath}/tycktill/resources/style/modalStyle.css";
-        @import "${deployPath}/tycktill/resources/style/style.css";
+        @import "resources/style/modalStyle.css";
+        @import "resources/style/style.css";
     </style>
 
 </head>
@@ -50,7 +49,7 @@
 </div>
 
 <div>
-    <h3>Tillgängliga kontakt formulär</h3>
+    <h3>Kontakta Oss formulär</h3>
 
     <table cellpadding="6" rules="groups" frame="box">
         <thead>
@@ -73,15 +72,15 @@
             <tr>
                 <td>${formTemplate.name}</td>
                 <td>${formTemplate.title}</td>
-                <td align="center">${formTemplate.showContent}</td>
-                <td align="center">${formTemplate.showFunction}</td>
-                <td align="center">${formTemplate.showCustom ? formTemplate.customCategory.name : formTemplate.showCustom}</td>
-                <td align="center">${formTemplate.showOther}</td>
-                <td align="center">${formTemplate.showContact}</td>
-                <td align="center">${formTemplate.showAttachment}</td>
-                <th><a href="TemplateEdit?templateId=${formTemplate.id}">Edit</a></th>
+                <td align="center" class="${formTemplate.showContent ? 'checked' : 'unchecked'}">&nbsp;</td>
+                <td align="center" class="${formTemplate.showFunction ? 'checked' : 'unchecked'}">&nbsp;</td>
+                <td align="center">${formTemplate.showCustom ? formTemplate.customCategory.name : ''}</td>
+                <td align="center" class="${formTemplate.showOther ? 'checked': 'unchecked'}">&nbsp;</td>
+                <td align="center" class="${formTemplate.showContact ? 'checked' : 'unchecked'}">&nbsp;</td>
+                <td align="center" class="${formTemplate.showAttachment ? 'checked' : 'unchecked'}">&nbsp;</td>
+                <th><a href="TemplateEdit?templateId=${formTemplate.id}">Ändra</a></th>
                 <th><a href="#"
-                       onclick="openDialog('KontaktaOss', 'formName=${formTemplate.name}', '${formTemplate.title}');">View</a>
+                       onclick="openDialog('KontaktaOss', 'formName=${formTemplate.name}', '${formTemplate.title}');">Pröva</a>
                 </th>
             </tr>
         </c:forEach>
@@ -89,7 +88,7 @@
         <tfoot>
         <tr>
             <th align="right" colspan="10">
-                <a href="TemplateAdd">Add</a>
+                <a href="TemplateAdd">Lägg till</a>
             </th>
         </tr>
         </tfoot>

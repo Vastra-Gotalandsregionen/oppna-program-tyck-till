@@ -12,8 +12,8 @@
 <head>
     <title>TyckTill - Administration</title>
 
-    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="${deployPath}/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery-ui-1.8.6.custom.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -26,24 +26,24 @@
                 resizeable: true,
                 title: 'Tyck till'
             });
-            loadjscssfile("${deployPath}/tycktill/resources/style/alternateStyle.css", "css");
+//            loadjscssfile("../../resources/style/alternateStyle.css", "css");
         });
 
-        function loadjscssfile(filename, filetype) {
-            if (filetype == "js") { //if filename is a external JavaScript file
-                var fileref = document.createElement('script')
-                fileref.setAttribute("type", "text/javascript")
-                fileref.setAttribute("src", filename)
-            }
-            else if (filetype == "css") { //if filename is an external CSS file
-                var fileref = document.createElement("link")
-                fileref.setAttribute("rel", "stylesheet")
-                fileref.setAttribute("type", "text/css")
-                fileref.setAttribute("href", filename)
-            }
-            if (typeof fileref != "undefined")
-                document.getElementsByTagName("head")[0].appendChild(fileref)
-        }
+//        function loadjscssfile(filename, filetype) {
+//            if (filetype == "js") { //if filename is a external JavaScript file
+//                var fileref = document.createElement('script')
+//                fileref.setAttribute("type", "text/javascript")
+//                fileref.setAttribute("src", filename)
+//            }
+//            else if (filetype == "css") { //if filename is an external CSS file
+//                var fileref = document.createElement("link")
+//                fileref.setAttribute("rel", "stylesheet")
+//                fileref.setAttribute("type", "text/css")
+//                fileref.setAttribute("href", filename)
+//            }
+//            if (typeof fileref != "undefined")
+//                document.getElementsByTagName("head")[0].appendChild(fileref)
+//        }
 
         function openDialog(url) {
             var form = $("#formTemplate");
@@ -54,8 +54,8 @@
     </script>
 
     <style type="text/css">
-        @import "${deployPath}/tycktill/resources/style/modalStyle.css";
-        @import "${deployPath}/tycktill/resources/style/style.css";
+        @import "resources/style/modalStyle.css";
+        @import "resources/style/style.css";
     </style>
 
 </head>

@@ -19,22 +19,10 @@
 
 package se.vgregion.userfeedback.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-
-import javax.mail.MessagingException;
-import javax.persistence.Transient;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.tools.generic.DateTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,15 +39,11 @@ import se.vgregion.userfeedback.domain.UserFeedback;
 import se.vgregion.util.EMailClient;
 
 import javax.mail.MessagingException;
+import javax.persistence.Transient;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
-
-import javax.mail.MessagingException;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.StringWriter;
 import java.util.*;
 
 /**
@@ -149,8 +133,6 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
             usdService.createRequest(parameters, report.getPlatformData().getUserId(), attachments);
 
         } catch (Exception e) {
-
-            System.out.println("-->>(2b) Request failed" + e.toString()); // TODO: Remove.
             LOGGER.error("USD service could not be reached, trying email instead.", e);
             try {
                 sendReportByEmail(report, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT + ":" + "USD-" + e.getMessage());
@@ -178,7 +160,6 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
 
     private int reportByEmail(UserFeedback report) {
         try {
-            System.out.println("Report by email"); // TODO: Remove
             sendReportByEmail(report, FEEDBACK_REPORT_EMAIL_SUBJECT);
 
             System.out.println("Successfully reported by email");
@@ -218,7 +199,8 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
      */
     private static VelocityContext makeVelocityContext(UserFeedback report) {
         VelocityContext context = new VelocityContext();
-        context.put("userfeedback", report);
+        context.put("date", new DateTool());
+        context.put("feedback", report);
         return context;
     }
 
@@ -315,7 +297,6 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         // // map tracker category to USD group.
         String trackerCategory = report.getCaseBackend().getUsd();
         String groupHandle = usdService.getUSDGroupHandleForApplicationName(trackerCategory);
-        // System.out.println("--- >> Grouphandle: " + groupHandle); // TODO: Remove
         p.setProperty("group", groupHandle);
         p.setProperty("impact", "imp:1603");
         p.setProperty("priority", "pri:500");

@@ -141,6 +141,7 @@ div.subselect {
 	padding: 5px;
 	margin-top: 3px;
     float: left;
+    clear: both;
 }
 
 .value {

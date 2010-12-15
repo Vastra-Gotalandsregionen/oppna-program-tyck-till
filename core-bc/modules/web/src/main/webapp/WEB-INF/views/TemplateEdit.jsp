@@ -188,7 +188,7 @@
 
     <div>
         <input type="submit" value="Spara"/>
-        <input type="button" onclick="tycktill/TemplateList" value="Avbryt">
+        <input type="button" onclick="javascript: window.location.href = 'TemplateList'" value="Avbryt">
     </div>
 
     <br/>

@@ -95,7 +95,14 @@ public class TyckTillController {
         UserFeedback userFeedback;
         if (!model.containsKey("userFeedback")) {
             userFeedback = new UserFeedback();
-            userFeedback.setCaseCategory(null);
+
+            if (template.getShowCustom()) {
+                CustomCategory category = template.getCustomCategory();
+                userFeedback.setCaseCategory(category.getName());
+                userFeedback.setCaseCategoryId(category.getId());
+            } else {
+                userFeedback.setCaseCategory(null);
+            }
 
             userFeedback.setBreadcrumb(breadcrumb);
             userFeedback.setPlatformData(platformDataService.mapUserPlatform(request));

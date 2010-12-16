@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%--<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>--%>
+
     <title>TyckTill</title>
 
     <script type="text/javascript" src="resources/js/layout-effects.js"></script>
@@ -61,6 +63,22 @@
         <div class="subject">
             <span>Vad handlar ditt ärende om?</span><br/>
 
+            <div id="customCategory" class="${template.showCustom ? 'show' : 'hide'}">
+                <form:radiobutton id="customCase"
+                                  path="caseCategoryId"
+                                  value="${template.customCategory.id}"
+                                  label="${template.customCategory.name}"/><br/>
+
+                <div id="customSubCase" class="subselect">
+                    <form:radiobuttons path="caseSubCategoryIds"
+                                       items="${template.customCategory.customSubCategories}"
+                                       itemValue="id"
+                                       itemLabel="name"
+                                       delimiter="<br/>"/>
+                </div>
+            </div>
+
+
             <div id="webpageContentCategory" class="${template.showContent ? 'show' : 'hide'}">
 
                 <form:radiobutton id="contentCase"
@@ -88,22 +106,6 @@
                                      delimiter="<br/>"/>
                 </div>
             </div>
-
-            <div id="customCategory" class="${template.showCustom ? 'show' : 'hide'}">
-                <form:radiobutton id="customCase"
-                                  path="caseCategoryId"
-                                  value="${template.customCategory.id}"
-                                  label="${template.customCategory.name}"/><br/>
-
-                <div id="customSubCase" class="subselect">
-                    <form:radiobuttons path="caseSubCategoryIds"
-                                       items="${template.customCategory.customSubCategories}"
-                                       itemValue="id"
-                                       itemLabel="name"
-                                       delimiter="<br/>"/>
-                </div>
-            </div>
-
             <div id="otherCategory" class="${template.showOther ? 'show' : 'hide'}">
                 <form:radiobutton id="otherCase"
                                   path="caseCategoryId"

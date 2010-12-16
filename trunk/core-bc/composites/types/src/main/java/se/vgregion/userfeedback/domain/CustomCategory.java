@@ -11,12 +11,12 @@ import java.util.List;
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @Entity
-public class CustomCategory extends AbstractEntity<Integer> implements Serializable {
+public class CustomCategory extends AbstractEntity<Long> implements Serializable {
     private static final long serialVersionUID = 2103137794928299880L;
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -38,7 +38,7 @@ public class CustomCategory extends AbstractEntity<Integer> implements Serializa
     private List<CustomSubCategory> customSubCategories = new ArrayList<CustomSubCategory>();
 
     @Override
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

@@ -37,19 +37,19 @@
             <td>
                 <span class="defaultBackend backendUsd" title="USD">
                     <form:checkbox path="customCategory.backend.activeUsd" cssClass="backendInput"/>
-                    <form:input path="customCategory.backend.usd"/>
+                    <form:input size="6" path="customCategory.backend.usd"/>
                 </span>
             </td>
             <td>
                 <span class="defaultBackend backendPivotal" title="Pivotal">
                     <form:checkbox path="customCategory.backend.activePivotal" cssClass="backendInput"/>
-                    <form:input path="customCategory.backend.pivotal"/>
+                    <form:input size="6" path="customCategory.backend.pivotal"/>
                 </span>
             </td>
             <td>
                 <span class="defaultBackend backendMbox" title="E-post">
                     <form:checkbox path="customCategory.backend.activeMbox" cssClass="backendInput"/>
-                    <form:input path="customCategory.backend.mbox"/>
+                    <form:input size="25" path="customCategory.backend.mbox"/>
                 </span>
             </td>
         </tr>
@@ -76,21 +76,21 @@
                     <span class="backend${loop.index} backendUsd" title="USD">
                         <form:checkbox path="customCategory.customSubCategories[${loop.index}].backend.activeUsd"
                                        cssClass="backendInput"/>
-                        <form:input path="customCategory.customSubCategories[${loop.index}].backend.usd"/>
+                        <form:input size="6" path="customCategory.customSubCategories[${loop.index}].backend.usd"/>
                     </span>
                 </td>
                 <td>
                     <span class="backend${loop.index} backendPivotal" title="PivotalTracker">
                         <form:checkbox path="customCategory.customSubCategories[${loop.index}].backend.activePivotal"
                                        cssClass="backendInput"/>
-                        <form:input path="customCategory.customSubCategories[${loop.index}].backend.pivotal"/>
+                        <form:input size="6" path="customCategory.customSubCategories[${loop.index}].backend.pivotal"/>
                     </span>
                 </td>
                 <td>
                     <span class="backend${loop.index} backendMbox" title="E-post">
                         <form:checkbox path="customCategory.customSubCategories[${loop.index}].backend.activeMbox"
                                        cssClass="backendInput"/>
-                        <form:input path="customCategory.customSubCategories[${loop.index}].backend.mbox"/>
+                        <form:input size="25" path="customCategory.customSubCategories[${loop.index}].backend.mbox"/>
                     </span>
                 </td>
             </tr>
@@ -122,7 +122,6 @@
     });
 
     function showhide(cb, class) {
-        alert(cb);
         if (cb.checked) {
             jQuery('.' + class).show('fast');
         } else {

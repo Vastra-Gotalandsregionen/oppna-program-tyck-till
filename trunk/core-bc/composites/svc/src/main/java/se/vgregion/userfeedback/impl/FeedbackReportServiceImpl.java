@@ -149,6 +149,8 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     private int registerInPivotal(UserFeedback report) {
         try {
             createUserStory(report);
+
+            LOGGER.info("Successfully reported to pivotal");
         } catch (Exception e) {
             LOGGER.error("Pivotal tracker could not be reached, trying email instead.", e);
             try {
@@ -165,7 +167,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         try {
             sendReportByEmail(report, FEEDBACK_REPORT_EMAIL_SUBJECT);
 
-            System.out.println("Successfully reported by email");
+            LOGGER.info("Successfully reported by email");
         } catch (MessagingException me) {
 
             System.out.println("Failed report by email" + me.toString());
@@ -222,10 +224,11 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
 
         String url = pivotalTrackerClient.createuserStory(story);
         report.setHyperLink(url);
+
         List<se.vgregion.util.Attachment> attachments = mapAttachments(report);
         story.setAttachments(attachments);
 
-        if (url != null && attachments != null && attachments.size() > 0) {
+        if (url != null && attachments.size() > 0) {
             try {
                 pivotalTrackerClient.addAttachmentToStory(story.getProjectId(), story);
             } catch (Exception ex) {
@@ -236,10 +239,13 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
 
     private List<se.vgregion.util.Attachment> mapAttachments(UserFeedback report) {
         Collection<Attachment> byteAttachments = report.getAttachments();
+
         List<se.vgregion.util.Attachment> attachments = new ArrayList<se.vgregion.util.Attachment>();
         for (Attachment byteAttachment : byteAttachments) {
             se.vgregion.util.Attachment attachment = new se.vgregion.util.Attachment();
+
             attachment.setFilename(byteAttachment.getFilename());
+            attachment.setFileLength(byteAttachment.getFile().length);
             attachment.setData(new ByteArrayInputStream(byteAttachment.getFile()));
             attachments.add(attachment);
         }

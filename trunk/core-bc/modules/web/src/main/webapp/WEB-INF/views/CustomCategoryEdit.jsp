@@ -12,29 +12,6 @@
 <head>
     <title>Custom category</title>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            try {
-                var cb = $('.defaultBackendActive');
-                showhide(cb[0], 'defaultBackend');
-
-                var cbSub = $('.backendActive');
-                for (var i = 0; i < cbSub.length; i++) {
-                    showhide(cbSub[i], 'backend' + i);
-                }
-            } catch (e) {
-                alert(e.message);
-            }
-        });
-
-        function showhide(cb, class) {
-            if (cb.checked) {
-                jQuery('.' + class).show('fast');
-            } else {
-                jQuery('.' + class).hide('fast');
-            }
-        }
-    </script>
 
 </head>
 <body>
@@ -129,7 +106,31 @@
 
 
 </form:form>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        try {
+            var cb = $('.defaultBackendActive');
+            showhide(cb[0], 'defaultBackend');
 
+            var cbSub = $('.backendActive');
+            for (var i = 0; i < cbSub.length; i++) {
+                showhide(cbSub[i], 'backend' + i);
+            }
+        } catch (e) {
+            alert(e.message);
+        }
+    });
+
+    function showhide(cb, class) {
+        alert(cb);
+        if (cb.checked) {
+            jQuery('.' + class).show('fast');
+        } else {
+            jQuery('.' + class).hide('fast');
+        }
+    }
+</script>
 
 </body>
+
 </html>

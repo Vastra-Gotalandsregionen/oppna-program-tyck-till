@@ -156,24 +156,23 @@
                     </div>
 
                     <div>
-                        <span style="float:left;">
+                        <div>
                             <span>Ditt namn</span>
                             <form:input path="userContact.userName"/> *
                             <span class="error"><form:errors path="userContact.userName" htmlEscape="false"
                                                              cssClass="errorBox"/></span>
-                        </span>
+                        </div>
 
-                        <span style="float: left;">
+                        <div>
                             <span style="float: left; padding-top: 3px;"
                                   class="${(template.showContactByEmail && !template.showContactByPhone) ? 'show' : 'contact-mail'}">Din e-postadress</span>
                             <span style="float: left; padding-top: 3px;"
                                   class="${(!template.showContactByEmail && template.showContactByPhone) ? 'show' : 'contact-phone'}">Ditt telefonnummer</span>
-                            <span style="float: left;"
-                                  class="${(!template.showContactByEmail || !template.showContactByPhone) ? 'show' : 'contact-method-input'}"><form:input
-                                    path="userContact.contactMethod"/> *</span>
-                            <span class="error"><form:errors path="userContact.contactMethod" htmlEscape="false"
-                                                             cssClass="errorBox"/></span>
-                        </span>
+                            <form:input path="userContact.contactMethod"/> *
+                            <span class="error">
+                                <form:errors path="userContact.contactMethod" htmlEscape="false" cssClass="errorBox"/>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

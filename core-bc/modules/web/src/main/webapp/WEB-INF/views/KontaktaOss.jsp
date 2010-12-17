@@ -156,7 +156,7 @@
                     </div>
 
                     <div>
-                        <span style="float:left">
+                        <span style="float:left;">
                             <span>Ditt namn</span>
                             <form:input path="userContact.userName"/> *
                             <span class="error"><form:errors path="userContact.userName" htmlEscape="false"

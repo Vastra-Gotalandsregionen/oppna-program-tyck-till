@@ -21,7 +21,7 @@ $feedback.caseMessage
 #if(${feedback.userContact.shouldContactUser})
     *Kontakta användaren via:*
     *Namn:* ${feedback.userContact.userName}
-    *${feedback.userContact.contactOption.label}:* {feedback.userContact.contactMethod}
+    *${feedback.userContact.contactOption.label}:* ${feedback.userContact.contactMethod}
 #end
 
 *Automatgenererade uppgifter:*

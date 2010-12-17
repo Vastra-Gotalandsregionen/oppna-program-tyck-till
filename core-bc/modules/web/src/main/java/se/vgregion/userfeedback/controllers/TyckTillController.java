@@ -296,7 +296,7 @@ public class TyckTillController {
 
             // No subCategory or subcategory not unique
             List<Long> subCategoryIds = userFeedback.getCaseSubCategoryIds();
-            if (subCategoryIds.size() == 0 || subCategoryIds.size() > 1) {
+            if (subCategoryIds == null || subCategoryIds.size() == 0 || subCategoryIds.size() > 1) {
                 return getCustomCategoryBackend(category, template);
             }
 

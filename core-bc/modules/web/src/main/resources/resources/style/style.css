@@ -58,15 +58,6 @@ h3{
 	color:#2a6344; 
 }
 
-.xforms-textarea{
-	width: 55em;
-	height: 4em;
-}
-
-input{
-    /*float: left;*/
-  }
-
 #defaultErrorMessageDiv {
 	width: 54em;
 	border: 0.1em solid gray;
@@ -74,19 +65,6 @@ input{
 	font-family:Arial,Helvetica,Geneva,sans-serif;
 	color:gray;
 }
-
-.xforms-select1-appearance-full span {
-    display:block;
-    margin-bottom:0.3em;
-	margin-top:0.3em;
-}
-
-.xforms-select-appearance-full span {
-    display:block;
-    margin-bottom:0.3em;
-	margin-top:0.3em;
-}
-
 
 .leadtext {
 	-x-system-font:none;

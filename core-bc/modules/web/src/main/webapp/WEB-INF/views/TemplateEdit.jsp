@@ -76,84 +76,85 @@
         <span class="name">Konfigurera vilka delar av formuläret som skall visas</span>
 
         <span class="value">
-        <div class="prop">
-            <span class="value">
-                <form:checkbox path="showContent" label="Visa innehålls kategorin"/>
-                <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
-            </span>
-            <br/><br/>
+            <div class="prop">
+                <span class="value">
+                    <form:checkbox path="showCustom" label="Visa en egen kategori"/>
+                    <input type="button" value="Ändra" onclick="openDialog('CustomCategoryEdit')"/>
+                </span>
+                <br/><br/>
 
-            <span class="name" style="text-align:right;">${contentCategory.name}</span>
-            <span class="value">
-            <c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">
-                <span class="subCategory">-- ${subCategory.value}</span>
-                <br/>
-            </c:forEach>
-            </span>
-        </div>
-        <div class="prop">
-            <span class="value">
-                <form:checkbox path="showFunction" label="Visa funktions kategorin"/>
-                <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
-            </span>
-            <br/><br/>
+                <span class="name" style="text-align:right;">${formTemplate.customCategory.name}</span>
+                <span class="value">
+                <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory"
+                           varStatus="loop">
+                    <span class="subCategory">-- ${subCategory.name}</span>
+                    <span class="subCategory">${subCategory.backend.usd}</span>
+                    <span class="subCategory">${subCategory.backend.pivotal}</span>
+                    <span class="subCategory">${subCategory.backend.mbox}</span>
+                    <br/>
+                </c:forEach>
+                </span>
+            </div>
+            <div class="prop">
+                <span class="value">
+                    <form:checkbox path="showContent" label="Visa innehålls kategorin"/>
+                    <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
+                </span>
+                <br/><br/>
 
-            <span class="name" style="text-align:right;">${functionCategory.name}</span>
-            <span class="value">
-            <c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">
-                <span class="subCategory">-- ${subCategory.value}</span>
-                <br/>
-            </c:forEach>
-            </span>
-        </div>
-        <div class="prop">
-            <span class="value">
-                <form:checkbox path="showCustom" label="Visa en egen kategori"/>
-                <input type="button" value="Ändra" onclick="openDialog('CustomCategoryEdit')"/>
-            </span>
-            <br/><br/>
-
-            <span class="name" style="text-align:right;">${formTemplate.customCategory.name}</span>
-            <span class="value">
-            <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory" varStatus="loop">
-                <span class="subCategory">-- ${subCategory.name}</span>
-                <span class="subCategory">${subCategory.backend.usd}</span>
-                <span class="subCategory">${subCategory.backend.pivotal}</span>
-                <span class="subCategory">${subCategory.backend.mbox}</span>
-                <br/>
-            </c:forEach>
-            </span>
-        </div>
-        <div class="prop">
-            <span class="value">
-                <form:checkbox path="showOther" label="Visa övrigt kategorin"/>
-                <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
-            </span>
-            <br/><br/>
-
-            <span class="name" style="text-align:right;">${otherCategory.name}</span><br/>
-            <span class="value">
-                <c:forEach items="${otherCategory.subCategories}" var="subCategory" varStatus="loop">
+                <span class="name" style="text-align:right;">${contentCategory.name}</span>
+                <span class="value">
+                <c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">
                     <span class="subCategory">-- ${subCategory.value}</span>
                     <br/>
                 </c:forEach>
-            </span>
-        </div>
-        <div class="prop">
-            <span class="value">
-                <form:checkbox path="showContact" label="Visa användar kontakt"/><br/>
+                </span>
+            </div>
+            <div class="prop">
+                <span class="value">
+                    <form:checkbox path="showFunction" label="Visa funktions kategorin"/>
+                    <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
+                </span>
+                <br/><br/>
 
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Vilka alternativ skall användaren ges</span><br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form:checkbox path="showContactByEmail"
-                                                                                     label="Kontakt via e-post"/><br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form:checkbox path="showContactByPhone"
-                                                                                     label="Kontakt via telefon"/>
-            </span>
-        </div>
-        <div class="prop">
-            <span class="value"><form:checkbox path="showAttachment"
-                                               label="Skall användaren ges möjligheten att ladda upp filer (tex. en skärmdump)"/></span>
-        </div>
+                <span class="name" style="text-align:right;">${functionCategory.name}</span>
+                <span class="value">
+                <c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">
+                    <span class="subCategory">-- ${subCategory.value}</span>
+                    <br/>
+                </c:forEach>
+                </span>
+            </div>
+            <div class="prop">
+                <span class="value">
+                    <form:checkbox path="showOther" label="Visa övrigt kategorin"/>
+                    <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
+                </span>
+                <br/><br/>
+
+                <span class="name" style="text-align:right;">${otherCategory.name}</span><br/>
+                <span class="value">
+                    <c:forEach items="${otherCategory.subCategories}" var="subCategory" varStatus="loop">
+                        <span class="subCategory">-- ${subCategory.value}</span>
+                        <br/>
+                    </c:forEach>
+                </span>
+            </div>
+            <div class="prop">
+                <span class="value">
+                    <form:checkbox path="showContact" label="Visa användar kontakt"/><br/>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Vilka alternativ skall användaren ges</span><br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form:checkbox path="showContactByEmail"
+                                                                                         label="Kontakt via e-post"/><br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form:checkbox path="showContactByPhone"
+                                                                                         label="Kontakt via telefon"/>
+                </span>
+            </div>
+            <div class="prop">
+                <span class="value"><form:checkbox path="showAttachment"
+                                                   label="Skall användaren ges möjligheten att ladda upp filer (tex. en skärmdump)"/></span>
+            </div>
         </span>
     </div>
 

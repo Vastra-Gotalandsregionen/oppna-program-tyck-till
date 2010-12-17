@@ -197,3 +197,7 @@ div.subselect {
     background-origin: content;
     background-repeat: no-repeat;
 }
+
+.subCategory {
+    white-space: nowrap;
+}

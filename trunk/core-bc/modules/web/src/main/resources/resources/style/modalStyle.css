@@ -75,9 +75,9 @@ span#ui-dialog-title-modalDiv {
 /* Overlays */
 .ui-widget-overlay {
     background: #aaaaaa/*{bgColorOverlay}*/ none/*{bgImgUrlOverlay}*/ 0/*{bgOverlayXPos}*/ 0/*{bgOverlayYPos}*/ repeat-x/*{bgOverlayRepeat}*/;
-    opacity: .3;
+    opacity: .4;
     filter:Alpha(Opacity=40)/*{opacityOverlay}*/;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;

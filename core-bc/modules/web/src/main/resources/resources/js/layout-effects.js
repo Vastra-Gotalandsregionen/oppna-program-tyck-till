@@ -1,7 +1,3 @@
-jQuery(document).ready(function() {
-    initForm();
-});
-
 function initForm() {
     // Init
     jQuery('.subselect').hide();
@@ -31,9 +27,6 @@ function initForm() {
     addEventToContactOption();
     addEventToAttachments();
 
-    if (isShowInDialog) {
-        showInDialogInit();
-    }
 }
 
 function addEventsToCaseSubject() {

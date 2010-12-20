@@ -6,22 +6,28 @@
 
     <title>TyckTill</title>
 
-    <script type="text/javascript" src="resources/js/layout-effects.js"></script>
-    <script type="text/javascript" src="resources/js/jquery.form.js"></script>
-    <script type="text/javascript" src="resources/js/jquery.timer.js"></script>
-    <script type="text/javascript" src="tycktill/resources/js/layout-effects.js"></script>
-    <script type="text/javascript" src="tycktill/resources/js/jquery.form.js"></script>
-    <script type="text/javascript" src="tycktill/resources/js/jquery.timer.js"></script>
+    <script type="text/javascript"
+            src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript"
+            src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery.form.js"></script>
+    <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery.timer.js"></script>
+    <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/layout-effects.js"></script>
 
     <script type="text/javascript">
+        jQuery(document).ready(function() {
+            showInDialogInit();
+            initForm();
+        });
+
         function showInDialogInit() {
             $('.title').hide();
 
-            var options = {
-                target:         '#userfeedback_form',
-                success:        showResponse
-            };
-            $("#userFeedback").ajaxForm(options);
+//            var options = {
+//                target:         '#userfeedback_form',
+//                success:        showResponse
+//            };
+//            $("#userFeedback").ajaxForm(options);
         }
 
         function showResponse(responseText, statusText, xhr, $form) {
@@ -35,8 +41,8 @@
     </script>
 
     <style type="text/css">
-        @import "resources/style/modalStyle.css";
-        @import "resources/style/style.css";
+        @import "http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/style/modalStyle.css";
+        @import "http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/style/style.css";
     </style>
 </head>
 <body>

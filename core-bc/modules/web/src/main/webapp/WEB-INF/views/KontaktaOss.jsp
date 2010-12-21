@@ -6,28 +6,25 @@
 
     <title>TyckTill</title>
 
-    <script type="text/javascript"
-            src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript"
-            src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
-    <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery.form.js"></script>
-    <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery.timer.js"></script>
-    <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/layout-effects.js"></script>
+    <script type="text/javascript" src="resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.form.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.timer.js"></script>
+    <script type="text/javascript" src="resources/js/layout-effects.js"></script>
 
     <script type="text/javascript">
         jQuery(document).ready(function() {
-            showInDialogInit();
             initForm();
         });
 
         function showInDialogInit() {
             $('.title').hide();
 
-//            var options = {
-//                target:         '#userfeedback_form',
-//                success:        showResponse
-//            };
-//            $("#userFeedback").ajaxForm(options);
+            var options = {
+                target:         '#userfeedback_form',
+                success:        showResponse
+            };
+            $("#userFeedback").ajaxForm(options);
         }
 
         function showResponse(responseText, statusText, xhr, $form) {
@@ -41,30 +38,21 @@
     </script>
 
     <style type="text/css">
-        @import "http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/style/modalStyle.css";
-        @import "http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/style/style.css";
+        @import "resources/style/modalStyle.css";
+        @import "resources/style/style.css";
     </style>
 </head>
 <body>
 
 
 <div id="userfeedback_form">
-    <p class="${userFeedback.breadcrumb != null ? 'show' : 'hide'}">${userFeedback.breadcrumb}</p>
-
-
     <span class="title">${template.title}</span>
 
     <div class="leadtext">${template.description}</div>
 
     <form:form commandName="userFeedback" enctype="multipart/form-data">
-        <%--<form:errors path="caseTitle"/>--%>
-
-
         <input type="hidden" id="formTemplateId" name="formTemplateId" value="${template.id}"/>
-
-        <div class="breadcrumb">
-            <form:hidden path="breadcrumb"/>
-        </div>
+        <form:hidden path="breadcrumb"/>
 
         <div class="subject">
             <span>Vad handlar ditt ärende om?</span><br/>
@@ -210,9 +198,7 @@
 
         <div style="text-align: center;"><input value="Skicka" type="submit"></div>
     </form:form>
-
 </div>
-
 
 </body>
 </html>

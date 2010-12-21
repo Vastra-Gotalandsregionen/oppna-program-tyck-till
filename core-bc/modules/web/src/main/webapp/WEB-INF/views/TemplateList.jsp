@@ -6,10 +6,9 @@
 
     <script type="text/javascript" src="resources/js/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="resources/js/tycktill-dialog.js"></script>
 
     <script type="text/javascript">
-        var isShowInDialog = true;
-
         jQuery(document).ready(function() {
             $("#modalDiv").dialog({
                 modal: true,
@@ -26,9 +25,13 @@
         });
 
         function openDialog(url, args, title) {
-            $("#modalDiv").dialog({title: title});
+            $("#modalDiv").dialog({
+                title: title,
+                height: 600,
+                width: 610});
             $("#modalDiv").dialog("open");
             $("#modalDialog").load(url, args, function() {
+                showInDialogInit();
                 initForm();
             });
             return false;

@@ -66,6 +66,22 @@ h3{
 	color:gray;
 }
 
+.title {
+    -x-system-font:none;
+    color:#222222;
+    font-family:Verdana,Arial,Helvetica,sans-serif;
+    font-size:1.6em;
+    font-size-adjust:none;
+    font-stretch:normal;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:bold;
+    line-height:1.4em;
+    margin-bottom:20px;
+    margin-top:0;
+    width: 300px;
+}
+
 .leadtext {
 	-x-system-font:none;
 	color:#222222;

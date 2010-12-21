@@ -10,9 +10,13 @@
       <title>Tack</title>
 
       <style type="text/css">
-          @import "http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/style/modalStyle.css";
-          @import "http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/style/style.css";
+          @import "resources/style/modalStyle.css";
+          @import "resources/style/style.css";
       </style>
   </head>
-  <body>Tack för din åsikt.</body>
+  <body>
+
+  <div class="leadtext">Tack för din åsikt.</div>
+
+  </body>
 </html>

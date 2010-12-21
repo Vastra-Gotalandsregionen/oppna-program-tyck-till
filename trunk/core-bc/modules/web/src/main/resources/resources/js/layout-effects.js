@@ -26,7 +26,6 @@ function initForm() {
     addEventsShouldContactUser();
     addEventToContactOption();
     addEventToAttachments();
-
 }
 
 function addEventsToCaseSubject() {

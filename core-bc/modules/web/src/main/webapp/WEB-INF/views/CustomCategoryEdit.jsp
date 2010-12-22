@@ -1,3 +1,5 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,11 +12,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
     <title>Custom category</title>
 
+    <script type="text/javascript" src="resources/js/layout-effects.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+//            showhideInit();
+        });
+
+    </script>
 
 </head>
 <body>
+
+<script type="text/javascript">
+<c:import url="resources/js/layout-effects.js" />
+</script>
 
 <h3>Konfigurera en egen kategori</h3>
 
@@ -35,22 +51,22 @@
                                cssClass="defaultBackendActive" onclick="showhide(this, 'defaultBackend');"/>
             </td>
             <td>
-                <span class="defaultBackend backendUsd" title="USD">
+                <div class="defaultBackend backendUsd" title="USD">
                     <form:checkbox path="customCategory.backend.activeUsd" cssClass="backendInput"/>
                     <form:input size="6" path="customCategory.backend.usd"/>
-                </span>
+                </div>
             </td>
             <td>
-                <span class="defaultBackend backendPivotal" title="Pivotal">
+                <div class="defaultBackend backendPivotal" title="Pivotal">
                     <form:checkbox path="customCategory.backend.activePivotal" cssClass="backendInput"/>
                     <form:input size="6" path="customCategory.backend.pivotal"/>
-                </span>
+                </div>
             </td>
             <td>
-                <span class="defaultBackend backendMbox" title="E-post">
+                <div class="defaultBackend backendMbox" title="E-post">
                     <form:checkbox path="customCategory.backend.activeMbox" cssClass="backendInput"/>
                     <form:input size="25" path="customCategory.backend.mbox"/>
-                </span>
+                </div>
             </td>
         </tr>
         </thead>
@@ -61,7 +77,6 @@
             <th>&nbsp;</th>
             <th colspan="4" align="left">Ändra mottagare</th>
         </tr>
-        <sp/>
         <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory" varStatus="loop">
             <tr>
                 <td>
@@ -73,25 +88,25 @@
                                    cssClass="backendActive" onclick="showhide(this, 'backend${loop.index}');"/>
                 </td>
                 <td>
-                    <span class="backend${loop.index} backendUsd" title="USD">
+                    <div class="backend${loop.index} backendUsd" title="USD">
                         <form:checkbox path="customCategory.customSubCategories[${loop.index}].backend.activeUsd"
                                        cssClass="backendInput"/>
                         <form:input size="6" path="customCategory.customSubCategories[${loop.index}].backend.usd"/>
-                    </span>
+                    </div>
                 </td>
                 <td>
-                    <span class="backend${loop.index} backendPivotal" title="PivotalTracker">
+                    <div class="backend${loop.index} backendPivotal" title="PivotalTracker">
                         <form:checkbox path="customCategory.customSubCategories[${loop.index}].backend.activePivotal"
                                        cssClass="backendInput"/>
                         <form:input size="6" path="customCategory.customSubCategories[${loop.index}].backend.pivotal"/>
-                    </span>
+                    </div>
                 </td>
                 <td>
-                    <span class="backend${loop.index} backendMbox" title="E-post">
+                    <div class="backend${loop.index} backendMbox" title="E-post">
                         <form:checkbox path="customCategory.customSubCategories[${loop.index}].backend.activeMbox"
                                        cssClass="backendInput"/>
                         <form:input size="25" path="customCategory.customSubCategories[${loop.index}].backend.mbox"/>
-                    </span>
+                    </div>
                 </td>
             </tr>
         </c:forEach>
@@ -106,29 +121,6 @@
 
 
 </form:form>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        try {
-            var cb = $('.defaultBackendActive');
-            showhide(cb[0], 'defaultBackend');
-
-            var cbSub = $('.backendActive');
-            for (var i = 0; i < cbSub.length; i++) {
-                showhide(cbSub[i], 'backend' + i);
-            }
-        } catch (e) {
-            alert(e.message);
-        }
-    });
-
-    function showhide(cb, class) {
-        if (cb.checked) {
-            jQuery('.' + class).show('fast');
-        } else {
-            jQuery('.' + class).hide('fast');
-        }
-    }
-</script>
 
 </body>
 

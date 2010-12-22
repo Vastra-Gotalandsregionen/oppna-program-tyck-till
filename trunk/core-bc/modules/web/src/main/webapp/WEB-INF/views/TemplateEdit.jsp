@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,10 +11,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>TyckTill - Administration</title>
 
     <script type="text/javascript" src="resources/js/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="resources/js/layout-effects.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -31,7 +34,9 @@
         function openDialog(url) {
             var form = $("#formTemplate");
             $("#modalDiv").dialog("open");
-            $("#modalDialog").load(url, form.serialize());
+            $("#modalDialog").load(url, form.serialize(), function() {
+                showhideBackendInit();
+            });
             return false;
         }
     </script>
@@ -85,14 +90,61 @@
 
                 <span class="name" style="text-align:right;">${formTemplate.customCategory.name}</span>
                 <span class="value">
-                <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory"
-                           varStatus="loop">
-                    <span class="subCategory">-- ${subCategory.name}</span>
-                    <span class="subCategory">${subCategory.backend.usd}</span>
-                    <span class="subCategory">${subCategory.backend.pivotal}</span>
-                    <span class="subCategory">${subCategory.backend.mbox}</span>
-                    <br/>
-                </c:forEach>
+                    <table>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="backendUsd">
+                                    <span class="backend">
+                                    ${(formTemplate.customCategory.backend.activeBackend && formTemplate.customCategory.backend.activeUsd) ? formTemplate.customCategory.backend.usd : ''}
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="backendPivotal">
+                                    <span class="backend">
+                                    ${(formTemplate.customCategory.backend.activeBackend && formTemplate.customCategory.backend.activePivotal) ? formTemplate.customCategory.backend.pivotal : ''}
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="backendMbox">
+                                    <span class="backend">
+                                    ${(formTemplate.customCategory.backend.activeBackend && formTemplate.customCategory.backend.activeMbox) ? formTemplate.customCategory.backend.mbox : ''}
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory"
+                                   varStatus="loop">
+                            <tr>
+                                <td>
+                                    <div class="subCategory">-- ${subCategory.name}</span>
+                                </td>
+                                <td>
+                                    <div class="subCategory backendUsd">
+                                        <div class="backend">
+                                            ${(subCategory.backend.activeBackend && subCategory.backend.activeUsd) ? subCategory.backend.usd : ''}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="subCategory backendPivotal">
+                                        <div class="backend">
+                                            ${(subCategory.backend.activeBackend && subCategory.backend.activePivotal) ? subCategory.backend.pivotal : ''}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="subCategory backendMbox">
+                                        <div class="backend">
+                                            ${(subCategory.backend.activeBackend && subCategory.backend.activeMbox) ? subCategory.backend.mbox : ''}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
                 </span>
             </div>
             <div class="prop">
@@ -144,11 +196,11 @@
                 <span class="value">
                     <form:checkbox path="showContact" label="Visa användar kontakt"/><br/>
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Vilka alternativ skall användaren ges</span><br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form:checkbox path="showContactByEmail"
-                                                                                         label="Kontakt via e-post"/><br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form:checkbox path="showContactByPhone"
-                                                                                         label="Kontakt via telefon"/>
+                    <div class="contactMethods">Vilka alternativ skall användaren ges</div>
+                    <div class="contactMethod"><form:checkbox path="showContactByEmail"
+                                                              label="Kontakt via e-post"/></div>
+                    <div class="contactMethod"><form:checkbox path="showContactByPhone"
+                                                              label="Kontakt via telefon"/></div>
                 </span>
             </div>
             <div class="prop">
@@ -164,22 +216,22 @@
             <table>
                 <tr>
                     <td>
-                        <span class="backendUsd" title="USD">
-                                <form:checkbox path="defaultBackend.activeUsd" cssClass="backendInput"/>
-                                <form:input path="defaultBackend.usd"/>
-                        </span>
+                        <div class="backendUsd" title="USD">
+                            <form:checkbox path="defaultBackend.activeUsd" cssClass="backendInput"/>
+                            <form:input size="6" path="defaultBackend.usd"/>
+                        </div>
                     </td>
                     <td>
-                        <span class="backendPivotal" title="Pivotal">
-                                <form:checkbox path="defaultBackend.activePivotal" cssClass="backendInput"/>
-                                <form:input path="defaultBackend.pivotal"/>
-                        </span>
+                        <div class="backendPivotal" title="Pivotal">
+                            <form:checkbox path="defaultBackend.activePivotal" cssClass="backendInput"/>
+                            <form:input size="6" path="defaultBackend.pivotal"/>
+                        </div>
                     </td>
                     <td>
-                        <span class="backendMbox" title="E-post">
-                                <form:checkbox path="defaultBackend.activeMbox" cssClass="backendInput"/>
-                                <form:input path="defaultBackend.mbox"/>
-                        </span>
+                        <div class="backendMbox" title="E-post">
+                            <form:checkbox path="defaultBackend.activeMbox" cssClass="backendInput"/>
+                            <form:input size="25" path="defaultBackend.mbox"/>
+                        </div>
                     </td>
                 </tr>
             </table>

@@ -143,6 +143,14 @@ div.subselect {
 	padding: 5px;
 }
 
+.contactMethods {
+    padding-left: 30px;
+}
+
+.contactMethod {
+    padding-left: 40px;
+}
+
 .subCategory {
     width: 170px;
 	float: left;
@@ -172,7 +180,7 @@ div.subselect {
 }
 
 .defaultBackend {
-    min-width: 175px;
+    min-width: 100px;
 }
 
 .backendUsd {
@@ -197,6 +205,10 @@ div.subselect {
 }
 
 .backendInput {
+    margin-left: 20px;
+}
+
+.backend {
     margin-left: 20px;
 }
 

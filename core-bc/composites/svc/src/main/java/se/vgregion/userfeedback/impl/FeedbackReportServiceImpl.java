@@ -166,7 +166,6 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     private int reportByEmail(UserFeedback report) {
         try {
             sendReportByEmail(report, FEEDBACK_REPORT_EMAIL_SUBJECT);
-
             LOGGER.info("Successfully reported by email");
         } catch (MessagingException me) {
 

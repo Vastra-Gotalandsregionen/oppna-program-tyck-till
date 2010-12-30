@@ -19,6 +19,16 @@
 
 package se.vgregion.userfeedback.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
+
+import javax.mail.MessagingException;
+import javax.persistence.Transient;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -28,6 +38,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 import se.vgregion.incidentreport.pivotaltracker.PTStory;
 import se.vgregion.incidentreport.pivotaltracker.PivotalTrackerService;
 import se.vgregion.usdservice.USDService;
@@ -37,15 +48,6 @@ import se.vgregion.userfeedback.domain.Backend;
 import se.vgregion.userfeedback.domain.UserContact;
 import se.vgregion.userfeedback.domain.UserFeedback;
 import se.vgregion.util.EMailClient;
-
-import javax.mail.MessagingException;
-import javax.persistence.Transient;
-import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * Implementation of the incident report service.
@@ -100,6 +102,9 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     @Autowired
     private PivotalTrackerService pivotalTrackerClient;
 
+    @Autowired
+    private EMailClient emailService;
+
     /**
      * {@inheritDoc}
      */
@@ -113,9 +118,9 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
             if (backend.isActivePivotal()) {
                 registerInPivotal(report);
             }
-//            if (backend.isActiveUsd()) {
-//                registerInUsd(report);
-//            }
+            if (backend.isActiveUsd()) {
+                registerInUsd(report);
+            }
             if (backend.isActiveMbox()) {
                 reportByEmail(report);
             }
@@ -130,9 +135,7 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
     private int registerInUsd(UserFeedback report) {
         try {
             Properties parameters = mapToRequestParameters(report);
-
             Collection<se.vgregion.util.Attachment> attachments = mapAttachments(report);
-
             usdService.createRequest(parameters, report.getPlatformData().getUserId(), attachments);
 
         } catch (Exception e) {
@@ -259,13 +262,13 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
             String[] reportEmailArray = { reportEmail };
 
             try {
-                new EMailClient().postMailWithAttachments(reportEmailArray, subject, description,
+                emailService.postMailWithAttachments(reportEmailArray, subject, description,
                         FEEDBACK_REPORT_SERVICE_NOREPLY, mapAttachments(report));
             } catch (MessagingException e1) {
                 LOGGER.error("Email submission failed:", e1);
                 String[] emailTo = { FEEDBACK_REPORT_SERVICE_ADMIN_EMAIL };
 
-                new EMailClient().postMailWithAttachments(emailTo, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT, ""
+                emailService.postMailWithAttachments(emailTo, FEEDBACK_REPORT_ERROR_EMAIL_SUBJECT, ""
                         + e1.getMessage() + "\n" + description, FEEDBACK_REPORT_SERVICE_NOREPLY,
                         mapAttachments(report));
             }

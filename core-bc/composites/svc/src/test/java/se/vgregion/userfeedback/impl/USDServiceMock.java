@@ -9,7 +9,7 @@ import se.vgregion.usdservice.domain.Issue;
 import se.vgregion.util.Attachment;
 
 /**
- * Mock USD service.
+ * Mock USD service. Allows inspection of the request parameters and attachments passed to a USDService.
  * 
  * @author robde1
  * 
@@ -18,7 +18,7 @@ public class USDServiceMock implements USDService {
 
     private static final String TEST_USD_HANDLE = "Test_handle_for_USD";
 
-    private Properties requestParameters;
+    private Properties requestParameters = new Properties();
     private Collection<Attachment> attachments;
 
     public static String getTestUsdHandle() {
@@ -35,7 +35,7 @@ public class USDServiceMock implements USDService {
 
     @Override
     public String createRequest(Properties requestParameters, String arg1, Collection<Attachment> attachments) {
-        this.requestParameters = requestParameters;
+        this.requestParameters.putAll(requestParameters);
         this.attachments = attachments;
         return "";
     }

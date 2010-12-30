@@ -55,7 +55,7 @@
 </div>
 
 <div>
-    <h3>Kontakta Oss formulär</h3>
+    <h3>Kontakta Oss-formulär</h3>
 
     <table cellpadding="6" rules="groups" frame="box">
         <thead>

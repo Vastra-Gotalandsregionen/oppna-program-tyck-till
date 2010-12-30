@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -15,7 +16,6 @@ import junit.framework.TestCase;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +52,8 @@ public class FeedbackReportServiceTest extends TestCase {
 
     private static final String TEST_DESCRIPTION = "Test message";
     private static final String TEST_USER_NAME = "Hacke Hackspett";
+    private static final String TEST_ATTACHMENT_FILENAME = "chairman-meow-little-red.jpg";
+    private static final String TEST_EMAIL = "woodyw@woodpeckers.rus";
 
     UserFeedback feedback;
 
@@ -67,7 +69,7 @@ public class FeedbackReportServiceTest extends TestCase {
         platform.setUserId("woodyw");
 
         // Add attachment
-        File file = new File("/chairman-meow-little-red.jpg");
+        File file = new File("/" + TEST_ATTACHMENT_FILENAME);
         se.vgregion.userfeedback.domain.Attachment attachment = new se.vgregion.userfeedback.domain.Attachment();
         attachment.setFile(getBytesFromFile(file));
         attachment.setFilename(file.getName());
@@ -125,13 +127,22 @@ public class FeedbackReportServiceTest extends TestCase {
     }
 
     @Test
-    @Ignore
     public void testReportToEmail() throws Exception {
         Backend caseBackend = new Backend();
-        caseBackend.setMbox("arakun@gmail.com");
+        caseBackend.setMbox(TEST_EMAIL);
         caseBackend.setActiveMbox(true);
         feedback.setCaseBackend(caseBackend);
         reportService.reportFeedback(feedback);
+
+        // Check recipient email
+        List<String> recipients = emailServiceMock.getRecipients();
+        String recipient = recipients.get(0);
+        assertEquals(TEST_EMAIL, recipient);
+
+        // Check attachments
+        List<Attachment> attachments = emailServiceMock.getAttachments();
+        Attachment attachment = attachments.get(0);
+        assertEquals(TEST_ATTACHMENT_FILENAME, attachment.getFilename());
     }
 
     // Returns the contents of the file in a byte array.

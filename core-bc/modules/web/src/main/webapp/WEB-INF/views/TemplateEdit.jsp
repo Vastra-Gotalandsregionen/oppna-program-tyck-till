@@ -50,7 +50,7 @@
 <body>
 <!--spring:url value="resources/js/jquery-1.4.2.min.js" /-->
 
-<h1>${formTemplate.id == null ? 'Skapa nytt kontakt formulär' : 'Ändra kontakt formulär'}</h1>
+<h1>${formTemplate.id == null ? 'Skapa nytt kontaktformulär' : 'Ändra kontaktformulär'}</h1>
 
 <div id="modalDiv">
     <div id="modalDialog">
@@ -149,7 +149,7 @@
             </div>
             <div class="prop">
                 <span class="value">
-                    <form:checkbox path="showContent" label="Visa innehålls kategorin"/>
+                    <form:checkbox path="showContent" label="Visa kategorin innehåll"/>
                     <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
                 </span>
                 <br/><br/>
@@ -164,7 +164,7 @@
             </div>
             <div class="prop">
                 <span class="value">
-                    <form:checkbox path="showFunction" label="Visa funktions kategorin"/>
+                    <form:checkbox path="showFunction" label="Visa kategorin funktioner"/>
                     <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
                 </span>
                 <br/><br/>
@@ -179,7 +179,7 @@
             </div>
             <div class="prop">
                 <span class="value">
-                    <form:checkbox path="showOther" label="Visa övrigt kategorin"/>
+                    <form:checkbox path="showOther" label="Visa kategorin övrigt"/>
                     <input type="button" value="Backend" onclick="javascript: alert('Inte implementerad ännu')"/>
                 </span>
                 <br/><br/>
@@ -194,7 +194,7 @@
             </div>
             <div class="prop">
                 <span class="value">
-                    <form:checkbox path="showContact" label="Visa användar kontakt"/><br/>
+                    <form:checkbox path="showContact" label="Visa användarkontakt"/><br/>
 
                     <div class="contactMethods">Vilka alternativ skall användaren ges</div>
                     <div class="contactMethod"><form:checkbox path="showContactByEmail"

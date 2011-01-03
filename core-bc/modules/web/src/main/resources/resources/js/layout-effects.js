@@ -26,6 +26,42 @@ function initForm() {
     addEventsShouldContactUser();
     addEventToContactOption();
     addEventToAttachments();
+
+    addEventToInput();
+}
+
+function addEventToInput() {
+    $(".defaultRubrik").focus(function(srcc) {
+        if ($(this).val() == $(this)[0].title) {
+            $(this).removeClass("defaultRubrikActive");
+            $(this).val("");
+        }
+    });
+
+    $(".defaultRubrik").blur(function() {
+        if ($(this).val() == "") {
+            $(this).addClass("defaultRubrikActive");
+            $(this).val($(this)[0].title);
+        }
+    });
+
+    $(".defaultMessage").focus(function(srcc) {
+        if ($(this).val() == $(this)[0].title) {
+            $(this).removeClass("defaultMessageActive");
+            $(this).val("");
+        }
+    });
+
+    $(".defaultMessage").blur(function() {
+        if ($(this).val() == "") {
+            $(this).addClass("defaultMessageActive");
+            $(this).val($(this)[0].title);
+        }
+    });
+
+    $(".defaultRubrik").blur();
+    $(".defaultMessage").blur();
+    $(".msglabel").hide();
 }
 
 function addEventsToCaseSubject() {

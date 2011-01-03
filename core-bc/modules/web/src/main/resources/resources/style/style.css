@@ -229,3 +229,8 @@ div.subselect {
 .subCategory {
     white-space: nowrap;
 }
+
+.defaultRubrik { width: 450px; }
+.defaultRubrikActive { color: #a1a1a1; font-style: italic; }
+.defaultMessage { width: 450px; }
+.defaultMessageActive { color: #a1a1a1; font-style: italic; }

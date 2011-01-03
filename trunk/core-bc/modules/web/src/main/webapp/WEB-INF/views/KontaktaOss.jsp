@@ -118,20 +118,20 @@
             </div>
         </div>
 
-        <div><br/></div>
+        <div class="msglabel"><br/></div>
 
         <div class="message">
             <div>
-                <span class="msglabel">Rubrik:</span><br/>
-                <form:input path="caseTitle" size="60"/>
+                <span class="msglabel">Rubrik:</span><br class="msglabel"/>
+                <form:input path="caseTitle" title="Rubrik" cssClass="defaultRubrik" size="60"/>
                 <span class="error"><form:errors path="caseTitle" htmlEscape="false" cssClass="errorBox"/></span>
             </div>
         </div>
 
         <div class="message">
             <div>
-                <span class="msglabel">Förklara ditt ärende med egna ord:</span><br/>
-                <form:textarea path="caseMessage" cols="60" rows="7"/>
+                <span class="msglabel">Beskriv ditt &auml;rende och ge g&auml;rna exempel:</span><br class="msglabel"/>
+                <form:textarea path="caseMessage" title="Beskriv ditt ärende och ge gärna exempel" cssClass="defaultMessage" cols="60" rows="7"/>
                 <span class="error"><form:errors path="caseMessage" htmlEscape="false" cssClass="errorBox"/></span>
             </div>
         </div>

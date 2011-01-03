@@ -17,11 +17,11 @@ public class InMemoryStaticCategoryRepository extends AbstractInMemoryRepository
 
     private void init() {
         this.persist(new StaticCategory(StaticCategoryRepository.STATIC_CONTENT_CATEGORY,
-                "Webbplatsens innehåll",
-                "Saknar innehåll", "Fel innehåll", "Hittar inte information"));
+                "Webbplatsens innehåll"));
+//                "Saknar innehåll", "Fel innehåll", "Hittar inte information"));
         this.persist(new StaticCategory(StaticCategoryRepository.STATIC_FUNCTION_CATEGORY,
-                "Webbplatsens funktion",
-                "Sidan finns inte", "Felmeddelande", "Sidan laddas inte", "Förstår inte funktionen"));
+                "Webbplatsens funktion"));
+//                "Sidan finns inte", "Felmeddelande", "Sidan laddas inte", "Förstår inte funktionen"));
         this.persist(new StaticCategory(StaticCategoryRepository.STATIC_OTHER_CATEGORY,
                 "Övrigt"));
     }

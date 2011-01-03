@@ -1,28 +1,15 @@
 package se.vgregion.userfeedback.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import junit.framework.TestCase;
-
 import org.apache.velocity.app.VelocityEngine;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import se.vgregion.incidentreport.pivotaltracker.PTStory;
 import se.vgregion.userfeedback.domain.Backend;
 import se.vgregion.userfeedback.domain.PlatformData;
@@ -30,6 +17,10 @@ import se.vgregion.userfeedback.domain.UserContact;
 import se.vgregion.userfeedback.domain.UserContact.UserContactOption;
 import se.vgregion.userfeedback.domain.UserFeedback;
 import se.vgregion.util.Attachment;
+
+import javax.annotation.Resource;
+import java.io.*;
+import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/test-services-config.xml")
@@ -48,11 +39,16 @@ public class FeedbackReportServiceTest extends TestCase {
     private EMailClientMock emailServiceMock;
 
     @Autowired
-    VelocityEngine velocityEngine;
+    private VelocityEngine velocityEngine;
+
+    @Autowired
+    @Resource
+    private InputStreamSource attachmentFile;
 
     private static final String TEST_DESCRIPTION = "Test message";
     private static final String TEST_USER_NAME = "Hacke Hackspett";
-    private static final String TEST_ATTACHMENT_FILENAME = "chairman-meow-little-red.jpg";
+
+    private String TEST_ATTACHMENT_FILENAME = "meow_cat_art.jpg";
     private static final String TEST_EMAIL = "woodyw@woodpeckers.rus";
 
     UserFeedback feedback;
@@ -69,10 +65,10 @@ public class FeedbackReportServiceTest extends TestCase {
         platform.setUserId("woodyw");
 
         // Add attachment
-        File file = new File("/" + TEST_ATTACHMENT_FILENAME);
+//        File file = new File("classpath:" + TEST_ATTACHMENT_FILENAME);
         se.vgregion.userfeedback.domain.Attachment attachment = new se.vgregion.userfeedback.domain.Attachment();
-        attachment.setFile(getBytesFromFile(file));
-        attachment.setFilename(file.getName());
+        attachment.setFile(getBytesFromFile(attachmentFile));
+        attachment.setFilename(TEST_ATTACHMENT_FILENAME);
         Set<se.vgregion.userfeedback.domain.Attachment> attachments = new HashSet<se.vgregion.userfeedback.domain.Attachment>();
         attachments.add(attachment);
 
@@ -146,31 +142,20 @@ public class FeedbackReportServiceTest extends TestCase {
     }
 
     // Returns the contents of the file in a byte array.
-    public static byte[] getBytesFromFile(File file) throws IOException {
-        InputStream is = new FileInputStream(file);
-        // Get the size of the file
-        long length = file.length();
-        // You cannot create an array using a long type.
-        // It needs to be an int type.
-        // Before converting to an int type, check
-        // to ensure that file is not larger than Integer.MAX_VALUE.
-        if (length > Integer.MAX_VALUE) {
-            // File is too large
+    public byte[] getBytesFromFile(InputStreamSource source) throws IOException {
+        byte[] bytes = null;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        InputStream is = source.getInputStream();
+        int maxLen = 1024;
+        int len = 0;
+        byte[] buf = new byte[maxLen];
+        while ((len = is.read(buf, 0, maxLen)) != -1) {
+           os.write(buf, 0, len);
         }
-        // Create the byte array to hold the data
-        byte[] bytes = new byte[(int) length];
-        // Read in the bytes
-        int offset = 0;
-        int numRead = 0;
-        while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
-            offset += numRead;
-        }
-        // Ensure all the bytes have been read in
-        if (offset < bytes.length) {
-            throw new IOException("Could not completely read file " + file.getName());
-        }
-        // Close the input stream and return bytes
+        os.flush();
+        bytes = os.toByteArray();
         is.close();
+        os.close();
         return bytes;
     }
 }

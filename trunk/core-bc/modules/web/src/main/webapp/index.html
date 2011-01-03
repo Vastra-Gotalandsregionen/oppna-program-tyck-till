@@ -6,39 +6,19 @@
     
     <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="http://antonio.vgregion.se:8980/tyck-till/tycktill/resources/js/tycktill-dialog.js"></script>
 
     <script type="text/javascript">
-        var isShowInDialog = true;
-        
+        //<![CDATA[
         $(document).ready(function() {
-            $("#modalDiv").dialog({
-                modal: true,
-                autoOpen: false,
-                height: 600,
-                width: 600,
-                draggable: true,
-                resizeable: true,
-                show: 'slide',
-                hide: {effect: 'fade', duration: 1500},
-                title: 'Tyck till'
-            });
-            $('#goToPage').click(
-                    function() {
-                        url = 'http://antonio.vgregion.se:8980/tyck-till/tycktill/KontaktaOss';
-                        openDialog(url, 'formName=default', 'Kontakta Oss');
-                        return false;
-                    });
+            initIFrameDialog('#modalDiv',
+                    '#iFrameDialog',
+                    '#goToPage',
+                    'http://antonio.vgregion.se:8980/tyck-till/tycktill/KontaktaOss',
+                    'formName=default',
+                    'Kontakta Oss');
         });
-
-
-        function openDialog(url, args, title) {
-            $("#modalDiv").dialog({title: title});
-            $("#modalDiv").dialog("open");
-            $("#modalDialog").load(url, args, function() {
-                initForm();
-            });
-            return false;
-        }
+        //]]>
     </script>
 
     <style type="text/css">
@@ -52,8 +32,8 @@
 Hej
     <a id="goToPage" href="http://antonio.vgregion.se:8980/tyck-till/tycktill/KontaktaOss?formnName=default">Kontakta oss!</a>
     <div id="modalDiv">
-        <div id="modalDialog">
-        </div>
+        <iframe id="iFrameDialog" height="100%" width="100%" marginheight="500px" marginwidth="500px" frameborder="0" scrolling="auto" src="">
+        </iframe>
     </div>
     
     <div>

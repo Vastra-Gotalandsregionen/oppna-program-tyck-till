@@ -53,15 +53,8 @@ public class TyckTillController {
     @Autowired
     private PlatformDataService platformDataService;
 
-//    @Value("${deploy.path}")
-//    private String deployPath;
-
     @Value("${tycktill.maxfileuploadsize}")
     private Long maxFileUploadSize = 100000L; // default 100k
-
-
-    // @Autowired
-    // private FeedbackReportService reportService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -122,8 +115,6 @@ public class TyckTillController {
 
 
         model.addAttribute("contactOptions", UserContact.UserContactOption.getLabelMap());
-
-//        model.addAttribute("deployPath", deployPath);
 
         return "KontaktaOss";
 
@@ -198,19 +189,6 @@ public class TyckTillController {
             return "KontaktaOss";
         }
     }
-//
-//    @ExceptionHandler({MaxUploadSizeExceededException.class})
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    public String handleUploadToBigFile(MaxUploadSizeExceededException ex,
-//                                        ModelMap model) {
-//        logger.info("exception thrown: "+ex.getMessage());
-//
-//        long maxFileSize = ex.getMaxUploadSize();
-//        logger.info("file upload failed");
-//        model.addAttribute("fileUploadError", "File är för stor. Den får max vara " + maxFileSize + " Mb.");
-//
-//        return "KontaktaOss";
-//    }
 
     private void processUserfeedback(UserFeedback userFeedback, Long formTemplateId,
                                      MultipartHttpServletRequest multipartRequest) {

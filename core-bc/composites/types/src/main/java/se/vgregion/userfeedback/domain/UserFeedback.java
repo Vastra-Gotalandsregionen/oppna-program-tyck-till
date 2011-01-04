@@ -21,7 +21,16 @@ package se.vgregion.userfeedback.domain;
 
 import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -193,53 +202,6 @@ public class UserFeedback extends AbstractEntity<Long> implements Serializable {
     }
 
     // --------------------------------------------------------------
-
-    @Override
-    public String toString() {
-        StringBuffer sb = new StringBuffer();
-        if (hyperLink != null && hyperLink.length() > 0) {
-            sb.append(hyperLink + " " + "\n");
-        }
-        sb.append("\n" + "Uppgifter inmatade av användaren" + "\n");
-        sb.append("- Förklara felet med egna ord: " + "\n" + getCaseMessage());
-        sb.append("\n\n");
-        sb.append("- Typ av feedback: " + getCaseCategory() + "\n");
-
-        sb.append("- Användaren vill ha feedback via: ");
-        UserContact method = getUserContact();
-        sb.append(method.getContactOption().getLabel());
-        switch (method.getContactOption()) {
-            case email:
-                sb.append("- Användaren epost: " + method.getContactMethod() + "\n");
-                break;
-            case telephone:
-                sb.append("- Användaren telefon: " + method.getContactMethod() + "\n");
-                break;
-            default:
-                throw new RuntimeException("Unrecognized use contact option");
-        }
-        sb.append("\n");
-        if (this.getAttachments() != null) {
-            Collection<Attachment> attachments = this.getAttachments();
-            sb.append("- Bifogade skärmdumpar: ");
-            for (Attachment attachment : attachments) {
-                sb.append(attachment.getFilename());
-                sb.append(", ");
-            }
-            sb.append("\n");
-        }
-        sb.append("\n" + "Uppgifter automatgenererade" + "\n");
-        PlatformData userPlatform = getPlatformData();
-        sb.append("- Användar ID: " + userPlatform.getUserId() + "\n");
-        sb.append("- IP Adress: " + userPlatform.getIpAddress() + "\n");
-        sb.append("- Browser: " + userPlatform.getBrowser() + "\n");
-        sb.append("- OS: " + userPlatform.getOperatingSystem() + "\n");
-        sb.append("- Referer: " + userPlatform.getReferer() + "\n");
-        sb.append("- Timestamp: " + userPlatform.getTimeStamp() + "\n");
-
-        sb.append("\n");
-        return sb.toString();
-    }
 
     public String getHyperLink() {
         return hyperLink;

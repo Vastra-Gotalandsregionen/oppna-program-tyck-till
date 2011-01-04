@@ -9,6 +9,12 @@ import se.vgregion.dao.domain.patterns.repository.Repository;
  */
 public interface FormTemplateRepository extends Repository<FormTemplate, Long> {
 
+    /**
+     * Find form template by name.
+     *
+     * @param name - form template name.
+     * @return FormTemplate.
+     */
     public FormTemplate find(String name);
 
 }

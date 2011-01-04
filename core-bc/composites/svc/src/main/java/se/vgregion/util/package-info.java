@@ -18,6 +18,6 @@
  */
 
 /**
- * Contains an email utility class
+ * Contains an email utility class.
  */
 package se.vgregion.util;

@@ -50,16 +50,7 @@ public class UserAgentUtils {
 
     private static String getFirstVersionNumber(String userAgent, int position, int numDigits) {
         String ver = getVersionNumber(userAgent, position);
-        if (ver == null) {
-            return "";
-        }
-        int i = 0;
-        String res = "";
-        while (i < ver.length() && i < numDigits) {
-            res += String.valueOf(ver.charAt(i));
-            i++;
-        }
-        return res;
+        return ver.substring(0, Math.min(ver.length(), numDigits));
     }
 
     private static String getVersionNumber(String userAgent, int position) {
@@ -354,11 +345,11 @@ public class UserAgentUtils {
         } else {
             res = getArray("<b>?</b>", "<b>?</b>", "<b>?</b>");
         }
-        String result = "";
+        StringBuilder result = new StringBuilder("");
         for (String s : res) {
-            result += s + " ";
+            result.append(s).append(" ");
         }
-        return result;
+        return result.toString();
     }
 
     /**
@@ -501,11 +492,11 @@ public class UserAgentUtils {
                 res = getArray("<B>?</B>", "<B>?</B>", "<B>?</B>");
             }
         }
-        String result = "";
+        StringBuilder result = new StringBuilder("");
         for (String s : res) {
-            result += s + " ";
+            result.append(s).append(" ");
         }
-        return result;
+        return result.toString();
     }
 
 }

@@ -220,11 +220,11 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
     }
 
     public Date getLastChanged() {
-        return lastChanged;
+        return new Date(lastChanged.getTime());
     }
 
     public void setLastChanged(Date lastChanged) {
-        this.lastChanged = lastChanged;
+        this.lastChanged = new Date(lastChanged.getTime());
     }
 
     public CustomCategory getCustomCategory() {

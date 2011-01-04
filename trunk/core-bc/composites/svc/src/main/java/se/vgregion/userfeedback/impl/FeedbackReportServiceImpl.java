@@ -19,16 +19,6 @@
 
 package se.vgregion.userfeedback.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-
-import javax.mail.MessagingException;
-import javax.persistence.Transient;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -38,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import se.vgregion.incidentreport.pivotaltracker.PTStory;
 import se.vgregion.incidentreport.pivotaltracker.PivotalTrackerService;
 import se.vgregion.usdservice.USDService;
@@ -48,6 +37,15 @@ import se.vgregion.userfeedback.domain.Backend;
 import se.vgregion.userfeedback.domain.UserContact;
 import se.vgregion.userfeedback.domain.UserFeedback;
 import se.vgregion.util.EMailClient;
+
+import javax.mail.MessagingException;
+import javax.persistence.Transient;
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * Implementation of the incident report service.
@@ -296,14 +294,6 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
         descBuf.append("\n");
         p.setProperty("description", descBuf.toString());
         return p;
-    }
-
-    private String lookupProjectId(String applicationName) {
-        String result = pivotalTrackerMappings.getProperty(applicationName);
-        if (result == null || result.length() == 0) {
-            result = applicationName;
-        }
-        return result;
     }
 
     private String lookupPhonenumber(UserFeedback report) {

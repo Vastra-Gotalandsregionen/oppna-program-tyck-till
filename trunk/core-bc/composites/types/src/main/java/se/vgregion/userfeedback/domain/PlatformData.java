@@ -5,6 +5,7 @@ import se.vgregion.dao.domain.patterns.valueobject.AbstractValueObject;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,8 @@ import java.util.Date;
  * 
  */
 @Embeddable
-public class PlatformData extends AbstractValueObject<PlatformData> {
+public class PlatformData extends AbstractValueObject<PlatformData> implements Serializable {
+    private static final long serialVersionUID = 6398230873747213549L;
 
     private String userId;
     private String browser;
@@ -52,11 +54,11 @@ public class PlatformData extends AbstractValueObject<PlatformData> {
     }
 
     public Date getTimeStamp() {
-        return timeStamp;
+        return new Date(timeStamp.getTime());
     }
 
     public void setTimeStamp(Date timeStamp) {
-        this.timeStamp = timeStamp;
+        this.timeStamp = new Date(timeStamp.getTime());
     }
 
     public String getIpAddress() {

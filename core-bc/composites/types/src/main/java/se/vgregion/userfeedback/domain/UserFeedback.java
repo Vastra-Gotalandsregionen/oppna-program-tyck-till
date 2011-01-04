@@ -31,10 +31,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This class represents a feedback instance.
- * 
- * @author Robert de Bésche
- * 
+ * The main domain object that handles the user feedback.
+ *
+ * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @Entity
 public class UserFeedback extends AbstractEntity<Long> implements Serializable {

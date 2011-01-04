@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * This class carries data about the user platform. It would typically be populated with information from the
+ * Domain object that carries data about the user platform. It would typically be populated with information from the
  * user's HTTP request headers.
  * 
  * @author Arakun

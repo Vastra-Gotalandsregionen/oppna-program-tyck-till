@@ -8,7 +8,7 @@ import javax.persistence.Transient;
 import java.io.Serializable;
 
 /**
- * This action do that and that, if it has something special it is.
+ * Domain object representing where to send the case.
  *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
@@ -25,8 +25,18 @@ public class Backend extends AbstractValueObject<Backend> implements Serializabl
     private boolean activePivotal;
     private boolean activeMbox;
 
-    public Backend() {}
+    /**
+     * Default constructor creating an inactive Backend.
+     */
+    public Backend() {
+        this(false);
+    }
 
+    /**
+     * Convenience constructor creating an active or inactive Backend.
+     *
+     * @param active - boolean state of Backend.
+     */
     public Backend(boolean active) {
         activeBackend = active;
     }

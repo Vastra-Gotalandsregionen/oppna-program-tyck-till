@@ -6,14 +6,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import se.vgregion.userfeedback.domain.*;
+import se.vgregion.userfeedback.domain.Backend;
+import se.vgregion.userfeedback.domain.CustomCategory;
+import se.vgregion.userfeedback.domain.CustomSubCategory;
+import se.vgregion.userfeedback.domain.FormTemplate;
+import se.vgregion.userfeedback.domain.FormTemplateRepository;
+import se.vgregion.userfeedback.domain.StaticCategory;
+import se.vgregion.userfeedback.domain.StaticCategoryRepository;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
+ * Controller for FormTemplate administration.
+ *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 
@@ -27,19 +43,29 @@ public class TyckTillAdminController {
     @Autowired
     private StaticCategoryRepository staticCategoryRepository;
 
-//    @Value("${deploy.path}")
-//    private String deployPath;
-
+    /**
+     * Access to a list of FormTemplates.
+     *
+     * @param model - ModelMap.
+     * @return a list of all Form templates.
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/TemplateList")
     public String listView(ModelMap model) {
 
         Collection<FormTemplate> templates = formTemplateRepository.findAll();
         model.addAttribute("templateList", templates);
 
-//        model.addAttribute("deployPath", deployPath);
         return "TemplateList";
     }
 
+    /**
+     * Access a prepared FormTemplate object for adding.
+     * This method also handles state when changing screen during the creation process.
+     *
+     * @param templateId - form template id.
+     * @param model      - ModelMap
+     * @return navigates to TemplateEdit
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/TemplateAdd")
     public String addTemplates(@RequestParam(value = "templateId", required = false) Long templateId,
             ModelMap model) {
@@ -72,10 +98,16 @@ public class TyckTillAdminController {
         model.addAttribute("functionCategory", functionCategory);
         model.addAttribute("otherCategory", otherCategory);
 
-//        model.addAttribute("deployPath", deployPath);
         return "TemplateEdit";
     }
 
+    /**
+     * Access a FormTemplate to be edited.
+     *
+     * @param templateId - template id
+     * @param model      - ModelMap
+     * @return navigate to TemplateEdit
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/TemplateEdit")
     public String editTemplates(@RequestParam(value = "templateId", required = false) Long templateId,
             ModelMap model) {
@@ -117,15 +149,22 @@ public class TyckTillAdminController {
         model.addAttribute("functionCategory", functionCategory);
         model.addAttribute("otherCategory", otherCategory);
 
-//        model.addAttribute("deployPath", deployPath);
         return "TemplateEdit";
     }
 
+    /**
+     * Persist a FormTempate.
+     *
+     * @param formTemplate - FormTemplate.
+     * @param result       - used for errorhandling.
+     * @param status       - used for session state handling.
+     * @param model        - ModelMap
+     * @return navigate to Templatelist or back to TemplateEdit.
+     */
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String addTemplate(@Valid @ModelAttribute("formTemplate") FormTemplate formTemplate,
             BindingResult result, SessionStatus status, ModelMap model) {
-//        model.addAttribute("deployPath", deployPath);
         if (result.hasErrors()) {
             return "TemplateEdit";
         }
@@ -153,16 +192,14 @@ public class TyckTillAdminController {
     }
 
     /**
-     * Edit CustomCategory without persis. FormTemplate has to be handled to allow preserving data not stored yet.
+     * Edit CustomCategory without persist.
+     * FormTemplate has to be handled to allow preserving data not stored yet.
      * 
-     * @param formTemplate
-     *            - main backing bean.
+     * @param formTemplate - main backing bean.
      * @return - view with edit form.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/CustomCategoryEdit")
-    public String editCustomCategory(@ModelAttribute("formTemplate") FormTemplate formTemplate,
-                                     ModelMap model) {
-//        model.addAttribute("deployPath", deployPath);
+    public String editCustomCategory(@ModelAttribute("formTemplate") FormTemplate formTemplate) {
 
         List<CustomSubCategory> subCategories = formTemplate.getCustomCategory().getCustomSubCategories();
         int emptyCnt = 0;
@@ -183,16 +220,13 @@ public class TyckTillAdminController {
     /**
      * Redirect back to TemplateEdit to continue working with the formTemplate.
      * 
-     * @param formTemplate
-     *            - the main backing bean.
+     * @param formTemplate - the main backing bean.
      * @return - view for FormTemplate edit.
      */
     @RequestMapping(method = RequestMethod.POST, value = "/CustomCategoryUpdate")
-    public String updateCustomCategory(@ModelAttribute("formTemplate") FormTemplate formTemplate,
-                                       ModelMap model) {
-//        model.addAttribute("deployPath", deployPath);
-        for (Iterator<CustomSubCategory> it = formTemplate.getCustomCategory().getCustomSubCategories().iterator(); it
-                .hasNext();) {
+    public String updateCustomCategory(@ModelAttribute("formTemplate") FormTemplate formTemplate) {
+        for (Iterator<CustomSubCategory> it = formTemplate.getCustomCategory().getCustomSubCategories().iterator();
+             it.hasNext();) {
             CustomSubCategory subCategory = it.next();
             if (StringUtils.isBlank(subCategory.getName())) {
                 it.remove();

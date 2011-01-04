@@ -7,12 +7,20 @@ import se.vgregion.userfeedback.domain.CustomSubCategoryRepository;
 import java.beans.PropertyEditorSupport;
 
 /**
+ * Custom spring converter to allow CustomSubCategory binding.
+ *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 public class CustomSubCategoryPropertyEditor extends PropertyEditorSupport {
     @Autowired
     private CustomSubCategoryRepository customSubCategoryRepository;
 
+    /**
+     * Lookup object from incoming String id representation.
+     *
+     * @param incoming - CustomSubCategory id as String.
+     * @throws IllegalArgumentException
+     */
     @Override
     public void setAsText(String incoming) throws IllegalArgumentException {
         Long id = 0l;
@@ -30,6 +38,11 @@ public class CustomSubCategoryPropertyEditor extends PropertyEditorSupport {
         }
     }
 
+    /**
+     * Convert subcategory back to it's String representation.
+     *
+     * @return - CustomSubCategory id as String.
+     */
     @Override
     public String getAsText() {
         CustomSubCategory subCategory = (CustomSubCategory) getValue();

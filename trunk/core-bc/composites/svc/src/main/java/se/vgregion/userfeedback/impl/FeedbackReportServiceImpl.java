@@ -67,10 +67,6 @@ public class FeedbackReportServiceImpl implements FeedbackReportService {
      */
     private static final String PIVOTAL_TEMPLATE = "velocity/tycktill-pivotal-report.vm";
 
-    @Autowired
-    @Qualifier("pivotalTrackerMappings")
-    private Properties pivotalTrackerMappings;
-
     /**
      * Reciever of messages when the regular report recievers can´t be reached.
      */

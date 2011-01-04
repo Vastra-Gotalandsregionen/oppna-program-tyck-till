@@ -1,12 +1,20 @@
 package se.vgregion.userfeedback.domain;
 
-import se.vgregion.dao.domain.patterns.entity.*;
+import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 
+
 /**
+ * Domain object representing a custom subcategory.
+ *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @Entity

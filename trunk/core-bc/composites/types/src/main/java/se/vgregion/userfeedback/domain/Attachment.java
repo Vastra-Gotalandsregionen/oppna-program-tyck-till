@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
+ * Domain object for handling feedback attachment.
+ *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @Entity

@@ -3,7 +3,8 @@ package se.vgregion.userfeedback.domain;
 import se.vgregion.dao.domain.patterns.repository.Repository;
 
 /**
- * This action do that and that, if it has something special it is.
+ * Interface for the repository that that handles static categories.
+ * It also declares which static categories exist.
  *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */

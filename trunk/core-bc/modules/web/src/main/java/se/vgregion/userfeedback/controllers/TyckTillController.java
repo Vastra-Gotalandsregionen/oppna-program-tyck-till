@@ -10,30 +10,53 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import se.vgregion.userfeedback.FeedbackReportService;
 import se.vgregion.userfeedback.PlatformDataService;
-import se.vgregion.userfeedback.domain.*;
+import se.vgregion.userfeedback.domain.Attachment;
+import se.vgregion.userfeedback.domain.AttachmentRepository;
+import se.vgregion.userfeedback.domain.Backend;
+import se.vgregion.userfeedback.domain.CustomCategory;
+import se.vgregion.userfeedback.domain.CustomSubCategory;
+import se.vgregion.userfeedback.domain.FormTemplate;
+import se.vgregion.userfeedback.domain.FormTemplateRepository;
+import se.vgregion.userfeedback.domain.StaticCategory;
+import se.vgregion.userfeedback.domain.StaticCategoryRepository;
+import se.vgregion.userfeedback.domain.UserContact;
+import se.vgregion.userfeedback.domain.UserFeedback;
+import se.vgregion.userfeedback.domain.UserFeedbackRepository;
 
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
+ * Main controller for handling user feedback.
+ *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 
 @Controller
 @RequestMapping(value = {"/KontaktaOss"})
-@SessionAttributes({"userFeedback", "template", "contactOptions", "contentCategory", "functionCategory", "otherCategory", "deployPath"})
+@SessionAttributes({"userFeedback", "template", "contactOptions", "contentCategory",
+        "functionCategory", "otherCategory", "deployPath"})
 public class TyckTillController {
-    private static final Logger logger = LoggerFactory.getLogger(TyckTillController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TyckTillController.class);
 
     @Autowired
     private FormTemplateRepository formTemplateRepository;
@@ -64,9 +87,10 @@ public class TyckTillController {
     /**
      * Used to render the userFeedback form. Basic initialization before render-view.
      *
-     * @param formName   - FormTemplate name. The request parameter "formName" decide how the form is rendered. It is an
-     *                   inparameter to give the client this choise.
+     * @param formName   - FormTemplate name. The request parameter "formName" decide how the form is
+     *                     rendered. It is an inparameter to give the client this choise.
      * @param breadcrumb - client specific inparameter declaring from where the contact were initiated.
+     * @param request    - used to access platform data.
      * @param model      - the normal Spring ModelMap.
      * @return - view to be rendered.
      */
@@ -135,7 +159,9 @@ public class TyckTillController {
      * Action method to send Userfeedback.
      *
      * @param userFeedback     - form backing bean.
-     * @param formTemplateId   - FormTemplate used to render form, used for extracting CustomCategory configuration.
+     * @param result           - used to handle error messages
+     * @param formTemplateId   - FormTemplate used to render form, used for extracting
+     *                           CustomCategory configuration.
      * @param multipartRequest - the http-request used for attachment upload and PlatformData extraction.
      * @param status           - controls Session state.
      * @param model            - the normal Spring ModelMap.
@@ -148,18 +174,16 @@ public class TyckTillController {
                                    @RequestParam("formTemplateId") Long formTemplateId,
                                    MultipartHttpServletRequest multipartRequest,
                                    SessionStatus status, ModelMap model) {
-        logger.info("Sending...");
+        LOGGER.info("Sending...");
 
         try {
             if (result.hasErrors()) {
-                logger.info("validation error");
+                LOGGER.info("validation error");
                 for (ObjectError err : result.getAllErrors()) {
                     System.out.println(err.toString());
                 }
                 return "KontaktaOss";
             }
-
-            // logger.debug("User agent data captured: " + report);
 
             processUserfeedback(userFeedback, formTemplateId, multipartRequest);
             reportService.reportFeedback(userFeedback);
@@ -173,19 +197,17 @@ public class TyckTillController {
                 userFeedbackRepository.merge(userFeedback);
             }
 
-            logger.info("Session complete");
+            LOGGER.info("Session complete");
             status.setComplete();
-
-//            model.addAttribute("deployPath", deployPath);
 
             return "Tacksida";
         } catch (MaxUploadSizeExceededException e) {
-            long maxFileSize = e.getMaxUploadSize()/1000L;
-            logger.info("file upload failed");
+            long maxFileSize = e.getMaxUploadSize() / 1000L;
+            LOGGER.info("file upload failed");
             model.addAttribute("fileUploadError", "File är för stor. Den får max vara " + maxFileSize + " kb.");
             return "KontaktaOss";
         } catch (Exception e) {
-            logger.info("exception:" + e.getMessage());
+            LOGGER.info("exception:" + e.getMessage());
             return "KontaktaOss";
         }
     }
@@ -195,7 +217,7 @@ public class TyckTillController {
         // 1: Lookup Attachments
         for (Iterator<String> filenameIterator = multipartRequest.getFileNames(); filenameIterator.hasNext();) {
             String fileName = filenameIterator.next();
-            logger.info("Attachment: " + fileName);
+            LOGGER.info("Attachment: " + fileName);
 
             processAttachment(multipartRequest.getFile(fileName), userFeedback);
         }
@@ -204,17 +226,18 @@ public class TyckTillController {
         // 2: Lookup CaseCategory
         String caseCategory = lookupCaseCategory(userFeedback, template);
         userFeedback.setCaseCategory(caseCategory);
-        logger.info("CaseCategory: " + caseCategory);
+        LOGGER.info("CaseCategory: " + caseCategory);
 
         // 3: Lookup CaseSubCategory
         List<String> caseSubCategories = lookupCaseSubCategory(userFeedback, template);
         userFeedback.setCaseSubCategories(caseSubCategories);
-        logger.info("CaseSubCategory: " + caseSubCategories);
+        LOGGER.info("CaseSubCategory: " + caseSubCategories);
 
         // 4: Lookup CaseContact
         Backend backend = lookupCaseBackend(userFeedback, template);
         userFeedback.setCaseBackend(backend);
-        logger.info("Backend: " + backend.isActiveBackend() + " " + backend.getMbox() + " " + backend.getPivotal() + " " + backend.getUsd());
+        LOGGER.info("Backend: " + backend.isActiveBackend() + " " + backend.getMbox() +
+                    " " + backend.getPivotal() + " " + backend.getUsd());
     }
 
     private String lookupCaseCategory(UserFeedback userFeedback, FormTemplate template) {
@@ -261,8 +284,6 @@ public class TyckTillController {
     }
 
     private Backend lookupCaseBackend(UserFeedback userFeedback, FormTemplate template) {
-        Backend backend = null;
-
         // No category selected
         if (userFeedback.getCaseCategoryId() == null) {
             return getFormTemplateBackend(template);
@@ -348,23 +369,23 @@ public class TyckTillController {
             attachment.setFilename(file.getOriginalFilename());
             attachment.setFile(file.getBytes());
 
-            logger.debug(file.getOriginalFilename());
+            LOGGER.debug(file.getOriginalFilename());
 
             attachments.add(attachment);
         } catch (IOException e) {
-            logger.error(e.toString());
+            LOGGER.error(e.toString());
         }
     }
 
     private void log(UserFeedback userFeedback, ModelMap model) {
-        if (!logger.isDebugEnabled()) {
+        if (!LOGGER.isDebugEnabled()) {
             return;
         }
 
-        logger.debug("attachmentSize: " + userFeedback.getAttachments().size());
+        LOGGER.debug("attachmentSize: " + userFeedback.getAttachments().size());
 
         for (Map.Entry<String, Object> entry : model.entrySet()) {
-            logger.debug("Entry: " + entry.getKey());
+            LOGGER.debug("Entry: " + entry.getKey());
         }
     }
 

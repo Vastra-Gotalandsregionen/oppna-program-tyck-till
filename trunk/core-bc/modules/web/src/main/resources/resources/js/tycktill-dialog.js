@@ -18,7 +18,10 @@ function initDialog(dialogDivId, dialogContentId, actionId, url, args, title) {
 }
 
 function openDialogAction(dialogDivId, dialogContentId, url, args, title) {
-    $(dialogDivId).dialog({title: title});
+    $(dialogDivId).dialog({
+        title: title,
+        height: 600,
+        width: 610});
     $(dialogDivId).dialog("open");
     $(dialogContentId).load(url, args, function() {
         showInDialogInit();
@@ -47,8 +50,11 @@ function initIFrameDialog(dialogDivId, iFrameContentId, actionId, url, args, tit
 }
 
 function openIFrameDialogAction(dialogDivId, iFrameContentId, url, args, title) {
-    $(dialogDivId).dialog({title: title});
+    $(dialogDivId).dialog({
+        title: title,
+        height: 600,
+        width: 610});
     $(dialogDivId).dialog("open");
-    $(iFrameContentId).attr('src', url+'?'+args);
+    $(iFrameContentId).attr('src', url + '?' + args);
     return false;
 }

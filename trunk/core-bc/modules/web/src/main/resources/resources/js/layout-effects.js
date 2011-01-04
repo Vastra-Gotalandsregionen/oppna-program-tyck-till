@@ -174,11 +174,11 @@ function showhideBackendInit() {
     }
 }
 
-function showhide(cb, class) {
+function showhide(cb, cssClass) {
     if (cb.checked) {
-        jQuery('.' + class).show('fast');
+        jQuery('.' + cssClass).show('fast');
     } else {
-        jQuery('.' + class).hide('fast');
+        jQuery('.' + cssClass).hide('fast');
     }
 }
 

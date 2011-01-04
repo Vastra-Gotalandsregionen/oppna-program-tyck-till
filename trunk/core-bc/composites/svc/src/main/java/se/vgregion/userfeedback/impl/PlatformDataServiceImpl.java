@@ -1,14 +1,16 @@
 package se.vgregion.userfeedback.impl;
 
-import java.util.Date;
-import java.util.Enumeration;
-
-import javax.servlet.http.HttpServletRequest;
-
 import se.vgregion.userfeedback.PlatformDataService;
 import se.vgregion.userfeedback.domain.PlatformData;
 import se.vgregion.util.UserAgentUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.Enumeration;
+
+/**
+ * Implementation of the PlatformDataService.
+ */
 public class PlatformDataServiceImpl implements PlatformDataService {
 
     private static final String USER_AGENT_HEADER = "User-Agent";
@@ -18,9 +20,8 @@ public class PlatformDataServiceImpl implements PlatformDataService {
     /**
      * Map header data in an HTTP request to a corresponding {@code PlatformData} object.
      * 
-     * @param request
-     *            Http request.
-     * @return .
+     * @param request Http request.
+     * @return a PlatformData object.
      */
     @Override
     public PlatformData mapUserPlatform(HttpServletRequest request) {

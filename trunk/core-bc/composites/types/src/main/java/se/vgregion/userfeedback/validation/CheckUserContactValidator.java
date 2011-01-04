@@ -34,7 +34,9 @@ public class CheckUserContactValidator implements ConstraintValidator<CheckUserC
     @Override
     public boolean isValid(UserContact userContact, ConstraintValidatorContext context) {
 
-        if (userContact == null) return true;
+        if (userContact == null) {
+            return true;
+        }
 
         if (userContact.getShouldContactUser()) {
             boolean isUserNameValid = StringUtils.isNotBlank(userContact.getUserName());

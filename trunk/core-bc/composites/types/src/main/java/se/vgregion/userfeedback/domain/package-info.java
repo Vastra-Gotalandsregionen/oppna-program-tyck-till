@@ -1,4 +1,4 @@
 /**
- * Domain model for tyck till
+ * Domain model for tyck till.
  */
 package se.vgregion.userfeedback.domain;

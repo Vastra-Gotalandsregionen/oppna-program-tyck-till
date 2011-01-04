@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Domain objject that handles a static category and it's subcategories.
+ * Domain object that handles a static category and it's subcategories.
  *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
@@ -18,6 +18,13 @@ public class StaticCategory extends AbstractEntity<Long> {
 
     private Map<Long, String> subCategories;
 
+    /**
+     * Constructor creating an immutable Static Category object.
+     *
+     * @param id  - category id
+     * @param name - category name.
+     * @param subCategories - an array of subcategories.
+     */
     public StaticCategory(Long id, String name, String... subCategories) {
         this.id = id;
         this.name = name;

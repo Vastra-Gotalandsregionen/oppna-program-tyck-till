@@ -5,12 +5,15 @@ import se.vgregion.userfeedback.domain.StaticCategory;
 import se.vgregion.userfeedback.domain.StaticCategoryRepository;
 
 /**
- * This action do that and that, if it has something special it is.
+ * Static inmemory implementation of StaticCategory.
  *
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 public class InMemoryStaticCategoryRepository extends AbstractInMemoryRepository<StaticCategory, Long> implements StaticCategoryRepository {
 
+    /**
+     * All available StaticCategory's are created at repository instantiation.
+     */
     public InMemoryStaticCategoryRepository() {
         init();
     }

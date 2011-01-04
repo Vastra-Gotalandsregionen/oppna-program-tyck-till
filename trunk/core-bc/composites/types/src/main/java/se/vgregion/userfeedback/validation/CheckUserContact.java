@@ -2,7 +2,11 @@ package se.vgregion.userfeedback.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * JSR-303 annotation for UserContact validation.
@@ -15,10 +19,25 @@ import java.lang.annotation.*;
 @Documented
 public @interface CheckUserContact {
 
+    /**
+     * Declaring key for default error message lookup.
+     *
+     * @return  lookup key.
+     */
     String message() default "{vgr.tycktill.usercontact}";
 
-    Class<?>[] groups() default {};
+    /**
+     * No group behaviour.
+     *
+     * @return empty.
+     */
+    Class<?>[] groups() default { };
 
-    Class<? extends Payload>[] payload() default {};
+    /**
+     * No payload.
+     *
+     * @return empty.
+     */
+    Class<? extends Payload>[] payload() default { };
 
 }

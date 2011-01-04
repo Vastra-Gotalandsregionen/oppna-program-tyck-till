@@ -66,7 +66,8 @@ public class UserContact extends AbstractValueObject<UserContact> implements Ser
      * List of ways user can be contacted.
      */
     public enum UserContactOption {
-        email("E-post"), telephone("Telefon");
+        email("E-post"),
+        telephone("Telefon");
 
         private String label;
 

@@ -55,7 +55,7 @@ public class FormTemplate extends AbstractEntity<Long> implements Serializable {
 
 
     // optional parts
-    private Boolean showCustom;
+    private Boolean showCustom = Boolean.FALSE;
 
     private Boolean showContent = Boolean.TRUE;
 

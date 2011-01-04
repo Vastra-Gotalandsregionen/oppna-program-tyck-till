@@ -13,12 +13,11 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function() {
-            $("#modalDiv").dialog({
+            jQuery("#modalDiv").dialog({
                 modal: true,
                 autoOpen: false,
                 height: 600,
                 width: 610,
-                position: 'center',
                 draggable: true,
                 resizeable: true,
                 show: 'slide',
@@ -28,12 +27,12 @@
         });
 
         function openDialog(url, args, title) {
-            $("#modalDiv").dialog({
+            jQuery("#modalDiv").dialog({
                 title: title,
                 height: 600,
                 width: 610});
-            $("#modalDiv").dialog("open");
-            $("#modalDialog").load(url, args, function() {
+            jQuery("#modalDiv").dialog("open");
+            jQuery("#modalDialog").load(url, args, function() {
                 showInDialogInit();
                 initForm();
             });

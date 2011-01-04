@@ -19,7 +19,7 @@ public class PlatformDataServiceImpl implements PlatformDataService {
 
     /**
      * Map header data in an HTTP request to a corresponding {@code PlatformData} object.
-     * 
+     *
      * @param request Http request.
      * @return a PlatformData object.
      */
@@ -31,8 +31,10 @@ public class PlatformDataServiceImpl implements PlatformDataService {
         String forwardedIpAddress = getRemoteIpAddress(request);
         Date timeStamp = new Date(); // Capture current time, not User's time.
 
-        platform.setBrowser(UserAgentUtils.getBrowser(userAgent));
-        platform.setOperatingSystem(UserAgentUtils.getOS(userAgent));
+        if (userAgent != null) {
+            platform.setBrowser(UserAgentUtils.getBrowser(userAgent));
+            platform.setOperatingSystem(UserAgentUtils.getOS(userAgent));
+        }
         platform.setTimeStamp(timeStamp);
         platform.setReferer(referer);
         platform.setIpAddress(request.getRemoteAddr());
@@ -45,9 +47,8 @@ public class PlatformDataServiceImpl implements PlatformDataService {
     /**
      * Fix for Siteminder. Retrieves the original ip address of the user request if it has been stored in a
      * {@code HEADER_X_FORWARDED_FOR} header.
-     * 
-     * @param request
-     *            .
+     *
+     * @param request .
      * @return
      */
     private static String getRemoteIpAddress(HttpServletRequest request) {

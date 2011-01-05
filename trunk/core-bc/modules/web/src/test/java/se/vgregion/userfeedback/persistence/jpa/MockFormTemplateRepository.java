@@ -1,5 +1,6 @@
 package se.vgregion.userfeedback.persistence.jpa;
 
+import se.vgregion.userfeedback.domain.CustomCategory;
 import se.vgregion.userfeedback.domain.FormTemplate;
 import se.vgregion.userfeedback.domain.FormTemplateRepository;
 
@@ -21,6 +22,12 @@ public class MockFormTemplateRepository implements FormTemplateRepository {
         } else if ("test".equals(name)) {
             FormTemplate template = new FormTemplate();
             template.setName("test");
+            template.setShowCustom(Boolean.TRUE);
+            CustomCategory custom = new CustomCategory();
+            custom.setName("TestCustom");
+            template.setCustomCategory(custom);
+            template.setShowContactByEmail(false);
+            template.setShowContactByPhone(true);
             return template;
         }
 

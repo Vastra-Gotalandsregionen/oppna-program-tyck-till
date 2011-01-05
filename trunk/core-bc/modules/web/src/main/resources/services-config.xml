@@ -9,6 +9,7 @@
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
   <import resource="classpath:tracker-config.xml"/>
+
   <bean id="usdService" class="se.vgregion.usdservice.USDServiceImpl">
     <constructor-arg ref="usdProperties"/>
     <property name="usdAppToGroupMappings" ref="usdAppToGroupMappings"/>

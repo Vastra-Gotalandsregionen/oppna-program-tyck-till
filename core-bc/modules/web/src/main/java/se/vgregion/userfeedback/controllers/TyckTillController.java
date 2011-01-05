@@ -110,7 +110,9 @@ public class TyckTillController {
                 .find(StaticCategoryRepository.STATIC_OTHER_CATEGORY));
 
         UserFeedback userFeedback;
-        if (!model.containsKey("userFeedback")) {
+        if (model.containsKey("userFeedback")) {
+            userFeedback = (UserFeedback) model.get("userFeedback");
+        } else {
             userFeedback = new UserFeedback();
 
             if (template.getShowCustom()) {
@@ -133,8 +135,6 @@ public class TyckTillController {
             userFeedback.setUserContact(contact);
 
             model.addAttribute("userFeedback", userFeedback);
-        } else {
-            userFeedback = (UserFeedback) model.get("userFeedback");
         }
 
 

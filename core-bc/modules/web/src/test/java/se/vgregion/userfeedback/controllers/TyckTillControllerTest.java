@@ -12,6 +12,8 @@ import org.springframework.web.servlet.*;
 import se.vgregion.userfeedback.domain.FormTemplate;
 import se.vgregion.userfeedback.domain.StaticCategory;
 import se.vgregion.userfeedback.domain.StaticCategoryRepository;
+import se.vgregion.userfeedback.domain.UserContact;
+import se.vgregion.userfeedback.domain.UserFeedback;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -107,6 +109,11 @@ public class TyckTillControllerTest {
 
         FormTemplate template = (FormTemplate) model.get("template");
         assertEquals("test", template.getName());
+
+        UserFeedback feedback = (UserFeedback) model.get("userFeedback");
+        assertEquals("TestCustom", feedback.getCaseCategory());
+
+        assertEquals(UserContact.UserContactOption.telephone, feedback.getUserContact().getContactOption());
     }
 
     @Test
@@ -146,6 +153,10 @@ public class TyckTillControllerTest {
         assertEquals("Övrigt", category.getName());
         assertEquals(0, category.getSubCategories().size());
         assertEquals(StaticCategoryRepository.STATIC_OTHER_CATEGORY, category.getId());
+    }
+
+    public void testSetupForm_UserFeedback() throws Exception {
+
     }
 
     @Test

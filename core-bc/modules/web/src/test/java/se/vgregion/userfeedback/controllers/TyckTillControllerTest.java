@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath*:web/WEB-INF/TyckTill-servlet-config.xml"})
+@ContextConfiguration({"/web/WEB-INF/TyckTill-servlet-config.xml"})
 public class TyckTillControllerTest {
     @Inject
     private ApplicationContext applicationContext;
@@ -34,16 +34,16 @@ public class TyckTillControllerTest {
     private MockHttpServletResponse response;
     private HandlerAdapter handlerAdapter;
 
+
     @Before
     public void setUp() throws Exception {
-        this.request = new MockHttpServletRequest();
-        this.response = new MockHttpServletResponse();
+        request = new MockHttpServletRequest();
+        response = new MockHttpServletResponse();
 
-        this.handlerAdapter = applicationContext.getBean(HandlerAdapter.class);
+        handlerAdapter = applicationContext.getBean(HandlerAdapter.class);
     }
 
-    ModelAndView handle(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    ModelAndView handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
         final HandlerMapping handlerMapping = applicationContext.getBean(HandlerMapping.class);
         final HandlerExecutionChain handler = handlerMapping.getHandler(request);
         assertNotNull("No handler found for request, check you request mapping", handler);

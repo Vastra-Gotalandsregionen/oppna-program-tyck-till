@@ -88,7 +88,7 @@ public class TyckTillController {
      * Used to render the userFeedback form. Basic initialization before render-view.
      *
      * @param formName   - FormTemplate name. The request parameter "formName" decide how the form is
-     *                     rendered. It is an inparameter to give the client this choise.
+     *                   rendered. It is an inparameter to give the client this choise.
      * @param breadcrumb - client specific inparameter declaring from where the contact were initiated.
      * @param request    - used to access platform data.
      * @param model      - the normal Spring ModelMap.
@@ -161,7 +161,7 @@ public class TyckTillController {
      * @param userFeedback     - form backing bean.
      * @param result           - used to handle error messages
      * @param formTemplateId   - FormTemplate used to render form, used for extracting
-     *                           CustomCategory configuration.
+     *                         CustomCategory configuration.
      * @param multipartRequest - the http-request used for attachment upload and PlatformData extraction.
      * @param status           - controls Session state.
      * @param model            - the normal Spring ModelMap.
@@ -237,7 +237,7 @@ public class TyckTillController {
         Backend backend = lookupCaseBackend(userFeedback, template);
         userFeedback.setCaseBackend(backend);
         LOGGER.info("Backend: " + backend.isActiveBackend() + " " + backend.getMbox() +
-                    " " + backend.getPivotal() + " " + backend.getUsd());
+                " " + backend.getPivotal() + " " + backend.getUsd());
     }
 
     private String lookupCaseCategory(UserFeedback userFeedback, FormTemplate template) {

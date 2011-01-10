@@ -88,6 +88,7 @@
             <exclude>**/jquery-ui-*.min.js</exclude>
             <exclude>**/jquery.timer.js</exclude>
             <exclude>**/jquery-*.min.js</exclude>
+            <exclude>**/messages.properties</exclude>
           </excludes>
         </configuration>
       </plugin>

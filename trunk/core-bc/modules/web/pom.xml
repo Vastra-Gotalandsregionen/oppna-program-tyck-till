@@ -79,6 +79,18 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/jquery-ui-*.min.js</exclude>
+            <exclude>**/jquery.timer.js</exclude>
+            <exclude>**/jquery-*.min.js</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

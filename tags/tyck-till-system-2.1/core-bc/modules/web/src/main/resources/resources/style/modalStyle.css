@@ -1,0 +1,156 @@
+/**
+ * Copyright 2010 Västra Götalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ *
+ */
+@CHARSET "UTF-8";
+
+div#Inner710 { color: red; }
+
+div.ui-dialog-titlebar {
+}
+span#ui-dialog-title-modalDiv {
+}
+  
+  /* Overlays */
+.ui-widget-overlay {
+}
+  
+/* Icons
+----------------------------------*/
+/* states and images */
+.ui-icon {
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+    background-image: url(../../resources/style/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
+.ui-widget-content .ui-icon {
+    background-image: url(../../resources/style/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
+.ui-icon-closethick {
+    background-position: -96px -128px; }
+.ui-icon-grip-diagonal-se {
+    background-position: -80px -224px; }
+
+
+/* Component containers
+----------------------------------*/
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif/*{ffDefault}*/;
+    font-size: 1.1em/*{fsDefault}*/; }
+.ui-widget-content {
+    border: 1px solid #aaaaaa/*{borderColorContent}*/;
+    background: #ffffff/*{bgColorContent}*/
+                url(../../resources/style/images/ui-bg_glass_75_ffffff_1x400.png)/*{bgImgUrlContent}*/
+                0/*{bgContentXPos}*/
+                0/*{bgContentYPos}*/
+                repeat-x/*{bgContentRepeat}*/;
+    color: #222222/*{fcContent}*/; }
+.ui-widget-content a {
+    color: #222222/*{fcContent}*/; }
+.ui-widget-header {
+    border: 1px solid #aaaaaa;
+    background: #cccccc url(../../resources/style/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 0/*{bgHeaderXPos}*/ 50%/*{bgHeaderYPos}*/ repeat-x/*{bgHeaderRepeat}*/;
+    color: #222222/*{fcHeader}*/;
+    font-weight: bold; }
+.ui-widget-header a {
+    color: #222222/*{fcHeader}*/; }
+
+
+/* Overlays */
+.ui-widget-overlay {
+    background: #aaaaaa/*{bgColorOverlay}*/ none/*{bgImgUrlOverlay}*/ 0/*{bgOverlayXPos}*/ 0/*{bgOverlayYPos}*/ repeat-x/*{bgOverlayRepeat}*/;
+    opacity: .4;
+    filter:Alpha(Opacity=40)/*{opacityOverlay}*/;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+.ui-corner-all {
+    -moz-border-radius: 4px/*{cornerRadius}*/;
+    -webkit-border-radius: 4px/*{cornerRadius}*/; }
+
+
+  /* Dialog
+----------------------------------*/
+
+.ui-dialog {
+    position: relative;
+    padding: .2em;
+    width: 300px;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    padding: .4em .4em .4em 1em;
+    position: relative;
+}
+
+.ui-dialog .ui-dialog-title {
+    margin: 0;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+    position: absolute;
+    right: 10px;
+    top: 16px;
+    width: 19px;
+    margin: -10px 0;
+    padding: 1px;
+    height: 18px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close span {
+    display: block;
+    margin: 1px;
+}
+
+.ui-dialog .ui-dialog-content {
+    border: 0;
+    padding: .5em 1em;
+    background: none;
+    overflow: auto;
+    zoom: 1;
+}
+.ui-dialog .ui-resizable-se {
+    width: 14px;
+    height: 14px;
+    right: 3px;
+    bottom: 3px;
+}
+.ui-draggable .ui-dialog-titlebar {
+    cursor: move;
+}
+  
+/* Resizable
+----------------------------------*/
+.ui-resizable { position: relative;}
+.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;}
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
+.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0px; }
+.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0px; }
+.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0px; height: 100%; }
+.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0px; height: 100%; }
+.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
+.ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
+.ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
+.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
+
+  

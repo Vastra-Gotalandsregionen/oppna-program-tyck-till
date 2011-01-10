@@ -1,0 +1,38 @@
+*Uppgifter inmatade av användaren*
+
+#if(${feedback.caseCategory})
+    *Kategori:*
+    ${feedback.caseCategory}
+    #if($feedback.caseSubCategories.size() > 0)
+    *Underkategori:*
+        #foreach($sub in $feedback.caseSubCategories)
+            $sub
+        #end
+    #end
+#end
+
+*Rubrik:*
+${feedback.caseTitle}
+
+*Förklara felet med egna ord:*
+$feedback.caseMessage
+
+
+#if(${feedback.userContact.shouldContactUser})
+    *Kontakta användaren via:*
+    *Namn:* ${feedback.userContact.userName}
+    *${feedback.userContact.contactOption.label}:* ${feedback.userContact.contactMethod}
+#end
+
+*Automatgenererade uppgifter:*
+    #if($feedback.platformData.userId)
+        *Användar id:* ${feedback.platformData.userId}
+    #else
+        *Användar id:* Inget användar id tillgängligt
+    #end
+    *IP:* ${feedback.platformData.ipAddress}
+    *Forwarded IP:* ${feedback.platformData.forwardedIpAddress}
+    *Webbläsare:* ${feedback.platformData.browser}
+    *OS:* ${feedback.platformData.operatingSystem}
+    *Referer:* ${feedback.platformData.referer}
+    *Timestamp:* $date.format('long', $feedback.platformData.timeStamp)

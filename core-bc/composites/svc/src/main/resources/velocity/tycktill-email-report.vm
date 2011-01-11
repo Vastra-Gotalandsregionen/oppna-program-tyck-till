@@ -46,6 +46,10 @@
     <tr>
         <td colspan="2"><b>Automatgenererade uppgifter</b></td>
     </tr>
+##    <tr>
+##        <td><b>Formul&auml;r</b></td>
+##        <td>${feedback.templateName}</td>
+##    </tr>
     <tr>
         <td><b>Anv&auml;ndar id</b></td>
         #if($feedback.platformData.userId)
@@ -74,6 +78,12 @@
         <td><b>Referer</b></td>
         <td>${feedback.platformData.referer}</td>
     </tr>
+    #if($feedback.breadcrumb)
+        <tr>
+            <td><b>Site info</b></td>
+            <td>${feedback.breadcrumb}</td>
+        </tr>
+    #end
     <tr>
         <td><b>Timestamp</b></td>
         <td>$date.format('long', $feedback.platformData.timeStamp)</td>

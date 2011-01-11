@@ -34,9 +34,12 @@
         function openDialog(url) {
             var form = $("#formTemplate");
             $("#modalDiv").dialog("open");
-            $("#modalDialog").load(url, form.serialize(), function() {
+            $("#modalDialog").load(url, function() {
                 showhideBackendInit();
             });
+//            $("#modalDialog").load(url, form.serialize(), function() {
+//                showhideBackendInit();
+//            });
             return false;
         }
     </script>
@@ -150,44 +153,47 @@
             <div class="prop">
                 <span class="value">
                     <form:checkbox path="showContent" label="Visa kategorin innehåll"/>
+                    &nbsp;
+                    <b>${contentCategory.name}</b>
                 </span>
-                <br/><br/>
 
-                <span class="name" style="text-align:right;">${contentCategory.name}</span>
-                <span class="value">
-                <c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">
-                    <span class="subCategory">-- ${subCategory.value}</span>
-                    <br/>
-                </c:forEach>
-                </span>
+                <%--<span class="name" style="text-align:right;">${contentCategory.name}</span>--%>
+                <%--<span class="value">--%>
+                <%--<c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">--%>
+                    <%--<span class="subCategory">-- ${subCategory.value}</span>--%>
+                    <%--<br/>--%>
+                <%--</c:forEach>--%>
+                <%--</span>--%>
             </div>
             <div class="prop">
                 <span class="value">
                     <form:checkbox path="showFunction" label="Visa kategorin funktioner"/>
+                    &nbsp;
+                    <b>${functionCategory.name}</b>
                 </span>
-                <br/><br/>
 
-                <span class="name" style="text-align:right;">${functionCategory.name}</span>
-                <span class="value">
-                <c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">
-                    <span class="subCategory">-- ${subCategory.value}</span>
-                    <br/>
-                </c:forEach>
-                </span>
+                <%--<span class="name" style="text-align:right;">${functionCategory.name}</span>--%>
+                <%--<span class="value">--%>
+                <%--<c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">--%>
+                    <%--<span class="subCategory">-- ${subCategory.value}</span>--%>
+                    <%--<br/>--%>
+                <%--</c:forEach>--%>
+                <%--</span>--%>
             </div>
             <div class="prop">
                 <span class="value">
                     <form:checkbox path="showOther" label="Visa kategorin övrigt"/>
+                    &nbsp;
+                    <b>${otherCategory.name}</b>
                 </span>
-                <br/><br/>
 
-                <span class="name" style="text-align:right;">${otherCategory.name}</span><br/>
-                <span class="value">
-                    <c:forEach items="${otherCategory.subCategories}" var="subCategory" varStatus="loop">
-                        <span class="subCategory">-- ${subCategory.value}</span>
-                        <br/>
-                    </c:forEach>
-                </span>
+                <%--<span class="name" style="text-align:right;">${otherCategory.name}</span><br/>--%>
+                <%--<span class="value">--%>
+                    <%--<c:forEach items="${otherCategory.subCategories}" var="subCategory" varStatus="loop">--%>
+                        <%--<span class="subCategory">-- ${subCategory.value}</span>--%>
+                        <%--<br/>--%>
+                    <%--</c:forEach>--%>
+                <%--</span>--%>
             </div>
             <div class="prop">
                 <span class="value">

@@ -25,6 +25,7 @@ $feedback.caseMessage
 #end
 
 *Automatgenererade uppgifter:*
+##    *Formulär:* ${feedback.templateName}
     #if($feedback.platformData.userId)
         *Användar id:* ${feedback.platformData.userId}
     #else
@@ -35,4 +36,7 @@ $feedback.caseMessage
     *Webbläsare:* ${feedback.platformData.browser}
     *OS:* ${feedback.platformData.operatingSystem}
     *Referer:* ${feedback.platformData.referer}
+    #if($feedback.breadcrumb)
+        *Site info:* ${feedback.breadcrumb}
+    #end
     *Timestamp:* $date.format('long', $feedback.platformData.timeStamp)

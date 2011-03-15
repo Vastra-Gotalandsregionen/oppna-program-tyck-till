@@ -1,16 +1,15 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>se.vgregion.tyck-till</groupId>
     <artifactId>tyck-till-core-bc</artifactId>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.2</version>
   </parent>
   <artifactId>tyck-till-core-bc-module-web</artifactId>
   <packaging>war</packaging>
   <name>${project.artifactId}</name>
-  <version>2.2-SNAPSHOT</version>
+  <version>2.2</version>
 
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -86,12 +85,12 @@
     <dependency>
       <groupId>se.vgregion.tyck-till</groupId>
       <artifactId>tyck-till-core-bc-composite-svc</artifactId>
-      <version>2.2-SNAPSHOT</version>
+      <version>2.2</version>
     </dependency>
     <dependency>
       <groupId>se.vgregion.tyck-till</groupId>
       <artifactId>tyck-till-core-bc-composite-types</artifactId>
-      <version>2.2-SNAPSHOT</version>
+      <version>2.2</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>

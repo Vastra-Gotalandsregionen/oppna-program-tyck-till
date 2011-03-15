@@ -19,17 +19,17 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>tyck-till-core-bc-composite-types</artifactId>
-      <version>2.2-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>se.vgregion.commons-util</groupId>
       <artifactId>commons-util-core-bc-composite-svc-pivotaltracker</artifactId>
-      <version>3.2</version>
+      <version>3.3</version>
     </dependency>
     <dependency>
       <groupId>se.vgregion.commons-util</groupId>
       <artifactId>commons-util-core-bc-composite-svc-usd</artifactId>
-      <version>3.2</version>
+      <version>3.3</version>
     </dependency>
     <dependency>
       <groupId>org.apache.velocity</groupId>
@@ -85,15 +85,15 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.powermock.modules</groupId>
-      <artifactId>powermock-module-junit4</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.powermock.api</groupId>
-      <artifactId>powermock-api-mockito</artifactId>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.powermock.modules</groupId>-->
+      <!--<artifactId>powermock-module-junit4</artifactId>-->
+      <!--<scope>test</scope>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+      <!--<groupId>org.powermock.api</groupId>-->
+      <!--<artifactId>powermock-api-mockito</artifactId>-->
+    <!--</dependency>-->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>

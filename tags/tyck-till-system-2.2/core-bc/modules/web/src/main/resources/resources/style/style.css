@@ -1,0 +1,236 @@
+/**
+ * Copyright 2010 Västra Götalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ *
+ */
+
+@CHARSET "UTF-8";
+
+html {
+	height: 100%;
+}
+
+body {
+    height: 100%;
+	font: 90% Arial, Verdana, Helvetica, sans-serif;
+	background:#fff;
+	padding: 0;
+	margin: 0;
+	margin-left: 0.5em
+}
+
+#custom-doc {
+	margin:auto;text-align:left; /* leave unchanged */
+	width:60em;/* non-IE */
+	width:58.50em;/* IE */
+	min-width:600px;/* optional but recommended */
+}
+
+
+
+h2{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:1.2em;
+	font-weight:bold; 
+	color:#2a6344;
+	margin-bottom:0.3em;
+	margin-top:0.2em;
+}
+
+
+h3{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 1.1em;
+	font-weight:bold;
+	color:#2a6344; 
+}
+
+#defaultErrorMessageDiv {
+	width: 54em;
+	border: 0.1em solid gray;
+	padding: 0.2em;
+	font-family:Arial,Helvetica,Geneva,sans-serif;
+	color:gray;
+}
+
+.title {
+    -x-system-font:none;
+    color:#222222;
+    font-family:Verdana,Arial,Helvetica,sans-serif;
+    font-size:1.6em;
+    font-size-adjust:none;
+    font-stretch:normal;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:bold;
+    line-height:1.4em;
+    margin-bottom:20px;
+    margin-top:0;
+    width: 300px;
+}
+
+.leadtext {
+	-x-system-font:none;
+	color:#222222;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:1.1em;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:1.3em;
+	margin-bottom:20px;
+	margin-top:0;
+    width: 300px;
+}
+
+input.btn {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 1.2em;
+}
+
+
+div.addrow {
+	padding-top: 0.8em;
+	padding-bottom: 1.2em;
+}
+
+div.header {
+	margin-bottom:0.4em;
+}
+
+div {
+    clear: both;
+}
+
+div.subselect {
+    padding-left: 2.0em;
+}
+
+.checkbox {
+    vertical-align: middle;
+}
+
+.msglabel {
+    vertical-align: top;
+}
+
+.name {
+	font-weight: bold;
+	width: 150px;
+	padding: 5px;
+	margin-top: 3px;
+    float: left;
+    clear: both;
+}
+
+.value {
+	float: left;
+	padding: 5px;
+}
+
+.contactMethods {
+    padding-left: 30px;
+}
+
+.contactMethod {
+    padding-left: 40px;
+}
+
+.subCategory {
+    width: 170px;
+	float: left;
+}
+
+.error {
+	padding: 0px;
+    margin-top: 0px;
+    color: red;
+}
+
+.errors {
+	color: #FF0000;
+	vertical-align: middle;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.action {
+    padding-left: 10px;
+}
+
+.defaultBackend {
+    min-width: 100px;
+}
+
+.backendUsd {
+    background-image: url(../../resources/style/images/usd.png);
+    background-position: 0 50%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}
+
+.backendPivotal {
+    background-image: url(../../resources/style/images/pivotal.png);
+    background-position: 0 50%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}
+
+.backendMbox {
+    background-image: url(../../resources/style/images/mbox.png);
+    background-position: 0 50%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}
+
+.backendInput {
+    margin-left: 20px;
+}
+
+.backend {
+    margin-left: 20px;
+}
+
+.checked {
+    background-image: url(../../resources/style/images/checked.png);
+    background-position: 50% 35%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}
+
+.unchecked {
+    background-image: url(../../resources/style/images/checkbox.png);
+    background-position: 50% 35%;
+    background-origin: content;
+    background-repeat: no-repeat;
+}
+
+.subCategory {
+    white-space: nowrap;
+}
+
+.defaultRubrik { width: 450px; }
+.defaultRubrikActive { color: #a1a1a1; font-style: italic; }
+.defaultMessage { width: 450px; }
+.defaultMessageActive { color: #a1a1a1; font-style: italic; }

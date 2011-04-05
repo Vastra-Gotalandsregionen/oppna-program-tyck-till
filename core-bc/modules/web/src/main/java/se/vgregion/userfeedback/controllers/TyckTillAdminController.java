@@ -21,11 +21,7 @@ import se.vgregion.userfeedback.domain.StaticCategory;
 import se.vgregion.userfeedback.domain.StaticCategoryRepository;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Controller for FormTemplate administration.
@@ -34,7 +30,7 @@ import java.util.List;
  */
 
 @Controller
-@SessionAttributes({ "formTemplate", "customCategory" })
+@SessionAttributes({"formTemplate", "customCategory"})
 public class TyckTillAdminController {
 
     @Autowired
@@ -52,7 +48,16 @@ public class TyckTillAdminController {
     @RequestMapping(method = RequestMethod.GET, value = "/TemplateList")
     public String listView(ModelMap model) {
 
-        Collection<FormTemplate> templates = formTemplateRepository.findAll();
+        List<FormTemplate> templates = (List<FormTemplate>) formTemplateRepository.findAll();
+        Collections.sort(templates, new Comparator<FormTemplate>() {
+            @Override
+            public int compare(FormTemplate formTemplate, FormTemplate otherFormTemplate) {
+                if ("default".equals(formTemplate.getName())) return -1;
+                if ("default".equals(otherFormTemplate.getName())) return 1;
+
+                return formTemplate.getName().compareTo(otherFormTemplate.getName());
+            }
+        });
         model.addAttribute("templateList", templates);
 
         return "TemplateList";
@@ -68,7 +73,7 @@ public class TyckTillAdminController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/TemplateAdd")
     public String addTemplates(@RequestParam(value = "templateId", required = false) Long templateId,
-            ModelMap model) {
+                               ModelMap model) {
         FormTemplate template = new FormTemplate();
         model.addAttribute("formTemplate", template);
 
@@ -110,7 +115,7 @@ public class TyckTillAdminController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/TemplateEdit")
     public String editTemplates(@RequestParam(value = "templateId", required = false) Long templateId,
-            ModelMap model) {
+                                ModelMap model) {
         FormTemplate template;
         if (templateId == null) {
             template = (FormTemplate) model.get("formTemplate");
@@ -164,7 +169,7 @@ public class TyckTillAdminController {
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public String addTemplate(@Valid @ModelAttribute("formTemplate") FormTemplate formTemplate,
-            BindingResult result, SessionStatus status, ModelMap model) {
+                              BindingResult result, SessionStatus status, ModelMap model) {
         if (result.hasErrors()) {
             return "TemplateEdit";
         }
@@ -194,7 +199,7 @@ public class TyckTillAdminController {
     /**
      * Edit CustomCategory without persist.
      * FormTemplate has to be handled to allow preserving data not stored yet.
-     * 
+     *
      * @param formTemplate - main backing bean.
      * @return - view with edit form.
      */
@@ -219,7 +224,7 @@ public class TyckTillAdminController {
 
     /**
      * Redirect back to TemplateEdit to continue working with the formTemplate.
-     * 
+     *
      * @param formTemplate - the main backing bean.
      * @return - view for FormTemplate edit.
      */

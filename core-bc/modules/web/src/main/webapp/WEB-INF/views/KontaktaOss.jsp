@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html id="all_html">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <%--<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>--%>
@@ -45,13 +45,15 @@
         @import "resources/style/style.css";
     </style>
 </head>
-<body>
+<body id="all_body">
 
 
 <div id="userfeedback_form">
-    <span class="title">${template.title}</span>
+    <div class="title">${template.title}</div>
 
     <div class="leadtext">${template.description}</div>
+
+    <hr class="hr_line"/>
 
     <form:form commandName="userFeedback" enctype="multipart/form-data">
         <input type="hidden" id="formTemplateId" name="formTemplateId" value="${template.id}"/>
@@ -118,7 +120,7 @@
             </div>
         </div>
 
-        <div class="msglabel"><br/></div>
+        <hr class="hr_line"/>
 
         <div class="message">
             <div>
@@ -175,11 +177,9 @@
             </div>
         </div>
 
-        <div><br/></div>
-
         <div class="${template.showAttachment ? 'show' : 'hide'}">
             <div>
-                <span>Bifoga en skärmdump, så vi kan se det du ser</span><br/>
+                <span>Du kan välja att bifoga en skärmdump, så vi kan se det du ser</span><br/>
 
                 <form:checkbox id="attachScreenDump" path="attachScreenDump" label="Jag vill bifoga en skärmdump"/>
                 <div id="attachmentDetail">
@@ -197,7 +197,7 @@
             </div>
         </div>
 
-        <hr/>
+        <hr class="hr_line"/>
 
         <div style="text-align: center;"><input value="Skicka" type="submit"></div>
     </form:form>

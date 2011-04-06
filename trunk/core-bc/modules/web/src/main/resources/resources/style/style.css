@@ -19,13 +19,13 @@
 
 @CHARSET "UTF-8";
 
-html {
-	height: 100%;
+#all_html {
+	height: 98%;
 }
 
-body {
-    height: 100%;
-	font: 90% Arial, Verdana, Helvetica, sans-serif;
+#all_body {
+    height: 98%;
+	font: 83% Verdana, Arial, Helvetica, sans-serif;
 	background:#fff;
 	padding: 0;
 	margin: 0;
@@ -40,7 +40,7 @@ body {
 }
 
 
-
+/*
 h2{
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:1.2em;
@@ -57,6 +57,7 @@ h3{
 	font-weight:bold;
 	color:#2a6344; 
 }
+*/
 
 #defaultErrorMessageDiv {
 	width: 54em;
@@ -75,27 +76,31 @@ h3{
     font-stretch:normal;
     font-style:normal;
     font-variant:normal;
-    font-weight:bold;
+    font-weight:normal;
     line-height:1.4em;
-    margin-bottom:20px;
-    margin-top:0;
-    width: 300px;
+    margin-bottom:8px;
+    margin-top:5px;
+    width: 430px;
 }
 
 .leadtext {
 	-x-system-font:none;
 	color:#222222;
 	font-family:Verdana,Arial,Helvetica,sans-serif;
-	font-size:1.1em;
+	font-size:1.0em;
 	font-size-adjust:none;
 	font-stretch:normal;
 	font-style:normal;
 	font-variant:normal;
 	font-weight:normal;
-	line-height:1.3em;
-	margin-bottom:20px;
-	margin-top:0;
-    width: 300px;
+	line-height:1.4em;
+	margin-bottom:15px;
+	margin-top:6px;
+    width: 430px;
+}
+
+.message {
+    margin-top: 10px;
 }
 
 input.btn {
@@ -169,6 +174,12 @@ div.subselect {
 
 .show {
     display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.hr_line {
+    color: #EEEEEE;
 }
 
 .hide {
@@ -232,5 +243,5 @@ div.subselect {
 
 .defaultRubrik { width: 450px; }
 .defaultRubrikActive { color: #a1a1a1; font-style: italic; }
-.defaultMessage { width: 450px; }
+.defaultMessage { width: 454px; }
 .defaultMessageActive { color: #a1a1a1; font-style: italic; }

@@ -97,6 +97,7 @@ public class TyckTillController {
     @RequestMapping(method = RequestMethod.GET)
     public String setupForm(@RequestParam(value = "formName", required = false) String formName,
                             @RequestParam(value = "breadcrumb", required = false) String breadcrumb,
+                            @RequestParam(value = "userId", required = false) String userId,
                             HttpServletRequest request, ModelMap model) {
 
         FormTemplate template = lookupFormTemplate(formName);
@@ -124,7 +125,7 @@ public class TyckTillController {
             }
 
             userFeedback.setBreadcrumb(breadcrumb);
-            userFeedback.setPlatformData(platformDataService.mapUserPlatform(request));
+            userFeedback.setPlatformData(platformDataService.mapUserPlatform(request, userId));
 
             UserContact contact = new UserContact();
             if (template.getShowContactByEmail()) {

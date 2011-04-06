@@ -1,5 +1,6 @@
 package se.vgregion.userfeedback.impl;
 
+import org.apache.commons.lang.StringUtils;
 import se.vgregion.userfeedback.PlatformDataService;
 import se.vgregion.userfeedback.domain.PlatformData;
 import se.vgregion.util.UserAgentUtils;
@@ -7,6 +8,7 @@ import se.vgregion.util.UserAgentUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * Implementation of the PlatformDataService.
@@ -24,7 +26,7 @@ public class PlatformDataServiceImpl implements PlatformDataService {
      * @return a PlatformData object.
      */
     @Override
-    public PlatformData mapUserPlatform(HttpServletRequest request) {
+    public PlatformData mapUserPlatform(HttpServletRequest request, String userId) {
         PlatformData platform = new PlatformData();
         String userAgent = request.getHeader(USER_AGENT_HEADER);
         String referer = request.getHeader(REFERER_HEADER);
@@ -39,7 +41,13 @@ public class PlatformDataServiceImpl implements PlatformDataService {
         platform.setReferer(referer);
         platform.setIpAddress(request.getRemoteAddr());
         platform.setForwardedIpAddress(forwardedIpAddress);
-        platform.setUserId(request.getRemoteUser());
+
+        String remoteUser = request.getRemoteUser();
+        if (StringUtils.isBlank(remoteUser)) {
+            platform.setUserId(userId);
+        } else {
+            platform.setUserId(request.getRemoteUser());
+        }
 
         return platform;
     }

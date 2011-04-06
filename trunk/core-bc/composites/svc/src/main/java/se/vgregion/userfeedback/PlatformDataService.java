@@ -13,5 +13,5 @@ public interface PlatformDataService {
      *            Http request.
      * @return .
      */
-    PlatformData mapUserPlatform(HttpServletRequest request);
+    PlatformData mapUserPlatform(HttpServletRequest request, String userId);
 }

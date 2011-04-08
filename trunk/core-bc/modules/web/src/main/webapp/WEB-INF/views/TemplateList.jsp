@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>TyckTill - Administration</title>
 
     <script type="text/javascript" src="resources/js/jquery-1.4.2.min.js"></script>
@@ -13,29 +13,50 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function() {
+
             jQuery("#modalDiv").dialog({
-                modal: true,
-                autoOpen: false,
-                height: 600,
-                width: 610,
-                draggable: true,
-                resizeable: true,
-                show: 'slide',
-                hide: {effect: 'fade', duration: 1500},
-                title: ''
-            });
+                                           modal: true,
+                                           autoOpen: false,
+                                           height: 600,
+                                           width: 610,
+                                           draggable: true,
+                                           resizeable: true,
+                                           show: 'slide',
+                                           hide: {effect: 'fade', duration: 1500},
+                                           title: ''
+                                       });
         });
 
         function openDialog(url, args, title) {
             jQuery("#modalDiv").dialog({
-                title: title,
-                height: 600,
-                width: 610});
+                                           title: title,
+                                           height: 650,
+                                           width: 610});
             jQuery("#modalDiv").dialog("open");
             jQuery("#modalDialog").load(url, args, function() {
-                showInDialogInit();
+                //showInDialogInit();
                 initForm();
             });
+            return false;
+        }
+        function openIFrameDialog(url, args, title) {
+            jQuery("#modalDiv").dialog({
+                                           modal: true,
+                                           autoOpen: false,
+                                           height: 600,
+                                           width: 600,
+                                           draggable: true,
+                                           resizeable: true,
+                                           show: 'slide',
+                                           hide: {effect: 'fade', duration: 1500},
+                                           title: ''
+                                       });
+            jQuery("#modalDiv").dialog("open");
+            jQuery("#iFrameDialog").attr('src', url + '?' + args);
+//            jQuery("#iFrameDialog").load(url, args, function() {
+//                //showInDialogInit();
+//                initForm();
+//            });
             return false;
         }
     </script>
@@ -49,6 +70,9 @@
 <body>
 
 <div id="modalDiv">
+    <iframe id="iFrameDialog" height="100%" width="100%" marginheight="500px" marginwidth="500px" frameborder="0"
+            scrolling="auto" src="">
+    </iframe>
     <div id="modalDialog">
     </div>
 </div>
@@ -83,9 +107,11 @@
                 <td align="center" class="${formTemplate.showOther ? 'checked': 'unchecked'}">&nbsp;</td>
                 <td align="center" class="${formTemplate.showContact ? 'checked' : 'unchecked'}">&nbsp;</td>
                 <td align="center" class="${formTemplate.showAttachment ? 'checked' : 'unchecked'}">&nbsp;</td>
-                <th><a href="TemplateEdit?templateId=${formTemplate.id}">Ändra</a></th>
-                <th><a href="#"
-                       onclick="openDialog('KontaktaOss', 'formName=${formTemplate.name}', '${formTemplate.title}');">Pröva</a>
+                <th>
+                    <a href="TemplateEdit?templateId=${formTemplate.id}">Ändra</a>
+                </th>
+                <th>
+                    <a class="iframe-dialog-link" href="#" onclick="openIFrameDialog('KontaktaOss', 'formName=${formTemplate.name}', '');">Pröva</a>
                 </th>
             </tr>
         </c:forEach>

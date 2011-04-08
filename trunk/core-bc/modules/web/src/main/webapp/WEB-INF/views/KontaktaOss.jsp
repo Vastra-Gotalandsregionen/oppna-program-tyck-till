@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html id="all_html">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <%--<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>--%>
 
     <title>TyckTill</title>
@@ -49,31 +49,32 @@
 
 
 <div id="userfeedback_form">
-    <div class="title">${template.title}</div>
+    <div class="form-head">
+        <h1 class="title">${template.title}</h1>
 
-    <div class="leadtext">${template.description}</div>
+        <div class="leadtext">${template.description}</div>
+    </div>
 
-    <hr class="hr_line"/>
 
     <form:form commandName="userFeedback" enctype="multipart/form-data">
         <input type="hidden" id="formTemplateId" name="formTemplateId" value="${template.id}"/>
         <form:hidden path="breadcrumb"/>
 
         <div class="subject">
-            <span>Vad handlar ditt ärende om?</span><br/>
+            <div class="leadtext">Vad handlar ditt ärende om?</div>
 
             <div id="customCategory" class="${template.showCustom ? 'show' : 'hide'}">
                 <form:radiobutton id="customCase"
                                   path="caseCategoryId"
                                   value="${template.customCategory.id}"
-                                  label="${template.customCategory.name}"/><br/>
+                                  label="${template.customCategory.name}"/>
 
                 <div id="customSubCase" class="subselect">
                     <form:radiobuttons path="caseSubCategoryIds"
                                        items="${template.customCategory.customSubCategories}"
                                        itemValue="id"
                                        itemLabel="name"
-                                       delimiter="<br/>"/>
+                                       delimiter=""/>
                 </div>
             </div>
 
@@ -83,26 +84,26 @@
                 <form:radiobutton id="contentCase"
                                   path="caseCategoryId"
                                   value="${contentCategory.id}"
-                                  label="${contentCategory.name}"/><br/>
+                                  label="${contentCategory.name}"/>
 
                 <div id="contentSubCase" class="subselect">
                     <form:checkboxes cssClass="checkbox"
                                      path="caseSubCategoryIds"
                                      items="${contentCategory.subCategories}"
-                                     delimiter="<br/>"/>
+                                     delimiter=""/>
                 </div>
             </div>
             <div id="webpageFunctionCategory" class="${template.showFunction ? 'show' : 'hide'}">
                 <form:radiobutton id="functionCase"
                                   path="caseCategoryId"
                                   value="${functionCategory.id}"
-                                  label="${functionCategory.name}"/><br/>
+                                  label="${functionCategory.name}"/>
 
                 <div id="functionSubCase" class="subselect">
                     <form:checkboxes cssClass="checkbox"
                                      path="caseSubCategoryIds"
                                      items="${functionCategory.subCategories}"
-                                     delimiter="<br/>"/>
+                                     delimiter=""/>
                 </div>
             </div>
             <div id="otherCategory" class="${template.showOther ? 'show' : 'hide'}">
@@ -115,91 +116,96 @@
                     <form:checkboxes cssClass="checkbox"
                                      path="caseSubCategoryIds"
                                      items="${otherCategory.subCategories}"
-                                     delimiter="<br/>"/>
+                                     delimiter=""/>
                 </div>
             </div>
         </div>
 
-        <hr class="hr_line"/>
-
-        <div class="message">
-            <div>
-                <span class="msglabel">Rubrik:</span><br class="msglabel"/>
-                <form:input path="caseTitle" title="Rubrik" cssClass="defaultRubrik" size="60"/>
-                <span class="error"><form:errors path="caseTitle" htmlEscape="false" cssClass="errorBox"/></span>
+        <div class="message-wrap">
+            <div class="message">
+                <div>
+                    <span class="msglabel">Rubrik:</span><br class="msglabel"/>
+                    <form:input path="caseTitle" title="Rubrik" cssClass="defaultRubrik" size="60"/>
+                    <span class="error"><form:errors path="caseTitle" htmlEscape="false" cssClass="errorBox"/></span>
+                </div>
             </div>
-        </div>
 
-        <div class="message">
-            <div>
-                <span class="msglabel">Beskriv ditt &auml;rende och ge g&auml;rna exempel:</span><br class="msglabel"/>
-                <form:textarea path="caseMessage" title="Beskriv ditt ärende och ge gärna exempel" cssClass="defaultMessage" cols="60" rows="7"/>
-                <span class="error"><form:errors path="caseMessage" htmlEscape="false" cssClass="errorBox"/></span>
+            <div class="message">
+                <div>
+                    <span class="msglabel">Beskriv ditt &auml;rende och ge g&auml;rna exempel:</span><br
+                        class="msglabel"/>
+                    <form:textarea path="caseMessage" title="Beskriv ditt ärende och ge gärna exempel"
+                                   cssClass="defaultMessage" cols="60" rows="7"/>
+                    <span class="error"><form:errors path="caseMessage" htmlEscape="false" cssClass="errorBox"/></span>
+                </div>
             </div>
-        </div>
 
-        <div><br/></div>
+            <div><br/></div>
 
-        <div class="${template.showContact ? 'show' : 'hide'}">
-            <div>
-                <span></span>
-                <form:checkbox id="shouldContactUser" path="userContact.shouldContactUser"
-                               label="Jag vill ha svar"/><br/>
+            <div class="${template.showContact ? 'show' : 'hide'}">
+                <div>
+                    <form:checkbox id="shouldContactUser" path="userContact.shouldContactUser"
+                                   label="Jag vill ha svar"/>
 
-                <div id="contactInfo" class="subselect">
-                    <div class="${(template.showContactByEmail && template.showContactByPhone) ? 'show' : 'hide'}">
-                        <form:radiobuttons id="contactOption"
-                                           path="userContact.contactOption"
-                                           items="${contactOptions}"
-                                           cssClass="contactOptionClass"/> *
-                    </div>
-
-                    <div>
-                        <div>
-                            <span>Ditt namn</span>
-                            <form:input path="userContact.userName"/> *
-                            <span class="error"><form:errors path="userContact.userName" htmlEscape="false"
-                                                             cssClass="errorBox"/></span>
+                    <div id="contactInfo" class="subselect contact-info">
+                        <div class="${(template.showContactByEmail && template.showContactByPhone) ? 'show' : 'hide'}">
+                            <form:radiobuttons id="contactOption"
+                                               path="userContact.contactOption"
+                                               items="${contactOptions}"
+                                               cssClass="contactOptionClass"/> *
                         </div>
 
                         <div>
-                            <span style="float: left; padding-top: 3px;"
-                                  class="${(template.showContactByEmail && !template.showContactByPhone) ? 'show' : 'contact-mail'}">Din e-postadress</span>
-                            <span style="float: left; padding-top: 3px;"
-                                  class="${(!template.showContactByEmail && template.showContactByPhone) ? 'show' : 'contact-phone'}">Ditt telefonnummer</span>
-                            <form:input path="userContact.contactMethod"/> *
+                            <div class="form-item-wrap clearfix">
+                                <label class="inline">Ditt namn</label>
+                                <form:input path="userContact.userName"/> *
+                                <span class="error">
+                                    <form:errors path="userContact.userName"
+                                                 htmlEscape="false"
+                                                 cssClass="errorBox"/>
+                                </span>
+                            </div>
+
+                            <div class="form-item-wrap clearfix">
+                                <label for="userContact.contactMethod"
+                                       class="inline ${(template.showContactByEmail && !template.showContactByPhone) ? 'show' : 'contact-mail'}">Din
+                                    e-postadress</label>
+                                <label for="userContact.contactMethod"
+                                       class="inline ${(!template.showContactByEmail && template.showContactByPhone) ? 'show' : 'contact-phone'}">Ditt
+                                    telefonnummer</label>
+                                <form:input path="userContact.contactMethod"/> *
                             <span class="error">
                                 <form:errors path="userContact.contactMethod" htmlEscape="false" cssClass="errorBox"/>
                             </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="${template.showAttachment ? 'show' : 'hide'}">
-            <div>
-                <span>Du kan välja att bifoga en skärmdump, så vi kan se det du ser</span><br/>
+            <div class="${template.showAttachment ? 'show' : 'hide'}">
+                <div class="form-item-wrap">
+                    <div class="instruction">Du kan välja att bifoga en skärmdump, så vi kan se det du ser</div>
 
-                <form:checkbox id="attachScreenDump" path="attachScreenDump" label="Jag vill bifoga en skärmdump"/>
-                <div id="attachmentDetail">
-                    <ol>
-                        <li>Aktivera sidan du vill bifoga bild på.</li>
-                        <li>Tryck på PrtSc i övre högra hörnet på tangentborder.</li>
-                        <li>Starta Microsoft Word och öppna Nytt dokument.</li>
-                        <li>Klistra int skärmdumpen i worddokumentet (högerklicka och välj "Klistra in")</li>
-                        <li>Spara dokumentet på datorn.</li>
-                        <li>Bifoga dokumentet.</li>
-                    </ol>
-                    <input type="file" name="file1" value="Ladda upp fil"/><br/>
-                    <span class="${fileUploadError != null ? 'error' : ''}">${fileUploadError != null ? fileUploadError : ''}</span>
+                    <form:checkbox id="attachScreenDump" path="attachScreenDump" label="Jag vill bifoga en skärmdump"/>
+                    <div id="attachmentDetail">
+                        <ol>
+                            <li>Aktivera sidan du vill bifoga bild på.</li>
+                            <li>Tryck på PrtSc i övre högra hörnet på tangentborder.</li>
+                            <li>Starta Microsoft Word och öppna Nytt dokument.</li>
+                            <li>Klistra int skärmdumpen i worddokumentet (högerklicka och välj "Klistra in")</li>
+                            <li>Spara dokumentet på datorn.</li>
+                            <li>Bifoga dokumentet.</li>
+                        </ol>
+                        <input type="file" name="file1" value="Ladda upp fil"/>
+                        <span class="${fileUploadError != null ? 'error' : ''}">${fileUploadError != null ? fileUploadError : ''}</span>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-        <hr class="hr_line"/>
-
-        <div style="text-align: center;"><input value="Skicka" type="submit"></div>
+        <div class="btn-wrap"><input value="Skicka" type="submit"></div>
     </form:form>
 </div>
 

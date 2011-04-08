@@ -95,7 +95,8 @@ span#ui-dialog-title-modalDiv {
 
 .ui-dialog {
     position: relative;
-    padding: .2em;
+    padding-top: 20px;
+    padding-right: 2px;
     width: 300px;
 }
 
@@ -112,8 +113,8 @@ span#ui-dialog-title-modalDiv {
 }
 .ui-dialog .ui-dialog-titlebar-close {
     position: absolute;
-    right: 4px;
-    top: 14px;
+    right: -2px;
+    top: -10px;
     width: 19px;
     margin: -10px 0;
     padding: 1px;
@@ -127,7 +128,7 @@ span#ui-dialog-title-modalDiv {
 
 .ui-dialog .ui-dialog-content {
     border: 0;
-    padding: .5em 1em;
+    padding: 0;
     background: none;
     overflow: auto;
     zoom: 1;

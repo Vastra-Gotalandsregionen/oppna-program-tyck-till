@@ -14,7 +14,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <title>Custom category</title>
+    <title>Egen kategori</title>
 
     <script type="text/javascript" src="resources/js/layout-effects.js"></script>
 
@@ -34,7 +34,7 @@
 
 <h3>Konfigurera en egen kategori</h3>
 
-<form:form commandName="formTemplate" action="CustomCategoryUpdate">
+<form:form commandName="formTemplate" action="CustomCategoryUpdate" accept-charset="UTF-8">
     <form:hidden path="id"/>
     <table cellpadding="6" rules="groups" frame="box">
         <thead>

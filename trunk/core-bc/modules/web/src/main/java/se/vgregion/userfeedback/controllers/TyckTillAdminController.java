@@ -30,7 +30,7 @@ import java.util.*;
  */
 
 @Controller
-@SessionAttributes({"formTemplate", "customCategory"})
+@SessionAttributes({"formTemplate", "customCategory", "userId"})
 public class TyckTillAdminController {
 
     @Autowired
@@ -46,7 +46,8 @@ public class TyckTillAdminController {
      * @return a list of all Form templates.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/TemplateList")
-    public String listView(ModelMap model) {
+    public String listView(ModelMap model,
+                           @RequestParam(value = "userId", required = false) String userId) {
 
         List<FormTemplate> templates = (List<FormTemplate>) formTemplateRepository.findAll();
         Collections.sort(templates, new Comparator<FormTemplate>() {

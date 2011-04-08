@@ -21,25 +21,25 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#modalDiv").dialog({
-                modal: true,
-                autoOpen: false,
-                height: 500,
-                width: 810,
-                draggable: true,
-                resizeable: true,
-                title: 'Tyck till'
-            });
+                                      modal: true,
+                                      autoOpen: false,
+                                      height: 500,
+                                      width: 810,
+                                      draggable: true,
+                                      resizeable: true,
+                                      title: 'Tyck till'
+                                  });
         });
 
         function openDialog(url) {
             var form = $("#formTemplate");
             $("#modalDiv").dialog("open");
-            $("#modalDialog").load(url, function() {
-                showhideBackendInit();
-            });
-//            $("#modalDialog").load(url, form.serialize(), function() {
+//            $("#modalDialog").load(url, function() {
 //                showhideBackendInit();
 //            });
+            $("#modalDialog").load(url, form.serialize(), function() {
+                showhideBackendInit();
+            });
             return false;
         }
     </script>
@@ -60,34 +60,34 @@
     </div>
 </div>
 
-<form:form commandName="formTemplate">
+<form:form commandName="formTemplate" enctype="UTF-8">
     <form:hidden path="id"/>
-    <div class="prop">
+    <div class="prop clearfix">
         <span class="name">Formulärets namn</span>
         <span class="value"><form:input path="name" size="50"/></span>
         <span class="error"><form:errors path="name" htmlEscape="false" cssClass="errors"/></span>
     </div>
 
-    <div class="prop">
+    <div class="prop clearfix">
         <span class="name">Titel</span>
         <span class="value"><form:input path="title" size="50"/></span>
         <span class="error"><form:errors path="title" htmlEscape="false" cssClass="errorBox"/></span>
     </div>
 
-    <div class="prop">
+    <div class="prop clearfix">
         <span class="name">Inledning</span>
-        <span class="value"><form:textarea htmlEscape="false" path="description" cols="50" rows="10"/></span>
+        <span class="value"><form:textarea htmlEscape="false" path="description" cols="60" rows="10"/></span>
         <span class="error"><form:errors path="description" htmlEscape="false"/></span>
     </div>
 
-    <div>
+    <div class="clearfix">
         <span class="name">Konfigurera vilka delar av formuläret som skall visas</span>
 
         <span class="value">
             <div class="prop">
                 <span class="value">
                     <form:checkbox path="showCustom" label="Visa en egen kategori"/>
-                    <input type="button" value="Ändra" onclick="openDialog('CustomCategoryEdit')"/>
+                    <input type="button" value="Ändra" onclick="openDialog('CustomCategoryEdit');"/>
                 </span>
                 <br/><br/>
 
@@ -99,103 +99,104 @@
                             <td>
                                 <div class="backendUsd">
                                     <span class="backend">
-                                    ${(formTemplate.customCategory.backend.activeBackend && formTemplate.customCategory.backend.activeUsd) ? formTemplate.customCategory.backend.usd : ''}
+                                            ${(formTemplate.customCategory.backend.activeBackend && formTemplate.customCategory.backend.activeUsd) ? formTemplate.customCategory.backend.usd : ''}
                                     </span>
                                 </div>
                             </td>
                             <td>
                                 <div class="backendPivotal">
                                     <span class="backend">
-                                    ${(formTemplate.customCategory.backend.activeBackend && formTemplate.customCategory.backend.activePivotal) ? formTemplate.customCategory.backend.pivotal : ''}
+                                            ${(formTemplate.customCategory.backend.activeBackend && formTemplate.customCategory.backend.activePivotal) ? formTemplate.customCategory.backend.pivotal : ''}
                                     </span>
                                 </div>
                             </td>
                             <td>
                                 <div class="backendMbox">
                                     <span class="backend">
-                                    ${(formTemplate.customCategory.backend.activeBackend && formTemplate.customCategory.backend.activeMbox) ? formTemplate.customCategory.backend.mbox : ''}
+                                            ${(formTemplate.customCategory.backend.activeBackend && formTemplate.customCategory.backend.activeMbox) ? formTemplate.customCategory.backend.mbox : ''}
                                     </span>
                                 </div>
                             </td>
                         </tr>
                         <c:forEach items="${formTemplate.customCategory.customSubCategories}" var="subCategory"
                                    varStatus="loop">
-                            <tr>
-                                <td>
-                                    <div class="subCategory">-- ${subCategory.name}</span>
-                                </td>
-                                <td>
-                                    <div class="subCategory backendUsd">
-                                        <div class="backend">
-                                            ${(subCategory.backend.activeBackend && subCategory.backend.activeUsd) ? subCategory.backend.usd : ''}
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="subCategory backendPivotal">
-                                        <div class="backend">
-                                            ${(subCategory.backend.activeBackend && subCategory.backend.activePivotal) ? subCategory.backend.pivotal : ''}
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="subCategory backendMbox">
-                                        <div class="backend">
-                                            ${(subCategory.backend.activeBackend && subCategory.backend.activeMbox) ? subCategory.backend.mbox : ''}
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </table>
+                        <tr>
+                            <td>
+                                <div class="subCategory">--
+                        ${subCategory.name}</span>
+                </td>
+                <td>
+                    <div class="subCategory backendUsd">
+                        <div class="backend">
+                                ${(subCategory.backend.activeBackend && subCategory.backend.activeUsd) ? subCategory.backend.usd : ''}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="subCategory backendPivotal">
+                        <div class="backend">
+                                ${(subCategory.backend.activeBackend && subCategory.backend.activePivotal) ? subCategory.backend.pivotal : ''}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="subCategory backendMbox">
+                        <div class="backend">
+                                ${(subCategory.backend.activeBackend && subCategory.backend.activeMbox) ? subCategory.backend.mbox : ''}
+                        </div>
+                    </div>
+                </td>
+                </tr>
+                </c:forEach>
+                </table>
                 </span>
-            </div>
-            <div class="prop">
+    </div>
+    <div class="prop clearfix">
                 <span class="value">
                     <form:checkbox path="showContent" label="Visa kategorin innehåll"/>
                     &nbsp;
                     <b>${contentCategory.name}</b>
                 </span>
 
-                <%--<span class="name" style="text-align:right;">${contentCategory.name}</span>--%>
-                <%--<span class="value">--%>
-                <%--<c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">--%>
-                    <%--<span class="subCategory">-- ${subCategory.value}</span>--%>
-                    <%--<br/>--%>
-                <%--</c:forEach>--%>
-                <%--</span>--%>
-            </div>
-            <div class="prop">
+            <%--<span class="name" style="text-align:right;">${contentCategory.name}</span>--%>
+            <%--<span class="value">--%>
+            <%--<c:forEach items="${contentCategory.subCategories}" var="subCategory" varStatus="loop">--%>
+            <%--<span class="subCategory">-- ${subCategory.value}</span>--%>
+            <%--<br/>--%>
+            <%--</c:forEach>--%>
+            <%--</span>--%>
+    </div>
+    <div class="prop clearfix">
                 <span class="value">
                     <form:checkbox path="showFunction" label="Visa kategorin funktioner"/>
                     &nbsp;
                     <b>${functionCategory.name}</b>
                 </span>
 
-                <%--<span class="name" style="text-align:right;">${functionCategory.name}</span>--%>
-                <%--<span class="value">--%>
-                <%--<c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">--%>
-                    <%--<span class="subCategory">-- ${subCategory.value}</span>--%>
-                    <%--<br/>--%>
-                <%--</c:forEach>--%>
-                <%--</span>--%>
-            </div>
-            <div class="prop">
+            <%--<span class="name" style="text-align:right;">${functionCategory.name}</span>--%>
+            <%--<span class="value">--%>
+            <%--<c:forEach items="${functionCategory.subCategories}" var="subCategory" varStatus="loop">--%>
+            <%--<span class="subCategory">-- ${subCategory.value}</span>--%>
+            <%--<br/>--%>
+            <%--</c:forEach>--%>
+            <%--</span>--%>
+    </div>
+    <div class="prop clearfix">
                 <span class="value">
                     <form:checkbox path="showOther" label="Visa kategorin övrigt"/>
                     &nbsp;
                     <b>${otherCategory.name}</b>
                 </span>
 
-                <%--<span class="name" style="text-align:right;">${otherCategory.name}</span><br/>--%>
-                <%--<span class="value">--%>
-                    <%--<c:forEach items="${otherCategory.subCategories}" var="subCategory" varStatus="loop">--%>
-                        <%--<span class="subCategory">-- ${subCategory.value}</span>--%>
-                        <%--<br/>--%>
-                    <%--</c:forEach>--%>
-                <%--</span>--%>
-            </div>
-            <div class="prop">
+            <%--<span class="name" style="text-align:right;">${otherCategory.name}</span><br/>--%>
+            <%--<span class="value">--%>
+            <%--<c:forEach items="${otherCategory.subCategories}" var="subCategory" varStatus="loop">--%>
+            <%--<span class="subCategory">-- ${subCategory.value}</span>--%>
+            <%--<br/>--%>
+            <%--</c:forEach>--%>
+            <%--</span>--%>
+    </div>
+    <div class="prop clearfix">
                 <span class="value">
                     <form:checkbox path="showContact" label="Visa användarkontakt"/><br/>
 
@@ -205,15 +206,15 @@
                     <div class="contactMethod"><form:checkbox path="showContactByPhone"
                                                               label="Kontakt via telefon"/></div>
                 </span>
-            </div>
-            <div class="prop">
+    </div>
+    <div class="prop clearfix">
                 <span class="value"><form:checkbox path="showAttachment"
                                                    label="Skall användaren ges möjligheten att ladda upp filer (tex. en skärmdump)"/></span>
-            </div>
-        </span>
+    </div>
+    </span>
     </div>
 
-    <div class="prop">
+    <div class="prop clearfix">
         <span class="name">Mottagare</span>
         <span class="value">
             <table>
@@ -242,7 +243,9 @@
         <span class="error"><form:errors path="defaultBackend" htmlEscape="false"/></span>
     </div>
 
-    <div>
+    <div class="clearfix"><hr/></div>
+
+    <div class="clearfix">
         <input type="submit" value="Spara"/>
         <input type="button" onclick="javascript: window.location.href = 'TemplateList'" value="Avbryt">
     </div>

@@ -34,12 +34,12 @@
         function openDialog(url) {
             var form = $("#formTemplate");
             $("#modalDiv").dialog("open");
-//            $("#modalDialog").load(url, function() {
-//                showhideBackendInit();
-//            });
-            $("#modalDialog").load(url, form.serialize(), function() {
+            $("#modalDialog").load(url, function() {
                 showhideBackendInit();
             });
+//            $("#modalDialog").load(url, form.serialize(), function() {
+//                showhideBackendInit();
+//            });
             return false;
         }
     </script>
@@ -60,7 +60,7 @@
     </div>
 </div>
 
-<form:form commandName="formTemplate" enctype="UTF-8">
+<form:form commandName="formTemplate" accept-charset="UTF-8">
     <form:hidden path="id"/>
     <div class="prop clearfix">
         <span class="name">Formulärets namn</span>
@@ -87,7 +87,7 @@
             <div class="prop">
                 <span class="value">
                     <form:checkbox path="showCustom" label="Visa en egen kategori"/>
-                    <input type="button" value="Ändra" onclick="openDialog('CustomCategoryEdit');"/>
+                    <input type="button" value="Ändra" onclick="if (confirm('Spara ändringar innan du fortsätter!')) {openDialog('CustomCategoryEdit');}"/>
                 </span>
                 <br/><br/>
 

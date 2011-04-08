@@ -303,6 +303,7 @@ label {
     padding: 4px 8px;
     width: auto;
     margin: 0;
+    float: left;
 }
 
 .logo {

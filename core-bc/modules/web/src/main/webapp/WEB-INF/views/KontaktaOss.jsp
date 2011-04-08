@@ -205,7 +205,7 @@
 
         </div>
 
-        <div class="btn-wrap"><input value="Skicka" type="submit"></div>
+        <div class="btn-wrap clearfix"><input value="Skicka" type="submit"> <span class="logo"><img src="resources/img/vgr_logo_vit.gif" alt="Västra Götalands Regionen" /></span></div>
     </form:form>
 </div>
 

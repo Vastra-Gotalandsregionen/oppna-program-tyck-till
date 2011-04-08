@@ -63,25 +63,6 @@
     display: block
 }
 
-/*
-h2{
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:1.2em;
-    font-weight:bold;
-    color:#2a6344;
-    margin-bottom:0.3em;
-    margin-top:0.2em;
-}
-
-
-h3{
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 1.1em;
-    font-weight:bold;
-    color:#2a6344;
-}
-*/
-
 #defaultErrorMessageDiv {
     width: 54em;
     border: 0.1em solid gray;
@@ -115,7 +96,7 @@ h3{
     line-height: 1.4em;
     margin-bottom: 15px;
     margin-top: 6px;
-    width: 430px;
+    width: 485px;
 }
 
 .message {
@@ -136,7 +117,7 @@ div.header {
 }
 
 div {
-    clear: both;
+    /*clear: both;*/
 }
 
 div.subselect {
@@ -307,5 +288,23 @@ label {
 }
 
 .btn-wrap {
-    margin: 16px 14px;
+    margin: 20px 14px;
+}
+
+.btn-wrap input[type="submit"] {
+    border-radius: 12px;
+    border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
+    border-style: solid;
+    border-width: 1px;
+    font-weight: bold;
+    text-shadow: 1px 1px #FFF;
+    background: scroll 0 0 #EEE;
+    overflow: visible;
+    padding: 4px 8px;
+    width: auto;
+    margin: 0;
+}
+
+.logo {
+    float: right;
 }

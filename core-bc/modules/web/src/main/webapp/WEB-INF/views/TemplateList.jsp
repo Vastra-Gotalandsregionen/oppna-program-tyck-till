@@ -17,7 +17,7 @@
             jQuery("#modalDiv").dialog({
                                            modal: true,
                                            autoOpen: false,
-                                           height: 600,
+                                           height: 630,
                                            width: 610,
                                            draggable: true,
                                            resizeable: true,
@@ -111,7 +111,7 @@
                     <a href="TemplateEdit?templateId=${formTemplate.id}">Ändra</a>
                 </th>
                 <th>
-                    <a class="iframe-dialog-link" href="#" onclick="openIFrameDialog('KontaktaOss', 'formName=${formTemplate.name}', '');">Pröva</a>
+                    <a class="iframe-dialog-link" href="#" onclick="openIFrameDialog('KontaktaOss', 'formName=${formTemplate.name}&userId=${userId}&breadcrumb=test%20av%20${formTemplate.name}', '');">Pröva</a>
                 </th>
             </tr>
         </c:forEach>

@@ -4,9 +4,12 @@
 <head>
     <title>Hej</title>
     
-    <script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
-    <script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/tycktill-dialog.js"></script>
+    <!--<script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/jquery-1.4.2.min.js"></script>-->
+    <!--<script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>-->
+    <!--<script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/tycktill-dialog.js"></script>-->
+    <script type="text/javascript" src="http://antonio:8980/tyck-till/tycktill/resources/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="http://antonio:8980/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="http://antonio:8980/tyck-till/tycktill/resources/js/tycktill-dialog.js"></script>
 
     <script type="text/javascript">
         //<![CDATA[
@@ -16,7 +19,8 @@
             initIFrameDialog('#modalDiv',
                     '#iFrameDialog',
                     '#goToPage',
-                    'http://localhost:9090/tyck-till/tycktill/KontaktaOss',
+//                    'http://localhost:9090/tyck-till/tycktill/KontaktaOss',
+                    'http://antonio:8980/tyck-till/tycktill/KontaktaOss',
                     'formName=default',
                     '');
         });
@@ -24,15 +28,18 @@
     </script>
 
     <style type="text/css">
-        @import "http://localhost:9090/tyck-till/tycktill/resources/style/modalStyle.css";
-        @import "http://localhost:9090/tyck-till/tycktill/resources/style/style.css";
+        /*@import "http://localhost:9090/tyck-till/tycktill/resources/style/modalStyle.css";*/
+        /*@import "http://localhost:9090/tyck-till/tycktill/resources/style/style.css";*/
+        @import "http://antonio:8980/tyck-till/tycktill/resources/style/modalStyle.css";
+        @import "http://antonio:8980/tyck-till/tycktill/resources/style/style.css";
     </style>
 </head>
 <body>
 
 <div>
 Hej
-    <a id="goToPage" href="http://localhost:9090/tyck-till/tycktill/KontaktaOss?formnName=default">Kontakta oss!</a>
+    <!--<a id="goToPage" href="http://localhost:9090/tyck-till/tycktill/KontaktaOss?formnName=default">Kontakta oss!</a>-->
+    <a id="goToPage" href="http://antonio:8980/tyck-till/tycktill/KontaktaOss?formnName=default">Kontakta oss!</a>
     <div id="modalDiv">
         <iframe id="iFrameDialog" height="100%" width="100%" marginheight="500px" marginwidth="500px" frameborder="0" scrolling="auto" src="">
         </iframe>

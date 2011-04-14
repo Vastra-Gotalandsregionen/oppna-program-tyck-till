@@ -70,11 +70,16 @@
     color: gray;
 }
 
-.form-head,
+.form-head {
+    border-bottom: 1px solid #ccc;
+    margin-top: 15px;
+    padding-bottom: 10px;
+}
+
 .subject,
 .message-wrap {
     border-bottom: 1px solid #ccc;
-    margin: 15px 0 0 0;
+    margin: 10px 0 0 0;
 }
 
 .title {
@@ -92,11 +97,14 @@
 .leadtext {
     -x-system-font: none;
     color: #444;
-    font-weight: bold;
     line-height: 1.4em;
-    padding-bottom: 15px;
+    padding-bottom: 8px;
     margin-top: 6px;
     width: 485px;
+}
+
+.strong {
+    font-weight: bold;
 }
 
 .message {
@@ -136,7 +144,7 @@ div.subselect {
 
 label {
     color: #444;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .checkbox {
@@ -149,6 +157,14 @@ label {
 
 .form-item-wrap {
     margin: 7px 0;
+}
+
+.form-item-wrap label {
+    font-weight: bold;
+}
+
+.form-item-wrap .inline {
+    font-weight: normal;
 }
 
 .inline {
@@ -284,8 +300,10 @@ label {
 }
 
 .instruction {
-
+    color: #444444;
 }
+
+
 
 .btn-wrap {
     margin: 20px 14px;

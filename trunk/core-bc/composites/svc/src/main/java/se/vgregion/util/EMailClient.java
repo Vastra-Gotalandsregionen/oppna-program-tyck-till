@@ -88,7 +88,7 @@ public class EMailClient {
 
         // Setting the Subject and Content Type
         msg.setSubject(subject);
-        msg.setContent(message, "text/html; charset=ISO-8859-1");
+        msg.setContent(message, "text/html; charset=UTF-8");
 
         Transport.send(msg);
     }
@@ -148,7 +148,7 @@ public class EMailClient {
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 
             // fill message
-            messageBodyPart.setContent(message, "text/html; charset=ISO-8859-1");
+            messageBodyPart.setContent(message, "text/html; charset=UTF-8");
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);

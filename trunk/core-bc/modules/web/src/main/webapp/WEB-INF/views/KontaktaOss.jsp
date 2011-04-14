@@ -61,7 +61,7 @@
         <form:hidden path="breadcrumb"/>
 
         <div class="subject">
-            <div class="leadtext">Vad handlar ditt ärende om?</div>
+            <div class="leadtext strong">Vad handlar ditt ärende om?</div>
 
             <div id="customCategory" class="${template.showCustom ? 'show' : 'hide'}">
                 <form:radiobutton id="customCase"
@@ -140,11 +140,10 @@
                 </div>
             </div>
 
-            <div><br/></div>
-
             <div class="${template.showContact ? 'show' : 'hide'}">
-                <div>
+                <div class="form-item-wrap">
                     <form:checkbox id="shouldContactUser" path="userContact.shouldContactUser"
+                                   cssClass="strong"
                                    label="Jag vill ha svar"/>
 
                     <div id="contactInfo" class="subselect contact-info">
@@ -152,7 +151,7 @@
                             <form:radiobuttons id="contactOption"
                                                path="userContact.contactOption"
                                                items="${contactOptions}"
-                                               cssClass="contactOptionClass"/> *
+                                               cssClass="contactOptionClass"/>
                         </div>
 
                         <div>
@@ -187,9 +186,12 @@
                 <div class="form-item-wrap">
                     <div class="instruction">Du kan välja att bifoga en skärmdump, så vi kan se det du ser</div>
 
-                    <form:checkbox id="attachScreenDump" path="attachScreenDump" label="Jag vill bifoga en skärmdump"/>
+                    <form:checkbox id="attachScreenDump"
+                                   path="attachScreenDump"
+                                   cssClass="strong"
+                                   label="Jag vill bifoga en skärmdump"/>
                     <div id="attachmentDetail">
-                        <ol>
+                        <ol class="instruction">
                             <li>Aktivera sidan du vill bifoga bild på.</li>
                             <li>Tryck på PrtSc i övre högra hörnet på tangentborder.</li>
                             <li>Starta Microsoft Word och öppna Nytt dokument.</li>

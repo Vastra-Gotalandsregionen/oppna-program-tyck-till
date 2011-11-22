@@ -3,47 +3,43 @@
 <html id="wrap_all">
 <head>
     <title>Hej</title>
-    
-    <!--<script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/jquery-1.4.2.min.js"></script>-->
-    <!--<script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>-->
-    <!--<script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/tycktill-dialog.js"></script>-->
-    <script type="text/javascript" src="http://antonio:8980/tyck-till/tycktill/resources/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="http://antonio:8980/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>
-    <script type="text/javascript" src="http://antonio:8980/tyck-till/tycktill/resources/js/tycktill-dialog.js"></script>
 
-    <script type="text/javascript">
-        //<![CDATA[
-        var isShowInDialog = true;
 
-        $(document).ready(function() {
-            initIFrameDialog('#modalDiv',
-                    '#iFrameDialog',
-                    '#goToPage',
-//                    'http://localhost:9090/tyck-till/tycktill/KontaktaOss',
-                    'http://antonio:8980/tyck-till/tycktill/KontaktaOss',
-                    'formName=default',
-                    '');
-        });
-        //]]>
-    </script>
+<!--<script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/jquery-noconflict.js"></script>-->
+<!--<script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>-->
+<!--    <script type="text/javascript" src="http://localhost:9090/tyck-till/tycktill/resources/js/tycktill.js"></script>-->
+<!--    <script type="text/javascript" src="http://antonio:8980/tyck-till/tycktill/resources/js/jquery-1.4.2.min.js"></script>-->
+<!--    <script type="text/javascript" src="http://antonio:8980/tyck-till/tycktill/resources/js/jquery-ui-1.8.6.custom.min.js"></script>-->
+<!--    <script type="text/javascript" src="http://antonio:8980/tyck-till/tycktill/resources/js/tycktill-dialog.js"></script>-->
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+    //you can set options for (all) tycktill dialogs by defining a tycktill_options object
+    //*before* tycktill.js or tycktill-loader.js is loaded
+    var tycktill_options = { resizable: false };
+// ]]>
+</script>
+<script src="http://localhost:9090/tyck-till/tycktill/resources/js/tycktill-loader.js" type="text/javascript" language="javascript" charset="utf-8"></script>    
+   
 
-    <style type="text/css">
-        /*@import "http://localhost:9090/tyck-till/tycktill/resources/style/modalStyle.css";*/
-        /*@import "http://localhost:9090/tyck-till/tycktill/resources/style/style.css";*/
-        @import "http://antonio:8980/tyck-till/tycktill/resources/style/modalStyle.css";
-        @import "http://antonio:8980/tyck-till/tycktill/resources/style/style.css";
-    </style>
 </head>
 <body>
 
 <div>
 Hej
-    <!--<a id="goToPage" href="http://localhost:9090/tyck-till/tycktill/KontaktaOss?formnName=default">Kontakta oss!</a>-->
-    <a id="goToPage" href="http://antonio:8980/tyck-till/tycktill/KontaktaOss?formnName=default">Kontakta oss!</a>
-    <div id="modalDiv">
-        <iframe id="iFrameDialog" height="100%" width="100%" marginheight="500px" marginwidth="500px" frameborder="0" scrolling="auto" src="">
-        </iframe>
-    </div>
+    <!-- ordinary link, url of iframe taken from href -->
+    <a id="goToPage" class="tycktill" title="Kontakta oss" href="http://localhost:9090/tyck-till/tycktill/KontaktaOss?formName=default">Kontakta oss!</a>
+    
+    <!-- button, using data-form and data-url -->
+    <button  class="tycktill" title="Kontakta oss, knapp" 
+             data-form="default"
+             data-url="http://localhost:9090/tyck-till/tycktill/KontaktaOss?formName={form}"
+             href="http://www.youtube.com/watch?v=dQw4w9WgXcQ&ob=av2e">Kontakta oss!</button> 
+    
+    <!-- button just using data-url -->
+    <button  class="tycktill" title="Kontakta oss, knapp" 
+             data-url="http://localhost:9090/tyck-till/tycktill/KontaktaOss?formName=default"
+             href="http://www.youtube.com/watch?v=dQw4w9WgXcQ&ob=av2e">Kontakta oss!</button> 
+    
     
     <div>
         <div id="Outer">

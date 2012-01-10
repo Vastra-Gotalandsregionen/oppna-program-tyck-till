@@ -15,24 +15,24 @@ För att förenkla så att man slipper länka till alla dessa skript kan man lä
 
 Ex.
 <code language="html">
-<script src="htpp://host/path/to/js/tycktill-loader.js" type="text/javascript" language="javascript" charset="utf-8"></script>    
+<script src="http://host/path/to/js/tycktill-loader.js" type="text/javascript" language="javascript" charset="utf-8"></script>    
 </code>
 
-Förutom skriptet behövs minst en länk/knapp/html-element med klassen "tycktill", dessa öppnar en dialog med en iframe med valt formulär i. Om ingen annan konfiguration anges kommer iframen peka till samma som länken pekar till.
+Förutom skriptet behövs minst en länk/knapp/html-element med klassen "tycktill". Dessa element öppnar en dialog med ett förkonfigurerat Tyck-Till formulär. Som grund konfiguration kommer den angivna länken (href/data-url) att användas som källa till dialogens iFrame.
 
 Ex.
 <code language="html">
-<a href="http://path/to/page" data-url="http://path/to/iframe/" title="Tyck till">Tyck till!</a>
+<a class="tycktill" href="http://path/to/page" data-url="http://path/to/iframe/" title="Tyck till">Tyck till!</a>
 </code>
  
 =Konfiguration=
  
-Det finns två sätt att konfigurera dialogerna
+Det finns två sätt att konfigurera dialogen:
 
-  # Global konfiguration som definerad i en javascript variabel (i globalt scope) kallad `tycktill_options`. Defineras *innan* tyck till skriptet
+  # Global konfiguration som definerad i en javascript variabel (i globalt scope) kallad `tycktill_options`. Detta skall defineras *innan* tyck-till skriptet.
   # Attribut på länken/knappen/html-elementet
  
-== Global konfiguration ==
+== 1: Global konfiguration ==
 
 Ett exempel med standard värden. Förutom dessa gäller alla möjliga värden som [http://jqueryui.com/demos/dialog/ jQuery Dialogen] tar.
 
@@ -40,7 +40,7 @@ Ett exempel med standard värden. Förutom dessa gäller alla möjliga värden s
 <script type="text/javascript" language="javascript" charset="utf-8"> 
 
     var tycktill_options = {
-       type: 'iframe',             // 'iframe' eller 'ajax', ajax fungerar endast på samma server som tycktill 
+       type: 'iframe',             // 'iframe' eller 'ajax', (ajax fungerar endast på tycktill server) 
        width: 610,                 // dialogens storlek
        height: 625,     
        title: 'Tyck till',         // standard titel om ingen anges via attribut på länken
@@ -49,14 +49,14 @@ Ett exempel med standard värden. Förutom dessa gäller alla möjliga värden s
        autoOpen: false,            // Ändra inte detta värdet
        show: 'slide',              // animationen som används när dialogen öppnas
        hide: { effect: 'fade', duration: 1500 },    //animationen som används när dialogen stängs
-       default_url:  'http://localhost:9090/tyck-till/tycktill/KontaktaOss?formName={form}',  
+       default_url:  'http://{localhost:9090}/tyck-till/tycktill/KontaktaOss?formName={form}',  
        trigger_sel: '.tycktill'    // vilken klass vi ska leta efter på länkar/knappar 
     };
 </script> 
 </code> 
  
  
-==Attribut konfiguration==
+== 2: Attribut konfiguration==
 
 Vissa delar av dialogen kan konfigureras via attribut på den länk/knapp/html-element som öppnar dialogen.
 

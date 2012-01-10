@@ -89,16 +89,15 @@ Notera att man kan definiera iframens URL i den globala konfigurationen och där
 
 = Migrering från tidigare version = 
 
-Tidigare version krävde en del mer HTML.
-Som nu kan tas bort. Om jQuery och jQuery UI inte används på sidan kan även de tas bort.
+Tidigare version krävde mer HTML, som nu kan tas bort. (Om jQuery och jQuery UI inte används på sidan kan även dessa importer tas bort.)
 
-I huvudet
-<code language="">
-
-   <script type="text/javascript" src="http://tycktill.vgregion.se/tyck-till/tycktill/resources/js/tycktill-dialog.js"></script>
+I huvudet skall detta tas bort:
+<code language="javascript">
+ <script type="text/javascript" src="http://tycktill.vgregion.se/tyck-till/tycktill/resources/js/tycktill-dialog.js"></script>
 
   <script type="text/javascript">
-               $(document).ready(function() {
+          
+            $(document).ready(function() {
                 initIFrameDialog('#modalDiv',
                         '#iFrameDialog',
                         '#goToPage',
@@ -109,7 +108,7 @@ I huvudet
             </script>
 </code>
 
-I kroppen
+I kroppen skall detta tas bort:
 <code language="html">
 <div id="modalDiv">
 <iframe id="iFrameDialog" height="100%" width="100%" marginheight="500px" marginwidth="500px" frameborder="0" scrolling="no" src="tycktill.html">

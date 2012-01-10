@@ -1,0 +1,23 @@
+#summary Adding Tyck-Till examples.
+
+= No jQuery on page =
+
+  * Use tycktill-loader.js to load all needed dependencies:
+
+<code language="html">
+<script src="http://tycktill.vgregion.se/tyck-till/tycktill/resources/js/tycktill-loader.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+</code>
+
+  * Add a link/button/element with the class="tycktill" to the page:
+
+<code language="html">
+<a href="{http://path/to/local_page}" data-url="http://tycktill.vgregion.se/tyck-till/tycktill/KontaktaOss" data-form="{tycktill-form-name}" title="{Dialog title}">Tyck till!</a>
+</code>
+
+
+= jQuery on page =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages

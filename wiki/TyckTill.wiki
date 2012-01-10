@@ -17,3 +17,5 @@
   * *href="{[http://path/to/local_page]}"* - This is a locally maintained static page with an iFrame pointing to the TyckTill-form - this enables users with java-script turned off to report.
   * *data-form="{tycktill-form-name}"* - The TyckTill report-form is adapted for the site. Where to send the report, if a mail notification should be sent and so on. The forms are created by "TyckTill Admin" in "Regionportalen" and are given an unique name, this name are used to reference the correct form.
   * *title="{Dialog title}"* - This value will be shown in the java-script dialog header.
+
+[HurManLaggerTillTyckTillPaEnSida Detailed description] 

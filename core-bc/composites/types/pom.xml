@@ -12,6 +12,7 @@ Generation time : 2009-04-17 09:01:59 CEST
     <groupId>se.vgregion.tyck-till</groupId>
     <artifactId>tyck-till-core-bc</artifactId>
     <version>2.5-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
   <artifactId>tyck-till-core-bc-composite-types</artifactId>
   <packaging>jar</packaging>

@@ -40,7 +40,6 @@ public class USDServiceMock implements USDService {
         return "";
     }
 
-    @Override
     public List<Issue> getRecordsForContact(String arg0, Integer arg1) {
         throw new UnsupportedOperationException("TODO: Implement this method");
     }
@@ -53,5 +52,15 @@ public class USDServiceMock implements USDService {
     @Override
     public String getUSDGroupHandleForApplicationName(String arg0) {
         return TEST_USD_HANDLE;
+    }
+
+    @Override
+    public List<Issue> lookupIssues(String s, int i, boolean b) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getBopsId(String s) {
+        throw new UnsupportedOperationException();
     }
 }

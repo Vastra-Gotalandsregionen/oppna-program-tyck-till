@@ -1,0 +1,7 @@
+#Rename to security.propeties and update the properties below to real values.
+
+#Ldap user name. Ex: uid=name,ou=group,O=toplevel-org
+BIND_DN=
+
+#Ldap password
+BIND_PW=

@@ -9,6 +9,7 @@
     <groupId>se.vgregion.tyck-till</groupId>
     <artifactId>tyck-till-core-bc</artifactId>
     <version>2.5-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
   <artifactId>tyck-till-core-bc-composite-svc</artifactId>
   <packaging>jar</packaging>
@@ -24,12 +25,12 @@
     <dependency>
       <groupId>se.vgregion.commons-util</groupId>
       <artifactId>commons-util-core-bc-composite-svc-pivotaltracker</artifactId>
-      <version>3.5</version>
+      <version>3.12-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>se.vgregion.commons-util</groupId>
       <artifactId>commons-util-core-bc-composite-svc-usd</artifactId>
-      <version>3.5</version>
+      <version>3.12-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.velocity</groupId>

@@ -248,6 +248,7 @@
             <configuration>
               <excludes>
                 <exclude>**/jquery-ui-*.min.js</exclude>
+                <exclude>**/jquery-ui-*.css</exclude>
                 <exclude>**/jquery.timer.js</exclude>
                 <exclude>**/jquery-*.min.js</exclude>
                 <exclude>**/messages.properties</exclude>

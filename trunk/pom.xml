@@ -9,7 +9,7 @@
     <groupId>se.vgregion.tyck-till</groupId>
     <artifactId>tyck-till-system</artifactId>
     <packaging>pom</packaging>
-    <version>2.6-SNAPSHOT</version>
+    <version>2.6</version>
     <name>${project.artifactId}</name>
 
     <parent>
@@ -46,8 +46,8 @@
     </build>
 
     <scm>
-        <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/trunk</developerConnection>
-        <url>http://oppna-program-tyck-till.googlecode.com/svn/trunk</url>
+        <developerConnection>scm:svn:https://oppna-program-tyck-till.googlecode.com/svn/tags/tyck-till-system-2.6</developerConnection>
+        <url>http://oppna-program-tyck-till.googlecode.com/svn/tags/tyck-till-system-2.6</url>
     </scm>
 
 </project>

@@ -25,7 +25,7 @@
     <dependency>
       <groupId>se.vgregion.commons-util</groupId>
       <artifactId>commons-util-core-bc-composite-svc-pivotaltracker</artifactId>
-      <version>3.13</version>
+      <version>3.18-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>se.vgregion.commons-util</groupId>

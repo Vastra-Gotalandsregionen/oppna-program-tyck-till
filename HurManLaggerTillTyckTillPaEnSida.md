@@ -1,0 +1,161 @@
+# Installation #
+
+För att få en dialog med ett _tyck till_ formulär på valfri sida via behövs javascriptet `jquery.tycktill.js` laddas, samt en länk för att öppna dialogen läggas till, inget mer!
+
+`jquery.tycktill.js` är en [jQuery](http://jquery.com) plugin och har följande beroende:
+
+  * jQuery
+  * jQuery UI (Dialog is enough)
+  * jQuery UI CSS
+  * style/dialog.css
+
+För att förenkla så att man slipper länka till alla dessa skript kan man länka till endast ett: ´tycktill-loader.js` som i sin tur laddar allt som behövs. Skriptet kollar innan det laddar så har du redan jQuery på sidan kommer det inte laddas igen.
+
+Ex.
+```html
+
+<script src="http://host/path/to/js/tycktill-loader.js" type="text/javascript" language="javascript" charset="utf-8">
+
+Unknown end tag for &lt;/script&gt;
+
+
+```
+
+Förutom skriptet behövs minst en länk/knapp/html-element med klassen "tycktill". Dessa element öppnar en dialog med ett förkonfigurerat Tyck-Till formulär. Som grund konfiguration kommer den angivna länken (href/data-url) att användas som källa till dialogens iFrame.
+
+Ex.
+```html
+
+<a class="tycktill" href="http://path/to/page" data-url="http://path/to/iframe/" title="Tyck till">Tyck till!
+
+Unknown end tag for &lt;/a&gt;
+
+
+```
+
+# Konfiguration #
+
+Det finns två sätt att konfigurera dialogen:
+
+  1. Global konfiguration som definerad i en javascript variabel (i globalt scope) kallad `tycktill_options`. Detta skall defineras **innan** tyck-till skriptet.
+  1. Attribut på länken/knappen/html-elementet
+
+## 1: Global konfiguration ##
+
+Ett exempel med standard värden. Förutom dessa gäller alla möjliga värden som [jQuery Dialogen](http://jqueryui.com/demos/dialog/) tar.
+
+```javascript
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+
+var tycktill_options = {
+type: 'iframe',             // 'iframe' eller 'ajax', (ajax fungerar endast på tycktill server)
+width: 610,                 // dialogens storlek
+height: 625,
+title: 'Tyck till',         // standard titel om ingen anges via attribut på länken
+modal: true,                // skuggar bakgrunden
+resizable: true,
+autoOpen: false,            // Ändra inte detta värdet
+show: 'slide',              // animationen som används när dialogen öppnas
+hide: { effect: 'fade', duration: 1500 },    //animationen som används när dialogen stängs
+default_url:  'http://{localhost:9090}/tyck-till/tycktill/KontaktaOss?formName={form}',
+trigger_sel: '.tycktill'    // vilken klass vi ska leta efter på länkar/knappar
+};
+
+
+Unknown end tag for &lt;/script&gt;
+
+
+```
+
+
+## 2: Attribut konfiguration ##
+
+Vissa delar av dialogen kan konfigureras via attribut på den länk/knapp/html-element som öppnar dialogen.
+
+Attribut som konfigurerar är:
+  * `href`       Sätter SRC på iframen, dvs vilket formulär som ska visas
+  * `title`      Sätter titeln på dialogen
+  * `data-url`   Sätter SRC på iframen, kan innehålla `{form}` om den används i kombination med _data-form_ attributet, då kommer `{form}` bytas ut mot värdet däri. Om data-url attributet finns ignoreras href och man kan därmed ha länkar som länkar till en viss sida men visar en annan dialog.
+  * data-form  Värdet som  ersätter `{form}` i SRC på iframen.
+
+Exempel:
+```html
+
+<!-- ordinary link, url of iframe taken from href -->
+<a id="goToPage" class="tycktill" title="Kontakta oss" href="http://140.166.207.115:9090/tyck-till/tycktill/KontaktaOss?formName=default">Kontakta oss!
+
+Unknown end tag for &lt;/a&gt;
+
+
+
+<!-- button, using data-form and data-url -->
+<button  class="tycktill" title="Kontakta oss, knapp"
+data-form="default"
+data-url="http://140.166.207.115:9090/tyck-till/tycktill/KontaktaOss?formName={form}"
+href="http://www.youtube.com/watch?v=dQw4w9WgXcQ&ob=av2e">Kontakta oss!
+
+Unknown end tag for &lt;/button&gt;
+
+
+
+<!-- button just using data-url -->
+<button  class="tycktill" title="Kontakta oss, knapp"
+data-url="http://140.166.207.115:9090/tyck-till/tycktill/KontaktaOss?formName=default"
+href="http://www.youtube.com/watch?v=dQw4w9WgXcQ&ob=av2e">Kontakta oss!
+
+Unknown end tag for &lt;/button&gt;
+
+
+
+```
+
+Notera att man kan definiera iframens URL i den globala konfigurationen och därmed ha flera länkar som öppnar dialoger med olika formulär på samma sida, eller så kan man för enkelhetens skull bara ge dem olika href.
+
+
+# Migrering från tidigare version #
+
+Tidigare version krävde mer HTML, som nu kan tas bort. (Om jQuery och jQuery UI inte används på sidan kan även dessa importer tas bort.)
+
+I huvudet skall detta tas bort:
+```javascript
+
+<script type="text/javascript" src="http://tycktill.vgregion.se/tyck-till/tycktill/resources/js/tycktill-dialog.js">
+
+Unknown end tag for &lt;/script&gt;
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+initIFrameDialog('#modalDiv',
+'#iFrameDialog',
+'#goToPage',
+'http://tycktill.vgregion.se/tyck-till/tycktill/KontaktaOss',
+'formName=hitta',
+'Kontakta Oss');
+});
+
+
+Unknown end tag for &lt;/script&gt;
+
+
+```
+
+I kroppen skall detta tas bort:
+```html
+
+<div id="modalDiv">
+<iframe id="iFrameDialog" height="100%" width="100%" marginheight="500px" marginwidth="500px" frameborder="0" scrolling="no" src="tycktill.html">
+
+
+Unknown end tag for &lt;/iframe&gt;
+
+
+
+
+Unknown end tag for &lt;/div&gt;
+
+
+```

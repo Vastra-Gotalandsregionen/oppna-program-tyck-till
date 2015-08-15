@@ -1,0 +1,29 @@
+# Simplest possible configuration #
+
+1: Use tycktill-loader.js to load all needed dependencies:
+
+```html
+
+<script src="http://tycktill.vgregion.se/tyck-till/tycktill/resources/js/tycktill-loader.js" type="text/javascript" language="javascript" charset="utf-8">
+
+Unknown end tag for &lt;/script&gt;
+
+
+```
+
+2: Add a link/button/element with the class="tycktill" to the page:
+
+```html
+
+<a href="{http://path/to/local_page}" data-url="http://tycktill.vgregion.se/tyck-till/tycktill/KontaktaOss" data-form="{tycktill-form-name}" title="{Dialog title}">Tyck till!
+
+Unknown end tag for &lt;/a&gt;
+
+
+```
+
+  * **href="{http://path/to/local_page}"** - This is a locally maintained static page with an iFrame pointing to the TyckTill-form - this enables users with java-script turned off to report.
+  * **data-form="{tycktill-form-name}"** - The TyckTill report-form is adapted for the site. Where to send the report, if a mail notification should be sent and so on. The forms are created by "TyckTill Admin" in "Regionportalen" and are given an unique name, this name are used to reference the correct form.
+  * **title="{Dialog title}"** - This value will be shown in the java-script dialog header.
+
+[Detailed description](HurManLaggerTillTyckTillPaEnSida.md)

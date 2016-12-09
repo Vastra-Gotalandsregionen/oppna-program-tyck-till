@@ -77,7 +77,7 @@ public class TyckTillController {
     private PlatformDataService platformDataService;
 
     @Value("${tycktill.maxfileuploadsize}")
-    private Long maxFileUploadSize = 100000L; // default 100k
+    private Long maxFileUploadSize = 1000000L; // default ~1mb
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
